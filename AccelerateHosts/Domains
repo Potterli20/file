@@ -35,12 +35,10 @@ cdn.steamstatic.com.8686c.com
 media.st.dl.eccdnx.com
 avatars.st.dl.eccdnx.com
 store.st.dl.eccdnx.com
-broadcast.st.dl.pinyuncloud.com
 broadcast.st.dl.eccdnx.com
 cdn-ali.content.steamchina.com
 cdn-qc.content.steamchina.com
 xz.pphimalayanrt.com
-steampipe.steamcontent.tnkjmec.com
 dl.steam.clngaa.com
 st.dl.eccdnx.com
 st.dl.bscstorage.net
@@ -176,7 +174,6 @@ qd.poms.baidupcs.com
 wppkg.baidupcs.com
 v6.baidupcs.com
 v8.baidupcs.com
-d4.baidupcs.com
 qdcache02.baidupcs.com
 qdcache03.baidupcs.com
 nbcache03.baidupcs.com
@@ -191,7 +188,6 @@ d9.baidupcs.com
 v0.baidupcs.com
 d8.baidupcs.com
 issuecdn.baidupcs.com
-d2.baidupcs.com
 d1.baidupcs.com
 d7.baidupcs.com
 bjbgp02.baidupcs.com
@@ -265,7 +261,7 @@ ollector.github.com
 services.googleapis.cn
 i.imgur.com
 collector.githubapp.com
-play-fe.googleapis.com1
+play-fe.googleapis.com
 play-lh.googleusercontent.com
 play.googleapis.com
 abema.tv
