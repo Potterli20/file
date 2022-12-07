@@ -1,0 +1,42 @@
+name: GithubHosts
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11.0-rc.2]
+
+    steps:
+    - uses: actions/checkout@main
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@main
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        cd github-hosts
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt  ]; then pip install -r requirements.txt; fi
+        
+    - name: update hosts
+      run: |
+        sh ./file-hosts.sh/github/hosts.sh
+    - name: commit and push
+      id: commit
+      run: |
+        curl -u ${{ secrets.user }}:${{ secrets.password }} -T "{./file-hosts.sh/github/Accelerate-Hosts.txt}" https://${{ secrets.web }}/github/
+      continue-on-error: true
+      
+    # 删除无用 workflow runs;
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 0.1
+        keep_minimum_runs: 1
