@@ -441,7 +441,7 @@ function GetData() {
     filter_white=(
         "https://raw.githubusercontent.com/Potterli20/file/main/allow/Domains"
     )
-    mkdir ./ad-hosts && cd ./ad-hosts
+    mkdir ./ad-hosts-pro && cd ./ad-hosts-pro
     for filter_adblock_task in "${!filter_adblock[@]}"; do
         curl -s -L --connect-timeout 15 "${filter_adblock[$filter_adblock_task]}" >> ./filter_adblock.tmp
     done
@@ -679,14 +679,14 @@ function OutputData() {
     }
     if [ ! -f "../ad-domains.txt " ]; then
         GenerateInformation && FormatedOutputData
-        cd .. && rm -rf ./ad-hosts
+        cd .. && rm -rf ./ad-hosts-pro
     else
         cat ../ad-domains.txt | head -n $(sed -n '$=' ../ad-domains.txt ) | tail -n +9 > ./filter_data.old
         if [ "$(diff ./filter_data.tmp ./filter_data.old)" == "" ]; then
-            cd .. && rm -rf ./ad-hosts
+            cd .. && rm -rf ./ad-hosts-pro
         else
             GenerateInformation && FormatedOutputData
-            cd .. && rm -rf ./ad-hosts
+            cd .. && rm -rf ./ad-hosts-pro
         fi
     fi
 }
