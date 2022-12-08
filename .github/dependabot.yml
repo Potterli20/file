@@ -11,6 +11,6 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "pip" # GitHub Actions
-    directory: "/file-hosts.sh/github"
+    directory: "./file-hosts.sh/github"
     schedule:
       interval: "daily"
