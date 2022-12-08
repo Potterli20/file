@@ -9,3 +9,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+
+  - package-ecosystem: "pip" # GitHub Actions
+    directory: "/file-hosts.sh/github"
+    schedule:
+      interval: "daily"
