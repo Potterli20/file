@@ -1,0 +1,51 @@
+{
+  "Socks5ListenAddr": ":10800",
+    "PidFile": "amy4.pid",
+      "DnsListenAddr": ":10530",
+        "//amyCdnServerAddr": "qbdun.amy.quickconnect.buzz",
+          "//": "以上内容不能修改",
+            "AmyOuts": [{
+                  "Tag": "http",
+                        "ProxyType": "http",
+                              "httpSettings": {
+                                      "//": "HttpAddr留空表示net模式",
+                                              "HttpAddr": "10.0.0.200:80",
+                                                      "//": "HTTP模块",
+                                                              "HttpModify": {
+                                                                        "DelLine": ["Host,X-Online-Host"],
+                                                                                  "SetFirst":"[M] [U] [V]\r\n?\t\r\tHost:[H]\r\nHost: download.cloud.189.cn\r\nCONNECT download.cloud.189.cn\r\nConnection: keep-alive\r\n"
+                                                                                          },
+                                                                                                  "//": "HTTPS地址",
+                                                                                                          "TunnelAddr": "10.0.0.200:80",
+                                                                                                                  "//": "HTTPS模块",
+                                                                                                                          "TunnelModify": {
+                                                                                                                                    "DelLine": ["User-Agent,Host"],
+                                                                                                                                              "SetFirst": "[M] / [V]\r\nX-\t\rHost: [H]\r\nCONNECT download.cloud.189.cn\r\nHost: download.cloud.189.cn\r\n"
+                                                                                                                                                      },
+                                                                                                                                                              "//": "amy4Server地址及连接密码，代理UDP用",
+                                                                                                                                                                      "Amy4ServerAddr":"cns:端口",
+                                                                                                                                                                              "ServerKey": "密码",
+                                                                                                                                                                                      "//": "Http TCP连接池, Net模式下不支持(不设置DestAddrs)",
+                                                                                                                                                                                              "HttpPool": {
+                                                                                                                                                                                                      },
+                                                                                                                                                                                                              "//": "Tunnel TCP连接池, 不设置则不开启",
+                                                                                                                                                                                                                      "TunnelPool": {
+                                                                                                                                                                                                                                "//": "最大空闲连接数",
+                                                                                                                                                                                                                                          "MaxConn": 20,
+                                                                                                                                                                                                                                                    "//": "最小空闲连接数（达到最小空闲连接数时自动扩张到最大空闲连接数）",
+                                                                                                                                                                                                                                                              "MinConn": 2,
+                                                                                                                                                                                                                                                                        "//": "生成连接速度(每秒生成N个连接)",
+                                                                                                                                                                                                                                                                                  "DialSpeed": 15,
+                                                                                                                                                                                                                                                                                            "//": "连接最大空闲时间, 超过该时间连接则将失效（如果不设置则永不失效）",
+                                                                                                                                                                                                                                                                                                      "IdleSec": 57
+                                                                                                                                                                                                                                                                                                              }
+                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                        }, {
+                                                                                                                                                                                                                                                                                                                            "Tag": "block",
+                                                                                                                                                                                                                                                                                                                                "ProxyType": "block"
+                                                                                                                                                                                                                                                                                                                                  }, {
+                                                                                                                                                                                                                                                                                                                                      "Tag": "origin",
+                                                                                                                                                                                                                                                                                                                                          "ProxyType": "origin"
+                                                                                                                                                                                                                                                                                                                                            }],
+                                                                                                                                                                                                                                                                                                                                              "Routers": []
+                                                                                                                                                                                                                                                                                                                                              }
