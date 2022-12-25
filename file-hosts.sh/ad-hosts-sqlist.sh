@@ -1,6 +1,6 @@
-# Get Data
 function GetData() {
     filter_adblock=(
+        "https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Hosts.txt"
         "https://code.gitlink.org.cn/zzp282/ads/raw/branch/master/ADSLJ.txt"
         "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_adservers.txt"
         "https://raw.githubusercontent.com/easylist/easylistchina/master/easylistchina.txt"
@@ -321,10 +321,12 @@ function GetData() {
         "https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt"
     )
     filter_domain=(
+        "https://dl.red.flag.domains/red.flag.domains.txt"
+        "https://raw.githubusercontent.com/gioxx/xfiles/master/domains/upd_domains.txt"
         "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/hosts"
         "https://block.energized.pro/unified/formats/domains.txt"
         "https://raw.githubusercontent.com/badmojr/addons_1Hosts/main/kidSaf/domains.txt"
-        "https://file.trli.club:2087/ad-hosts/ad-edge-hosts.txt"
+        "https://file.trli.club:2083/ad-hosts/ad-edge-hosts.txt"
         "https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/domains"
         "https://v.firebog.net/hosts/static/w3kbl.txt"
         "https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
@@ -354,6 +356,9 @@ function GetData() {
         "https://raw.githubusercontent.com/stamparm/blackbook/master/blackbook.txt"
     )
     filter_hosts=(
+        "https://sysctl.org/cameleon/hosts"
+        "https://zerodot1.gitlab.io/CoinBlockerLists/hosts"
+        "https://gitlab.com/intr0/iVOID.GitLab.io/raw/master/iVOID.hosts"
         "https://adm.dimonvideo.ru/alive_hosts.txt"
         "https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/newhosts-final.hosts"
         "https://raw.githubusercontent.com/thisisu/hosts_adultxxx/master/hosts"
