@@ -321,6 +321,8 @@ function GetData() {
         "https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt"
     )
     filter_domain=(
+        "https://dl.red.flag.domains/red.flag.domains.txt"
+        "https://raw.githubusercontent.com/gioxx/xfiles/master/domains/upd_domains.txt"
         "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/hosts"
         "https://block.energized.pro/unified/formats/domains.txt"
         "https://raw.githubusercontent.com/badmojr/addons_1Hosts/main/kidSaf/domains.txt"
@@ -354,6 +356,9 @@ function GetData() {
         "https://raw.githubusercontent.com/stamparm/blackbook/master/blackbook.txt"
     )
     filter_hosts=(
+        "https://sysctl.org/cameleon/hosts"
+        "https://zerodot1.gitlab.io/CoinBlockerLists/hosts"
+        "https://gitlab.com/intr0/iVOID.GitLab.io/raw/master/iVOID.hosts"
         "https://adm.dimonvideo.ru/alive_hosts.txt"
         "https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/newhosts-final.hosts"
         "https://raw.githubusercontent.com/thisisu/hosts_adultxxx/master/hosts"
