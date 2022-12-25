@@ -33,10 +33,11 @@ function GetData() {
 	
     )
     gfwlist_domain=(
-            "https://dl.red.flag.domains/red.flag.domains.txt"
+    	"https://raw.githubusercontent.com/smed79/blacklist/master/extra/facebook.txt"
+        "https://dl.red.flag.domains/red.flag.domains.txt"
     	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global_Domain.list"
     	"https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/steam.txt"
-	    "https://raw.githubusercontent.com/v2fly/domain-list-custom/release/steam.txt"
+	 "https://raw.githubusercontent.com/v2fly/domain-list-custom/release/steam.txt"
     	"https://raw.githubusercontent.com/pexcn/daily/gh-pages/gfwlist/gfwlist.txt"
     	"https://raw.githubusercontent.com/Potterli20/file/main/Domains/gfw/Domains"
     	"https://cn-blocked-domain.trli.club/domains.txt"
