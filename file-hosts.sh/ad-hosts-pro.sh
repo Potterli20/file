@@ -1,6 +1,7 @@
 # Get Data
 function GetData() {
     filter_adblock=(
+        "https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Hosts.txt"
         "https://code.gitlink.org.cn/zzp282/ads/raw/branch/master/ADSLJ.txt"
         "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_adservers.txt"
         "https://raw.githubusercontent.com/easylist/easylistchina/master/easylistchina.txt"
