@@ -356,6 +356,9 @@ function GetData() {
         "https://raw.githubusercontent.com/stamparm/blackbook/master/blackbook.txt"
     )
     filter_hosts=(
+        "https://raw.githubusercontent.com/lingeringsound/10007_auto/master/all"
+        "https://raw.githubusercontent.com/yous/YousList/master/hosts.txt"
+        "https://raw.githubusercontent.com/smed79/blacklist/master/hosts.txt"
         "https://sysctl.org/cameleon/hosts"
         "https://zerodot1.gitlab.io/CoinBlockerLists/hosts"
         "https://gitlab.com/intr0/iVOID.GitLab.io/raw/master/iVOID.hosts"
