@@ -33,6 +33,7 @@ function GetData() {
 	
     )
     gfwlist_domain=(
+            "https://dl.red.flag.domains/red.flag.domains.txt"
     	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global_Domain.list"
     	"https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/steam.txt"
 	    "https://raw.githubusercontent.com/v2fly/domain-list-custom/release/steam.txt"
