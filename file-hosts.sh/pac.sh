@@ -3,7 +3,7 @@ function GetData() {
         "https://file.trli.club:2083/dns-hosts/dns-adguardhome/blacklist_full.txt"
     )
     gfwlist_domain=(
-        "https://file.trli.club:2083/dns-hosts/dns-adguardhome/blacklist_full.txt"
+        "https://file.trli.club:2083/dns-hosts/dns-adguardhome/whitelist_full.txt"
     )
     rm -rf ./listpac_* ./Temp && mkdir ./Temp && cd ./Temp
     for china_domain_task in "${!china_domain[@]}"; do
