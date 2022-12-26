@@ -529,7 +529,7 @@ function GenerateInformation() {
     adfilter_checksum=$(TZ=UTC-8 date "+%s" | base64)
     adfilter_description="HOSTS Project"
     adfilter_expires="24 hours (update frequency)"
-    adfilter_homepage="https://file.trli.club:2087/ad-hosts/ad-hosts-sqlist"
+    adfilter_homepage="https://file.trli.club:2083/ad-hosts/ad-hosts-sqlist"
     adfilter_timeupdated=$(TZ=UTC-8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%Y-%m-%dT%H:%M:%S%:z")
     adfilter_title="trli's Ad Filter for Sqlist"
     adfilter_total=$(sed -n '$=' ./filter_data.tmp)
