@@ -104,7 +104,7 @@ function GenerateHeaderInformation() {
 # Generate Footer Information
 function GenerateFooterInformation() {
     function listpac_shadowrocket() {
-        echo "DOMAIN-SET,https://trli.coding.net/p/file/d/ad-hosts/git/lfs/master/ad-shadowrocket.list">> ../listpac_${china_gfwlist}_shadowrocket.conf
+        echo "DOMAIN-SET,https://file.trli.club:2083/ad-hosts/ad-hosts-pro/ad-shadowrocket.list">> ../listpac_${china_gfwlist}_shadowrocket.conf
         echo "[URL Rewrite]">> ../listpac_${china_gfwlist}_shadowrocket.conf
 echo "#all">> ../listpac_${china_gfwlist}_shadowrocket.conf
 echo "^https?:\/\/(\w+\.)?(adclick|ads([0-9]+)?|adx|adserver|adformat|analysis|analytics|banners?|click|counter|delivery|log|log-?\w+?|pagead|stat|stats|statis|trace|track|tracking|uniad)\.\w+\.(com|cn|org|info|io|net|vn|com.vn)">> ../listpac_${china_gfwlist}_shadowrocket.conf
