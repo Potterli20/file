@@ -24,6 +24,8 @@ function GetData() {
 function AnalyseData() {
     filter_data=(
         $(cat ./filter_domain.tmp ./filter_hosts.tmp  | 
+        sed 's/[ ]*//g' |
+        sed '/^$/d' |
         sed "s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/255.255.255.255//g;s/localhost//g;s/localhost.localdomain//g;s/broadcasthost//g;s/ip6-localhost//g;s/::1//g;s/ip6-loopback//g;s/ip6-localnet//g;s/fe80::1%lo0//g;s/ff00::0//g;s/ff02::1//g;s/ff02::2//g;s/ff02::3//g;s/ip6-mcastprefix//g;s/ip6-allnodes//g;s/ip6-allrouters//g;s/ip6-allhosts//g;/^$/d;s/[[:space:]]//g" | 
         grep -v "=\|#\|<\|>\|!" |
         sort -u | 
