@@ -15,8 +15,8 @@ function GetData() {
 }
 # Analyse Data
 function AnalyseData() {
-    china_data=($(cat ./china_domain.tmp | sed "1,14d;s/\[\///g;s/\/\]//g;s/\//\n/g" | sort | uniq | awk "{ print $2 }"))
-    gfwlist_data=($(cat ./gfwlist_domain.tmp | sed "1,19d;s/\[\///g;s/\/\]//g;s/\//\n/g" | sort | uniq | awk "{ print $2 }"))
+    china_data=($(cat ./china_domain.tmp | sed "1,15d;s/\[\///g;s/\/\]//g;s/\//\n/g" | sed 's/[ ]*//g' | sed '/^$/d' | sort | uniq | awk "{ print $2 }"))
+    gfwlist_data=($(cat ./gfwlist_domain.tmp | sed "1,25d;s/\[\///g;s/\/\]//g;s/\//\n/g" | sed 's/[ ]*//g' | sed '/^$/d' | sort | uniq | awk "{ print $2 }"))
 }
 # Generate Header Information
 function GenerateHeaderInformation() {
