@@ -52,6 +52,7 @@ CONFIG_TARGET_rockchip=y
 CONFIG_TARGET_rockchip_armv8=y
 # CONFIG_TARGET_MULTI_PROFILE is not set
 # CONFIG_TARGET_rockchip_armv8_DEVICE_ezpro_mrkaio-m68s is not set
+# CONFIG_TARGET_rockchip_armv8_DEVICE_hinlink_opc-h66k is not set
 # CONFIG_TARGET_rockchip_armv8_DEVICE_hinlink_opc-h68k is not set
 # CONFIG_TARGET_rockchip_armv8_DEVICE_fastrhino_r66s is not set
 CONFIG_TARGET_rockchip_armv8_DEVICE_fastrhino_r68s=y
@@ -164,14 +165,23 @@ CONFIG_ARCH="aarch64"
 #
 # Target Images
 #
-# CONFIG_TARGET_ROOTFS_INITRAMFS is not set
+CONFIG_TARGET_ROOTFS_INITRAMFS=y
+# CONFIG_TARGET_INITRAMFS_COMPRESSION_NONE is not set
+# CONFIG_TARGET_INITRAMFS_COMPRESSION_GZIP is not set
+# CONFIG_TARGET_INITRAMFS_COMPRESSION_BZIP2 is not set
+# CONFIG_TARGET_INITRAMFS_COMPRESSION_LZMA is not set
+# CONFIG_TARGET_INITRAMFS_COMPRESSION_LZO is not set
+# CONFIG_TARGET_INITRAMFS_COMPRESSION_LZ4 is not set
+# CONFIG_TARGET_INITRAMFS_COMPRESSION_XZ is not set
+CONFIG_TARGET_INITRAMFS_COMPRESSION_ZSTD=y
 CONFIG_EXTERNAL_CPIO=""
+CONFIG_TARGET_INITRAMFS_FORCE=y
 
 #
 # Root filesystem archives
 #
-# CONFIG_TARGET_ROOTFS_CPIOGZ is not set
-# CONFIG_TARGET_ROOTFS_TARGZ is not set
+CONFIG_TARGET_ROOTFS_CPIOGZ=y
+CONFIG_TARGET_ROOTFS_TARGZ=y
 
 #
 # Root filesystem images
@@ -193,7 +203,7 @@ CONFIG_TARGET_IMAGES_GZIP=y
 # Image Options
 #
 CONFIG_TARGET_KERNEL_PARTSIZE=64
-CONFIG_TARGET_ROOTFS_PARTSIZE=2048
+CONFIG_TARGET_ROOTFS_PARTSIZE=1024
 CONFIG_TARGET_ROOTFS_PERSIST_VAR=y
 # end of Target Images
 
@@ -2351,7 +2361,7 @@ CONFIG_PACKAGE_kmod-ebtables-ipv4=y
 CONFIG_PACKAGE_kmod-ebtables-ipv6=y
 # CONFIG_PACKAGE_kmod-ebtables-watchers is not set
 CONFIG_PACKAGE_kmod-ip6tables=y
-# CONFIG_PACKAGE_kmod-ip6tables-extra is not set
+CONFIG_PACKAGE_kmod-ip6tables-extra=y
 # CONFIG_PACKAGE_kmod-ipt-account is not set
 # CONFIG_PACKAGE_kmod-ipt-chaos is not set
 # CONFIG_PACKAGE_kmod-ipt-checksum is not set
@@ -4326,7 +4336,7 @@ CONFIG_PACKAGE_libmnl=y
 CONFIG_PACKAGE_libncurses=y
 # CONFIG_PACKAGE_libndpi is not set
 # CONFIG_PACKAGE_libneon is not set
-# CONFIG_PACKAGE_libnet-1.2.x is not set
+CONFIG_PACKAGE_libnet-1.2.x=y
 # CONFIG_PACKAGE_libnetconf2 is not set
 # CONFIG_PACKAGE_libnetfilter-acct is not set
 CONFIG_PACKAGE_libnetfilter-conntrack=y
@@ -4499,7 +4509,8 @@ CONFIG_PACKAGE_libudns=y
 # CONFIG_PACKAGE_libugpio is not set
 # CONFIG_PACKAGE_libunistring is not set
 # CONFIG_PACKAGE_libunwind is not set
-# CONFIG_PACKAGE_libupnp is not set
+CONFIG_PACKAGE_libupnp=y
+# CONFIG_PACKAGE_libupnp-sample is not set
 # CONFIG_PACKAGE_libupnpp is not set
 # CONFIG_PACKAGE_liburcu is not set
 CONFIG_PACKAGE_liburing=y
@@ -4748,7 +4759,6 @@ CONFIG_PACKAGE_luci-app-firewall=y
 # CONFIG_PACKAGE_luci-app-kodexplorer is not set
 # CONFIG_PACKAGE_luci-app-koolproxyR is not set
 # CONFIG_PACKAGE_luci-app-linkease is not set
-# CONFIG_PACKAGE_luci-app-lucky is not set
 # CONFIG_PACKAGE_luci-app-lxc is not set
 # CONFIG_PACKAGE_luci-app-mentohust is not set
 # CONFIG_PACKAGE_luci-app-minidlna is not set
@@ -5320,7 +5330,7 @@ CONFIG_PACKAGE_unishare=y
 # CONFIG_PACKAGE_vsftpd-alt is not set
 # CONFIG_PACKAGE_vsftpd-tls is not set
 CONFIG_PACKAGE_webdav2=y
-# CONFIG_PACKAGE_wget-nossl is not set
+CONFIG_PACKAGE_wget-nossl=y
 CONFIG_PACKAGE_wget-ssl=y
 # end of File Transfer
 
@@ -5349,9 +5359,9 @@ CONFIG_PACKAGE_wget-ssl=y
 # CONFIG_PACKAGE_fwknop is not set
 # CONFIG_PACKAGE_fwknopd is not set
 CONFIG_PACKAGE_ip6tables=y
-# CONFIG_PACKAGE_ip6tables-extra is not set
-# CONFIG_PACKAGE_ip6tables-mod-nat is not set
-# CONFIG_PACKAGE_ip6tables-nft is not set
+CONFIG_PACKAGE_ip6tables-extra=y
+CONFIG_PACKAGE_ip6tables-mod-nat=y
+CONFIG_PACKAGE_ip6tables-nft=y
 CONFIG_PACKAGE_iptables=y
 CONFIG_IPTABLES_CONNLABEL=y
 CONFIG_IPTABLES_NFTABLES=y
@@ -5701,7 +5711,7 @@ CONFIG_PACKAGE_libopenldap=y
 # CONFIG_PACKAGE_ip-bridge is not set
 CONFIG_PACKAGE_ip-full=y
 # CONFIG_PACKAGE_ip-tiny is not set
-CONFIG_PACKAGE_iptvhelper=y
+# CONFIG_PACKAGE_iptvhelper is not set
 # CONFIG_PACKAGE_lldpd is not set
 # CONFIG_PACKAGE_mcproxy is not set
 # CONFIG_PACKAGE_mrmctl is not set
@@ -5973,7 +5983,7 @@ CONFIG_PACKAGE_microsocks=y
 # CONFIG_PACKAGE_shadowsocks-rust-ssserver is not set
 # CONFIG_PACKAGE_shadowsocks-rust-ssservice is not set
 # CONFIG_PACKAGE_shadowsocks-rust-ssurl is not set
-CONFIG_PACKAGE_shadowsocksr-libev-ssr-check=y
+# CONFIG_PACKAGE_shadowsocksr-libev-ssr-check is not set
 # CONFIG_PACKAGE_shadowsocksr-libev-ssr-local is not set
 # CONFIG_PACKAGE_shadowsocksr-libev-ssr-nat is not set
 # CONFIG_PACKAGE_shadowsocksr-libev-ssr-redir is not set
@@ -6004,9 +6014,11 @@ CONFIG_SING_BOX_BUILD_WIREGUARD=y
 # CONFIG_PACKAGE_trojan is not set
 # CONFIG_PACKAGE_trojan-go is not set
 CONFIG_PACKAGE_uhttpd=y
-# CONFIG_PACKAGE_uhttpd-mod-lua is not set
+CONFIG_uhttpd_lua=y
+CONFIG_uhttpd_ucode=y
+CONFIG_PACKAGE_uhttpd-mod-lua=y
 CONFIG_PACKAGE_uhttpd-mod-ubus=y
-# CONFIG_PACKAGE_uhttpd-mod-ucode is not set
+CONFIG_PACKAGE_uhttpd-mod-ucode=y
 # CONFIG_PACKAGE_uwsgi is not set
 # CONFIG_PACKAGE_v2ray-plugin is not set
 # CONFIG_PACKAGE_v2raya is not set
@@ -6187,7 +6199,6 @@ CONFIG_PACKAGE_ipset-dns=y
 CONFIG_PACKAGE_libipset=y
 # CONFIG_PACKAGE_libndp is not set
 # CONFIG_PACKAGE_linknx is not set
-# CONFIG_PACKAGE_lucky is not set
 # CONFIG_PACKAGE_lynx is not set
 # CONFIG_PACKAGE_mac-telnet-client is not set
 # CONFIG_PACKAGE_mac-telnet-discover is not set
@@ -6274,7 +6285,7 @@ CONFIG_PACKAGE_ppp-mod-radius=y
 # CONFIG_PACKAGE_ppp-multilink is not set
 # CONFIG_PACKAGE_pppdump is not set
 # CONFIG_PACKAGE_pppoe-discovery is not set
-# CONFIG_PACKAGE_pppossh is not set
+CONFIG_PACKAGE_pppossh=y
 CONFIG_PACKAGE_pppstats=y
 CONFIG_PACKAGE_proto-bonding=y
 # CONFIG_PACKAGE_proxychains-ng is not set
@@ -6293,7 +6304,7 @@ CONFIG_PACKAGE_proto-bonding=y
 # CONFIG_PACKAGE_sagernet-core is not set
 # CONFIG_PACKAGE_samba36-server is not set
 # CONFIG_PACKAGE_samba4-admin is not set
-# CONFIG_PACKAGE_samba4-client is not set
+CONFIG_PACKAGE_samba4-client=y
 CONFIG_PACKAGE_samba4-libs=y
 CONFIG_PACKAGE_samba4-server=y
 CONFIG_SAMBA4_SERVER_WSDD2=y
@@ -6337,7 +6348,7 @@ CONFIG_PACKAGE_speedtest-web=y
 CONFIG_PACKAGE_tcpdump=y
 # CONFIG_PACKAGE_tcpdump-mini is not set
 CONFIG_PACKAGE_tcping=y
-# CONFIG_PACKAGE_tcpping is not set
+CONFIG_PACKAGE_tcpping=y
 # CONFIG_PACKAGE_tgt is not set
 # CONFIG_PACKAGE_tmate-ssh-server is not set
 # CONFIG_PACKAGE_tor is not set
@@ -6346,7 +6357,7 @@ CONFIG_PACKAGE_tcping=y
 # CONFIG_PACKAGE_trafficshaper is not set
 # CONFIG_PACKAGE_travelmate is not set
 # CONFIG_PACKAGE_trojan-plus is not set
-# CONFIG_PACKAGE_u2pnpd is not set
+CONFIG_PACKAGE_u2pnpd=y
 # CONFIG_PACKAGE_uacme is not set
 # CONFIG_PACKAGE_uacme-ualpn is not set
 CONFIG_PACKAGE_uclient-fetch=y
