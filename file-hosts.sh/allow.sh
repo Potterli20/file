@@ -1,5 +1,12 @@
 #adblock
-filter_adblock=(
+function GetData() {
+    filter_adblock=(
+        "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingLite/AdvertisingLite.txt"
+        "https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Hosts.txt"
+        "https://code.gitlink.org.cn/zzp282/ads/raw/branch/master/ADSLJ.txt"
+        "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_adservers.txt"
+        "https://raw.githubusercontent.com/easylist/easylistchina/master/easylistchina.txt"
+        "https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/adservers.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/autodiscover/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/bogons/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/cloak/adblock.txt"
@@ -297,30 +304,12 @@ filter_adblock=(
         "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/EnglishFilter/sections/adservers.txt"
         "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/SpywareFilter/sections/mobile.txt"
         "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_thirdparty.txt"
-        "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_specific_cname.txt"
         "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_specific.txt"
         "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_specific_block.txt"
         "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt"
         "https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt"
         "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt"
         "https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/adguard.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_9_Spanish/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_1_Russian/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_2_English/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_3_Spyware/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_4_Social/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_5_Experimental/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_6_German/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_7_Japanese/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_8_Dutch/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_10_Useful/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_11_Mobile/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_13_Turkish/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_14_Annoyances/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_15_DnsFilter/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_16_French/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_17_TrackParam/filter.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_224_Chinese/filter.txt"
         "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
         "https://filters.adtidy.org/windows/filters/2.txt" 
         "https://filters.adtidy.org/windows/filters/11.txt" 
@@ -332,7 +321,7 @@ filter_adblock=(
         "https://filters.adtidy.org/windows/filters/17.txt"
         "https://filters.adtidy.org/windows/filters/228.txt"
         "https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt"
-)
+    )
 
 #domain
 filter_domain=(
