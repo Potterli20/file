@@ -1,6 +1,7 @@
 # Get Data
 function GetData() {
     filter_adblock=(
+        "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingLite/AdvertisingLite.txt"
         "https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Hosts.txt"
         "https://code.gitlink.org.cn/zzp282/ads/raw/branch/master/ADSLJ.txt"
         "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_adservers.txt"
@@ -322,6 +323,9 @@ function GetData() {
         "https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt"
     )
     filter_domain=(
+        "https://raw.githubusercontent.com/neodevpro/neodevhost/master/domain"
+        "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/domains.dead.txt"
+        "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.dead.txt"
         "https://dl.red.flag.domains/red.flag.domains.txt"
         "https://raw.githubusercontent.com/gioxx/xfiles/master/domains/upd_domains.txt"
         "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/hosts"
