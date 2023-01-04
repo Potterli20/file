@@ -322,7 +322,6 @@ function GetData() {
         "https://filters.adtidy.org/windows/filters/228.txt"
         "https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt"
     )
-
 #domain
 filter_domain=(
     "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.whitelist.txt"
@@ -348,12 +347,5 @@ done
 cat ./filter_adblock.tmp | grep '^[@@]' | sed '/^$/d' | sed 's/[ ]*//g' | sort -u > allow-adblock.txt
 cat ./filter_domain.tmp | grep -v "#\|!" | sed '/^$/d' | sed 's/[ ]*//g' | sed "/./{s/^/@@||&/;s/$/&^/}" | sort -u > allow-domain.txt
 cat allow-domain.txt allow-adblock.txt | sed '/^$/d' | sed 's/[ ]*//g' | sort -u > allow.txt
-
-sed -i '1cTitle: trli's Filter for Allowlist' allow.txt
-sed -i '2cDescription: HOSTS Project' allow.txt
-sed -i '3cExpires: 24 hours (update frequency)' allow.txt
-sed -i '4cHomepage: https://file.trli.club:2083/allow/' allow.txt
-sed -i '5cVersion: `$(TZ=UTC-8 date +"%Y-%m-%d %H:%M:%S")`' allow.txt
-sed -i '6cTotal count: '$(wc -l allow.txt)'' allow.txt
 
 exit
