@@ -1,6 +1,5 @@
 #adblock
-function GetData() {
-    filter_adblock=(
+filter_adblock=(
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingLite/AdvertisingLite.txt"
         "https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Hosts.txt"
         "https://code.gitlink.org.cn/zzp282/ads/raw/branch/master/ADSLJ.txt"
@@ -160,7 +159,7 @@ function GetData() {
         "https://abl.arapurayil.com/filters/social.txt"
         "https://raw.githubusercontent.com/FutaGuard/FutaFilter/master/hosts.txt"
         "https://raw.githubusercontent.com/BlueSkyXN/AdGuardHomeRules/master/manhua.txt"
-        "https://raw.githubusercontent.com/BlueSkyXN/AdGuardHomeRules/master/all.txt"  
+        "https://raw.githubusercontent.com/BlueSkyXN/AdGuardHomeRules/master/all.txt"
         "https://raw.githubusercontent.com/MohamedElashri/filters/main/rules/adguard.txt"
         "https://raw.githubusercontent.com/chillipal/dns-blocklist/master/lists/blocklist-adguard.txt"
         "https://o0.pages.dev/Xtra/adblock.txt"
@@ -311,12 +310,12 @@ function GetData() {
         "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt"
         "https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/adguard.txt"
         "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
-        "https://filters.adtidy.org/windows/filters/2.txt" 
-        "https://filters.adtidy.org/windows/filters/11.txt" 
-        "https://filters.adtidy.org/windows/filters/3.txt" 
-        "https://filters.adtidy.org/windows/filters/224.txt" 
-        "https://filters.adtidy.org/windows/filters/14.txt" 
-        "https://filters.adtidy.org/windows/filters/5.txt" 
+        "https://filters.adtidy.org/windows/filters/2.txt"
+        "https://filters.adtidy.org/windows/filters/11.txt"
+        "https://filters.adtidy.org/windows/filters/3.txt"
+        "https://filters.adtidy.org/windows/filters/224.txt"
+        "https://filters.adtidy.org/windows/filters/14.txt"
+        "https://filters.adtidy.org/windows/filters/5.txt"
         "https://filters.adtidy.org/windows/filters/4.txt"
         "https://filters.adtidy.org/windows/filters/17.txt"
         "https://filters.adtidy.org/windows/filters/228.txt"
@@ -331,7 +330,7 @@ filter_domain=(
     "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/whitelist/master/domains.list"
     "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt"
     "https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Whitelists/Whitelist"
-    "https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Whitelists/Filter" 
+    "https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Whitelists/Filter"
     "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/optional-list.txt"
     "https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/whitelist_domains.txt"
     "https://raw.githubusercontent.com/ookangzheng/blahdns/master/hosts/whitelist.txt"
@@ -347,5 +346,12 @@ done
 cat ./filter_adblock.tmp | grep '^[@@]' | sed '/^$/d' | sed 's/[ ]*//g' | sort -u > allow-adblock.txt
 cat ./filter_domain.tmp | grep -v "#\|!" | sed '/^$/d' | sed 's/[ ]*//g' | sed "/./{s/^/@@||&/;s/$/&^/}" | sort -u > allow-domain.txt
 cat allow-domain.txt allow-adblock.txt | sed '/^$/d' | sed 's/[ ]*//g' | sort -u > allow.txt
+
+sed -i '1cTitle: trli's Filter for Allowlist' allow.txt
+sed -i '2cDescription: HOSTS Project' allow.txt
+sed -i '3cExpires: 24 hours (update frequency)' allow.txt
+sed -i '4cHomepage: https://file.trli.club:2083/allow/' allow.txt
+sed -i '5cVersion: `$(TZ=UTC-8 date +"%Y-%m-%d %H:%M:%S")`' allow.txt
+sed -i '6cTotal count: '$(wc -l allow.txt)'' allow.txt
 
 exit
