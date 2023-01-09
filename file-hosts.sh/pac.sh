@@ -22,7 +22,7 @@ function AnalyseData() {
 function GenerateHeaderInformation() {
     listpac_checksum=$(TZ=UTC-8 date "+%s" | base64)
     listpac_expires="24 hours (update frequency)"
-    listpac_homepage="https://file.trli.club:2087/pac/"
+    listpac_homepage="https://file.trli.club:2083/pac/"
     listpac_timeupdated=$(TZ=UTC-8 date -d @$(echo "${listpac_checksum}" | base64 -d) "+%Y-%m-%dT%H:%M:%S%:z")
     listpac_title=$(if [ "${china_gfwlist}" == "china" ]; then echo "Trli's ChinaList"; elif [ "${china_gfwlist}" == "gfwlist" ]; then echo "Trli's GFWList"; else exit 1; fi)
     function listpac_autoproxy() {
