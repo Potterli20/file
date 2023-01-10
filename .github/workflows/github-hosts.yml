@@ -31,7 +31,7 @@ jobs:
     - name: commit and push
       id: commit
       run: |
-        curl -s 20 -u ${{ secrets.user }}:${{ secrets.password }} -T "{./file-hosts.sh/github/Accelerate-Hosts.txt}" https://${{ secrets.web }}/github/
+        curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{./file-hosts.sh/github/Accelerate-Hosts.txt}" https://${{ secrets.web }}/github/
       continue-on-error: true
       
     # 删除无用 workflow runs;
