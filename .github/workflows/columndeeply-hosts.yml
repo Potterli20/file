@@ -26,7 +26,7 @@ jobs:
           bash ./file-hosts.sh/columndeeply-hosts.sh
       - name:  push ad-hosts-coding
         run: |
-          curl -u ${{ secrets.user }}:${{ secrets.password }} -T "{columndeeply-hosts.txt}" https://${{ secrets.web }}/columndeeply-hosts/
+          curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{columndeeply-hosts.txt}" https://${{ secrets.web }}/columndeeply-hosts/
         continue-on-error: true
 
     # 删除无用 workflow runs;
