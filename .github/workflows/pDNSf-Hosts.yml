@@ -26,7 +26,7 @@ jobs:
           bash ./file-hosts.sh/pDNSf-Hosts.sh
       - name:  push ad-hosts-coding
         run: |
-          curl -u ${{ secrets.user }}:${{ secrets.password }} -T "{pDNSf-hosts.txt}" https://${{ secrets.web }}/pDNSf-hosts/
+          curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{pDNSf-hosts.txt}" https://${{ secrets.web }}/pDNSf-hosts/
         continue-on-error: true
 
     # 删除无用 workflow runs;
