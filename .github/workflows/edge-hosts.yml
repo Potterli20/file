@@ -26,7 +26,7 @@ jobs:
           bash ./file-hosts.sh/edge-hosts.sh 
       - name:  push ad-hosts-coding
         run: |
-          curl -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-edge-hosts.txt}" https://${{ secrets.web }}/ad-hosts/        
+          curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-edge-hosts.txt}" https://${{ secrets.web }}/ad-hosts/        
         continue-on-error: true
 
     # 删除无用 workflow runs;
