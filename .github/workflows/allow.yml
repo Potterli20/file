@@ -23,11 +23,12 @@ jobs:
       # Runs a single command using the runners shell
       - name:  Build Allow
         run: |
+          sudo sh -c "$(curl -L https://github.com/mzz2017/gg/raw/main/release/go.sh)"
           bash ./file-hosts.sh/allow.sh 
       - name: commit and push 
         id: commit
         run: |
-          curl -u ${{ secrets.user }}:${{ secrets.password }} -T allow.txt https://${{ secrets.web }}/allow/
+          gg config -w ${{ secrets.config }} curl -u ${{ secrets.user }}:${{ secrets.password }} -T allow.txt https://${{ secrets.web }}/allow/
         continue-on-error: true
 
     # 删除无用 workflow runs;
