@@ -33,6 +33,7 @@ function GetData() {
 	
     )
     gfwlist_domain=(
+    	"https://raw.githubusercontent.com/kenzok8/small-package/main/luci-app-mosdns/root/etc/mosdns/rule/serverlist.txt"	
     	"https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
     	"https://raw.githubusercontent.com/smed79/blacklist/master/extra/facebook.txt"
         "https://dl.red.flag.domains/red.flag.domains.txt"
