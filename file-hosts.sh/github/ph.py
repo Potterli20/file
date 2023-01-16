@@ -60,7 +60,7 @@ def output_hosts():
             console.print('ip %s'%ip)
             f.write('%s %s\n'%(ip.ljust(30), domain.strip()))
         f.write('\n# Last update at %s (Beijing Time)'%(get_time()))
-        f.write('\n# Star me GitHub url: https://file.trli.club:2087/github')
+        f.write('\n# Star me GitHub url: https://file.trli.club:2083/github')
         f.write('\n# Hosts End \n\n')
 if __name__ == '__main__':
     output_hosts()
