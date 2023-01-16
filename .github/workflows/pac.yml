@@ -23,6 +23,7 @@ jobs:
       # Runs a single command using the runners shell
       - name:  Build pac
         run: |
+          echo 'nameserver 1.1.1.1' > /etc/resolv.conf
           bash ./file-hosts.sh/pac.sh 
 
       - name: commit and push 
