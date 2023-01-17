@@ -23,8 +23,10 @@ jobs:
       # Runs a single command using the runners shell
       - name:  Build AdHosts
         run: |
-          echo 'nameserver 1.1.1.1' > /etc/resolv.conf
           bash ./file-hosts.sh/ad-hosts-pro.sh
+      - name:  Build dns
+        run: |
+          bash ./file/dns/dns.sh
       - name:  push ad-hosts-coding
         run: |
           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-hosts.txt,ad-adblock.txt,ad-adguardhome.txt,ad-clash.yaml,ad-clash-premium.yaml,ad-dnsmasq.conf,ad-domains.txt,ad-quantumult.yaml,ad-shadowrocket.list,ad-smartdns.conf,ad-surge.yaml,ad-unbound.conf,ad-bind9.conf,ad-adguardhome-dnstype.txt}" https://${{ secrets.web }}/ad-hosts/ad-hosts-pro/

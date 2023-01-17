@@ -23,10 +23,11 @@ jobs:
       # Runs a single command using the runners shell
       - name:  Build pac
         run: |
-          echo 'nameserver 1.1.1.1' > /etc/resolv.conf
-          bash ./file-hosts.sh/pac.sh 
-
-      - name: commit and push 
+          bash ./file-hosts.sh/pac.sh
+      - name:  Build dns
+        run: |
+          bash ./file/dns/dns.sh
+      - name: commit and push
         id: commit
         run: |
             curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{listpac_china_autoproxy.txt,listpac_gfwlist_autoproxy.txt,listpac_china_clash.yaml,listpac_gfwlist_clash.yaml,listpac_china_clash_premium.yaml,listpac_gfwlist_clash_premium.yaml,listpac_china_shadowrocket.conf,listpac_gfwlist_shadowrocket.conf,listpac_china_surge.yaml,listpac_gfwlist_surge.yaml,listpac_china_quantumult.yaml,listpac_gfwlist_quantumult.yaml,listpac_china_v2raya.txt,listpac_gfwlist_v2raya.txt,listpac_china_v2rayn.txt,listpac_gfwlist_v2rayn.txt}" https://${{ secrets.web }}/pac/

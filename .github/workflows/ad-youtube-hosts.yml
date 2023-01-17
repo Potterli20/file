@@ -23,8 +23,10 @@ jobs:
       # Runs a single command using the runners shell
       - name:  Build AdHosts
         run: |
-          echo 'nameserver 1.1.1.1' > /etc/resolv.conf
           bash ./file-hosts.sh/ad-youtube-hosts.sh
+      - name:  Build dns
+        run: |
+          bash ./file/dns/dns.sh
       - name:  push ad-hosts-coding
         run: |
           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-youtube-adblock.txt,ad-youtube-adguardhome-dnstype.txt,ad-youtube-adguardhome.txt,ad-youtube-clash.yaml,ad-youtube-clash-premium.yaml,ad-youtube-dnsmasq.conf,ad-youtube-domains.txt,ad-youtube-hosts.txt,ad-youtube-quantumult.yaml,ad-youtube-shadowrocket.list,ad-youtube-smartdns.conf,ad-youtube-surge.yaml,ad-youtube-unbound.conf,ad-youtube-bind9.conf}" https://${{ secrets.web }}/ad-youtube-hosts/

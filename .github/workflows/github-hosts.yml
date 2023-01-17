@@ -21,11 +21,12 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        echo 'nameserver 1.1.1.1' > /etc/resolv.conf
         cd file-hosts.sh/github
         python -m pip install --upgrade pip
         if [ -f requirements.txt  ]; then pip install -r requirements.txt; fi
-        
+    - name:  Build dns
+      run: |
+        bash ./file/dns/dns.sh
     - name: update hosts
       run: |
         sh ./file-hosts.sh/github/hosts.sh
@@ -34,7 +35,7 @@ jobs:
       run: |
         curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{./file-hosts.sh/github/Accelerate-Hosts.txt}" https://${{ secrets.web }}/github/
       continue-on-error: true
-      
+
     # 删除无用 workflow runs;
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main

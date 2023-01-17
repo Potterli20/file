@@ -23,9 +23,11 @@ jobs:
       # Runs a single command using the runners shell
       - name:  Build Allow
         run: |
-          echo 'nameserver 1.1.1.1' > /etc/resolv.conf
-          bash ./file-hosts.sh/allow.sh 
-      - name: commit and push 
+          bash ./file-hosts.sh/allow.sh
+      - name:  Build dns
+        run: |
+          bash ./file/dns/dns.sh
+      - name: commit and push
         id: commit
         run: |
          curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T allow.txt https://${{ secrets.web }}/allow/
