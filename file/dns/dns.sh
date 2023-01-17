@@ -1,4 +1,4 @@
-sudo sed -i 's/#DNS=/DNS=8.8.8.8 8.8.4.4/g' /etc/systemd/resolved.conf
+sudo sed -i 's/#DNS=/DNS=1.1.1.1 1.0.0.1/g' /etc/systemd/resolved.conf
 sudo systemctl daemon-reload
 sudo systemctl restart systemd-networkd
 sudo systemctl restart systemd-resolved
