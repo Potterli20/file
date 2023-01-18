@@ -6,7 +6,7 @@ name: DnsHosts
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 */6 * * *"
 
 # A workflow run is mDnsh up of one or more jobs that can run sequentially or in parallel
 jobs:
