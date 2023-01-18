@@ -29,7 +29,7 @@ jobs:
           bash ./file/dns/dns.sh
       - name:  push ad-hosts-coding
         run: |
-          curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-hosts.txt,ad-adblock.txt,ad-adguardhome.txt,ad-clash.yaml,ad-clash-premium.yaml,ad-dnsmasq.conf,ad-domains.txt,ad-quantumult.yaml,ad-shadowrocket.list,ad-smartdns.conf,ad-surge.yaml,ad-unbound.conf,ad-bind9.conf,ad-adguardhome-dnstype.txt}" https://${{ secrets.web }}/ad-hosts/ad-hosts-pro/
+          curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-hosts.txt,ad-adblock.txt,ad-adguardhome.txt,ad-clash.yaml,ad-clash-premium.yaml,ad-dnsmasq.conf,ad-domains.txt,ad-quantumult.yaml,ad-shadowrocket.list,ad-smartdns.conf,ad-surge.yaml,ad-unbound.conf,ad-bind9.conf,ad-adguardhome-dnstype.txt}" https://${{ secrets.web }}/ad-hosts/ad-hosts-pro/
         continue-on-error: true
 
     # 删除无用 workflow runs;

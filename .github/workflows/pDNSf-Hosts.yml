@@ -29,7 +29,7 @@ jobs:
           bash ./file/dns/dns.sh
       - name:  push ad-hosts-coding
         run: |
-          curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{pDNSf-hosts.txt}" https://${{ secrets.web }}/pDNSf-hosts/
+          curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{pDNSf-hosts.txt}" https://${{ secrets.web }}/pDNSf-hosts/
         continue-on-error: true
 
     # 删除无用 workflow runs;
