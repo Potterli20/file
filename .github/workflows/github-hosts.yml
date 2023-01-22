@@ -37,7 +37,7 @@ jobs:
          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
          git gc --aggressive
          git add ./github-hosts/Accelerate-Hosts.txt
-         git commit -m "$(date +%Y.%m.%d.%H.%M)"
+         git commit -m "update $(date +%Y.%m.%d.%H.%M)"
          git push -f -u origin main
 
     - name: commit and push
