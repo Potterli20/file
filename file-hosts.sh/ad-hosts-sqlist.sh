@@ -322,6 +322,7 @@ function GetData() {
         "https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt"
     )
     filter_domain=(
+        "https://raw.githubusercontent.com/groovy-sky/SaferDNS/main/blocklists/domains/Ultimate.Hosts.Blacklist.txt"
         "https://raw.githubusercontent.com/slyfox1186/pihole-regex/main/domains/blacklist/exact-blacklist.txt"
         "https://raw.githubusercontent.com/neodevpro/neodevhost/master/domain"
         "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/domains.dead.txt"
