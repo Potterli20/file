@@ -32,13 +32,13 @@ jobs:
         sh ./file-hosts.sh/github/hosts.sh
     - name: update github
       run: |
-         mv ./file-hosts.sh/github/Accelerate-Hosts.txt ./github-hosts/
+         cp ./file-hosts.sh/github/Accelerate-Hosts.txt ./github-hosts/Accelerate-Hosts.txt
+         rm
          git config --global user.name root
-         git init
          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
          git gc --aggressive
-         git add --all
-         git commit -m "$(date +%Y%m%d%H%M)"
+         git add ./github-hosts/Accelerate-Hosts.txt
+         git commit -m "$(date +%Y.%m.%d.%H.%M)"
          git push -f -u origin main
 
     - name: commit and push
