@@ -1,0 +1,28 @@
+{
+  "Socks5ListenAddr": ":10800",
+  "PidFile": "amy4.pid",
+  "DnsListenAddr": ":10530",
+  "//": "以上内容不能修改",
+  "AmyOuts": [{
+    "Tag": "baidu",
+    "//": "百度",
+    "ProxyType": "baidu",
+    "BaiduSettings": {
+      "Secret": "kyy_free",
+      "DestAddrs": ["cloudnproxy.baidu.com:443"],
+      "//": "Amy4Server地址, 如果不填则不能代理UDP和部分TCP",
+      "//": "TCP连接池, 不设置则不开启",
+      "TCPPool": {
+        "//": "最大空闲连接数",
+        "MaxConn": 60,
+        "//": "最小空闲连接数（达到最小空闲连接数时自动扩张到最大空闲连接数）",
+        "MinConn": 5,
+        "//": "生成连接速度(每秒生成N个连接)",
+        "DialSpeed": 15,
+        "//": "连接最大空闲时间, 超过该时间连接则将失效（如果不设置则永不失效）",
+        "IdleSec": 295
+      }
+    }
+  }],
+  "Routers": []
+}
