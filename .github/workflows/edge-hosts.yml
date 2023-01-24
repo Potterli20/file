@@ -24,12 +24,16 @@ jobs:
       - name:  Build AdHosts
         run: |
           bash ./file-hosts.sh/edge-hosts.sh
-      - name:  Build dns
-        run: |
-          bash ./file/dns/dns.sh
       - name:  push ad-hosts-coding
         run: |
-          curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-edge-hosts.txt}" https://${{ secrets.web }}/ad-hosts/
+          cp ad-edge-hosts.txt ./ad-hosts/ad-edge-hosts.txt
+          git remote rm origin
+          git config --global user.name root
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
+          git gc --aggressive
+          git add ./ad-hosts/ad-edge-hosts.txt
+          git commit -m "update ad-edge-hosts $(date +%Y.%m.%d.%H.%M)"
+          git push -f -u origin main
         continue-on-error: true
 
     # 删除无用 workflow runs;

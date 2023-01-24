@@ -26,17 +26,17 @@ jobs:
           bash ./file-hosts.sh/dns.sh
       - name:  Build dns
         run: |
-          bash ./file/dns/dns.sh
+           bash ./file/bash/github-dns.sh
       - name: commit and push
         id: commit
         run: |
-           curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-adguardhome/blacklist_full.txt,dns-adguardhome/blacklist_full_split.txt,dns-adguardhome/whitelist_full.txt,dns-adguardhome/whitelist_full_split.txt}"  https://${{ secrets.web }}/dns-hosts/dns-adguardhome/
-           curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-bind9/blacklist_full.conf,dns-bind9/whitelist_full.conf}"  https://${{ secrets.web }}/dns-hosts/dns-bind9/
-           curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-dnsmasq/blacklist_full.conf,dns-dnsmasq/whitelist_full.conf}"  https://${{ secrets.web }}/dns-hosts/dns-dnsmasq/
-           curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-domain/blacklist_full.txt,dns-domain/whitelist_full.txt,dns-domain/whitelist_lite.txt,dns-domain/blacklist_lite.txt}"  https://${{ secrets.web }}/dns-hosts/dns-domain/
-           curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-smartdns/blacklist_full.conf,dns-smartdns/whitelist_full.conf,dns-smartdns/whitelist_lite.conf,dns-smartdns/blacklist_lite.conf}"  https://${{ secrets.web }}/dns-hosts/dns-smartdns/
-           curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-smartdns-domain-rules/blacklist_full.conf,dns-smartdns-domain-rules/whitelist_full.conf,dns-smartdns-domain-rules/whitelist_lite.conf,dns-smartdns-domain-rules/blacklist_lite.conf}"  https://${{ secrets.web }}/dns-hosts/dns-smartdns-domain-rules/
-           curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-unbound/blacklist_full.conf,dns-unbound/whitelist_full.conf}"  https://${{ secrets.web }}/dns-hosts/dns-unbound/
+           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-adguardhome/blacklist_full.txt,dns-adguardhome/blacklist_full_split.txt,dns-adguardhome/whitelist_full.txt,dns-adguardhome/whitelist_full_split.txt}"  https://${{ secrets.web }}/dns-hosts/dns-adguardhome/
+           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-bind9/blacklist_full.conf,dns-bind9/whitelist_full.conf}"  https://${{ secrets.web }}/dns-hosts/dns-bind9/
+           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-dnsmasq/blacklist_full.conf,dns-dnsmasq/whitelist_full.conf}"  https://${{ secrets.web }}/dns-hosts/dns-dnsmasq/
+           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-domain/blacklist_full.txt,dns-domain/whitelist_full.txt,dns-domain/whitelist_lite.txt,dns-domain/blacklist_lite.txt}"  https://${{ secrets.web }}/dns-hosts/dns-domain/
+           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-smartdns/blacklist_full.conf,dns-smartdns/whitelist_full.conf,dns-smartdns/whitelist_lite.conf,dns-smartdns/blacklist_lite.conf}"  https://${{ secrets.web }}/dns-hosts/dns-smartdns/
+           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-smartdns-domain-rules/blacklist_full.conf,dns-smartdns-domain-rules/whitelist_full.conf,dns-smartdns-domain-rules/whitelist_lite.conf,dns-smartdns-domain-rules/blacklist_lite.conf}"  https://${{ secrets.web }}/dns-hosts/dns-smartdns-domain-rules/
+           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-unbound/blacklist_full.conf,dns-unbound/whitelist_full.conf}"  https://${{ secrets.web }}/dns-hosts/dns-unbound/
         continue-on-error: true
 
     # 删除无用 workflow runs;

@@ -19,17 +19,17 @@ jobs:
       uses: actions/setup-python@main
       with:
         python-version: ${{ matrix.python-version }}
+
+    - name: update hosts
+      run: |
+        sh ./file-hosts.sh/github/hosts.sh
+
     - name: Install dependencies
       run: |
         cd file-hosts.sh/github
         python -m pip install --upgrade pip
         if [ -f requirements.txt  ]; then pip install -r requirements.txt; fi
-    - name:  Build dns
-      run: |
-        bash ./file/dns/dns.sh
-    - name: update hosts
-      run: |
-        sh ./file-hosts.sh/github/hosts.sh
+
     - name: update github
       run: |
          cp ./file-hosts.sh/github/Accelerate-Hosts.txt ./github-hosts/Accelerate-Hosts.txt
@@ -40,10 +40,11 @@ jobs:
          git add ./github-hosts/Accelerate-Hosts.txt
          git commit -m "update github $(date +%Y.%m.%d.%H.%M)"
          git push -f -u origin main
+
     - name: commit and push
       id: commit
       run: |
-        curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T "{./file-hosts.sh/github/Accelerate-Hosts.txt}" https://${{ secrets.web }}/github/
+        curl -sSL  -u ${{ secrets.user }}:${{ secrets.password }} -T "{./file-hosts.sh/github/Accelerate-Hosts.txt}" https://${{ secrets.web }}/github/
       continue-on-error: true
 
     # 删除无用 workflow runs;

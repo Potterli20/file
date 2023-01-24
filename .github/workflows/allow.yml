@@ -26,7 +26,7 @@ jobs:
           bash ./file-hosts.sh/allow.sh
       - name:  Build dns
         run: |
-          bash ./file/dns/dns.sh
+           bash ./file/bash/github-dns.sh
       - name: update github
         run: |
           cp allow.txt ./allow/allow.txt
@@ -40,7 +40,7 @@ jobs:
       - name: commit and push
         id: commit
         run: |
-         curl -sSL --connect-time 3  --max-time 2 -u ${{ secrets.user }}:${{ secrets.password }} -T allow.txt https://${{ secrets.web }}/allow/
+         curl -sSL  -u ${{ secrets.user }}:${{ secrets.password }} -T allow.txt https://${{ secrets.web }}/allow/
         continue-on-error: true
 
     # 删除无用 workflow runs;
