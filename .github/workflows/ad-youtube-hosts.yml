@@ -27,8 +27,9 @@ jobs:
       - name:  Build dns
         run: |
           bash ./file/bash/github-dns.sh
-            - name: update github
-      -  run: |
+          
+      - name: update github
+        run: |
           cp ad-youtube-* ./ad-hosts/ad-youtube/
           git remote rm origin
           git config --global user.name root
