@@ -22,11 +22,13 @@ jobs:
 
       - name: Git push
         run: |
-          cp ./cn-blocked-domain/publish/ ./Domains/cn-blocked-domain/
+          cp ./cn-blocked-domain/publish/ip.txt ./Domains/cn-blocked-domain/
+          cp ./cn-blocked-domain/publish/domains.txt ./Domains/cn-blocked-domain/
+          cp ./cn-blocked-domain/publish/raw.txt ./Domains/cn-blocked-domain/
           git remote rm origin
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
           git gc --aggressive
-          git add ./cn-blocked-domain
+          git add ./Domains/cn-blocked-domain/
           git commit -m "update cn-blocked-domain txt $(date +%Y.%m.%d.%H.%M)"
           git push -f -u origin main
 
