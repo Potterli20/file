@@ -160,7 +160,7 @@ function GetData() {
         "https://abl.arapurayil.com/filters/social.txt"
         "https://raw.githubusercontent.com/FutaGuard/FutaFilter/master/hosts.txt"
         "https://raw.githubusercontent.com/BlueSkyXN/AdGuardHomeRules/master/manhua.txt"
-        "https://raw.githubusercontent.com/BlueSkyXN/AdGuardHomeRules/master/all.txt"  
+        "https://raw.githubusercontent.com/BlueSkyXN/AdGuardHomeRules/master/all.txt"
         "https://raw.githubusercontent.com/MohamedElashri/filters/main/rules/adguard.txt"
         "https://raw.githubusercontent.com/chillipal/dns-blocklist/master/lists/blocklist-adguard.txt"
         "https://o0.pages.dev/Xtra/adblock.txt"
@@ -311,12 +311,12 @@ function GetData() {
         "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt"
         "https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/adguard.txt"
         "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
-        "https://filters.adtidy.org/windows/filters/2.txt" 
-        "https://filters.adtidy.org/windows/filters/11.txt" 
-        "https://filters.adtidy.org/windows/filters/3.txt" 
-        "https://filters.adtidy.org/windows/filters/224.txt" 
-        "https://filters.adtidy.org/windows/filters/14.txt" 
-        "https://filters.adtidy.org/windows/filters/5.txt" 
+        "https://filters.adtidy.org/windows/filters/2.txt"
+        "https://filters.adtidy.org/windows/filters/11.txt"
+        "https://filters.adtidy.org/windows/filters/3.txt"
+        "https://filters.adtidy.org/windows/filters/224.txt"
+        "https://filters.adtidy.org/windows/filters/14.txt"
+        "https://filters.adtidy.org/windows/filters/5.txt"
         "https://filters.adtidy.org/windows/filters/4.txt"
         "https://filters.adtidy.org/windows/filters/17.txt"
         "https://filters.adtidy.org/windows/filters/228.txt"
@@ -333,7 +333,7 @@ function GetData() {
         "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/hosts"
         "https://block.energized.pro/unified/formats/domains.txt"
         "https://raw.githubusercontent.com/badmojr/addons_1Hosts/main/kidSaf/domains.txt"
-        "https://file.trli.club:2083/ad-hosts/ad-edge-hosts.txt"
+        "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/ad-edge-hosts.txt"
         "https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/domains"
         "https://v.firebog.net/hosts/static/w3kbl.txt"
         "https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
@@ -478,29 +478,29 @@ function GetData() {
 # Analyse Data
 function AnalyseData() {
     filter_data=(
-        $(cat ./filter_white.tmp | 
-        sed "s/[[:space:]]//g;s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/\:\:1//g;s/\:\://g" | 
+        $(cat ./filter_white.tmp |
+        sed "s/[[:space:]]//g;s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/\:\:1//g;s/\:\://g" |
         sed 's/[ ]*//g' |
         sed '/^$/d' |
-        tr -d "@^|" | 
-        tr "A-Z" "a-z" | 
-        grep -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" | 
-        sort | 
-        uniq > ./filter_allow.tmp && 
-        cat ./filter_adblock.tmp ./filter_domain.tmp ./filter_hosts.tmp ./filter_other.tmp | 
+        tr -d "@^|" |
+        tr "A-Z" "a-z" |
+        grep -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |
+        sort |
+        uniq > ./filter_allow.tmp &&
+        cat ./filter_adblock.tmp ./filter_domain.tmp ./filter_hosts.tmp ./filter_other.tmp |
         sed 's/[ ]*//g' |
         sed '/^$/d' |
-        sed "s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/255.255.255.255//g;s/local//g;s/localhost//g;s/localhost.localdomain//g;s/broadcasthost//g;s/ip6-localhost//g;s/::1//g;s/ip6-loopback//g;s/ip6-localnet//g;s/fe80::1%lo0//g;s/ff00::0//g;s/ff02::1//g;s/ff02::2//g;s/ff02::3//g;s/ip6-mcastprefix//g;s/ip6-allnodes//g;s/ip6-allrouters//g;s/ip6-allhosts//g;/^$/d;s/[[:space:]]//g;s/DOMAIN\,//g;s/DOMAIN\-SUFFIX\,//g;s/domain\://g;s/full\://g" | 
-        tr -d "^|" | 
-        tr "A-Z" "a-z" | 
-        grep -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" | 
-        sort | 
-        uniq > ./filter_block.tmp && 
-        awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' ./filter_allow.tmp ./filter_block.tmp | 
-        sort | 
-        uniq > ./filter_data.tmp && 
-        cat ./filter_data.tmp | 
-        grep -v "\.\." | 
+        sed "s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/255.255.255.255//g;s/local//g;s/localhost//g;s/localhost.localdomain//g;s/broadcasthost//g;s/ip6-localhost//g;s/::1//g;s/ip6-loopback//g;s/ip6-localnet//g;s/fe80::1%lo0//g;s/ff00::0//g;s/ff02::1//g;s/ff02::2//g;s/ff02::3//g;s/ip6-mcastprefix//g;s/ip6-allnodes//g;s/ip6-allrouters//g;s/ip6-allhosts//g;/^$/d;s/[[:space:]]//g;s/DOMAIN\,//g;s/DOMAIN\-SUFFIX\,//g;s/domain\://g;s/full\://g" |
+        tr -d "^|" |
+        tr "A-Z" "a-z" |
+        grep -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |
+        sort |
+        uniq > ./filter_block.tmp &&
+        awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' ./filter_allow.tmp ./filter_block.tmp |
+        sort |
+        uniq > ./filter_data.tmp &&
+        cat ./filter_data.tmp |
+        grep -v "\.\." |
         awk "{ print $2 }")
         )
 }
@@ -684,7 +684,7 @@ function OutputData() {
             echo "  - DOMAIN,${filter_data[$filter_data_task]}" >> ../ad-clash.yaml
             echo "  - '+.${filter_data[$filter_data_task]}'" >> ../ad-clash-premium.yaml
             echo "address=/${filter_data[$filter_data_task]}/" >> ../ad-dnsmasq.conf
-            echo "${filter_data[$filter_data_task]}" >> ../ad-domains.txt 
+            echo "${filter_data[$filter_data_task]}" >> ../ad-domains.txt
             echo "127.0.0.53 ${filter_data[$filter_data_task]}" >> ../ad-hosts.txt
             echo "HOST-SUFFIX,${filter_data[$filter_data_task]},REJECT" >> ../ad-quantumult.yaml
             echo "DOMAIN-SUFFIX,${filter_data[$filter_data_task]},REJECT" >> ../ad-shadowrocket.list
