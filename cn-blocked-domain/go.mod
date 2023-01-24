@@ -1,5 +1,4 @@
-module cn-blocked-domain
-
+module github.com/Potterli20/file/tree/main/cn-blocked-domain
 go 1.19
 
 require (
