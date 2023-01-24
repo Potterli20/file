@@ -333,7 +333,6 @@ function GetData() {
         "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/hosts"
         "https://block.energized.pro/unified/formats/domains.txt"
         "https://raw.githubusercontent.com/badmojr/addons_1Hosts/main/kidSaf/domains.txt"
-        "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/ad-edge-hosts.txt"
         "https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/domains"
         "https://v.firebog.net/hosts/static/w3kbl.txt"
         "https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
