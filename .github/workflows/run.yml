@@ -1,4 +1,4 @@
-name: Crawl blocked domains and ips from Greatfire Analyzer
+name: cn-blocked-domain
 on:
   workflow_dispatch:
   schedule:
@@ -14,9 +14,14 @@ jobs:
 
       - name: Checkout codebase
         uses: actions/checkout@main
-
-      - name: Get project dependencies & run
+        
+      - name:  Build dns
         run: |
+          bash ./file/bash/github-dns.sh
+          
+      - name: Get cn-blocked-domain & run
+        run: |
+          git clone https://github.com/potterli20/cn-blocked-domain
           cd cn-blocked-domain
           go run ./
 
