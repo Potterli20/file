@@ -36,12 +36,12 @@ jobs:
 
     - name: update github
       run: |
-         cp ./file-hosts.sh/github/Accelerate-Hosts.txt ./Domains/Accelerate-Hosts/Accelerate-Hosts.txt
+         cp ./file-hosts.sh/github/Accelerate-Hosts.txt ./Domains/AccelerateHosts/github-hosts.txt
          git remote rm origin
          git config --global user.name root
          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
          git gc --aggressive
-         git add ./Domains/Accelerate-Hosts/Accelerate-Hosts.txt
+         git add ./Domains/AccelerateHosts/github-hosts.txt
          git commit -m "update github $(date +%Y.%m.%d.%H.%M)"
          git push -f -u origin main
 
