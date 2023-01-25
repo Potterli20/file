@@ -1,6 +1,7 @@
 # Get Data
 function GetData() {
     filter_adblock=(
+        "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=1&mimetype=plaintext"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingLite/AdvertisingLite.txt"
         "https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Hosts.txt"
         "https://code.gitlink.org.cn/zzp282/ads/raw/branch/master/ADSLJ.txt"
