@@ -30,11 +30,11 @@ function GetData() {
         "https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt"
         "https://raw.githubusercontent.com/poctopus/gfwlist-plus/master/gfwlist-plus.txt"
 	    "https://raw.githubusercontent.com/MoeKing/gfwlist/main/gfwlist.txt"
-	
+
     )
     gfwlist_domain=(
     	"https://raw.githubusercontent.com/missdeer/blocklist/master/toblock-optimized.lst"
-    	"https://raw.githubusercontent.com/kenzok8/small-package/main/luci-app-mosdns/root/etc/mosdns/rule/serverlist.txt"	
+    	"https://raw.githubusercontent.com/kenzok8/small-package/main/luci-app-mosdns/root/etc/mosdns/rule/serverlist.txt"
     	"https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
     	"https://raw.githubusercontent.com/smed79/blacklist/master/extra/facebook.txt"
         "https://dl.red.flag.domains/red.flag.domains.txt"
@@ -77,7 +77,7 @@ function GetData() {
         "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter-dns.txt"
         "https://raw.githubusercontent.com/sonofhelga/yicklist/master/yick.list"
         "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/ad-block-YouTube-Project.txt"
-    )    
+    )
     gfwlist2agh_modify=(
         "https://raw.githubusercontent.com/hezhijie0327/GFWList2AGH/source/data/data_modify.txt"
 	    "https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt"

@@ -24,7 +24,7 @@ jobs:
       - name:  Build pDNSf-Hosts
         run: |
           bash ./file-hosts.sh/pDNSf-Hosts.sh
-          
+
       - name: update github
         run: |
           cp pDNSf-hosts.txt ./ad-hosts/pDNSf-hosts/pDNSf-hosts.txt
@@ -35,14 +35,6 @@ jobs:
           git add ./ad-hosts/pDNSf-hosts/pDNSf-hosts.txt
           git commit -m "update pDNSf-hosts $(date +%Y.%m.%d.%H.%M)"
           git push -f -u origin main
-          
-      - name:  Build dns
-        run: |
-          bash ./file/bash/github-dns.sh
-      - name:  push ad-hosts-coding
-        run: |
-          curl -sSL  -u ${{ secrets.user }}:${{ secrets.password }} -T "{pDNSf-hosts.txt}" https://${{ secrets.web }}/pDNSf-hosts/
-        continue-on-error: true
 
     # 删除无用 workflow runs;
       - name: Delete workflow runs

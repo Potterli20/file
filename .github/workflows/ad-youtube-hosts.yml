@@ -27,7 +27,7 @@ jobs:
       - name:  Build dns
         run: |
           bash ./file/bash/github-dns.sh
-          
+
       - name: update github
         run: |
           cp ad-youtube-* ./ad-hosts/ad-youtube/
@@ -40,7 +40,7 @@ jobs:
           git push -f -u origin main
       - name:  push ad-hosts-coding
         run: |
-          curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-youtube-adblock.txt,ad-youtube-adguardhome-dnstype.txt,ad-youtube-adguardhome.txt,ad-youtube-clash.yaml,ad-youtube-clash-premium.yaml,ad-youtube-dnsmasq.conf,ad-youtube-domains.txt,ad-youtube-hosts.txt,ad-youtube-quantumult.yaml,ad-youtube-shadowrocket.list,ad-youtube-smartdns.conf,ad-youtube-surge.yaml,ad-youtube-unbound.conf,ad-youtube-bind9.conf}" https://${{ secrets.web }}/ad-youtube-hosts/
+          curl -sSL --parallel-max --doh-url https://1dot1dot1dot1.cloudflare-dns.com/dns-query -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-youtube-adblock.txt,ad-youtube-adguardhome-dnstype.txt,ad-youtube-adguardhome.txt,ad-youtube-clash.yaml,ad-youtube-clash-premium.yaml,ad-youtube-dnsmasq.conf,ad-youtube-domains.txt,ad-youtube-hosts.txt,ad-youtube-quantumult.yaml,ad-youtube-shadowrocket.list,ad-youtube-smartdns.conf,ad-youtube-surge.yaml,ad-youtube-unbound.conf,ad-youtube-bind9.conf}" https://${{ secrets.web }}/ad-youtube-hosts/
         continue-on-error: true
 
     # 删除无用 workflow runs;

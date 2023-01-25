@@ -24,14 +24,17 @@ jobs:
       - name:  Build pac
         run: |
           bash ./file-hosts.sh/pac.sh
-      - name:  Build dns
-        run: |
-          bash ./file/bash/github-dns.sh
-      - name: commit and push
-        id: commit
-        run: |
-            curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{listpac_china_autoproxy.txt,listpac_gfwlist_autoproxy.txt,listpac_china_clash.yaml,listpac_gfwlist_clash.yaml,listpac_china_clash_premium.yaml,listpac_gfwlist_clash_premium.yaml,listpac_china_shadowrocket.conf,listpac_gfwlist_shadowrocket.conf,listpac_china_surge.yaml,listpac_gfwlist_surge.yaml,listpac_china_quantumult.yaml,listpac_gfwlist_quantumult.yaml,listpac_china_v2raya.txt,listpac_gfwlist_v2raya.txt,listpac_china_v2rayn.txt,listpac_gfwlist_v2rayn.txt}" https://${{ secrets.web }}/pac/
-        continue-on-error: true
+
+    - name: update github
+      run: |
+         cp listpac_* ./file/pac/
+         git remote rm origin
+         git config --global user.name root
+         git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
+         git gc --aggressive
+         git add ./file/pac/
+         git commit -m "update github $(date +%Y.%m.%d.%H.%M)"
+         git push -f -u origin main
 
     # 删除无用 workflow runs;
       - name: Delete workflow runs

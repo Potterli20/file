@@ -29,26 +29,26 @@ jobs:
         cd file-hosts.sh/github
         python -m pip install --upgrade pip
         if [ -f requirements.txt  ]; then pip install -r requirements.txt; fi
-        
+
     - name: update hosts
       run: |
         sh ./file-hosts.sh/github/hosts.sh
 
     - name: update github
       run: |
-         cp ./file-hosts.sh/github/Accelerate-Hosts.txt ./github-hosts/Accelerate-Hosts.txt
+         cp ./file-hosts.sh/github/Accelerate-Hosts.txt ./Accelerate-Hosts/Accelerate-Hosts.txt
          git remote rm origin
          git config --global user.name root
          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
          git gc --aggressive
-         git add ./github-hosts/Accelerate-Hosts.txt
+         git add ./Accelerate-Hosts/Accelerate-Hosts.txt
          git commit -m "update github $(date +%Y.%m.%d.%H.%M)"
          git push -f -u origin main
 
     - name: commit and push
       id: commit
       run: |
-        curl -sSL  -u ${{ secrets.user }}:${{ secrets.password }} -T "{./file-hosts.sh/github/Accelerate-Hosts.txt}" https://${{ secrets.web }}/github/
+        curl -sSL --parallel-max --doh-url https://1dot1dot1dot1.cloudflare-dns.com/dns-query -u ${{ secrets.user }}:${{ secrets.password }} -T "{./file-hosts.sh/github/Accelerate-Hosts.txt}" https://${{ secrets.web }}/github/
       continue-on-error: true
 
     # 删除无用 workflow runs;

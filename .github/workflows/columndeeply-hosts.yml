@@ -29,7 +29,7 @@ jobs:
           bash ./file/bash/github-dns.sh
       - name:  push ad-hosts-coding
         run: |
-          curl -sSL  -u ${{ secrets.user }}:${{ secrets.password }} -T "{columndeeply-hosts.txt}" https://${{ secrets.web }}/columndeeply-hosts/
+          curl -sSL --parallel-max --doh-url https://1dot1dot1dot1.cloudflare-dns.com/dns-query -u ${{ secrets.user }}:${{ secrets.password }} -T "{columndeeply-hosts.txt}" https://${{ secrets.web }}/columndeeply-hosts/
         continue-on-error: true
 
     # 删除无用 workflow runs;

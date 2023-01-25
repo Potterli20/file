@@ -1,1 +1,1 @@
-python ./file-hosts.sh/github/ph.py -f ./AccelerateHosts/Domains -o ./file-hosts.sh/github/Accelerate-Hosts.txt
+python ./file-hosts.sh/github/ph.py -f ./Domains/AccelerateHosts/Domains -o ./file-hosts.sh/github/Accelerate-Hosts.txt
