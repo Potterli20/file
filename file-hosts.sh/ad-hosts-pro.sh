@@ -287,7 +287,6 @@ function GetData() {
         "https://filters.adtidy.org/android/filters/10_optimized.txt"
         "https://filters.adtidy.org/android/filters/11_optimized.txt"
         "https://filters.adtidy.org/android/filters/15_optimized.txt"
-        "https://gitee.com/hong145/some-web-advertising-rules/raw/master/not-app.txtsed"
         "https://www.i-dont-care-about-cookies.eu/abp/"
         "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/ChineseFilter/sections/adservers.txt"
         "https://raw.githubusercontent.com/Zelo72/adguard/main/multi.adblock"
