@@ -43,7 +43,7 @@ function GetData() {
 	 "https://raw.githubusercontent.com/v2fly/domain-list-custom/release/steam.txt"
     	"https://raw.githubusercontent.com/pexcn/daily/gh-pages/gfwlist/gfwlist.txt"
     	"https://raw.githubusercontent.com/Potterli20/file/main/Domains/gfw/Domains"
-    	"https://cn-blocked-domain.trli.club/domains.txt"
+    	"https://file-git.trli.club/Domains/cn-blocked-domain/domains.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt"
     	"https://raw.githubusercontent.com/schrebra/Windows.10.DNS.Block.List/main/hosts.txt"
         "https://raw.githubusercontent.com/nickspaargaren/no-google/master/pihole-google.txt"
