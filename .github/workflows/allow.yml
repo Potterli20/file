@@ -40,7 +40,7 @@ jobs:
       - name: commit and push
         id: commit
         run: |
-         curl -sSL  --parallel-max --doh-url https://1dot1dot1dot1.cloudflare-dns.com/dns-query -u ${{ secrets.user }}:${{ secrets.password }} -T allow.txt https://${{ secrets.web }}/allow/
+         curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T allow.txt https://${{ secrets.web }}/allow/
         continue-on-error: true
 
     # 删除无用 workflow runs;
