@@ -31,8 +31,7 @@ jobs:
         run: |
           cp allow.txt ./allow/allow.txt
           git remote rm origin
-          git commit --amend --reset-author
-          git config --global user.name root
+          git config --global user.name Potterli20
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
           git gc --aggressive
           git add ./allow/allow.txt
