@@ -1,8 +1,8 @@
-# Checksum: MTY3NDczNTYxNQo=
+# Checksum: MTY3NDc5OTk5MQo=
 # Title: trli's Ad Filter Youtube for Pi-hole 
 # Description: HOSTS Project
-# Version: 20230126-6
-# TimeUpdated: 2023-01-26T20:20:15+08:00
+# Version: 20230127-4
+# TimeUpdated: 2023-01-27T14:13:11+08:00
 # Expires: 24 hours (update frequency)
 # Homepage: https://file.trli.club:2083/ad-youtube-hosts/
 # Total: 111204
