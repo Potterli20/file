@@ -29,7 +29,8 @@ jobs:
         run: |
          cp listpac_* ./file/pac/
          git remote rm origin
-         git config --global user.name root
+         git config --local user.name "github-actions[bot]"
+         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
          git gc --aggressive
          git add ./file/pac/
