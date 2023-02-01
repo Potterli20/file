@@ -51,10 +51,3 @@ jobs:
       run: |
         curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{./file-hosts.sh/github/Accelerate-Hosts.txt}" https://${{ secrets.web }}/github/
       continue-on-error: true
-
-    # 删除无用 workflow runs;
-    - name: Delete workflow runs
-      uses: GitRML/delete-workflow-runs@main
-      with:
-        retain_days: 0.1
-        keep_minimum_runs: 1
