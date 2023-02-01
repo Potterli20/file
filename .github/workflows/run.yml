@@ -2,7 +2,7 @@ name: cn-blocked-domain
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: "0 */6 * * *"
 jobs:
   crawl:
     runs-on: ubuntu-latest
@@ -38,10 +38,3 @@ jobs:
           git add ./Domains/cn-blocked-domain/
           git commit -m "update cn-blocked-domain txt $(date +%Y.%m.%d.%H.%M)"
           git push -f -u origin main
-
-    # 删除无用 workflow runs;
-      - name: Delete workflow runs
-        uses: GitRML/delete-workflow-runs@main
-        with:
-          retain_days: 0.1
-          keep_minimum_runs: 1
