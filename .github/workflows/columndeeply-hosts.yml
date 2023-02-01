@@ -6,7 +6,7 @@ name: columndeeply-hosts
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 23 * * *"
+    - cron: "0 0 * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -31,10 +31,3 @@ jobs:
         run: |
           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{columndeeply-hosts.txt}" https://${{ secrets.web }}/columndeeply-hosts/
         continue-on-error: true
-
-    # 删除无用 workflow runs;
-      - name: Delete workflow runs
-        uses: GitRML/delete-workflow-runs@main
-        with:
-          retain_days: 0.1
-          keep_minimum_runs: 1
