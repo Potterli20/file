@@ -6,7 +6,7 @@ name: Hosts-youtube
 on:
   workflow_dispatch:
   schedule:
-   - cron: "0 */6 * * *"
+   - cron: "0 0 * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -39,13 +39,8 @@ jobs:
           git add ./ad-hosts/ad-youtube/
           git commit -m "update ad-youtube $(date +%Y.%m.%d.%H.%M)"
           git push -f -u origin main
+          
       - name:  push ad-hosts-coding
         run: |
           curl -sSL  -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-youtube-adblock.txt,ad-youtube-adguardhome-dnstype.txt,ad-youtube-adguardhome.txt,ad-youtube-clash.yaml,ad-youtube-clash-premium.yaml,ad-youtube-dnsmasq.conf,ad-youtube-domains.txt,ad-youtube-hosts.txt,ad-youtube-quantumult.yaml,ad-youtube-shadowrocket.list,ad-youtube-smartdns.conf,ad-youtube-surge.yaml,ad-youtube-unbound.conf,ad-youtube-bind9.conf}" https://${{ secrets.web }}/ad-youtube-hosts/
         continue-on-error: true
-
-    # 删除无用 workflow runs;
-      - name: Delete workflow runs
-        uses: GitRML/delete-workflow-runs@main
-        with:
-          retain_days: 0.1
