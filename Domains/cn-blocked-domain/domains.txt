@@ -479,6 +479,7 @@
 2.android.pool.ntp.org
 2.cr.rs
 2.ftp1.biz
+2.hdd2.host
 2.inc.gs
 2.ns32.us
 2.p2.ro.lt
@@ -1286,7 +1287,6 @@
 6663011.com
 666365.tv
 66666kkk.cc
-66666lll.cc
 66666ooo.cc
 66666qqq.cc
 66666rrr.cc
@@ -1306,7 +1306,6 @@
 6684.strikingly.com
 668444000.com
 66866813.com
-668668135.com
 668770000.com
 668fff668.com
 668p668.com
@@ -1665,6 +1664,7 @@
 888.kk096.com
 888.lzgye.com
 888.suroot.com
+888.sy0606.com
 88818.com
 88857.org
 888800.co
@@ -1689,7 +1689,6 @@
 89.flnet.org
 89333a.com
 895577x.com
-8964.com
 8964museum.com
 8969.org
 89901.com
@@ -3089,7 +3088,7 @@ bartender.mobile.dowjones.io
 basc.berkeley.edu
 baseball-reference.com
 basevie.fr
-basic.rethinkdns.com
+basic.bravedns.com
 basicframes.com
 basicprogramming.comyr.com
 basil.idv.tw
@@ -3397,7 +3396,6 @@ binance.com
 binancezh.biz
 binancezh.io
 binary.com
-binary20.com
 binarysec.org
 bind2.com
 bindopos.com
@@ -5838,6 +5836,7 @@ deutschetibethilfe.de
 deuxje7t39utb.cloudfront.net
 dev-gameservice-v2.firebaseio.com
 dev.to
+dev.viewtube.io
 developer.kkbox.com
 developer.osterhoutgroup.com
 deviantart.com
@@ -5855,6 +5854,7 @@ df2global.weebly.com
 df8cc.com
 df8mm.com
 dfp6ofk9ssz35.cloudfront.net
+dg66.net
 dgtutpaqmy.com
 dgyqr055mfays.cloudfront.net
 dh.ddns.ms
@@ -6117,7 +6117,6 @@ donotban.com
 donou.ro
 donttrack.us
 doo.idv.tw
-doomdns.com
 dooprime.net
 doorbrowse.com
 dorcelclub.com
@@ -7262,6 +7261,7 @@ free-ss.site
 free-ssh.com
 free-web-proxy.de
 free-xueq-jianb.github.io
+free.bravedns.com
 free.com.tw
 free.gfw.im
 free18.net
@@ -8991,7 +8991,6 @@ icad.ae.org
 icams.com
 icanstay.com
 ice-gay.com
-ice01.weebly.com
 iceboard.id
 icecast.org
 icedrive.net
@@ -9058,12 +9057,12 @@ ige.es
 igg.biz
 ignite.bain.com
 igotmail.com.tw
+igrejauniversal.org.br
 iguge.club
 ihavesmalltits.com
 ihearttibet.org
 iht.com
 ii-i.org
-ii36.net
 ii63.net
 ii69.net
 iiccr.ro
@@ -10742,7 +10741,6 @@ m.ysb88cn.com
 m.yuyans.com
 m.yyty.live
 m.yzc212.com
-m.yzc369.com
 m11.1024xp2.xyz
 m11.sdccbly.xyz
 m2.888funcity.com
@@ -10793,6 +10791,7 @@ magic346cn.weebly.com
 magicalaska-form.weebly.com
 magicalaska.weebly.com
 magiccloak.net
+magicmovies.com
 magmafilm.com
 magri.ca
 magzter.com
@@ -10911,6 +10910,7 @@ marcianguyen.ml
 mare.nom.za
 marefa.org
 marenas.cl
+marguerite.su
 marine.rutgers.edu
 mario-lopes.pt
 mariocollin.com
@@ -11448,7 +11448,6 @@ mule.com
 mulher.uol.com.br
 mullvad.me
 mullvad.net
-multichannel.com
 multilan.com
 multimar.com.ar
 multiproxy.org
@@ -12291,11 +12290,11 @@ openstreetmap.com
 openstreetmap.org
 opentech.fund
 opentechfund.org
+opentunnel.net
 openvpn.com
 openvpn.net
 openvpn.org
 openvpn.se
-openxltd.com
 oplaneta.com
 opml.radiotime.com
 opulencebespoke.com
@@ -12623,7 +12622,6 @@ picacomic.com
 picasa.com
 picasaweb.com
 picbear.com
-pichunter.com
 picidae.net
 picnik.com
 picsart.com
@@ -13328,7 +13326,6 @@ redamateurtube.com
 redbubble.com
 redcandlegames.com
 redd.it
-reddit.0qz.fun
 reddit.app.link
 reddit.co
 reddit.com
@@ -13381,6 +13378,7 @@ restaurantgraf.ro
 restauranticos.com
 restofworld.org
 restoreprivacy.com
+rethinkdns.com
 retorte.ch
 reut.rs
 reuters.co.uk
@@ -13909,6 +13907,7 @@ sg1lib.org
 sgforums.com
 sgp1.racingvpn.com
 sgswsetwetwtwt.ml
+sgtsourcing.box.com
 sgwin123.com
 sh.yibada.com
 sh223.cf
@@ -14103,6 +14102,7 @@ skilling.com
 skimtube.com
 skoletube.dk
 sktnn.com
+sky.bravedns.com
 skyav.me
 skybl.life
 skydivedurban.co.za
@@ -15766,7 +15766,6 @@ uncensoredlibrary.com
 uncontrolledsurfer.com
 uncoverthenet.com
 uncyclopedia.hk
-uncyclopedia.miraheze.org
 uncyclopedia.tw
 underhentai.net
 undo.it
@@ -16156,6 +16155,7 @@ vnet.link
 vns001.cc
 vns06966.com
 vns1020.com
+vns2004.com
 vns3919.com
 vo.domain888.pw
 vo.freepac.pw
@@ -17095,7 +17095,6 @@ www.22003885.com
 www.222977.com
 www.222fyt.com
 www.222k8.com
-www.2233556.com
 www.223c.net
 www.223h.net
 www.223hh.net
@@ -17227,7 +17226,6 @@ www.5504t.com
 www.555456.com
 www.55598.cc
 www.55cc.cc
-www.55qqxx.com
 www.565506.cc
 www.57686.com
 www.58euro.com
@@ -17258,6 +17256,7 @@ www.66443885.com
 www.665066.cc
 www.66666ee.cc
 www.66666eee.cc
+www.66666lll.cc
 www.66666mmm.cc
 www.66666nn.cc
 www.66666ss.cc
@@ -18248,7 +18247,6 @@ www.dynasys.org
 www.dynit.it
 www.dynvpn.com
 www.dytt8.com
-www.dyvip1.com
 www.dyvip26.com
 www.dyvip37.com
 www.dyvip61.com
@@ -18614,6 +18612,7 @@ www.fuli35.lv
 www.fulibl.cc
 www.fulidang.com
 www.fulidao2.com
+www.fulltilt.com
 www.fun120.com
 www.fun131.com
 www.fun135.com
@@ -19997,7 +19996,6 @@ www.pchomeskype.com.tw
 www.pcnet.idv.tw
 www.pcp.pt
 www.pct.org.tw
-www.pcwelt.de
 www.pen-international.org
 www.penguin.com.au
 www.penthousemagazine.com
@@ -20017,6 +20015,7 @@ www.phototruth.net
 www.pi88.com
 www.pi88.net
 www.piaproxy.net
+www.pichunter.com
 www.pickyuhome.net
 www.picmonkey.com
 www.picpicapp.com
@@ -21805,6 +21804,7 @@ xunzhaoshiliantongzhi.github.io
 xuv.be
 xv202106.xyz
 xv5599.xyz
+xv9.cc
 xvdada.com
 xvideo.cc
 xvideo.com
