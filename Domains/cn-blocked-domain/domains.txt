@@ -78,7 +78,6 @@
 0328u.com
 032vic.com
 033004.com
-033008.com
 033009.com
 033508.com
 033765.com
@@ -2346,6 +2345,7 @@ all.freeddns.com
 all4hosting.cc
 allaround.cc
 allasianpornstars.com
+allasianreviews.com
 allasians.com
 allbet133.com
 allconnected.co
@@ -2441,7 +2441,6 @@ amws1100.com
 amws1122.com
 amws1133.com
 amws2200.com
-amws2255.com
 amws2266.com
 amws5544.com
 amws6611.com
@@ -4297,6 +4296,7 @@ cdn.jwplayer.com
 cdn.line-apps.com
 cdn.mobileread.com
 cdn.mxpnl.com
+cdn.plus500.com
 cdn.proxyium.com
 cdn.revjet.com
 cdn.statically.io
@@ -6227,6 +6227,7 @@ dsn104.com
 dsn207.com
 dsn270.com
 dsn2pcapp04.com
+dsn3373.com
 dsn503.co
 dsn5558.com
 dsnfa03.com
@@ -8646,7 +8647,9 @@ hk-wesi.xyz
 hk-wesi2.xyz
 hk-wesi3.xyz
 hk.32-b.it
+hk.apple.nextmedia.com
 hk.c.cloudss.pw
+hk.face.nextmedia.com
 hk.fs.faqserv.com
 hk.futu5.com
 hk.hacked.jp
@@ -8654,6 +8657,8 @@ hk.mobi.yahoo.com
 hk.mssi.pw
 hk.myblog.yahoo.com
 hk.news.yahoo.com
+hk.next.nextmedia.com
+hk.nextmedia.com
 hk.tomonews.net
 hk.vbkr.com
 hk.video.news.yahoo.com
@@ -9817,6 +9822,7 @@ k.mmhz.us
 k.ns02.top
 k07aa.com
 k1.jkub.com
+k11.1024xp1.net
 k236.com
 k2999.com
 k3.hk303.c8763.com
@@ -11798,7 +11804,7 @@ nextdns.io
 nextgenvpn.com
 nextjav.com
 nextmag.com.tw
-nextmedia.com
+nextplus.nextmedia.com
 nexttv.com.tw
 nextyoutube.com
 nexus-models.cl
@@ -12312,6 +12318,7 @@ oricon.co.jp
 orienta.com.br
 orientaldaily.com.my
 orientalradio.com.sg
+origin.1680118.com
 orknow.com
 orkut.com.br
 orlene.soon.it
@@ -13355,6 +13362,7 @@ rejectccp.org
 rejecttheccp.com
 relay.firefox.com
 relearnings.com
+relink.us
 reminderfox.org
 remote.entegris.com
 renfe.es
@@ -13798,6 +13806,7 @@ securityandtechnology.org
 securityawareness.usalearning.gov
 securityinabox.org
 securitykiss.com
+seductiveapps.com
 see.xxx
 seebird.net
 seedboxes.cc
@@ -13900,7 +13909,6 @@ sg1lib.org
 sgforums.com
 sgp1.racingvpn.com
 sgswsetwetwtwt.ml
-sgtsourcing.box.com
 sgwin123.com
 sh.yibada.com
 sh223.cf
@@ -14431,6 +14439,7 @@ starworldmacau.com
 state.pa.us
 statebuilding.tw
 statefarm.com
+static.apple.nextmedia.com
 static.cdprojektred.com
 static.digg.com
 static.googleusercontent.com
@@ -15556,6 +15565,8 @@ tw.mssi.pw
 tw.myblog.yahoo.com
 tw.myrenta.com
 tw.news.yahoo.com
+tw.next.nextmedia.com
+tw.nextmedia.com
 tw.pikolive.com
 tw.seemh.com
 tw.tech.yahoo.com
@@ -15889,6 +15900,7 @@ uts.jkub.com
 uts3.freeddns.com
 uu.4dq.com
 uu1234.pw
+uu777.net
 uu78ii.com
 uubqp.com
 uuc.slyip.com
@@ -16676,7 +16688,6 @@ wi55.cf
 wi55.tk
 wicked.com
 widih.com
-wikaba.com
 wiki.604kph.xyz
 wiki.epochbelt.com
 wiki.gd
@@ -17585,7 +17596,6 @@ www.avtb01.com
 www.avyahoo.com
 www.awarenessplace.com
 www.awebproxy.com
-www.axer.no
 www.axiusdesign.com
 www.ayxbet1290.com
 www.azattyk.kg
@@ -18266,13 +18276,13 @@ www.e8706.com
 www.e87127.com
 www.e8716.com
 www.e8737.com
+www.e8771.com
 www.e87766.com
 www.e8777.com
 www.e8781.com
 www.e8797.com
 www.e8832.com
 www.e8951.com
-www.e8972.com
 www.e89911.com
 www.e89988.com
 www.e8luck.cc
@@ -18494,6 +18504,7 @@ www.financialpost.com
 www.finchvpn.org
 www.findyoutube.net
 www.fineboy.co
+www.finet.hk
 www.fioridicipria.com
 www.firebaseio.com
 www.firebox.com
@@ -19473,6 +19484,7 @@ www.leyicai666.com
 www.leyicai888.com
 www.lgsinnovations.com
 www.liangyou.net
+www.liaosam.com
 www.liberalparty.org
 www.liberation.com
 www.liberty-ss.top
@@ -19664,6 +19676,7 @@ www.milfordmercury.co.uk
 www.militaryphotos.net
 www.milivpn.com
 www.milk.com.hk
+www.milsurps.com
 www.milulucn.com
 www.mimemi.org
 www.mimi.ooo
@@ -19823,6 +19836,7 @@ www.newtime.idv.tw
 www.newzealandreview.com
 www.nexis.com
 www.next-tv.ml
+www.nextmedia.com
 www.nfscdict.com
 www.nick20.com
 www.nicolasmoro.net
@@ -20369,6 +20383,7 @@ www.sbfa888.com
 www.sbm.sg
 www.scasino.com
 www.scdypost.com
+www.schaumburger-zeitung.de
 www.schoolbuscity.com
 www.schwaebische.de
 www.sciencenets.com
@@ -20955,7 +20970,6 @@ www.ute.com
 www.utjd.org
 www.uu-gg.com
 www.uu-gg.top
-www.uu777.net
 www.uuge.com
 www.uwdq.cn
 www.uyghurvoice.com
@@ -21451,6 +21465,7 @@ www.yzc999.com
 www.yzlhb708.com
 www.z100.com
 www.zalmos.com
+www.zangler.org
 www.zap2it.com
 www.zaq.us
 www.zavodjenje.com
