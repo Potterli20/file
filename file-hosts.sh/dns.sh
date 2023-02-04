@@ -33,6 +33,7 @@ function GetData() {
 
     )
     gfwlist_domain=(
+    	"https://raw.githubusercontent.com/SukkaW/Surge/master/List/domainset/icloud_private_relay.conf"
     	"https://raw.githubusercontent.com/missdeer/blocklist/master/toblock-optimized.lst"
     	"https://raw.githubusercontent.com/kenzok8/small-package/main/luci-app-mosdns/root/etc/mosdns/rule/serverlist.txt"
     	"https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
