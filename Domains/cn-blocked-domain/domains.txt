@@ -15,7 +15,6 @@
 002008.com
 003775.com
 0046868.com
-004ld.com
 004lt.com
 004vic.com
 006005.cc
@@ -363,7 +362,6 @@
 18avbook.com
 18avhub.com
 18avtube.com
-18bbs.net
 18comic.art
 18comic.bet
 18comic.biz
@@ -848,7 +846,6 @@
 372587.com
 373699.com
 374316.com
-377.chatnook.com
 3774.com
 378287.com
 37xccp.com
@@ -1940,7 +1937,6 @@ a.1u2u3u4u.com
 a.bnaz.org
 a.gufen.ga
 a.guge.ga
-a.idm.host
 a.mb2.host
 a.ssd2.bid
 a.temporaryrecord.com
@@ -2902,7 +2898,6 @@ awc7.com
 awcdzyc.xyz
 awk.so
 awn1.icu
-awn18.cam
 axabot.com
 axashop.ro
 axios.com
@@ -3809,7 +3804,6 @@ brill.com
 brilliantcode.com
 bringingtibethome.com
 brisyprl.overdrive.com
-britishproxy.uk
 brizzly.com
 broadbook.com
 broadpressinc.com
@@ -4212,7 +4206,6 @@ cbxxtv.com
 cc.365cent.com
 cc.com
 cc.ee.ntu.edu.tw
-cc.eye.rs
 cc.hacked.jp
 cc.srsr.ml
 cc1505.com
@@ -4865,7 +4858,6 @@ coolinet.com
 coolmath-games.com
 coolmath.com
 coolporn7.com
-coolstuffinc.com
 coomber.co.za
 cooproriz.pt
 copyki.biz
@@ -4889,7 +4881,6 @@ cosersuki.net
 cosmicspark49.wixsite.com
 cosmtv.site
 cosplayjav.pl
-cotizalia.com
 cotweet.com
 couchit.net
 courrierinternational.com
@@ -7004,6 +6995,7 @@ fh0.cc
 fh5.ld22222.com
 fh5.vs008.com
 fh5.vs191.com
+fh5.vs201.com
 fh5.vs286.com
 fh5.vs511.com
 fh5.vs5111.com
@@ -7084,7 +7076,6 @@ fixit.com
 fj.91dfjh.org
 fj13213.bg866.com
 fjbet.com
-fjd5599.com
 fjd7799.com
 fjd888.com
 fk-book.com
@@ -8195,6 +8186,7 @@ h28.chatnook.com
 h285.com
 h2porn.com
 h3.my03.com
+h5.004ld.com
 h5.012ld.com
 h5.031ld.com
 h5.040ld.com
@@ -8306,12 +8298,9 @@ h5.ledongsports72.com
 h5.mx80.bet
 h5.mx81.bet
 h5.vbvip22.com
-h5.vs162.com
-h5.vs189.com
 h5.vs286.com
 h5.vs597.tv
 h5.vs8081.com
-h5.vs9992.com
 h598.com
 h5galgame.com
 h6.slyip.net
@@ -8973,7 +8962,6 @@ icsin.org
 ictsupport.com.pe
 id.001www.com
 id.heroku.com
-id.now-ip.net
 id.oculus.com
 id.rlcdn.com
 ida.org
@@ -10702,7 +10690,6 @@ m11.sdccbly.xyz
 m2.888funcity.com
 m2.my03.com
 m20022.com
-m200260.com
 m2698.com
 m5.com
 m6vip2.com
@@ -11280,7 +11267,6 @@ montreuxhoa.com
 moo.flnet.org
 moo.im
 moodyz.com
-moomtv.site
 moon.com
 moon.fm
 moonangel.com
@@ -15456,7 +15442,6 @@ tv1.bit.ddns.ms
 tv100.cf
 tv100.ga
 tv100.gq
-tv101.tk
 tv123.cf
 tv123.ga
 tv123.us
@@ -15920,8 +15905,6 @@ vb1666.com
 vbet.com
 vbsf2.n56b.com
 vbty99.com
-vbvip6.com
-vbvip7.com
 vbvip9.com
 vc33.tk
 vcard.ameba.jp
@@ -16240,16 +16223,13 @@ vs1062.com
 vs192.com
 vs193.com
 vs200.com
-vs201.com
 vs212.com
 vs2266.com
-vs3335.com
 vs44444.com
 vs4466.com
 vs5083.com
 vs5085.com
 vs5099.com
-vs5511.com
 vs6099.com
 vs6464.com
 vs650.com
@@ -16259,7 +16239,6 @@ vs7776.com
 vs8051.com
 vs8091.com
 vs811.com
-vs851.com
 vs853.com
 vs856.com
 vs8585.com
@@ -18141,7 +18120,6 @@ www.divshare.com
 www.divxtotal.la
 www.dj0020.com
 www.djjsq.cn
-www.dm258.com
 www.dmmbus.cam
 www.documentingreality.com
 www.docusign.com
@@ -18255,7 +18233,6 @@ www.economie.gouv.qc.ca
 www.ecotibet.org
 www.ecpowergroup.com
 www.eddid.com.hk
-www.eddie.idv.tw
 www.edicionesdharma.com
 www.edninfo.com
 www.eduweb.idv.tw
@@ -18828,7 +18805,6 @@ www.h365.site
 www.h4610.com
 www.haberturk.com
 www.hacg.be
-www.hacg.lol
 www.hachettebookgroup.com
 www.hacker.org
 www.hackpad.com
@@ -20889,7 +20865,6 @@ www.unilever.com
 www.universe-truth.org
 www.unodedos.com
 www.upenn.edu
-www.uproxy.co.uk
 www.ups.com
 www.upstate.edu
 www.urlgot.com
