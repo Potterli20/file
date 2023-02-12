@@ -980,7 +980,6 @@
 48.myftp.biz
 48.webhop.biz
 484.ddns.ms
-486148.com
 486646.com
 487.microcycas.com
 48789x.com
@@ -1121,7 +1120,6 @@
 55666989.com
 5567.slyip.net
 557.slyip.net
-557.uk.to
 557869.com
 55832.com
 559.flnet.org
@@ -1618,7 +1616,6 @@
 8762.app
 8764.app
 8781.me
-87829.uk
 8784194.com
 878867.com
 88.chatnook.com
@@ -2500,7 +2497,6 @@ anonymous-proxies.net
 anonymous.si
 anonymouse.org
 anonymoussurf.us
-anonymox.net
 anonymus.us
 anonypost.com
 anothermathblog.blogspot.it
@@ -3431,7 +3427,6 @@ biubiu999.net
 bivpn.com
 biwei110.com
 bixin.com
-bixin.im
 biying12.com
 biying35.com
 biz.chuangxincyjm.com
@@ -3819,7 +3814,6 @@ bsurents.com
 bsymtv.site
 bt-king.xyz
 bt4g.org
-bta99.xyz
 btabc.xyz
 btbook.net
 btbtdy.com
@@ -3948,7 +3942,6 @@ bwin00084.com
 bwin01.com
 bwin668893.com
 bwin9099.com
-bwin99815.com
 bwinokd.com
 bwsjb168.com
 bx.in.th
@@ -3958,7 +3951,6 @@ by.bnaz.org
 by.ddns.name
 by.ns01.us
 by0800.com
-by0900.com
 bybit.com
 bygcloud.com
 byj01.com
@@ -4246,7 +4238,6 @@ cdjp.org
 cdn-images.mailchimp.com
 cdn-l-cyberpunk.cdprojektred.com
 cdn-main.plus500.com
-cdn.akamai.steamstatic.com
 cdn.basware-saas.com
 cdn.brand-display.com
 cdn.bscdn.xyz
@@ -4356,7 +4347,6 @@ chaterbate.com
 chathamhouse.org
 chatrandom.com
 chatroom.11cpk.com
-chatroom.156222.co
 chatroom.dsn05.co
 chatroom.dsn101.com
 chatroom.dsn201.co
@@ -4394,7 +4384,6 @@ chic.fat.flnet.org
 chicagoncmtv.com
 chicagoreader.com
 chicagotribune.com
-chichiao.weebly.com
 chick-fil-a.com
 chickenbarrel.org
 chiemtinhviet.com
@@ -4419,7 +4408,6 @@ china.tg
 china.zjnyd.top
 china101.com
 china18.org
-china21.org
 china21century.org
 china3m.jpn.com
 china5000.us
@@ -4477,7 +4465,6 @@ chinauncensored.tv
 chinaway.org
 chinaweb.bsgroup.com.hk
 chinawest.com
-chinawuyi.com
 chinayouth.org.hk
 chinayoutube.com
 chinese-bloggers.com
@@ -4562,10 +4549,8 @@ cinemashop.com
 cinemex.com
 cipfg.org
 cipher.to
-ciprianman.net
 ciproxy.de
 circleofmoms.com
-cirosantilli.com
 cisgroup.hk
 cisp.edu.kh
 cit.ddns.ms
@@ -4790,7 +4775,6 @@ comhealth.xyz
 comic-mega.me
 comments.app
 commissionshops.com
-communistcrimes.org
 communities.win
 community.she.com
 comopresentar.es
@@ -5762,6 +5746,7 @@ dengeki.com
 dentsuaegisnetwork.com
 deqmgur9wakvx.cloudfront.net
 derank.me
+derementeria.cl
 deribit.com
 derpibooru.org
 designwyo.com
@@ -6380,7 +6365,6 @@ efmoe.com
 efratasol.com
 efukt.com
 efxgc.kvbgc.com
-egafd.com
 eggc.com
 eggc111.com
 egotastic.com
@@ -7199,7 +7183,6 @@ free-gate.org
 free-hada-now.org
 free-movie.be
 free-proxy-list.net
-free-proxy.cz
 free-proxyserver.com
 free-proxysite.com
 free-ss.ooo
@@ -8345,7 +8328,6 @@ harvard.edu
 hasznaltauto.hu
 hatena.ne.jp
 hattrick.org
-hautetfort.com
 have8.com
 have8.tv
 hawaiipacifichealth.org
@@ -9009,7 +8991,6 @@ iimodo.com
 iimovie.cc
 iisacc.net
 iitd.ac.in
-ikforums.com
 ikimi.me
 ikk.gr
 iknowthatgirl.com
@@ -9855,7 +9836,6 @@ kenhk.org
 kenigma.org
 kenmitton.com
 kentstudios.net
-kenyons.org
 kerenua.xyz
 kettlebrand.com
 ketubruk.biz
@@ -11754,7 +11734,6 @@ niconode.xyz
 nicotv.cc
 nicovideo.jp
 nicoviii.de
-nicozon.net
 nifty.com
 nifty.org
 night.sclub.tw
@@ -12621,6 +12600,7 @@ play.hbogo.com
 play.kkbox.com
 play.pl
 play.spotify.com
+play.wxw.moe
 playboard.co
 playboyplus.com
 player.fm
@@ -13007,7 +12987,6 @@ puredrifter.com
 purefoodny.com
 puremature.com
 purevpn.com
-puritan.com
 purolatinas.com
 puromarketing.com
 purplelotus.org
@@ -13428,6 +13407,7 @@ rscihoops.com
 rsemtv.site
 rsf.org
 rsiapparel.box.com
+rss.cnn.com
 rsshub.app
 rssing.com
 rstt-lan.ch
@@ -17016,7 +16996,6 @@ www.3001003.com
 www.300avi.com
 www.301hk.com
 www.303xvideos.com
-www.30475.co
 www.30520a.com
 www.30520z.com
 www.315lz.com
@@ -17080,7 +17059,6 @@ www.4hu60.com
 www.4sex4.com
 www.4xspeed.net
 www.500pix.com
-www.50622.co
 www.5138.com.tw
 www.513vpn.com
 www.518363.com
@@ -17379,6 +17357,7 @@ www.animetake.com
 www.anjiasu.com
 www.annasplace.me.uk
 www.anonymousvpn.org
+www.anonymox.net
 www.anonyproz.com
 www.antiwave.net
 www.antvpn.com
@@ -17480,7 +17459,6 @@ www.azattyk.kg
 www.azattyk.org
 www.azattyq.org
 www.aznude.com
-www.b000007.com
 www.b00100.com
 www.b00500.com
 www.b00600.com
@@ -17528,7 +17506,6 @@ www.bb-in.cc
 www.bb-in.org
 www.bb-in.tv
 www.bb-ingames.com
-www.bb000100.com
 www.bb23986.com
 www.bb366.net
 www.bb66.com
@@ -17749,18 +17726,13 @@ www.bway997.com
 www.bwei101.com
 www.bwei8668.com
 www.bwin00082.com
-www.bwin00086.com
 www.bwin668890.com
-www.bwin668897.com
 www.bwin99810.com
 www.bwtiyu.com
-www.by00200.com
 www.by00300.com
-www.by00500.com
 www.by00700.com
 www.by00800.com
 www.by00900.com
-www.by0700.com
 www.bypasscensorship.org
 www.bytick.com
 www.byto18.com
@@ -17870,6 +17842,7 @@ www.china-duebro.com
 www.china-proxy.org
 www.china-review.com
 www.china-week.com
+www.china21.org
 www.china2all.com
 www.chinablog.xyz
 www.chinadmd.com
@@ -17905,6 +17878,7 @@ www.cili8.org
 www.cilifeng.me
 www.cincainews.com
 www.cinetv.site
+www.cirosantilli.com
 www.cite.com.tw
 www.citizen.org
 www.city-journal.org
@@ -17945,6 +17919,7 @@ www.colombogazette.com
 www.coltstudiogroup.com
 www.comcast.com
 www.commdev.org
+www.communistcrimes.org
 www.compassion.ca
 www.comunitatibetana.org
 www.concreteflux.com
@@ -18200,10 +18175,12 @@ www.economie.gouv.qc.ca
 www.ecotibet.org
 www.ecpowergroup.com
 www.eddid.com.hk
+www.eddie.idv.tw
 www.edicionesdharma.com
 www.edninfo.com
 www.eduweb.idv.tw
 www.efcc.org.hk
+www.egafd.com
 www.egaleonews.bravehost.com
 www.eggxv.com
 www.ehime-np.co.jp
@@ -19241,6 +19218,7 @@ www.kcai336.com
 www.kcai969.com
 www.keenow.com
 www.kendes.nl
+www.kenyons.org
 www.keppelland.com
 www.kernpunkt.de
 www.kfc2000.com
@@ -19256,7 +19234,6 @@ www.kimo.com
 www.kimo.com.tw
 www.kimomm.com
 www.kinetin.com.tw
-www.king5.com
 www.kingbally.com
 www.kingdomsalvation.org
 www.kinokuniya.co.jp
@@ -19623,7 +19600,6 @@ www.mushroomtube.com
 www.music.ivi.ru
 www.musicacopyleft.es
 www.musicade.net
-www.musicdish.com
 www.muslimtents.com
 www.muzik-online.com
 www.mvclub.net
@@ -20058,6 +20034,7 @@ www.pureland-buddhism.org
 www.purevpn.com.tw
 www.purevpn.net
 www.purifymind.com
+www.puritan.com
 www.pursuestar.com
 www.pusstv.com
 www.pussyspace.com
@@ -20193,7 +20170,6 @@ www.rightheart.org
 www.rights-practice.org
 www.rightware.com
 www.rigpa.org
-www.rigzod.org
 www.rihk.com
 www.ritsumei-arsvi.org
 www.rlcinvest.com
@@ -22002,7 +21978,6 @@ ys0.ballbet4.com
 ys138.win
 ys3302.com
 ys7771.com
-ys7773.com
 ys85.net
 ys8805.com
 yscconnector.com
