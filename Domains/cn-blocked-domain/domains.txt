@@ -53,6 +53,7 @@
 02.servebbs.org
 0200sc.com
 0203.org
+023.chocalanwines.com
 023432.com
 0235.com
 0235mm.com
@@ -768,6 +769,7 @@
 330557.com
 330558.com
 3308yh.com
+331.chocalanwines.com
 332.duckdns.org
 333.effers.com
 33339.com
@@ -951,6 +953,7 @@
 43xccp.com
 44.04.homeunix.org
 44003885.com
+443.chocalanwines.com
 443blog.cf
 4445511.com
 446498.com
@@ -1049,7 +1052,6 @@
 51xcps.com
 51xmtv.com
 51xtv.net
-52.chatnook.com
 52.cr.rs
 52.my.to
 52.onmypc.net
@@ -1538,7 +1540,6 @@
 816.microcycas.com
 81666.com
 818pb.com
-819dcea5.itgefbf.com
 82.cr.rs
 82.effers.com
 82.solfa.org
@@ -2401,7 +2402,6 @@ americanradiohistory.com
 americanthinker.com
 americnaas.com.br
 americorps.gov
-amh1111.com
 amh6666.com
 aminoapps.com
 amis-tibet.lu
@@ -2928,7 +2928,6 @@ b.cr.rs
 b.etowns.net
 b.hd36.win
 b.hoob.us
-b.mb2.host
 b.mome.pro
 b.spagettitoast.com
 b.we55.us
@@ -3022,7 +3021,6 @@ baidu-sex.com
 baidu.ehrenreich.ca
 baidu.masonic-lodge.ca
 baidu.swmbudokan.com
-baidu.viapoli.com
 baidud.com
 baidufl.tk
 baiduyun.me
@@ -3430,7 +3428,6 @@ bitvise.com
 bityard.com
 bityun.org
 biubiu999.net
-bivipsil.org
 bivpn.com
 biwei110.com
 bixin.com
@@ -4073,6 +4070,7 @@ cacnw.com
 cacss.me
 cactusvpn.com
 cadal.org
+cafe.naver.com
 cafedots.com
 cafegoodnews.com
 cafepress.com
@@ -4089,11 +4087,9 @@ cam4.sg
 camdenbeast.weebly.com
 camdough.com
 camdvr.org
-cameleo.ru
 camfrog.com
 camiscia.com.ar
 camolist.com
-campbellshawsteel.net
 cams.com
 cams.org.sg
 camscreative.com
@@ -4272,7 +4268,6 @@ cdn.trackjs.com
 cdn.tranquilli.org
 cdn.we-cc.xyz
 cdn.we-cc1.xyz
-cdn.we-cc5.xyz
 cdn.zgjznkyy.com
 cdn.zhongfangletou.com
 cdn2.ettoday.net
@@ -4362,7 +4357,6 @@ chathamhouse.org
 chatrandom.com
 chatroom.11cpk.com
 chatroom.156222.co
-chatroom.cpk09.com
 chatroom.dsn05.co
 chatroom.dsn101.com
 chatroom.dsn201.co
@@ -4517,7 +4511,6 @@ chn.the-liberty.com
 chnarchive.chosun.com
 chng.it
 chnroute.com
-chocalanwines.com
 chocolatkey.com
 chodientu.vn
 choicehotels.com
@@ -4609,7 +4602,6 @@ ckk.chatnook.com
 cl.1024cl.org
 clapaftis.com
 claro.com.br
-class.ruten.com.tw
 classical-iconoclast.blogspot.co.uk
 classicalhistorian.com
 classicporn.com
@@ -5039,7 +5031,6 @@ cy.cynaver.com
 cyber-berkut.org
 cyber-insider.com
 cyberbase.agglo-pau.fr
-cyberchango.tk
 cyberctm.com
 cyberfusion.com.au
 cyberghost.natado.com
@@ -5056,7 +5047,6 @@ cyl999.com
 cyoutube.com
 cyprus-mail.com
 cysll.com
-cytosys.com
 czjy.twoseed.com.cn
 czkxj.somee.com
 d.32tv.xyz
@@ -5546,7 +5536,6 @@ dadazim.com
 dadge.fr
 dadi360.com
 daf4fsa6m92ni.cloudfront.net
-dafa2030.com
 dafa888.com
 dafabet.com
 dafahao.com
@@ -5773,7 +5762,6 @@ dengeki.com
 dentsuaegisnetwork.com
 deqmgur9wakvx.cloudfront.net
 derank.me
-derementeria.cl
 deribit.com
 derpibooru.org
 designwyo.com
@@ -7805,6 +7793,7 @@ go.ss-get.com
 go123.ml
 go2av.com
 go2free.xyz
+go2win.vip
 go365.ml
 go5.dev
 go8989.net
@@ -9707,7 +9696,6 @@ jtbc.joins.com
 jtek.pro
 jtfx.mobi
 jtizyl.net
-jtl-software.de
 jtzgcd.neocities.org
 ju11.net
 juggworld.com
@@ -10610,7 +10598,6 @@ m.ca821.com
 m.ca88vip.com
 m.ca951.com
 m.cabet588.com
-m.cafe.naver.com
 m.dy9907.com
 m.dy9909.com
 m.dzcp8999.com
@@ -10952,6 +10939,7 @@ mec.gov.br
 media.aalah.me
 media.discordapp.net
 media.githubusercontent.com
+media.lanecrawford.com
 media.transformativeworks.org
 mediabistro.com
 mediafiretrend.com
@@ -12633,7 +12621,6 @@ play.hbogo.com
 play.kkbox.com
 play.pl
 play.spotify.com
-play.wxw.moe
 playboard.co
 playboyplus.com
 player.fm
@@ -13765,6 +13752,7 @@ seodirectorysites.blogspot.in
 sep.org.au
 sephora.com
 ser.freeddns.com
+sertanejas.net
 servebbs.com
 serveftp.com
 service.kvbgc.com
@@ -16525,7 +16513,6 @@ werktab.com
 wessely.ca
 westca.com
 westernshugdensociety.org
-westkit.net
 westworldss.com
 wethinker.com
 wetplace.com
@@ -17197,7 +17184,6 @@ www.828968.com
 www.8356156.com
 www.837881.com
 www.857zhibo.tv
-www.873447.com
 www.877369.com
 www.87bifa.com
 www.88-line.com
@@ -17371,6 +17357,7 @@ www.amateurs-gone-wild.com
 www.ambjl20.com
 www.america.gov
 www.americandistilling.com
+www.amh1111.com
 www.amnesty.ca
 www.amnesty.ch
 www.amnesty.nl
@@ -21074,7 +21061,6 @@ www.winter-company.com
 www.wireguard.io
 www.wisc-online.com
 www.witnessleeteaching.com
-www.wittistribune.com
 www.wivesinpantyhose.com
 www.wixhk.com
 www.wixsite.com
@@ -22033,7 +22019,6 @@ yt3.ggpht.com
 ytchannelembed.com
 ytkg8.com
 ytmp3.cc
-ytpub.com
 ytub.com
 ytvpn.com
 yu.slyip.net
