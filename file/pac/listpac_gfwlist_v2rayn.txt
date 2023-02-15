@@ -1,5 +1,5 @@
-# Checksum: MTY3NjMzOTA3Mgo=
+# Checksum: MTY3NjQyNTQ2MQo=
 # Title: Trli's GFWList for v2rayN
-# TimeUpdated: 2023-02-14T09:44:32+08:00
+# TimeUpdated: 2023-02-15T09:44:21+08:00
 # Expires: 24 hours (update frequency)
 # Homepage: https://file.trli.club:2083/pac/
