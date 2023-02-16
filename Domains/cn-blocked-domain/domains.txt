@@ -10,6 +10,7 @@
 000aa.com
 000webhost.com
 001.100du.us
+001850.com
 001894.com
 001930.com
 001lv.com
@@ -483,6 +484,7 @@
 20180094.com
 20181u.net
 20206003.com
+20206060.com
 202099600.com
 2022let.com
 203171.com
@@ -1368,7 +1370,6 @@
 710a5.com
 710a7.com
 711.nets.hk
-711ddd.net
 7140090.com
 71588.com
 718074.com
@@ -1766,7 +1767,6 @@
 95wen.com
 95xae.com
 96.freebieit.com
-96000sc.com
 96231a.com
 964.net
 967802.com
@@ -1909,6 +1909,7 @@ a.mb2.host
 a.ssd2.bid
 a.temporaryrecord.com
 a.vvvglass.com
+a.yigese.us
 a0775xpj.com
 a1.2112svt.work
 a1007.dspw43.akamai.net
@@ -1919,6 +1920,7 @@ a248.e.akamai.net
 a2zapk.com
 a3236.com
 a3285.net
+a3678.com
 a394cbd382.xyz.global.prod.fastly.net
 a3n2g4b3.stackpathcdn.com
 a444yl.com
@@ -2153,7 +2155,6 @@ aetoscg.com
 afaa.it
 afcp.com
 afcp01.com
-afcp02.com
 afcp03.com
 afcp04.com
 afcp05.com
@@ -2326,7 +2327,6 @@ alt-shells.readynas.com
 alt.com
 altavista.com
 altimiras.cl
-altop.vn
 altovidrio.cl
 altpress.com
 altvpn.com
@@ -3606,7 +3606,6 @@ bod.asia
 bodenwart.at
 bodog.cn
 bodog27.com
-bodog292.com
 bodog85.com
 bodog88.com
 bodog888.com
@@ -4190,7 +4189,6 @@ cdn.trackjs.com
 cdn.tranquilli.org
 cdn.we-cc1.xyz
 cdn.zgjznkyy.com
-cdn.zhongfangletou.com
 cdn2.ettoday.net
 cdn4.telegram-cdn.org
 cdn4.telesco.pe
@@ -4251,7 +4249,6 @@ cgst.edu
 ch.shvoong.com
 ch.videosection.com
 ch5.cc
-chaegeoni.duckdns.org
 chains.co
 championquizzer.in
 change.org
@@ -6518,7 +6515,6 @@ europapress.es
 europe-west1-mth-web.cloudfunctions.net
 europe-west1-ottplay.cloudfunctions.net
 europornstar.com
-eurostreaming.tv
 evchk.fandom.com
 evchk.wikia.com
 evchk.wikia.org
@@ -7566,7 +7562,6 @@ ggg626.net
 ggjav.com
 ggso.co
 ggso.me
-ggtatv.com
 ggtt8865.xyz
 gh.effers.com
 gh0028.com
@@ -7885,6 +7880,7 @@ googlr.com
 goojara.ch
 goolge.com
 gooogle.com
+goosevpn.com
 gopanda-b26fa.firebaseio.com
 gopetition.com
 goproxing.com
@@ -9385,6 +9381,7 @@ jhakhang.com
 jhalderm.com
 jhpass.somee.com
 jiafen.strikingly.com
+jiakai.newsblur.com
 jiangweiping.com
 jiangzemin.com
 jianminchina.com
@@ -10606,7 +10603,6 @@ mandelbaer.li
 mandelkatze.ch
 mandev.rfaweb.org
 manga-town.net
-mangapanda.com
 mangareader.com
 mangmang.run
 mango.pl
@@ -11495,7 +11491,6 @@ news24.co.za
 newsancai.com
 newsbeezer.com
 newsbeunity.com
-newsblur.com
 newsbreak.com
 newsdigest.jp
 newser.com
@@ -12208,7 +12203,6 @@ pay.v2ex.org
 pay2go.xyz
 payserve.com
 paysimple.com.com
-payssav.com
 pb1lib.org
 pbassociates.biz
 pbl.nl
@@ -12220,6 +12214,7 @@ pbxes.org
 pc.olife.org
 pc.php5.us
 pc4328.com
+pca.org
 pcdasm.flnet.org
 pcdvd.com.tw
 pcij.org
@@ -12901,7 +12896,6 @@ qubxv.com
 queerpixels.com
 quick.likeso.ml
 quickleft.net
-quickpix.co.za
 quickpornsearch.com
 quickvpn.lipisoft.com
 quit3.vacau.com
@@ -13046,7 +13040,6 @@ redtube.com.br
 redtv.cc
 referer.us
 refind.com
-reg.gldcz.com
 regabri.cl
 register.plotiohk-acc.com
 reimu.net
@@ -13254,6 +13247,7 @@ runoutfor.life
 rushlimbaugh.com
 russianproxy.ru
 russiasexygirls.com
+rusvpn.com
 rutnerspazzacamino.ch
 rutube.ru
 rv55.com
@@ -14228,6 +14222,7 @@ sulian.me
 sum.bbbccd.com
 summify.com
 sumrando.com
+sun035.com
 sun053.com
 sun241.com
 sun303.com
@@ -14462,7 +14457,6 @@ tcav.tv
 tccwonline.org
 tcdw-84f59.firebaseio.com
 tcewf.org
-tch15.medici.tv
 tcl.com
 tcnr2016.netne.net
 tcrn.ch
@@ -15200,6 +15194,7 @@ tvider.com
 tvmost.com.hk
 tvnet.lv
 tvplayvideos.com
+tvuol.uol.com.br
 tvyoutube.com
 tw-s1.fatvpn.ml
 tw.answers.yahoo.com
@@ -15509,7 +15504,6 @@ us2.vpnme.me
 us23.chatzy.com
 usahealth.xyz
 usaip.eu
-usairways.com
 usawebproxy.com
 usawebproxy.net
 usb3.gq
@@ -16965,6 +16959,7 @@ www.941hd.com
 www.94xx.com
 www.958476.com
 www.958b.com
+www.96000sc.com
 www.96vpn.com
 www.97933.com
 www.986.com
@@ -17907,6 +17902,7 @@ www.e8777.com
 www.e8781.com
 www.e8797.com
 www.e8832.com
+www.e8833.com
 www.e8951.com
 www.e89911.com
 www.e89988.com
@@ -17999,6 +17995,7 @@ www.esbline.net
 www.esperanto-gb.org
 www.esukhia.org
 www.etas.com
+www.etmall.com.tw
 www.etop.idv.tw
 www.ets.edu.hk
 www.eucasino.com
@@ -18475,7 +18472,6 @@ www.goulburnpost.com.au
 www.gov.org
 www.govbooks.com.tw
 www.gowanbo.cc
-www.gpk01.com
 www.gqznh.cfd
 www.grandeast.com.tw
 www.grandis.nu
@@ -18874,6 +18870,7 @@ www.javli6.com
 www.javpee.com
 www.javzoo.com
 www.jb33275.com
+www.jbb0016.com
 www.jbbbet.com
 www.jblshow.com
 www.jbo02.com
@@ -19255,7 +19252,6 @@ www.mecloud.fun
 www.media.org.hk
 www.mediafactory.co.jp
 www.mediamatters.org
-www.mediamaxnetwork.co.ke
 www.megaupload.byethost7.com
 www.meiemaa.ee
 www.meiju11.com
@@ -19346,6 +19342,7 @@ www.monstercurves.com
 www.moon-bbs.com
 www.moorburn.com
 www.moreechampion.com.au
+www.morningstar.co.uk
 www.morningstar.com
 www.motherjones.com
 www.movescount.com
@@ -19449,6 +19446,7 @@ www.newindianexpress.com
 www.newproxylist.net
 www.news100.com.tw
 www.news24.com
+www.newsblur.com
 www.newschinacomment.org
 www.newsclick.in
 www.newsmax.com
@@ -19945,6 +19943,7 @@ www.rocmgov.org
 www.rolfoundation.org
 www.rolia.net
 www.roomorama.com
+www.rosenheim24.de
 www.rosi68.com
 www.roskam.nl
 www.rostones.com
@@ -19987,6 +19986,7 @@ www.sakuravpn.com
 www.saloncs.com
 www.saloncs.com.tw
 www.sandsmacao.com
+www.saneuschinapolicy.org
 www.sangong-recht.de
 www.saporedicina.it
 www.sarasdiyhealth.com
@@ -21406,6 +21406,7 @@ xpeeps.com
 xphimheo.com
 xpj18290.com
 xpj1918.com
+xpj57888.com
 xq.dnsget.xyz
 xq.healthorg.xyz
 xr09s0897.vooreeno.com
@@ -21860,7 +21861,6 @@ zaloapp.com
 zampach.ee
 zapkolik.com
 zapto.org
-zb.xpj57888.com
 zb8088.com
 zb85.com
 zb8988.com
@@ -22002,7 +22002,6 @@ zlibcdn2.com
 zlibrary.org
 znrw.4.688.org
 zodgame.xyz
-zoemama.com
 zom.im
 zombags.com
 zomobo.net
@@ -22091,6 +22090,7 @@ zzw.heathwebsite.xyz
 zzx.dnsdyn.xyz
 zzx.dnsfree.xyz
 zzx.dnsget.xyz
+zzx.dnsgood.xyz
 zzx.dnsmail.xyz
 zzx.dnsser.xyz
 zzx.dnssite.xyz
