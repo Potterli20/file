@@ -36,6 +36,7 @@
 01.bit.ddns.ms
 01.buyshouses.net
 011000001.com
+011000040.com
 01100011a.com
 01100033a.com
 0110004440.com
@@ -1443,7 +1444,6 @@
 7765aa.com
 7765bb.com
 7765ee.com
-776661.com
 777.aiwin9.com
 777.asiabet11.com
 777.ctjdb166.com
@@ -4109,7 +4109,6 @@ caxata.com
 cb02.cedsip.org
 cbc.ca
 cbfoot.com
-cbimtv.site
 cbn.org
 cbsn.ws
 cbtc.org.hk
@@ -4244,7 +4243,6 @@ cgdepot.org
 cgn-sa.cl
 cgpay.pw
 cgst.edu
-ch.shvoong.com
 ch.videosection.com
 ch5.cc
 chains.co
@@ -5483,6 +5481,7 @@ damon-baker.com
 damplips.com
 dan-cloud.com
 danbooru.donmai.us
+dance.com
 dancemeets.com
 dancingbear.com
 dang7.ns01.biz
@@ -7949,7 +7948,6 @@ gstf.org
 gt3333.com
 gt5.332k.tk
 gt5533.com
-gt7h.fat.flnet.org
 gt8f.4u.cr.rs
 gtinfo.com.ar
 gtloli.com
@@ -7976,6 +7974,7 @@ gudanglagu.com
 guge.io
 guidaili.com
 guides.yoosecurity.com
+guildanimus.com
 guilty-soft.com
 gumroad.com
 gun999.tv
@@ -8660,7 +8659,6 @@ httwww.ossxtv.com
 hu1lib.org
 huaglad.com
 huaile.me
-huan.moe
 huanyin.org
 huaren.us
 huarian.com
@@ -12226,6 +12224,7 @@ pcisecuritystandards.org
 pcmarket.com.hk
 pcpxv.xyz
 pcstore.com.tw
+pcwelt.de
 pd.todytps.com
 pda.giuffre.it
 pdproxy.com
@@ -12329,6 +12328,7 @@ pic5.pixclub.net
 picaccomic.com
 picacomic.com
 picasa.com
+picasaweb.com
 picidae.net
 picnik.com
 picsart.com
@@ -12660,7 +12660,6 @@ prolink.pl
 pron.tv
 pronetsyscr.com
 pronhub.com
-proporn.com
 propub.li
 prospectmagazine.co.uk
 prostore.ru
@@ -13484,7 +13483,6 @@ secure.shadowsocks.nu
 secure.uncp.edu
 securecdn.oculus.com
 securecupuk6.fuhuisupport.com
-secureornot.blogspot.co.il
 securevpn.com
 securingdemocracy.gmfus.org
 securitales.com
@@ -13858,6 +13856,7 @@ socialequality.com
 socialequality.org.uk
 socialism.org.tw
 socialnomad.com
+sockboom.com
 sockboom.org
 socks-mall.com
 sockscap64.com
@@ -14998,6 +14997,7 @@ trace.org
 tracker.chdbits.org
 tracker.hdsky.me
 tracking.rb88.com
+trade.auth0.com
 trade.kgiworld.com
 tradeadexchange.com
 trader.lcg.com
@@ -15183,6 +15183,7 @@ tv365.cf
 tv5.spacetechnology.net
 tv55.ga
 tv555.ml
+tv72.ga
 tvants.com
 tvbddd.com
 tvbhhh.com
@@ -16388,6 +16389,7 @@ wk.chatnook.com
 wk.homenet.org
 wk.strangled.net
 wk13.ddns.me
+wkb.idv.tw
 wknews.org
 wl.dnssite.xyz
 wl.healthorg.xyz
@@ -17970,6 +17972,7 @@ www.emta.ee
 www.enanyang.my
 www.encoreintl.com
 www.energy-community.org
+www.enginess.io
 www.englishbymichael.com
 www.englishcentral.com
 www.englishdaily626.com
@@ -18497,7 +18500,6 @@ www.grjsq.me
 www.grneggs.com
 www.gruenbeck.de
 www.gsm.ir
-www.gsmvideocameras.com.com
 www.gspot-discuss.com
 www.gt3322.com
 www.gtja.com.hk
@@ -18530,7 +18532,6 @@ www.halifax.co.uk
 www.halihali.tv
 www.handelsblatt.com
 www.handelsblatt.de
-www.hanjutv.com
 www.hanjutv2020.com
 www.hansshih.com
 www.hanunyi.com
@@ -19121,6 +19122,7 @@ www.life-1s.com
 www.lifespacex.com
 www.lifetvcn.com
 www.lifevantage.idv.tw
+www.lightnovel.cn
 www.ligui.com
 www.liisex.com
 www.limetorrents.cc
@@ -19646,7 +19648,6 @@ www.phototruth.net
 www.pi88.com
 www.pi88.net
 www.piaproxy.net
-www.picasaweb.com
 www.pichunter.com
 www.pickyuhome.net
 www.picmonkey.com
@@ -19764,6 +19765,7 @@ www.projectfreetv.ch
 www.promostyl.com
 www.pronode.net
 www.propertynl.com
+www.proporn.com
 www.providencehk.com
 www.proxicate.net
 www.proxies.us
@@ -19830,7 +19832,6 @@ www.qporno.com
 www.qq-av.com
 www.queanbeyanage.com.au
 www.queensnake.com
-www.quilt.idv.tw
 www.quotev.com
 www.quran-radio.com
 www.qwe18.com
@@ -19923,6 +19924,7 @@ www.rfachina.com
 www.rferl.mobi
 www.rfiplaneteradio.org
 www.rge.com
+www.rhcloud.com
 www.rhein-zeitung.de
 www.rheinpfalz.de
 www.rhumdefrance.com
@@ -20163,6 +20165,7 @@ www.soundofhope.kr
 www.soundon.fm
 www.sourcemap.com
 www.southwalesargus.co.uk
+www.southwalesguardian.co.uk
 www.sovpn.net
 www.spank2u.com
 www.sparklabs.com
@@ -20791,6 +20794,7 @@ www.wikipedia.aufe.cf
 www.wikipedia.aust.cf
 www.wikipedia.co.uk
 www.wikipedia.ecnu.cf
+www.wikipedia.fr
 www.wikipedia.hfut.cf
 www.wikipedia.nl
 www.wikiquote.org
@@ -20816,7 +20820,6 @@ www.wixsite.com
 www.wizproxy.com
 www.wjbookny.com
 www.wjsnr.com
-www.wkb.idv.tw
 www.wkek.net
 www.wmfield.idv.tw
 www.wmzcn.com
@@ -21641,6 +21644,7 @@ yingmang.com
 yippy.com
 yiqiedoushiganggangkaishi.org
 yiqisheji.com
+yiyocloud.com
 yizhihongxingss.com
 yj.healthonsite.xyz
 yj1.b96dure93e9.pw
