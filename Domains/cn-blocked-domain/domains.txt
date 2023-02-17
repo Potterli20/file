@@ -448,6 +448,7 @@
 1lib.fr
 1lib.net
 1lib.org
+1lib.ph
 1lib.pl
 1lib.tw
 1lib.us
@@ -835,7 +836,6 @@
 36mm.net
 36mmm.net
 36nn.net
-36pp.net
 36rr.net
 36tt.net
 37.wha.la
@@ -2006,6 +2006,7 @@ abem.org
 abercrombie.com
 abet.cc
 ability.kir.jp
+abin.twidv.com
 ablebrain.us
 ablo.live
 ablwang.com
@@ -2383,8 +2384,6 @@ amtyc10000.com
 amuniverse.6te.net
 amvs66.com
 amws0077.com
-amws1100.com
-amws1133.com
 amws2200.com
 amws2266.com
 amws5544.com
@@ -2682,7 +2681,6 @@ asiamoviepass.com
 asian-boy-models.com
 asian18tube.com
 asianclassics.org
-asiancorrespondent.com
 asianews.it
 asianpornmovies.org
 asianresearch.org
@@ -2755,7 +2753,6 @@ atyoutube.com
 auctions.yahoo.co.jp
 auctmarts.com
 audio.voh.com.tw
-audiobar.net
 audioboom.com
 audiobro.com
 audioloud.com.br
@@ -2921,6 +2918,7 @@ b4e2.4.688.org
 b5.fe100.net
 b5.secretchina.com
 b5266.com
+b5505.com
 b582.com
 b586.com
 b595.com
@@ -4254,7 +4252,6 @@ changenow.io
 changhuanews.com
 changken.idv.tw
 changp.com
-channelfourteen.com
 channelnewsasia.com
 chanzuckerberg.com
 chaosmen.com
@@ -5567,7 +5564,6 @@ dca.ca.gov
 dcard.cc
 dcard.tw
 dcdbjkjn.fzgyh.com
-dchome.net
 dcj0f5wks23rq.cloudfront.net
 dczn9on5fqkkt.cloudfront.net
 dd.ns01.us
@@ -7779,6 +7775,7 @@ google.com.bd
 google.com.bn
 google.com.br
 google.com.cy
+google.com.do
 google.com.ec
 google.com.fj
 google.com.gh
@@ -8268,6 +8265,7 @@ hellovpn.app
 helloyoutube.com
 hellporno.com
 hells.pl
+help.learn.mulesoft.com
 help.opera.com
 help.overdrive.com
 help.weebly.com
@@ -8559,7 +8557,6 @@ hooters.com
 hootsuite.com
 hop3.lflinkup.com
 hopechannel.eu
-hopefulgeranium.blogspot.co.nz
 hopetv.org
 hopkins-consulting.com
 hopto.org
@@ -9222,7 +9219,6 @@ j2976.com
 j3.5525.eu.org
 j3083.com
 j32aa.com
-j35897.com
 j4b4.com
 j513.site
 j5681.com
@@ -9431,6 +9427,7 @@ jk-sexvideos.com
 jk.jetos.com
 jk.sf.zoo.flnet.org
 jkb.cc
+jksp03.cc
 jlc01.com
 jmail.media.org.hk
 jmcomic.asia
@@ -9503,6 +9500,7 @@ js094360.com
 js221.com
 js22222.com
 js223.com
+js3555.com
 js430886.com
 js513636.com
 js77777.com
@@ -9856,6 +9854,7 @@ kvbprime.me
 kvbr.com
 kwcg.ca
 kwfq.tk
+kwickservers.com
 kwok7.com
 kwp.twgg.org
 kxsw.life
@@ -12005,6 +12004,7 @@ openvpn.com
 openvpn.net
 openvpn.org
 openvpn.se
+opera-mini.ru
 oplaneta.com
 opml.radiotime.com
 opulencebespoke.com
@@ -12976,6 +12976,7 @@ rategf.com
 rationalwiki.org
 ravencoinipfs-gateway.com
 rawgit.com
+rawgithub.com
 rawstory.com
 rayer.idv.tw
 raym.ca
@@ -13066,6 +13067,7 @@ research.gavekal.com
 research.googleblog.com
 resilio.com
 resolver4.dns.openinternet.io
+resource.thermofisher.com
 restaurantgraf.ro
 restauranticos.com
 restofworld.org
@@ -13292,6 +13294,7 @@ s2.reutersmedia.net
 s2.scieron.com
 s2.slyip.com
 s2.soon.it
+s20.tiktokcdn.com
 s22.slyip.net
 s222.org
 s3-ap-northeast-1.amazonaws.com
@@ -13659,6 +13662,7 @@ shit.com
 shiwuyuetian.xyz
 shizhao.org
 shoebridge.me.uk
+shoebridge.org.uk
 shooshtime.com
 shop.cwbook.com.tw
 shop.tm
@@ -14144,6 +14148,7 @@ stheadline.com
 sthoo.com
 stickam.com
 stikot.tk
+stillwaterexpress.com
 stimme-de.de
 stitcher.com
 stm32f4-discovery.net
@@ -14408,6 +14413,7 @@ tangben.com
 tangents.us
 tango.me
 tangren.us
+tangu.nextbang.com
 tanzil.net
 tao.vg
 taobonfu.com
@@ -14619,6 +14625,7 @@ thehitechhouse.org
 thehousenews.com
 thehousenewsbloggers.net
 thehun.com
+thehun.net
 theindependent.sg
 theinitium.com
 theintercept.com
@@ -14755,6 +14762,7 @@ tibetdata.github.io
 tibetencostarica.com
 tibetexpress.net
 tibetfund.org
+tibetgermany.com
 tibethouse.jp
 tibethouse.org
 tibethouse.us
@@ -15737,7 +15745,6 @@ vip-platform.com
 vip.668cp.co
 vip.77xbgg.com
 vip.88xbgg.com
-vip.9aaa3.com
 vip1615.com
 vip370.cc
 vip5.88xbgg.com
@@ -16512,6 +16519,7 @@ wu.domain888.pw
 wufi.org.tw
 wujieliulan.com
 wujunying004.jigsy.com
+wuso.52lu.app
 wuwei.ca
 ww-cc.xyz
 ww-cc1.xyz
@@ -16752,6 +16760,7 @@ www.300avi.com
 www.301hk.com
 www.303xvideos.com
 www.30520a.com
+www.30k.com
 www.315lz.com
 www.3178zz.com
 www.32228.com
@@ -18393,6 +18402,7 @@ www.ginx.com
 www.girl127.com
 www.girlchina.com
 www.girlfriendsfilms.com
+www.github.com
 www.gkfx.co.uk
 www.glaruntech.com
 www.glaw.us
@@ -18436,7 +18446,6 @@ www.google.com.bo
 www.google.com.bz
 www.google.com.cn
 www.google.com.cu
-www.google.com.do
 www.google.com.eg
 www.google.com.kh
 www.google.com.kw
@@ -20141,7 +20150,6 @@ www.slot.com.tw
 www.slutroulette.com
 www.smallte.ch
 www.smartcardmacao.com
-www.sn88cn.com
 www.socialmediawall.me
 www.socialnmobile.com
 www.socketpro.help
@@ -20821,6 +20829,7 @@ www.wizproxy.com
 www.wjbookny.com
 www.wjsnr.com
 www.wkek.net
+www.wmd.org
 www.wmfield.idv.tw
 www.wmzcn.com
 www.wn.com
@@ -20937,7 +20946,6 @@ www.xiumima.com
 www.xiuren.org
 www.xizibook.com
 www.xj1996.com
-www.xj9928.com
 www.xlgirls.com
 www.xm.co.uk
 www.xmail.net
@@ -20954,6 +20962,7 @@ www.xuehua.tw
 www.xuekb.com
 www.xvbelink.com
 www.xvideos.com.es
+www.xvideos.org.ua
 www.xw256.com
 www.xw283.com
 www.xw292.com
@@ -21063,6 +21072,7 @@ www.yrcr4.com
 www.yrcr7.com
 www.yrcr8.com
 www.ys7000.com
+www.ysb88cn.com
 www.ysifx.com
 www.ytbit.com
 www.yuebet.com
@@ -21085,6 +21095,7 @@ www.yy67985.com
 www.yy80030.com
 www.yy83532.com
 www.yycili.com
+www.yyty.live
 www.yzc212.com
 www.yzc216.com
 www.yzc222.com
