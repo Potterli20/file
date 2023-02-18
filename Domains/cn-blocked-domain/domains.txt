@@ -226,7 +226,6 @@
 11youtube.com
 12.4dq.com
 12.com
-12001.com
 1208zp.com
 12212a.com
 12223nn.com
@@ -984,7 +983,6 @@
 4cbd1.azurewebsites.net
 4cdn.org
 4chan.com
-4chan.org
 4drc8.site
 4everproxy.com
 4freemam.myfw.us
@@ -1200,7 +1198,6 @@
 60cp08.com
 60cp09.com
 60cp3.com
-60cpydl3.com
 61000sc.com
 612fund.hk
 6162.cc
@@ -1593,7 +1590,6 @@
 868800.vip
 86900su.com
 86euro.com
-87.webhop.org
 870164.com
 87080.com
 8713.app
@@ -2501,6 +2497,7 @@ api-login.kkbox.com.tw
 api-secure.recaptcha.net
 api.amplitude.com
 api.api.ai
+api.arcadia.888pinb.com
 api.arcadia.pncle8.com
 api.df1617.com
 api.dmc.nico
@@ -3598,6 +3595,7 @@ bnaz.org
 bnbzaubernuss.ch
 bnf7.ras.flnet.org
 bo92.ga
+boards.4chan.org
 boards.4channel.org
 bob.com
 bobopash.weebly.com
@@ -6457,6 +6455,7 @@ esbi8.com
 esccc.org.au
 escortforumit.xxx
 escortguide.co.uk
+esi1.87.webhop.org
 esjzone.cc
 esjzone.net
 eskimotube.com
@@ -7541,6 +7540,7 @@ gfbv.de
 gffx8.com
 gfurlan.com.br
 gfvpn.com
+gfw.wtf
 gfwairport.icu
 gfwatch.org
 gfx47.com
@@ -9586,6 +9586,7 @@ k6.ac7074a8.com
 k6.c7b44558.org
 k6.g126eaf0.net
 k60702.com
+k6v8.la.idrivee2-46.com
 k7205.com
 k7206.com
 k8.com
@@ -12115,6 +12116,7 @@ p5562.com
 p5662.com
 p5933.com
 p5z8l.r5.cr.rs
+p6533.com
 p6552.com
 p6696.com
 p7666.com
@@ -12915,6 +12917,7 @@ qycz.org
 qz.com
 qztv01.co
 r.hunnur.com
+r.ro.lt
 r.twimg.com
 r18.clickme.net
 r3---sn-uxa0n-t8gz.xn--ngstr-lra8j.com
@@ -14188,6 +14191,7 @@ streetblowjobs.com
 strelchenok.com
 stripchat.com
 stripes.com
+sts1069.com
 stte.eu
 stuarttown.com.au
 stuarttown.org.au
@@ -14476,6 +14480,7 @@ teachparentstech.org
 teamskeet.com
 teamtest.in
 teapartycommunity.com
+techblog.netflix.com
 techdata.com
 technews.tw
 technik-specials.de
@@ -15685,7 +15690,6 @@ vft.com.tw
 viabilinvest.com
 viber.com
 vibiznews.com
-vibmotors.ca
 vico.co.za
 victimsofcommunism.org
 vicyh.com
@@ -15877,7 +15881,6 @@ vpn.ht
 vpn.ltha.de
 vpn.mozilla.org
 vpn.net
-vpn.onemore.com.hk
 vpn.totaltools.com.au
 vpn001.jimdo.com
 vpn123.com
@@ -16823,6 +16826,7 @@ www.494hu.com
 www.494itv.site
 www.499210.com
 www.4bc.cc
+www.4chan.org
 www.4gtv.tv
 www.4hu55.com
 www.4hu60.com
@@ -16961,7 +16965,6 @@ www.88tv.live
 www.88xbgg.com
 www.89925.com
 www.8world.com
-www.90100sc.com
 www.91000su.com
 www.91200sc.com
 www.91300sc.com
@@ -17590,6 +17593,7 @@ www.centerforamericannurses.com
 www.centralasian.org
 www.centurys.net
 www.cesi-italia.org
+www.cessnockadvertiser.com.au
 www.cetsedu.org
 www.ceuandalucia.es
 www.cf0009.com
@@ -18198,7 +18202,6 @@ www.freedomnfly.net
 www.freedomonthenet.org
 www.freedur.net
 www.freehk.live
-www.freeinchina.org
 www.freeintertv.com
 www.freelancer.ca
 www.freelxb.com
@@ -18427,7 +18430,6 @@ www.gmail.com.hk
 www.gmfus.org
 www.go-touzi.com
 www.go2av.com
-www.goagent.biz
 www.goagent.org
 www.gobway.com
 www.godgame.com.tw
@@ -19533,7 +19535,6 @@ www.nycu.edu.tw
 www.nydus-vpn.com
 www.nyt.net
 www.nytec.org
-www.nytfilmclub.com
 www.nytimes.org
 www.nytnow.com
 www.nzmao.com
