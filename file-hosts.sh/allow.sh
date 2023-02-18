@@ -344,8 +344,8 @@ for filter_domain_task in "${!filter_domain[@]}"; do
     curl -s -L --connect-timeout 15 "${filter_domain[$filter_domain_task]}" >> ./filter_domain.tmp
 done
 
-cat ./filter_adblock.tmp | grep '^[@@]' | sed '/^$/d' | sed 's/[ ]*//g' | sort -u > allow-adblock.txt
-cat ./filter_domain.tmp | grep -v "#\|!" | sed '/^$/d' | sed 's/[ ]*//g' | sed "/./{s/^/@@||&/;s/$/&^/}" | sort -u > allow-domain.txt
-cat allow-domain.txt allow-adblock.txt | sed '/^$/d' | sed 's/[ ]*//g' | sort -u > allow.txt
+cat ./filter_adblock.tmp | sed 's/[ ]*//g'| grep '^[@@]' | sed '/^$/d' | sort -u > allow-adblock.txt
+cat ./filter_domain.tmp  | sed 's/[ ]*//g' | grep -v "#\|!" | sed '/^$/d' | sed "/./{s/^/@@||&/;s/$/&^/}" | sort -u > allow-domain.txt
+cat allow-domain.txt allow-adblock.txt | sed 's/[ ]*//g' | sed '/^$/d' | sort -u > allow.txt
 
 exit
