@@ -561,6 +561,7 @@
 223rr.net
 223xx.net
 223zz.net
+226.qc.to
 226.slyip.net
 2267k.com
 2267l.com
@@ -772,6 +773,7 @@
 331.chocalanwines.com
 332.duckdns.org
 333.effers.com
+33337543.com
 33339.com
 3333jinsha.com
 33388.com
@@ -1638,6 +1640,7 @@
 888.lzgye.com
 888.suroot.com
 888.sy0606.com
+8880948.com
 88818.com
 88857.org
 888800.co
@@ -1949,7 +1952,6 @@ aa.as.gaw.flnet.org
 aa.slyip.net
 aa00004.com
 aa00006.com
-aa00007.com
 aa00300.com
 aa00500.com
 aa00700.com
@@ -3101,6 +3103,7 @@ bbs.gudicn.com
 bbs.hostevaluate.com
 bbs.imoutolove.me
 bbs.juyuange.org
+bbs.jygnet.org
 bbs.k369.eu.org
 bbs.kanshifang.com
 bbs.kimy.com.tw
@@ -4527,7 +4530,6 @@ cloclo21.cldmail.ru
 close.io
 cloud.bjcluestarvpn.tk
 cloud.ccu.edu.tw
-cloud.feedly.com
 cloud.mail.ru
 cloud4home.de
 cloudatcost.com
@@ -5454,7 +5456,6 @@ dak.jkub.com
 dakaba.club
 dakaba.pw
 dakaba.xyz
-dakimakuri.com
 dalailam.com
 dalailama-archives.org
 dalailama.com
@@ -6796,6 +6797,7 @@ feed43.com
 feedblitz.com
 feedburner.com
 feeder.co
+feedly.com
 feeds.buzzsprout.com
 feeds.digg.com
 feeds.fileforum.com
@@ -8113,7 +8115,6 @@ h5.ldvip097.com
 h5.ldvip30.com
 h5.ldvip40.com
 h5.ldvip66.com
-h5.ldzhibo333.pro
 h5.ledong2046.com
 h5.ledong2053.com
 h5.ledong9.cc
@@ -8222,7 +8223,6 @@ hdmbox.com
 hdrinc.com
 hdtube.porn
 he2911.com
-he95992.com
 headlinestoday.intoday.in
 headproxy.com
 health.businessweekly.com.tw
@@ -9303,7 +9303,6 @@ javdove9.club
 javdove9.xyz
 javdude.com
 javengsub.com
-javeu.com
 javfilm.com
 javfinder.is
 javhd.com
@@ -9392,7 +9391,6 @@ jiji.com
 jike0001.net
 jilw.xyz
 jin321.com
-jinbo666.com
 jinbo989898.com
 jindouyun.live
 jindouyun.tv
@@ -9522,6 +9520,7 @@ jtfx.mobi
 jtizyl.net
 jtzgcd.neocities.org
 ju11.net
+juanjoseflores.com.ar
 juggworld.com
 julesjordan.com
 julienpineault.blogspot.ca
@@ -11094,7 +11093,6 @@ mp.ejdj12.com
 mp.truth.gq
 mp3hub.net
 mp3juices.cc
-mp3juices.se
 mp3quran.net
 mp3truck.net
 mp3wifie.com
@@ -13306,7 +13304,6 @@ s3.ax1x.com
 s3.ca-central-1.amazonaws.com
 s3.eu-central-1.amazonaws.com
 s3.eu-west-2.amazonaws.com
-s3.feedly.com
 s3.radio.co
 s3.us-east-2.amazonaws.com
 s3285.net
@@ -14187,7 +14184,6 @@ streema.com
 streetblowjobs.com
 strelchenok.com
 stripchat.com
-stripes.com
 stte.eu
 stuarttown.com.au
 stuarttown.org.au
@@ -14936,6 +14932,7 @@ tophentaicomics.com
 topiawine.com
 toplistproxy.com
 topmtv.site
+topnews.asia
 toppornsites.com
 topscoliauto.ro
 topshop.sk
@@ -15213,7 +15210,6 @@ tw.artemislena.eu
 tw.bid.yahoo.com
 tw.buy.yahoo.com
 tw.daigobang.com
-tw.hao123.com
 tw.jzbet666.net
 tw.kkbox.com
 tw.knowledge.yahoo.com
@@ -15236,6 +15232,7 @@ tw116.com
 tw3399.com
 tw789.net
 twaud.io
+twbbs.org
 twcnn.net
 tweakwarevpn.net
 tweepml.org
@@ -15789,6 +15786,7 @@ viva-rev2.github.io
 vivaldi.com
 vivatube.com
 vivthomas.com
+vixen.com
 viyoutube.com
 vjav.com
 vjmedia.com.hk
@@ -17004,6 +17002,7 @@ www.a202.net
 www.a6e8.com
 www.a9vpn.com
 www.aa00003.com
+www.aa00007.com
 www.aa00009.com
 www.aa188818.us
 www.aa199919.us
@@ -17104,6 +17103,7 @@ www.amateurallure.com
 www.amateurs-gone-wild.com
 www.ambjl20.com
 www.america.gov
+www.americanamanhasset.com
 www.americandistilling.com
 www.amh1111.com
 www.amnesty.ca
@@ -17160,7 +17160,6 @@ www.arte.de
 www.arte.fr
 www.article19.org
 www.artisu.com
-www.arts.ac.uk
 www.artsculture.club
 www.artstation.com
 www.arunachalpradesh.gov.in
@@ -17363,6 +17362,7 @@ www.bismarck-besmart.com.tw
 www.bit-z.com
 www.bitbankgroup.com
 www.bitcoin.co.id
+www.bitcola.io
 www.bite.lt
 www.bitforex.com
 www.bituan.io
@@ -18992,6 +18992,7 @@ www.kagyu.org.nz
 www.kagyuoffice.org.tw
 www.kaixin.icu
 www.kaka1234.net
+www.kaku5.com
 www.kampogangra.com
 www.kan84.net
 www.kanaloco.jp
@@ -19916,6 +19917,7 @@ www.redwap.me
 www.refdag.nl
 www.refreshss.ml
 www.regardschine.com
+www.relay.com.tw
 www.releaseinternational.org
 www.remotevpn.net
 www.rennlist.com
@@ -20238,6 +20240,7 @@ www.straight.com
 www.straitstimes.com
 www.stranabg.com
 www.stratfor.com
+www.stripes.com
 www.strongvpn.com
 www.strongvpn.net
 www.stupkalnis.lt
@@ -20618,6 +20621,7 @@ www.uswebproxy.com
 www.utas.edu.au
 www.ute.com
 www.utjd.org
+www.utusan.com.my
 www.uu-gg.com
 www.uu-gg.top
 www.uuge.com
@@ -20669,7 +20673,6 @@ www.virtualworldland.com
 www.visiontimes.com.au
 www.visiontimesjp.com
 www.visitmonmouth.com
-www.vixen.com
 www.vk.nl
 www.vkontakte.com
 www.vlive.com
@@ -20844,6 +20847,7 @@ www.wmd.org
 www.wmfield.idv.tw
 www.wmzcn.com
 www.wn.com
+www.wn223.com
 www.wnacg.org
 www.wnflb.com
 www.woaijiejie.com
@@ -20963,6 +20967,7 @@ www.xmfxbroker.com
 www.xnylfcp.com
 www.xpj000888.com
 www.xpj123123.com
+www.xrentdvd.com
 www.xs9999.com
 www.xskywalker.com
 www.xsvc.xyz
@@ -21176,6 +21181,7 @@ www2.jpl.nasa.gov
 www2.watchop.io
 www2.yasegg.com
 www5.kinghost.com
+www5017.com
 www7775678.com
 wwwfacebook.com
 wwwhost.biz
@@ -21440,7 +21446,6 @@ xq.healthorg.xyz
 xr09s0897.vooreeno.com
 xrayjoe.com
 xrel.to
-xrentdvd.com
 xrosee.fr
 xs.domain888.pw
 xs.freepac.pw
@@ -21621,6 +21626,7 @@ ydgj2727.com
 ye168.789888.com
 yeeyi.com
 yegle.net
+yelp.ca
 yenmingtemple.org.au
 yep.xxxy.biz
 yes-news.com
@@ -21674,6 +21680,7 @@ yizhihongxingss.com
 yj.healthonsite.xyz
 yj1.b96dure93e9.pw
 yj1122.com
+yj2.2112sut.com
 yk.dnssite.xyz
 ykhwong.x-y.net
 yl.ejdj12.com
@@ -21707,6 +21714,7 @@ youiv.net
 youiv.tv
 youjizz.com
 youjizzlive.com
+youle295.com
 youmaker.com
 youneed.win
 younganaltryouts.com
