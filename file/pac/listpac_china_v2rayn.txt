@@ -1,5 +1,5 @@
-# Checksum: MTY3NjY4NDQ0MQo=
+# Checksum: MTY3Njc3MTA3Mwo=
 # Title: Trli's ChinaList for v2rayN
-# TimeUpdated: 2023-02-18T09:40:41+08:00
+# TimeUpdated: 2023-02-19T09:44:33+08:00
 # Expires: 24 hours (update frequency)
 # Homepage: https://file.trli.club:2083/pac/
