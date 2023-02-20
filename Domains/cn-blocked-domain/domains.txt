@@ -105,7 +105,6 @@
 068ld.com
 07.homeip.net
 0700sc.com
-07322222.com
 07786pp.com
 07786ss.com
 07786tt.com
@@ -532,6 +531,7 @@
 21xccp.com
 22.cr.rs
 22.ddos.im
+22.eye.rs
 22.flnet.org
 22.gotgeeks.com
 22.jezets.com
@@ -670,6 +670,7 @@
 284.itemdb.com
 287.slyip.net
 28789365.com
+2881010.com
 28853355.app
 288fun.com
 288x.com
@@ -912,7 +913,6 @@
 3tui.net
 3u.he.chatnook.com
 3u888.com
-3utilities.com
 3x3avalanche.com
 3xccp.com
 3xplanet.com
@@ -1618,7 +1618,7 @@
 8858126.com
 8858129.com
 8858132.com
-8858135.com
+8858133.com
 8858136.com
 8858137.com
 88663885.com
@@ -2399,6 +2399,7 @@ analepses.com.br
 analisistecnico.com.ar
 analteenangels.com
 analytics.blogspot.in
+anatoray.com
 anbpulsa.com
 anbrescue.org
 anchor.fm
@@ -2507,9 +2508,9 @@ api.huobi.de.com
 api.kkbox.com
 api.opensea.io
 api.ott.pm
+api.phantom.avira-vpn.com
 api.pncle8.com
 api.proxlet.com
-api.recaptcha.net
 api.rlcdn.com
 api.themoviedb.org
 api.threema.ch
@@ -2643,6 +2644,7 @@ artcomix.com
 arte.tv
 artibet.com
 article.wn.com
+articlehtml.hkgolden.com
 artune.weebly.com
 artworld.tw
 artzi.org
@@ -2714,6 +2716,7 @@ assetshare.box.com
 assisass.com
 assitport.co.za
 asstagram.net
+asstr.org
 assurdita5stelle.blogspot.it
 astellas.mdsol.com
 astraprod.ro
@@ -2947,6 +2950,7 @@ babelstone.blogspot.co.uk
 babepedia.com
 babes.com
 baby-kingdom.com
+baby.co.uk
 babycondom.com
 babylonbee.com
 babynet.com.hk
@@ -3732,7 +3736,6 @@ bridgefy.me
 bridgethewise.net
 brightkite.com
 briian.com
-brill.com
 brilliantcode.com
 bringingtibethome.com
 brisyprl.overdrive.com
@@ -3745,7 +3748,6 @@ bronzfederation.org.nz
 brookings.edu
 brostours.com
 brovpn.io
-browse007.com
 browsec.com
 browsehappy.com
 browser.sentry-cdn.com
@@ -3955,7 +3957,6 @@ ca.wcar.us
 ca151.com
 ca152.com
 ca1lib.org
-ca227.com
 ca265.com
 ca288.com
 ca4055.com
@@ -4487,7 +4488,6 @@ civicparty.hk
 civicus.org
 civilmedia.tw
 civiltaislamica.it
-cj0001.com
 cj0968.com
 cjb.net
 cjr.org
@@ -4758,7 +4758,6 @@ courrierinternational.com
 courtneywheeler.ga
 couwe.com
 cover-master.com
-covertproxy.net
 covid-19.hkcnews.com
 covid19.forget.eu.org
 covid19classaction.it
@@ -5521,6 +5520,7 @@ davemenzo.com
 david-kilgour.com
 daviddk.nom.za
 davila.com.ve
+davxv.com
 dawanda.com
 dawanews.com
 dawateislami.net
@@ -5563,6 +5563,7 @@ dc9966.com
 dc9977.com
 dca.ca.gov
 dcard.cc
+dcard.hk
 dcard.tw
 dcdbjkjn.fzgyh.com
 dcj0f5wks23rq.cloudfront.net
@@ -5691,6 +5692,7 @@ dg66.net
 dgtutpaqmy.com
 dgyqr055mfays.cloudfront.net
 dh.ddns.ms
+dh005.com
 dh2jkfaxlrbf5.cloudfront.net
 dharamsalanet.com
 dharmakara.net
@@ -6112,7 +6114,6 @@ dw-world.de
 dw.com
 dw.de
 dwarsxej7uvpt.cloudfront.net
-dwayneperry.ml
 dweb.link
 dwnews.com
 dwpty1o5z9lax.cloudfront.net
@@ -6951,7 +6952,6 @@ flicker.com
 flickr.com
 flickriver.com
 flikr.com
-flink.cl
 flipbizz-prod.firebaseio.com
 flitto.com
 flixya.com
@@ -7025,6 +7025,16 @@ forum.pchome.com.tw
 forum.slime.com.tw
 forum.uscreditcardguide.com
 forum.xentax.com
+forum1.hkgolden.com
+forum12.hkgolden.com
+forum14.hkgolden.com
+forum3.hkgolden.com
+forum4.hkgolden.com
+forum5.hkgolden.com
+forum6.hkgolden.com
+forum7.hkgolden.com
+forum8.hkgolden.com
+forum9.hkgolden.com
 forumophilia.com
 forumosa.com
 forums.steampowered.com
@@ -7034,6 +7044,7 @@ fosstodon.org
 fosunhani.com
 fotiaoqiang.club
 fouladkar.ir
+foum.hkgolden.com
 foundation.app
 fourthinternational.org
 fow.kr
@@ -7209,6 +7220,7 @@ frommyascloset.com
 fromyoutube.com
 frontlinedefenders.org
 frootvpn.com
+froum.hkgolden.com
 fruitbird.net
 fruitboy.net
 fryx.ca
@@ -7842,7 +7854,6 @@ google.si
 google.sn
 google.tg
 google.tk
-google.tm
 google.tn
 google.tse.moe
 google.tt
@@ -8463,7 +8474,6 @@ hkg12s09-in-f17.1e100.net
 hkg12s09-in-f4.1e100.net
 hkgalden.com
 hkgalden.org
-hkgolden.com
 hkgpao.com
 hkhandmade.com
 hkhoitong.com
@@ -9792,6 +9802,7 @@ kr71.4.688.org
 kraken.com
 kralin.su
 krhentai.com
+krinreed.ml
 krisarruda.com.br
 krwd.kisstv.cc
 krypt.com
@@ -10405,6 +10416,7 @@ m.byb10.com
 m.ca153.com
 m.ca157.com
 m.ca181.com
+m.ca227.com
 m.ca295.com
 m.ca821.com
 m.ca88vip.com
@@ -10421,6 +10433,7 @@ m.fun315.com
 m.fun336.com
 m.fun78.com
 m.h9-h9.com
+m.hkgolden.com
 m.huancai66.com
 m.huaren4us.com
 m.isle.moe
@@ -10479,6 +10492,7 @@ m11.sdccbly.xyz
 m2.888funcity.com
 m200260.com
 m5.com
+m6.hkgolden.com
 m6vip2.com
 m7.k818868.com
 m789.cc
@@ -10655,7 +10669,6 @@ mark.tw
 marketplace.org
 markets.com.cn
 markhidding.nl
-markporter.gq
 maroubra.pub
 martian.tk
 martin.pics
@@ -10737,7 +10750,6 @@ mcwy.club
 md-t.org
 md.pub
 mdacc.box.com
-mdk.flnet.org
 mdkwid.chatnook.com
 mdqd02.com
 mdr18.com
@@ -11707,7 +11719,6 @@ nrcdiscovery.com
 nrk.no
 nrl.com
 nrtshoes.com.br
-ns.app.dns04.com
 ns.tv333.us
 ns01.gq
 ns01.tk
@@ -12026,7 +12037,6 @@ orgasm.com
 orgasmatrix.com
 oricon.co.jp
 orienta.com.br
-orientaldaily.com.my
 orientalradio.com.sg
 origin.1680118.com
 orknow.com
@@ -12263,7 +12273,6 @@ perfectvpn.net
 perfektegirls.com
 perfil.com.ar
 perfspot.com
-periodicgames.com
 periscope.tv
 perlproxy.com
 perma.cc
@@ -13992,7 +14001,6 @@ sport24.com
 sports-bb.ipistech471.com
 sports1.im.fun787.com
 sports1.im.fun88-kk.com
-sports1.rb887.com
 sports1.tlc173.com
 sports918.com
 spotflux.com
@@ -15689,6 +15697,7 @@ vf.freepac.pw
 vfacai.com
 vft.com.tw
 viabilinvest.com
+viatemperley.com.ar
 viber.com
 vibiznews.com
 vibmotors.ca
@@ -16868,7 +16877,6 @@ www.5zuo2.com
 www.60003sc.com
 www.60005sc.com
 www.60008sc.com
-www.60300su.com
 www.603yf.com
 www.60500su.com
 www.608c.com
@@ -16954,7 +16962,6 @@ www.888.so
 www.888173.net
 www.888bodog.com
 www.888funcity.com
-www.8896362.com
 www.88fanya.com
 www.88gjb.com
 www.88gpz.com
@@ -17277,7 +17284,6 @@ www.barracuda.com
 www.barus.cc
 www.bastillepost.com
 www.bastv.site
-www.bayue888.com
 www.bb-in.cc
 www.bb-in.org
 www.bb-in.tv
@@ -17449,6 +17455,7 @@ www.breakingnews.com
 www.breakwall.org
 www.brenda88.idv.tw
 www.brighteon.com
+www.brill.com
 www.bryanboy.com
 www.bscu.ac.kr
 www.bskk.com
@@ -17519,6 +17526,7 @@ www.c2552.com
 www.c988.com
 www.ca157.com
 www.ca218.com
+www.ca227.com
 www.ca295.com
 www.ca762.com
 www.ca77.com
@@ -17978,7 +17986,6 @@ www.elchk.org.hk
 www.electronicdesign.com
 www.elegantangel.com
 www.elkosmos.gr
-www.elladodelmal.com
 www.elnuevodiario.com.do
 www.elpmtv.site
 www.email.it
@@ -18052,6 +18059,7 @@ www.f-url.com
 www.f8188.com
 www.f88line.com
 www.f88vip11.com
+www.f88vip112.com
 www.f88vip15.com
 www.f88vip2.app
 www.f88vip21.com
@@ -18363,6 +18371,7 @@ www.gay104.com
 www.gayboystube.com
 www.gaycn.net
 www.gayfuror.com
+www.gayguys.com
 www.gaynetwork.co.uk
 www.gayspa.com.tw
 www.gazco.com
@@ -18472,6 +18481,7 @@ www.google.mv
 www.google.pl
 www.google.pt
 www.google.sk
+www.google.tm
 www.google.vu
 www.googlechinablog.com
 www.googlemail.com
@@ -18580,7 +18590,6 @@ www.hengssc88.com
 www.henhenlu.com
 www.hentai-foundry.com
 www.hentaicore.net
-www.hentaiheroes.com
 www.hentaimg.com
 www.hentairon.net
 www.hepburnadvocate.com.au
@@ -18628,6 +18637,7 @@ www.hkcnews.com
 www.hkctu.org.hk
 www.hkdailynews.com.hk
 www.hkfhh.com
+www.hkgolden.com
 www.hkheadline.com
 www.hkindieff.hk
 www.hkip.org.uk
@@ -19563,6 +19573,7 @@ www.okfun.org
 www.okinawatimes.co.jp
 www.okxav.com
 www.olevod.com
+www.olive-radio.blogspot.gr
 www.omct.org
 www.one88bet.com
 www.onefinancialmarkets.com
@@ -19681,6 +19692,7 @@ www.pilio.idv.tw
 www.pin2288.com
 www.pin8899.com
 www.pin9988.com
+www.pingtest.net
 www.pinnacle888.com
 www.pinterest.cl
 www.pinterest.co.uk
@@ -19987,6 +19999,7 @@ www.ruleporn.com
 www.runos.us
 www.runox.net
 www.runoz.us
+www.runsocial.com
 www.ruten.com.tw
 www.rutgers.edu
 www.rwin88.com
@@ -21000,8 +21013,8 @@ www.y68123.com
 www.y6825.com
 www.yabo-cn.com
 www.yabo.com
+www.yah.idv.tw
 www.yahaha.club
-www.yahoo.fr
 www.yamagata-np.jp
 www.yasukuni.or.jp
 www.ybgjqp.net
@@ -21202,7 +21215,6 @@ x-art.com
 x-arthd.com
 x-berry.com
 x.co
-x.coolxtv.com
 x.zgjznkyy.com
 x06966.com
 x1.2112svt.xyz
@@ -21630,7 +21642,6 @@ yegle.net
 yelp.ca
 yenmingtemple.org.au
 yep.xxxy.biz
-yes-news.com
 yes.6te.net
 yes104.com
 yes123.com.tw
