@@ -1,0 +1,47 @@
+name: GFWHosts
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11.0]
+
+    steps:
+    - uses: actions/checkout@main
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@main
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name:  Build dns
+      run: |
+       bash ./file/bash/github-dns.sh
+
+    - name: Install dependencies
+      run: |
+        cd file-hosts.sh/github
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt  ]; then pip install -r requirements.txt; fi
+
+    - name: update hosts
+      run: |
+        sh ./file-hosts.sh/github/gfw-hosts.sh
+
+    - name: update github
+      run: |
+         cp ../file-hosts.sh/github/gfw-Hosts.txt ./Domains/AccelerateHosts/gfw-hosts.txt
+         git remote rm origin
+         git config --local user.name "github-actions[bot]"
+         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+         git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
+         git gc --aggressive
+         git add ./Domains/AccelerateHosts/gfw-hosts.txt 
+         git commit -m "update gfw-hsts $(date +%Y.%m.%d.%H.%M)"
+         git push -f -u origin main
