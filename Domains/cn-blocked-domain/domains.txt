@@ -970,6 +970,7 @@
 4cbd1.azurewebsites.net
 4cdn.org
 4chan.com
+4chan.org
 4drc8.site
 4everproxy.com
 4freemam.myfw.us
@@ -1393,7 +1394,6 @@
 7466671.com
 7472r.com
 747833.com
-748335.com
 75.qc.to
 75.scr.ns01.biz
 752241.com
@@ -2292,6 +2292,7 @@ allproxysites.com
 allsex4you.blogspot.it
 allstate.com
 allvpn.ru
+allywed.com
 almostmy.com
 alohabrowser.com
 alphaporno.com
@@ -3416,6 +3417,7 @@ blm569.com
 blm655.com
 blm76.com
 blm7777.com
+blm89.com
 blm898.com
 blm98.net
 blmdc456.com
@@ -3428,7 +3430,6 @@ blockedinchina.net
 blockedonweibo.com
 blockedsiteaccess.com
 blockless.com
-blocknative.com
 blockscout.com
 blog.0x427567.com
 blog.bengmugenr.com
@@ -3579,7 +3580,6 @@ bnaz.org
 bnbzaubernuss.ch
 bnf7.ras.flnet.org
 bo92.ga
-boards.4chan.org
 boards.4channel.org
 bob.com
 bobopash.weebly.com
@@ -5497,6 +5497,7 @@ dav4mbastv8a0.cloudfront.net
 davemenzo.com
 david-kilgour.com
 daviddk.nom.za
+davidsonsousa.net
 davila.com.ve
 davxv.com
 dawanda.com
@@ -5997,7 +5998,6 @@ draft.it
 dragon-fly.club
 dragtimes.com
 draiveda.lt
-drama3s.com
 drciocan.ro
 dreamamateurs.com
 dreamland.im
@@ -6075,6 +6075,7 @@ duncanteng.me
 dunktankbabes.com
 duosuccess.com
 dup8.freeddns.com
+duplicati.com
 durnyi.blog.shinobi.jp
 dushi.ca
 dustri.org
@@ -6190,6 +6191,7 @@ ebook.longmabook.com
 ebookbrowse.com
 ebookjapan.yahoo.co.jp
 ebuy.mo
+ecaipe.com.ar
 ecar.jlr-apps.com
 ecat-47d68.firebaseio.com
 ecdm.fandom.com
@@ -8216,6 +8218,7 @@ he2911.com
 headlinestoday.intoday.in
 headproxy.com
 health.businessweekly.com.tw
+health2.cc
 health2.fun
 health2.icu
 health2.live
@@ -9016,6 +9019,7 @@ invidious.weblibre.org
 invidious.xyz
 inxian.com
 inyt.com
+inznature.weebly.com
 io.freess.org
 iok.duckdns.org
 iol.pt
@@ -9163,6 +9167,7 @@ itemfix.com
 ithelp.ithome.com.tw
 itm-tracker.witron.de
 itnext.io
+itsaol.com
 itsgoingdown.org
 itweet.net
 iu45.com
@@ -9236,6 +9241,7 @@ jamestabor.com
 jamestown.org
 jameswong.sg
 jamo.tv
+jamyang.co.uk
 jamyangleeds.co.uk
 jang.com.pk
 jangchuplamrim.org
@@ -9574,7 +9580,6 @@ k6.c7b44558.org
 k6.g126eaf0.net
 k60702.com
 k6v8.la.idrivee2-46.com
-k7205.com
 k7206.com
 k8.com
 k818.com
@@ -9899,6 +9904,7 @@ landiyibu.com
 landjusticehk.org
 landofhope.tv
 lang.idv.tw
+langritangpa.org.au
 languagelog.ldc.upenn.edu
 languagemo.strikingly.com
 lanking.web44.net
@@ -10165,6 +10171,7 @@ linz.host
 lionfree.net
 lionmail.columbia.edu
 lipa.ga
+liping.edu.hk
 liquid.com
 lirekit.ch
 lishuhang.com
@@ -11018,6 +11025,7 @@ moeimg.net
 moeshare.com
 moess.cc
 mofidonline.com
+mogi.ws
 moha.club
 mohubackup.github.io
 mojang.com
@@ -11025,7 +11033,6 @@ mojie.pw
 mojim.com
 molihua.org
 molliross.com
-moment-present.ca
 mommyfucktube.com
 momo2.live
 momon-ga.com
@@ -13059,6 +13066,7 @@ restaurantgraf.ro
 restauranticos.com
 restofworld.org
 restoreprivacy.com
+rethink.fr
 rethinkdns.com
 retorte.ch
 reut.rs
@@ -13543,6 +13551,7 @@ sex.com
 sex.xxx
 sex168.site
 sex169.net
+sex169.org
 sex18.xyz
 sex3.com
 sex8.cn
@@ -13577,7 +13586,6 @@ sftuk.org
 sfu.ca
 sfxslibrary.club
 sfxslibrary.org
-sg.iabc.com.tw
 sg.news.yahoo.com
 sg1lib.org
 sgforums.com
@@ -14663,6 +14671,7 @@ thetibetconnection.org
 thetibetpost.com
 thetripplus.weebly.com
 thetvdb.com
+thevineyardchurch.com
 thevpn.guru
 theweek.com
 thewire.in
@@ -15048,7 +15057,6 @@ tripadvisor.co.za
 tripadvisor.com
 tripadvisor.com.ph
 tripadvisor.de
-tripadvisor.se
 tripcard.pages.dev
 trojan-tutor.github.io
 trombi.com
@@ -15341,7 +15349,6 @@ udomain.hk
 ue.flipboard.com
 ue4gia.dm2301.livefilestore.com
 ueccom.weebly.com
-ueex.com
 ufreevpn.com
 ufunr.net
 ug.freepac.pw
@@ -15687,7 +15694,6 @@ video.aol.com
 video.foxbusiness.com
 video.genyt.net
 video.pbs.org
-video.sex169.org
 video.xgfemdom.com
 video.yahoo.com
 videobox.com
@@ -16211,6 +16217,7 @@ webs.com
 websdr.org
 webshite.com
 website--4210285482279019401133-hostel.business.site
+website.informer.com
 webssearches.com
 websurfingproxies.net
 webtorrent.io
@@ -16720,6 +16727,7 @@ www.248bc.com
 www.248cn.com
 www.24option.com
 www.24proxy.com
+www.24tru.com
 www.24winbet.com
 www.2584201.com
 www.262xx.com
@@ -16801,7 +16809,6 @@ www.494hu.com
 www.494itv.site
 www.499210.com
 www.4bc.cc
-www.4chan.org
 www.4gtv.tv
 www.4hu55.com
 www.4hu60.com
@@ -17303,6 +17310,7 @@ www.betvictor12.com
 www.betvictor25.com
 www.betvictor38.com
 www.betvictor39.com
+www.betvictor51.com
 www.betvictor52.com
 www.betvictor96.com
 www.betvip14.cc
@@ -17321,6 +17329,7 @@ www.bibox.com
 www.bifa1990.com
 www.bigboobsalert.com
 www.bikiniriot.com
+www.bilanz.ch
 www.bilifl.com
 www.bilifuli.com
 www.binance.us
@@ -17853,7 +17862,6 @@ www.duetdisplay.com
 www.dukascopy.com
 www.dukevpn.com
 www.duping.net
-www.duplicati.com
 www.dw-world.com
 www.dw777.com
 www.dybee.co
@@ -18087,7 +18095,6 @@ www.fhfuhui.com
 www.fhgroup-cn.com
 www.fhgroup-zh.com
 www.fhjituan.com
-www.fhjt-chinese.com
 www.fhjt-chn.com
 www.fhjt-global.com
 www.fhjt-zh.com
@@ -19907,7 +19914,6 @@ www.repaik.com
 www.republica.com
 www.resilientsystems.com
 www.resistchina.org
-www.rethink.fr
 www.retweetrank.com
 www.reuters.co.jp
 www.reuters.com.cn
@@ -21541,7 +21547,6 @@ y48bc.com
 y666.com
 y66zz.com
 y68002.com
-y68004.com
 y68ok.com
 y6viplus.com
 y8022.com
