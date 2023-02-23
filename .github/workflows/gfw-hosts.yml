@@ -36,7 +36,7 @@ jobs:
 
     - name: update github
       run: |
-         cp ../file-hosts.sh/github/gfw-Hosts.txt ./Domains/AccelerateHosts/gfw-hosts.txt
+         cp ./file-hosts.sh/github/gfw-Hosts.txt ./Domains/AccelerateHosts/gfw-hosts.txt
          git remote rm origin
          git config --local user.name "github-actions[bot]"
          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
