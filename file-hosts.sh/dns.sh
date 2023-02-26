@@ -181,7 +181,6 @@ function GenerateRules() {
             )
             foreign_dns=(
                 "https://doh.opendns.com/dns-query"
-		"https://dns64.dns.google/dns-query"
                 "https://dns.google/dns-query"
                 "https://1dot1dot1dot1.cloudflare-dns.com/dns-query"
                 "https://dns11.quad9.net/dns-query"
@@ -196,10 +195,10 @@ function GenerateRules() {
                 "https://doh3.dns.nextdns.io/dns-query"
 		"https://anycast.dns.nextdns.io/dns-query"
 		"https://dns.google.com/dns-query"
-		"quic://anycast.dns.nextdns.io"
-		"quic://dns-unfiltered.adguard.com"
-                "quic://dns.nextdns.io"
-		"quic://doh3.dns.nextdns.io"
+		"quic://anycast.dns.nextdns.io:853"
+		"quic://dns-unfiltered.adguard.com:853"
+                "quic://dns.nextdns.io:853"
+		"quic://doh3.dns.nextdns.io:853"
 		"h3://anycast.dns.nextdns.io"
 		"h3://doh3.dns.nextdns.io/dns-query"
 		"h3://dns.nextdns.io/dns-query"
