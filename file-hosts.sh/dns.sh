@@ -81,7 +81,8 @@ function GetData() {
     )
     gfwlist2agh_modify=(
         "https://raw.githubusercontent.com/hezhijie0327/GFWList2AGH/source/data/data_modify.txt"
-	    "https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt"
+	"https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt"
+	"https://raw.githubusercontent.com/jimmyshjj/GFWList2AGH/source/data/data_modify.txt"
     )
     mkdir ./dns-hosts && cd ./dns-hosts
     for cnacc_domain_task in "${!cnacc_domain[@]}"; do
