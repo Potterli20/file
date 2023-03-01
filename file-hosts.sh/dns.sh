@@ -164,21 +164,13 @@ function GenerateRules() {
         case ${software_name} in
         adguardhome)
             domestic_dns=(
-                "https://doh.360.cn/dns-query"
                 "https://dns.alidns.com/dns-query"
                 "https://doh.pub/dns-query"
+		"https://dns.pub/dns-query"
 		"https://sm2.doh.pub/dns-query"
-		"https://1.12.12.12/dns-query"
-		"https://120.53.53.53/dns-query"
-		"https://223.5.5.5/dns-query"
-		"https://223.6.6.6/dns-query"
 		"tls://dns.alidns.com"
-		"tls://dot.360.cn"
 		"tls://dns.pub"
-		"tls://1.12.12.12"
-		"tls://120.53.53.53"
-		"tls://223.5.5.5"
-		"tls://223.6.6.6"
+		"tls://dot.pub"
             )
             foreign_dns=(
                 "https://doh.opendns.com/dns-query"
