@@ -30,10 +30,10 @@ jobs:
       - name: update github
         run: |
           cp allow.txt ./allow/allow.txt
-          git gc --aggressive
+          git remote rm origin
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"          git gc --aggressive
           git add ./allow/allow.txt
-          git stash -u -k 
           git commit -m "update allow $(date +%Y.%m.%d.%H.%M)"
-          git pull 
           git push -f -u origin main
-          git stash pop 
