@@ -27,7 +27,7 @@ jobs:
 
       - name: update github
         run: |
-         cp listpac_* ./file/pac/
+         cp ./listpac_* ./file/pac/
          git remote rm origin
          git config --local user.name "github-actions[bot]"
          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
