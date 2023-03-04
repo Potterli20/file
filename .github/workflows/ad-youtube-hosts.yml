@@ -30,7 +30,7 @@ jobs:
 
       - name: update github
         run: |
-          cp ad-youtube-* ./ad-hosts/ad-youtube/
+          cp ./ad-youtube-* ./ad-hosts/ad-youtube/
           git remote rm origin
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -39,4 +39,3 @@ jobs:
           git add ./ad-hosts/ad-youtube/
           git commit -m "update ad-youtube $(date +%Y.%m.%d.%H.%M)"
           git push -f -u origin main
-        
