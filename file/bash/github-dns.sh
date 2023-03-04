@@ -5,4 +5,4 @@ sudo systemctl restart systemd-resolved
 sudo prlimit --pid $$ --nofile=500000:500000
 ulimit -a
 sudo apt-get -qq update
-sudo apt reinstall curl git nss
+sudo apt reinstall curl git libnss3*
