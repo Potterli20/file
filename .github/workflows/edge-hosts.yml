@@ -26,7 +26,7 @@ jobs:
           bash ./file-hosts.sh/edge-hosts.sh
       - name:  push ad-hosts-coding
         run: |
-          cp ad-edge-hosts.txt ./ad-hosts/ad-edge-hosts.txt
+          cp ./ad-edge-hosts.txt ./ad-hosts/ad-edge-hosts.txt
           git remote rm origin
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
