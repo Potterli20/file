@@ -30,7 +30,7 @@ jobs:
       - name: commit and push
         id: commit
         run: |
-           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-adguardhome/blacklist_full.txt,dns-adguardhome/blacklist_full_combine.txt,dns-adguardhome/blacklist_full_split.txt,dns-adguardhome/blacklist_full_split_combine.txt,dns-adguardhome/whitelist_full.txt,dns-adguardhome/whitelist_full.txt_combine.txt,dns-adguardhome/whitelist_full_split.txt,dns-adguardhome/whitelist_full_split_combine.txt}"  https://${{ secrets.web }}/dns-hosts/dns-adguardhome/
+           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-adguardhome/blacklist_full.txt,dns-adguardhome/blacklist_full_combine.txt,dns-adguardhome/blacklist_full_split.txt,dns-adguardhome/blacklist_full_split_combine.txt,dns-adguardhome/whitelist_full.txt,dns-adguardhome/whitelist_full_combine.txt,dns-adguardhome/whitelist_full_split.txt,dns-adguardhome/whitelist_full_split_combine.txt}"  https://${{ secrets.web }}/dns-hosts/dns-adguardhome/
            curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-bind9/blacklist_full.conf,dns-bind9/whitelist_full.conf}"  https://${{ secrets.web }}/dns-hosts/dns-bind9/
            curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-dnsmasq/blacklist_full.conf,dns-dnsmasq/whitelist_full.conf}"  https://${{ secrets.web }}/dns-hosts/dns-dnsmasq/
            curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-domain/blacklist_full.txt,dns-domain/whitelist_full.txt,dns-domain/whitelist_lite.txt,dns-domain/blacklist_lite.txt}"  https://${{ secrets.web }}/dns-hosts/dns-domain/
