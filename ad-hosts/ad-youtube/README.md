@@ -6,20 +6,6 @@
 |   规则名称/Rule name  |🚀 下载Link(file.trli.club)/🚀 DownloadLink(file.trli.club)  | 网盘/cloud |
 |  :----:  | :----:  | :----:  |
 |  :----:  | 全球网盘/global cloud  | :----:  |
-| Ad-YouTuBe-Hosts（For ad-adblock） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-adblock.txt) |全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-adguardhome） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-adguardhome.txt)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-adguardhome-dnstype.txt） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-adguardhome-dnstype.txt)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-clash） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-clash.yaml)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-clash-premium） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-clash-premium.yaml)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-dnsmasq） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-dnsmasq.conf)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-domains） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-domains.txt)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-hosts/pi-hole） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-hosts.txt) |全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-quantumult） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-quantumult.yaml)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-shadowrocket） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-shadowrocket.list)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-smartdns） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-smartdns.conf)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-surge） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-surge.yaml)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-unbound） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-unbound.conf)|全球网盘/global cloud |
-| Ad-YouTuBe-Hosts（For ad-bind9） | [Link](https://file.trli.club:2083/ad-youtube-hosts/ad-youtube-bind9.conf)|全球网盘/global cloud |
 | Ad-YouTuBe-Hosts（For ad-adblock） | [Link](https://file-git.trli.club/ad-hosts/ad-youtube/ad-youtube-adblock.txt) |全球网盘/global cloud(github) |
 | Ad-YouTuBe-Hosts（For ad-adguardhome） | [Link](https://file-git.trli.club/ad-hosts/ad-youtube/ad-youtube-adguardhome.txt)|全球网盘/global cloud(github) |
 | Ad-YouTuBe-Hosts（For ad-adguardhome-dnstype.txt） | [Link](https://file-git.trli.club/ad-hosts/ad-youtube/ad-youtube-adguardhome-dnstype.txt)|全球网盘/global cloud(github) |
@@ -34,20 +20,5 @@
 | Ad-YouTuBe-Hosts（For ad-surge） | [Link](https://file-git.trli.club/ad-hosts/ad-youtube/ad-youtube-surge.yaml)|全球网盘/global cloud(github) |
 | Ad-YouTuBe-Hosts（For ad-unbound） | [Link](https://file-git.trli.club/ad-hosts/ad-youtube/ad-youtube-unbound.conf)|全球网盘/global cloud(github) |
 | Ad-YouTuBe-Hosts（For ad-bind9） | [Link](https://file-git.trli.club/ad-hosts/ad-youtube/ad-youtube-bind9.conf)|全球网盘/global cloud(github) |
-|  :----:  | 国内网盘/china cloud | :----:  |
-| Ad-YouTuBe-Hosts（For ad-adblock） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-adblock.txt) | 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-adguardhome） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-adguardhome.txt)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-adguardhome-dnstype.txt） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-adguardhome-dnstype.txt)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-clash） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-clash.yaml)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-clash-premium） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-clash-premium.yaml)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-dnsmasq） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-dnsmasq.conf)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-domains） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-domains.txt)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-hosts/pi-hole） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-hosts.txt) | 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-quantumult） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-quantumult.yaml)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-shadowrocket） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-shadowrocket.list)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-smartdns） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-smartdns.conf)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-surge） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-surge.yaml)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-unbound） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-unbound.conf)| 国内网盘/china cloud |
-| Ad-YouTuBe-Hosts（For ad-bind9） | [Link](https://file-cn.trli.club:2083/ad-youtube-hosts/ad-youtube-bind9.conf)| 国内网盘/china cloud |
 
 </details>
