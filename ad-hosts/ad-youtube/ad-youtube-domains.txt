@@ -1,37 +1,62 @@
-# Checksum: MTY3Nzk3NzU3NAo=
+# Checksum: MTY3ODg0MTAzMQo=
 # Title: trli's Ad Filter Youtube for Pi-hole 
 # Description: HOSTS Project
-# Version: 20230305-2
-# TimeUpdated: 2023-03-05T08:52:54+08:00
+# Version: 20230315-2
+# TimeUpdated: 2023-03-15T08:43:51+08:00
 # Expires: 24 hours (update frequency)
 # Homepage: https://file.trli.club:2083/ad-youtube-hosts/
-# Total: 111204
-.localdomain
+# Total: 111235
 2975c.v.fwmrm.net
 2mdn.net
 acquisition-tracker.wix.com
+ad-emea.doubleclick.net
 ad-g.doubleclick.net
+ad.ae.doubleclick.net
+ad.au.doubleclick.net
+ad.be.doubleclick.net
+ad.br.doubleclick.net
+ad.de.doubleclick.net
+ad.dk.doubleclick.net
 ad.doubleclick.net
+ad.es.doubleclick.net
+ad.fi.doubleclick.net
+ad.fr.doubleclick.net
+ad.it.doubleclick.net
+ad.jp.doubleclick.net
 ad.mo.doubleclick.net
+ad.n2434.doubleclick.net
+ad.nl.doubleclick.net
+ad.no.doubleclick.net
+ad.nz.doubleclick.net
+ad.pl.doubleclick.net
+ad.se.doubleclick.net
+ad.sg.doubleclick.net
 ad.tw.doubleclick.net
+ad.uk.doubleclick.net
+ad.ve.doubleclick.net
 ad.youtube.com
+ad.za.doubleclick.net
 ad2.doubleclick.net
 adclick.g.doubleclick.net
 ade.googlesyndication.com
 ads.doubleclick.net
+ads.imeem.com
 ads.youtube.com
 adservice.google
 adservice.google.com
 akamaitechnologies.com
 analytic-google.com
+auto.search.msn.com
 blockeverything.txt
 c.googlesyndication.com
+cdn.fastclick.net
 clients1.google.com
+creative.cc-dt.com
+doubleclick.de
 doubleclick.net
 dts.innovid.com
 eligibility-panelresearch.googlevideo.com
-fe80%lo0
-ff02
+feedads.g.doubleclick.net
 files.adform.net
 fls.doubleclick.net
 fwmrm.net
@@ -44,10 +69,15 @@ googleadservices.com
 googletagmanager.com
 i1.ytimg.com
 innovid.com
-ip6-
+iv.doubleclick.net
 l.doubleclick.net
-local
+m.2mdn.net
+m.doubleclick.net
+m1.2mdn.net
 manifest.googlevideo.com
+media.fastclick.net
+n4403ad.doubleclick.net
+n479ad.doubleclick.net
 ocsp.comodoca.com
 pagead.googlesyndication.com
 pagead.l.doubleclick.net
@@ -111185,6 +111215,7 @@ second-blocklist.txt
 secure-ds.serving-sys.com
 securepubads.g.doubleclick.net
 ssl.google-analytics.com
+stat.livejournal.com
 static.doubleclick.net
 stats.g.doubleclick.net
 third-youtube-blocklist.txt
