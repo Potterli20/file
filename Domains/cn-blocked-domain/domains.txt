@@ -67,7 +67,6 @@
 029149.biz
 03.from-ga.com
 03.webhop.org
-030vic.com
 0328b.com
 0328c.com
 0328l.com
@@ -146,7 +145,6 @@
 103.hk
 1035kissfm.com
 10399888.com
-1048.com
 10500022.com
 1050604.com
 1050608.com
@@ -169,13 +167,13 @@
 10beasts.net
 10bet.com
 10bo1000.com
-10bo10000.com
 10bo10001.com
 10bo8118.com
 10c.pat.flnet.org
 10conditionsoflove.com
 10jsq.com
 10minutemail.net
+10musume.com
 10questionsforthedalailama.com
 10tracks.ru
 11.233txb.com
@@ -203,7 +201,6 @@
 1129977.net
 112tt.net
 11333885.com
-11365sb.com
 1138x.com
 114ss.tk
 11559jin.com
@@ -709,6 +706,8 @@
 3011090.com
 301works.org
 3022.com
+304.com
+3044.com
 30508.com
 30520f.com
 30999xam.com
@@ -1110,6 +1109,7 @@
 56.serveirc.com
 5604a.com
 562.servebeer.com
+5622999.com
 5644321.com
 56444vip.com
 564859.biz
@@ -1347,7 +1347,7 @@
 710118.com
 710333.com
 710a7.com
-7140090.com
+71373337.com
 71588.com
 718074.com
 719.myftp.biz
@@ -1400,7 +1400,6 @@
 763.microcycas.com
 766.chatnook.com
 76652200.com
-767.dtdns.net
 7686g.com
 76ry.4.688.org
 77.effers.com
@@ -1448,6 +1447,7 @@
 789666365.com
 7911tt.com
 79479626.com
+795922.com
 796720.com
 79796s.com
 7981306.com
@@ -1570,6 +1570,7 @@
 871091.com
 8713.app
 8717.com
+873.zzux.com
 8762.app
 8767598.cc
 8781.me
@@ -1695,7 +1696,6 @@
 9269av.co
 928.epac.to
 92eaa.com
-92xaa.com
 92xag.com
 93.cao1024lui99.club
 93.serveirc.com
@@ -1741,6 +1741,7 @@
 96100sc.com
 96200sc.com
 96231a.com
+963.zzux.com
 96300sc.com
 96396a.com
 964.net
@@ -1763,7 +1764,6 @@
 97bcw.vip
 97lm.com
 97tang.site
-97xaa.com
 97ym.cn
 98.to
 9807.vip
@@ -2103,6 +2103,7 @@ adultrental.com
 adultreviews.com
 adventist.org
 advertisercommunity.com
+advertising.bbcworldwide.com
 adviesentips.nl
 advisoryapps.com
 advocatesforyouth.org
@@ -2335,6 +2336,7 @@ americnaas.com.br
 americorps.gov
 ameritrade.com
 amh6666.com
+amh8888.com
 amimtv.site
 aminoapps.com
 amis-tibet.lu
@@ -2407,6 +2409,7 @@ aniseedballs.co.uk
 anitracksub.ml
 anmourchen.wordpress.com
 annieandmike.us
+anntw.com
 anobii.com
 anonasurf.com
 anonfiles.com
@@ -2688,6 +2691,7 @@ assembla.com
 assendo.cl
 asset-cache.net
 assets.bomoda.com
+assets.change.org
 assets.readingeggsassets.com
 assets.strikingly.com
 assetshare.box.com
@@ -2987,7 +2991,6 @@ bankmandiri.co.id
 bannedbook.org
 bannedyoutube.com
 bansheerocks.com
-banwagong.cn
 baobanli.com
 baoguang.cable-modem.org
 barbarasbookstore.com
@@ -3858,6 +3861,7 @@ bway883.com
 bway885056.com
 bway88725.com
 bway938.com
+bway996.com
 bwbw188.com
 bwei101.com
 bwh1.net
@@ -4247,7 +4251,6 @@ cgst.edu
 ch.videosection.com
 ch5.cc
 championquizzer.in
-change.org
 changeip.name
 changeip.net
 changenow.io
@@ -4889,7 +4892,6 @@ css5.ga
 css5.gq
 css5.ml
 css5.tk
-cstudiohd.com
 csvconstructora.cl
 csw.org.uk
 csweek.com
@@ -5011,6 +5013,7 @@ d18s29gmamtamp.cloudfront.net
 d18teiqcwhzbtm.cloudfront.net
 d18v0bv6hf4y69.cloudfront.net
 d190vlqkktza4c.cloudfront.net
+d1993.com
 d19g1tkerpkn1x.cloudfront.net
 d19tl7r1win8lc.cloudfront.net
 d19ysv8o6fv16v.cloudfront.net
@@ -5517,7 +5520,6 @@ daolan.net
 dapao888.com
 dariknews.bg
 darinmohr.com
-dark.moe
 darkbzoj.tk
 darrenliuwei.com
 darrensibley.co.uk
@@ -5842,7 +5844,6 @@ dm44143bsn99b.cloudfront.net
 dmas.com.au
 dmbjjp7n9kgns.cloudfront.net
 dmcdn.net
-dmhk.001107.xyz
 dmhy.org
 dmmbus.com
 dmoj.tk
@@ -5933,7 +5934,7 @@ doh.chi.ahadns.net
 doh.cleanbrowsing.org
 doh.disconnect.app
 doh.dns.apple.com
-doh.dnscrypt.uk
+doh.dnslify.com
 doh.dnswarden.com
 doh.ffmuc.net
 doh.futa.gg
@@ -6316,6 +6317,7 @@ el-ladies.com
 elad.ca
 elashi.ca
 elconfidencial.com
+elcorreo.com
 elektroda.pl
 elektroluks.si
 element14.com
@@ -6449,6 +6451,7 @@ eprice.com.hk
 er-webs.com
 erabaru.net
 eranews.eracom.com.tw
+erepublik.com
 ericecheng2266.wordpress.com
 ericjgagnon.com
 erights.net
@@ -7413,6 +7416,7 @@ fxopenasia.com
 fxprimus.com
 fxtrade.oanda.co.uk
 fy587.com
+fybersearch.com
 fyndiq.se
 fyptt.to
 fyt10.com
@@ -7726,6 +7730,7 @@ globalhealthmedia.org
 globalinkjetsystems.zendesk.com
 globaljihad.net
 globalmediaoutreach.com
+globalmusicvideo.com
 globalnewstv.com.tw
 globalpay.identitynow.com
 globalreach.org
@@ -8029,7 +8034,6 @@ graceandpoise.wordpress.com
 gradadmissions.stevens.edu
 graeleah.com
 grahamreaper.com
-gramho.com
 grammar.ccc.commnet.edu
 grangorz.org
 grantt.cl
@@ -8407,6 +8411,7 @@ hd.port0.org
 hd.xmv63jf9e.com
 hdd.biz.st
 hdm2011.com
+hdpornfull.com
 hdrinc.com
 hdtube.porn
 he2911.com
@@ -8468,6 +8473,7 @@ helpzhuling.org
 hen5.lflinkup.com
 hen8.fat.flnet.org
 hen9.fat.flnet.org
+henet.icu
 hengjing.org
 hentai-cosplays.com
 hentai-porn.net
@@ -8621,7 +8627,6 @@ hk.futu5.com
 hk.hacked.jp
 hk.mobi.yahoo.com
 hk.mssi.pw
-hk.myblog.yahoo.com
 hk.news.yahoo.com
 hk.next.nextmedia.com
 hk.nextmedia.com
@@ -8694,6 +8699,7 @@ hmarkets.com
 hmart.com
 hmoegirl.com
 hmongjob.com
+hmt.org.au
 hmvdas.cloud.com
 hnag11.com
 hnjhj.com
@@ -8935,6 +8941,7 @@ iavnight.com
 ib.pibullion.com
 ibcp07.com
 ibkr.com.hk
+ibksturm.synology.me
 ibm.co
 ibook.idv.tw
 ibtimes.com
@@ -9752,7 +9759,6 @@ joymii.com
 jp.hao123.com
 jp.myav.tv
 jp.tiar.app
-jp.tiarap.org
 jp01-28.ssv4.net
 jp1lib.org
 jpattiz.com
@@ -10486,6 +10492,7 @@ live.remo.co
 live.streamingfast.net
 livedoor.blogimg.jp
 livefromgaza.wordpress.com
+livehdcams.com
 livejasmin.com
 liveleak.com
 livestation.com
@@ -10634,6 +10641,7 @@ ltjqk.vip
 ltn.com.tw
 ltnibr.ro
 ltou178.com
+ltou88.net
 ltthailand.xyz
 ltunnel.com
 lubinscy.pl
@@ -10766,6 +10774,7 @@ m.pin1188.com
 m.plixi.com
 m.pncle8.com
 m.ptcff666.com
+m.qxcp88888.com
 m.royalpanda.com
 m.rse43.com
 m.search.aol.com
@@ -10984,7 +10993,6 @@ marinit.no
 mario-lopes.pt
 mariocollin.com
 mariodesigns.uk
-mariusl.com
 mark.tw
 markerhunter.wordpress.com
 marketo.com
@@ -11037,6 +11045,7 @@ mathmidterm.com
 mathmodels.org
 matome.naver.jp
 matomen6ch.blog.jp
+matorral.cl
 matrix.org
 matters.news
 matthewcingram.com
@@ -11492,6 +11501,7 @@ ms52.ml
 ms6588.com
 ms88333.com
 msgforex.com
+msgpack.org
 msguancha.com
 msnapk.com
 msper.freeiz.com
@@ -11603,6 +11613,7 @@ myftp.org
 mygalgame.com
 mygaysites.com
 mygirlfriendsbustyfriend.com
+mygod.firebaseio.com
 mygod.tk
 mygraybar.graybar.com
 mygreatlakes.org
@@ -12029,6 +12040,7 @@ nm.nmcsym.org
 nm.sex787.com
 nm.x8e9ft7k.net
 nm1314.com
+nmslzlgbe5xbag6t.onion.ly
 nn.dtdns.net
 nn.zzux.com
 nn633.com
@@ -12175,7 +12187,6 @@ nuovelle.ee
 nut.cc
 nuvid.com
 nuvoices.com
-nux.co.za
 nvpn.net
 nvquan.org
 nvsr.com.au
@@ -12375,7 +12386,6 @@ oneworldgaming.com
 oneyoutube.com
 onflapp.wordpress.com
 onfrontiers.com
-onion.ly
 online-anonymizer.com
 online-instagram.com
 online.freemansec.com
@@ -12515,6 +12525,7 @@ owa.baltimorecity.gov
 owa.wrinklefreeit.com
 owl.li
 owl6.ddns.ms
+owmvhpxyisu6fgd7r2fcswgavs7jly4znldaey33utadwmgbbp4pysad.onion.ly
 ows2.cat.flnet.org
 owzkmh.site
 oxg1.gor.b0ne.com
@@ -13245,7 +13256,6 @@ pu889.com
 pu9900.com
 pub-api-1.bianyuan.xyz
 pub.dartlang.org
-pub.dev
 public.slidesharecdn.com
 publicaffairsbooks.com
 publichealthinchina.wordpress.com
@@ -13257,6 +13267,7 @@ pulse.yahoo.com
 pungasenelsubte.com
 punishtube.com
 punked.us
+punyu.com
 puppetlabs.com
 puppy.com
 puredns.cn
@@ -13567,7 +13578,6 @@ republicworld.com
 research.gavekal.com
 research.googleblog.com
 resilio.com
-resolver4.dns.openinternet.io
 resource.thermofisher.com
 resourcenet.wordpress.com
 restaurantgraf.ro
@@ -13897,7 +13907,6 @@ savetibet.nl
 savetibet.org
 savetibet.ru
 savetibet.us
-savetibetwebshop.nl
 savevid.com
 savevideo.me
 saveyoutube.com
@@ -14426,6 +14435,7 @@ smcmba.com
 smeeth.in
 smh.com.au
 smhric.org
+smigit.com
 smileawei.com
 smilebb5.web.fc2.com
 smt.live
@@ -14729,6 +14739,7 @@ static.palgrave.com
 static.pubu.tw
 static.slidesharecdn.com
 static.zdassets.com
+staticx1.dditscdn.com
 stats.wordpress.com
 statul-paralel.ro
 status.co.il
@@ -15695,7 +15706,6 @@ tre.9adz1.com
 tre.9bah1.com
 treadgfw.weebly.com
 treasureislandgame.1731788.com
-treasurysource.bokf.com
 tremmelino.de
 trendsmap.com
 trezor.io
@@ -15725,7 +15735,6 @@ truechu.com
 trueporn.com
 trulyergonomic.com
 trulyminimaldemo.wordpress.com
-trustwalletapp.com
 truth.atspace.eu
 truthinchina.wordpress.com
 truthortrust.com
@@ -15761,6 +15770,7 @@ tt3855.com
 tt3911.com
 tt513.com
 ttf118.com
+ttkacz.com
 ttqp76.com
 tttan.com
 tub99.com
@@ -17161,7 +17171,6 @@ wsj.com.cn
 wsj.net
 wsong83.wordpress.com
 wss445566.web.fc2.com
-wsvip4.com
 wsvip7.com
 wsvn.com
 wsws.org
@@ -17187,7 +17196,6 @@ ww.b977634.com
 ww.bb75283.com
 ww.daliulian.net
 ww.orange01.org
-ww1.chinonyaa1.xyz
 ww1.fijidz.xyz
 ww1.gcdz.pw
 ww1.silent-screams.com
@@ -17236,6 +17244,7 @@ www.1000hands.idv.tw
 www.100bo100.com
 www.100most.com.hk
 www.100sihu.com
+www.1048.com
 www.104fuck.com
 www.106666.com
 www.1066hg.com
@@ -17304,6 +17313,7 @@ www.12y.cc
 www.1300kai.com
 www.1365tu.com
 www.141545.com
+www.141jav.com
 www.141tube.com
 www.14520.cc
 www.14rabbits.dojin.com
@@ -17445,6 +17455,7 @@ www.3917800.com
 www.39178822.com
 www.3917ss.com
 www.39vpn.com
+www.3dbet8.com
 www.3kliksphilip.com
 www.3movs.com
 www.3pforum.com
@@ -17480,6 +17491,7 @@ www.5138.com.tw
 www.513vpn.com
 www.518363.com
 www.518770.com
+www.51avi.xyz
 www.51jiasu.com
 www.51jsq.biz
 www.51jsq.net
@@ -17565,7 +17577,6 @@ www.80500sc.com
 www.80600sc.com
 www.808pb.com
 www.81000su.com
-www.81500su.com
 www.82299.com
 www.823252.xyz
 www.8344a.com
@@ -17914,6 +17925,7 @@ www.baomihua.com
 www.baramangaonline.com
 www.barebackpayperview.com
 www.barracuda.com
+www.barryanddistrictnews.co.uk
 www.barus.cc
 www.bastv.site
 www.bb-in.cc
@@ -18240,8 +18252,8 @@ www.cellsystech.cn
 www.cellsystech.net
 www.centerforamericannurses.com
 www.centorindia.com
+www.centraladvocate.com.au
 www.centralasian.org
-www.centraltv.fr
 www.centralwesterndaily.com.au
 www.cesi-italia.org
 www.cessnockadvertiser.com.au
@@ -18255,6 +18267,7 @@ www.chagtong.org
 www.challenger.it
 www.chancentre.org
 www.chandrakirti.co.nz
+www.change.org
 www.changp.com
 www.channel8news.sg
 www.channelnewsasia.com.sg
@@ -18296,7 +18309,6 @@ www.chineselovelinks.com
 www.chinesespanking.com
 www.chineseupress.com
 www.chip1stop.com
-www.chode.com
 www.choi-waru.com
 www.chpn.idv.tw
 www.christianfreedom.org
@@ -18459,6 +18471,7 @@ www.dang.idv.tw
 www.danskespil.dk
 www.darknight.blog
 www.dashaqi.ga
+www.davidku.com.tw
 www.davidwolinsky.com
 www.dayungs.com
 www.dazeddigital.com
@@ -18474,6 +18487,7 @@ www.ddsqq.idv.tw
 www.ddtomm.com
 www.deainx.net
 www.dearjohn.idv.tw
+www.deephentai.com
 www.definefetish.com
 www.dele88.com
 www.delicate.idv.tw
@@ -18495,6 +18509,7 @@ www.dialoguechina.com
 www.diamantweg-boeddhisme.nl
 www.dianying2090.com
 www.diariodenavarra.es
+www.diariovasco.com
 www.didixtv.com
 www.diedart2.com
 www.digifinex.com
@@ -18582,6 +18597,7 @@ www.e87766.com
 www.e8777.com
 www.e8781.com
 www.e87976.com
+www.e8803.com
 www.e8832.com
 www.e8833.com
 www.e88833.com
@@ -18670,7 +18686,6 @@ www.epochtimes.ru
 www.epochweek.com
 www.equinenow.com
 www.eraysecure.com.tw
-www.erepublik.com
 www.ericjoung.idv.tw
 www.erito.com
 www.erkenliradio.com
@@ -18681,7 +18696,6 @@ www.eros.com
 www.eroticbeauty.com
 www.eroxia.com
 www.esb-livegame.com
-www.esb110.com
 www.esbline.net
 www.escortforumit.xxx
 www.escortguide.co.uk
@@ -18803,7 +18817,6 @@ www.fhjt-global.com
 www.fhjtzh.com
 www.fhm.com.tw
 www.fhmarkets.com
-www.fickr.com
 www.fictfact.com
 www.figprayer.com
 www.fileshare.ro
@@ -19186,6 +19199,7 @@ www.greatzhonghua.org
 www.greenhubtx.ga
 www.greenvpn.net
 www.greenway.ie
+www.grenfellrecord.com.au
 www.grid.news
 www.grjsq.biz
 www.grneggs.com
@@ -19217,6 +19231,7 @@ www.h4610.com
 www.h528.com
 www.h88trail.wordpress.com
 www.h8step.wordpress.com
+www.haaretz.com
 www.hacg.be
 www.hacg.li
 www.hachettebookgroup.com
@@ -19253,7 +19268,6 @@ www.hb528.com
 www.hbzyc0722.com
 www.hcy.idv.tw
 www.hdporn.net
-www.hdpornfull.com
 www.hdwheelsonline.com
 www.healthymultiplicity.com
 www.heepwoh.edu.hk
@@ -19333,6 +19347,7 @@ www.hngj112.com
 www.ho5ho.com
 www.hogtied.com
 www.hokkaido-np.co.jp
+www.hokkoku.co.jp
 www.holland.idv.tw
 www.hollisterco.com.tw
 www.holyspiritspeaks.org
@@ -19672,6 +19687,7 @@ www.kernpunkt.de
 www.kfapfakes.com
 www.kfc2000.com
 www.khabdha.com
+www.khacholing.org
 www.khg56.com
 www.khmertimeskh.com
 www.kidderminstershuttle.co.uk
@@ -19768,6 +19784,7 @@ www.leenarasanen.com
 www.legion.org
 www.lehu394.com
 www.leihuo66.com
+www.lejsl.com
 www.lejsq.net
 www.lematin.ch
 www.lenoircityschools.net
@@ -19820,6 +19837,7 @@ www.linkyoutube.com
 www.lionsroar.com
 www.lipuman.com
 www.liquidvpn.com
+www.liquip.com
 www.listennotes.com
 www.listvpn.net
 www.litebit.eu
@@ -19877,7 +19895,6 @@ www.lt1838.com
 www.lt333.xyz
 www.lt628.com
 www.lt666.xyz
-www.lt678.xyz
 www.ltbest.vip
 www.ltgold.vip
 www.lucasentertainment.com
@@ -20314,6 +20331,7 @@ www.paofucloud.com
 www.paofucloud.vip
 www.paofuyun.me
 www.paperclip.tk
+www.par666.net
 www.paradigmhq.org
 www.paradoxplaza.com
 www.paramita.org
@@ -20365,7 +20383,6 @@ www.pichunter.com
 www.pickyuhome.net
 www.picpicapp.com
 www.pidaiy.biz
-www.pilio.idv.tw
 www.pin-cong.com
 www.pin2288.com
 www.pin9988.com
@@ -20507,7 +20524,6 @@ www.pucocn.com
 www.puff-store.com
 www.puffss.me
 www.pullcm.com
-www.punyu.com
 www.pureland-buddhism.org
 www.purevpn.com.tw
 www.purevpn.net
@@ -20614,6 +20630,7 @@ www.rf199.com
 www.rfachina.com
 www.rferl.mobi
 www.rfiplaneteradio.org
+www.rft-training.com
 www.rge.com
 www.rhein-zeitung.de
 www.rheinpfalz.de
@@ -20696,6 +20713,7 @@ www.santasporngirls.com
 www.sarasdiyhealth.com
 www.sauditimes.com
 www.saveclipbro.com
+www.savetibetwebshop.nl
 www.sb5202.com
 www.sbf233.com
 www.sbf363.com
@@ -20750,6 +20768,7 @@ www.sexttt.com
 www.sexx123.com
 www.sexypattycake.com
 www.sf590.com
+www.sflinear.com
 www.sgchinese.com
 www.sgreenvpn.com
 www.shadowcheap.com
@@ -20857,6 +20876,7 @@ www.sosick.org
 www.souguge.net
 www.soundon.fm
 www.sourcemap.com
+www.sourcewadio.com
 www.southwalesargus.co.uk
 www.southwalesguardian.co.uk
 www.sovpn.net
@@ -21487,7 +21507,6 @@ www.webproxy.at
 www.webproxy2.com
 www.webptt.com
 www.webrush.net
-www.webs.com
 www.websnapr.com
 www.weltwoche.ch
 www.wenhui.ch
@@ -21541,6 +21560,7 @@ www.wizproxy.com
 www.wjbookny.com
 www.wjsnr.com
 www.wkek.net
+www.wlz-online.de
 www.wmd.org
 www.wmfield.idv.tw
 www.wmzcn.com
@@ -21684,11 +21704,11 @@ www.y6825.com
 www.yah.idv.tw
 www.yahaha.club
 www.yahaha.xyz
+www.yahoo.hk
 www.yamagata-np.jp
 www.yamamay.com
 www.yanyuge.net
 www.yasukuni.or.jp
-www.yazhouribao.com
 www.ybgjqp.net
 www.yc2357.com
 www.yc2358.com
@@ -21795,7 +21815,6 @@ www.yy38725.com
 www.yy80300.com
 www.yy80600.com
 www.yy83532.com
-www.yycili.com
 www.yzc212.com
 www.yzc216.com
 www.yzc222.com
@@ -22387,6 +22406,7 @@ yh22305.com
 yh478.com
 yh60089.com
 yh88309.com
+yhc88.me
 yhcw.net
 yi.dnscom.work
 yi.dnsit.xyz
@@ -22521,6 +22541,7 @@ yt.dnsit.xyz
 yt.dorper.me
 yt1s.com
 yt3.ggpht.com
+ytbcp4.com
 ytchannelembed.com
 ytkg8.com
 ytmp3.cc
@@ -22747,6 +22768,7 @@ zhichang.5article.com
 zhikanlouzhu.com
 zhina.sb
 zhina.wiki
+zhinazhuibevssdm.onion.ly
 zhinazhuibevssdm.onion.ws
 zhon009.com
 zhon011.com
