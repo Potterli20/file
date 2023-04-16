@@ -84,7 +84,7 @@ function GetData() {
 	"https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt"
 	"https://raw.githubusercontent.com/jimmyshjj/GFWList2AGH/source/data/data_modify.txt"
     )
-    mkdir ./dns-hosts && cd ./dns-hosts
+    mkdir ./d-ns-hosts && cd ./d-ns-hosts
     for cnacc_domain_task in "${!cnacc_domain[@]}"; do
         curl -s -L --connect-timeout 15 "${cnacc_domain[$cnacc_domain_task]}" | sed "s/^\.//g" >> ./cnacc_domain.tmp
     done

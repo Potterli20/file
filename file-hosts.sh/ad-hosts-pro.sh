@@ -334,7 +334,6 @@ function GetData() {
         "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/hosts"
         "https://block.energized.pro/unified/formats/domains.txt"
         "https://raw.githubusercontent.com/badmojr/addons_1Hosts/main/kidSaf/domains.txt"
-        "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/ad-edge-hosts.txt"
         "https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/domains"
         "https://v.firebog.net/hosts/static/w3kbl.txt"
         "https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
@@ -441,6 +440,7 @@ function GetData() {
         "https://raw.githubusercontent.com/ricardbejarano/hosts/master/hosts"
     )
     filter_other=(
+        "https://edge.microsoft.com/abusiveadblocking/api/v1/blocklist"
         "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list"
         "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list"
         "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyList.list"
@@ -489,6 +489,7 @@ function AnalyseData() {
         sort |
         uniq > ./filter_allow.tmp &&
         cat ./filter_adblock.tmp ./filter_domain.tmp ./filter_hosts.tmp ./filter_other.tmp |
+        grep -oP '(?<=url":")(.*?)(?=")' |
         sed 's/[ ]*//g' |
         sed '/^$/d' |
         sed "s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/255.255.255.255//g;s/local//g;s/localhost//g;s/localhost.localdomain//g;s/broadcasthost//g;s/ip6-localhost//g;s/::1//g;s/ip6-loopback//g;s/ip6-localnet//g;s/fe80::1%lo0//g;s/ff00::0//g;s/ff02::1//g;s/ff02::2//g;s/ff02::3//g;s/ip6-mcastprefix//g;s/ip6-allnodes//g;s/ip6-allrouters//g;s/ip6-allhosts//g;/^$/d;s/[[:space:]]//g;s/DOMAIN\,//g;s/DOMAIN\-SUFFIX\,//g;s/domain\://g;s/full\://g" |
@@ -510,7 +511,7 @@ function GenerateInformation() {
     adfilter_checksum=$(TZ=UTC-8 date "+%s" | base64)
     adfilter_description="HOSTS Project"
     adfilter_expires="24 hours (update frequency)"
-    adfilter_homepage="https://file.trli.club:2083/ad-hosts/ad-hosts-pro"
+    adfilter_homepage="https://github.com/Potterli20/file/releases"
     adfilter_timeupdated=$(TZ=UTC-8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%Y-%m-%dT%H:%M:%S%:z")
     adfilter_title="trli's Ad Filter for Pro"
     adfilter_total=$(sed -n '$=' ./filter_data.tmp)
