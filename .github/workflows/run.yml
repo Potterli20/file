@@ -25,16 +25,25 @@ jobs:
           cd cn-blocked-domain
           go run ./
 
-      - name: Git push
-        run: |
-          cp ./cn-blocked-domain/publish/ip.txt ./Domains/cn-blocked-domain/
-          cp ./cn-blocked-domain/publish/domains.txt ./Domains/cn-blocked-domain/
-          cp ./cn-blocked-domain/publish/raw.txt ./Domains/cn-blocked-domain/
-          git remote rm origin
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
-          git gc --aggressive
-          git add ./Domains/cn-blocked-domain/
-          git commit -m "update cn-blocked-domain txt $(date +%Y.%m.%d.%H.%M)"
-          git push -f -u origin main
+      #- name: Git push
+      #  run: |
+      #    cp ./cn-blocked-domain/publish/ip.txt ./Domains/cn-blocked-domain/
+      #    cp ./cn-blocked-domain/publish/domains.txt ./Domains/cn-blocked-domain/
+      #    cp ./cn-blocked-domain/publish/raw.txt ./Domains/cn-blocked-domain/
+      #    git remote rm origin
+      #    git config --local user.name "github-actions[bot]"
+      #    git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      #    git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
+      #    git gc --aggressive
+      #    git add ./Domains/cn-blocked-domain/
+      #    git commit -m "update cn-blocked-domain txt $(date +%Y.%m.%d.%H.%M)"
+      #    git push -f -u origin main
+       - name: Release
+        uses: svenstaro/upload-release-action@master
+        with:
+          repo_token: ${{ secrets.GITHUBTOKEN }}
+          tag: cn-blocked-domain
+          file: ./cn-blocked-domain/publish/*
+          file_glob: true
+          overwrite: true
+          body: "update cn-blocked-domain"
