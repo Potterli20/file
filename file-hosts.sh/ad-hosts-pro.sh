@@ -707,7 +707,7 @@ function OutputData() {
             cd .. && rm -rf ./ad-hosts-pro
         else
             GenerateInformation && FormatedOutputData
-            cd .. && rm -rf ./ad-hosts-pro
+            cd .. && rm -rf ./ad-hosts-pro ./ad-hosts
         fi
     fi
 }

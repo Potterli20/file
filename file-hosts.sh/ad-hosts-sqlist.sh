@@ -738,7 +738,7 @@ function OutputData() {
             cd .. && rm -rf ./ad-hosts-sqlist
         else
             GenerateInformation && FormatedOutputData
-            cd .. && rm -rf ./ad-hosts-sqlist
+            cd .. && rm -rf ./ad-hosts-sqlist ./ad-hosts
         fi
     fi
 }
