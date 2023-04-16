@@ -38,7 +38,7 @@ jobs:
       #    git add ./Domains/cn-blocked-domain/
       #    git commit -m "update cn-blocked-domain txt $(date +%Y.%m.%d.%H.%M)"
       #    git push -f -u origin main
-       - name: Release
+      - name: Release
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
