@@ -1,0 +1,164 @@
+<!doctype html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ios-dns服务</title>
+    <style>
+        .container {
+            width: 70%;
+            margin: 10% auto 0;
+            background-color: #f0f0f0;
+            padding: 2% 5%;
+            border-radius: 10px
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+            ul li {
+                line-height: 2.3
+            }
+
+        a {
+            color: #20a53a
+        }
+    </style>
+<script>
+        var hm = document.createElement("script");
+        hm.src = "https://file-git.trli.club/file/js/background-html.js";
+        var s = document.getElementsByTagName("title")[0];
+        s.parentNode.insertBefore(hm, s);
+</script>
+
+<script>
+        Date.prototype.format = function (fmt) {
+            var o = {
+                "y+": this.getFullYear, //年
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds() //秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        setInterval("document.getElementById('dateTime').innerHTML = (new Date()).format('yyyy-MM-dd hh:mm:ss');", 100);
+</script>
+	<div id="ytWidget"></div>
+	<script src="https://translate.yandex.net/website-widget/v1/widget.js?widgetId=ytWidget&pageLang=ru&widgetTheme=dark&trnslKey=trnsl.1.1.20160709T133816Z.f5d66a42d77a4e51.ddf29e47bba7c2db465f2749b8b52335a3922d07&autoMode=false" type="text/javascript"></script>
+</head>
+<body>
+    <div class="container">
+        <ul>
+        <h5>
+        <details>
+        <summary>📃 项目说明/Project description</summary>
+        <code>
+        <li>🛑Only for learning, communication, self-use, academic research use, do not commercial use!! Please comply with local laws and regulations, download must be deleted within 24 hours ！！！！</li>
+        <li>🛑仅供学习交流和自用、学术研究使用，请勿商用!!!请遵守当地法律法规，下载后24小时内必须删除！！！！</li>
+        <li>International/China accelerated ad filtering rules subscription.</li>
+        <li>国际/中国加速广告过滤规则订阅</li>
+        <li>Cold Mo (TRLI) rules is the only one to provide a global comparison of the library.</li>
+        <li>冷莫规则是唯一一个提供全球比较全的库。</li>
+        <li>This rule is a popular rule on upstream Github and GitLab. It is not maintained by me. I only maintain the whitelist that uses this rule</li>
+        <li>这个规则是上游Github和GitLab的流行规则，它不是我的维护者，我只维护白名单使用这个规则。</li>
+        <li>The blacklist and whitelist have been processed, that is, the blacklist has been used, and the mistakenly killed domain name has been processed</li>
+        <li>The black and white list is global</li>
+        <li>Let me know if it was a mistak</li>
+        <li>已经处理黑白名单，即使用了黑名单，在处理的时候已经把误杀的域名处理了</li>
+        <li>黑白名单是全球的</li>
+        <li>误杀就告诉我</li>
+        </code>
+        </details>
+        </h5>
+
+         <h5>
+        <details>
+        <summary>📃 dns服务/DNS service</summary>
+	<datalis><summary>📃 全球dns服务/global DNS service(全球/global)[cdn]</summary>
+            <code>
+                <details><summary>📃 干净的dns/Clean the DNS</summary>
+                    <code>
+                        <table border="干净的dns/Clean the DNS">
+                        <tr><td style="text-align: center;">干净的dns-doh/Clean the DNS - doh </td><td style="text-align: center;">🚀 链接/Link</td></tr>
+                        <tr><td style="text-align: center;">主doh/main doh </td><td style="text-align: center;" >https://dns-cdn.trli.club/doh/dns</td></tr>
+                        <tr><td style="text-align: center;">备doh/prepare doh </td><td style="text-align: center;" >https://dns-cdn.trli.club/doh1/dns</td></tr>
+                        <tr><td style="text-align: center;">主stamps doh/main stamps doh </td><td style="text-align: center;" >sdns://AgcAAAAAAAAAAAARZG5zLWNkbi50cmxpLmNsdWIIL2RvaC9kbnM/<a href="sdns://AgcAAAAAAAAAAAARZG5zLWNkbi50cmxpLmNsdWIIL2RvaC9kbnM">添加到AdGuard/Added to the AdGuard</a></td></tr>
+                        <tr><td style="text-align: center;">备stamps doh/prepare stamps doh </td><td style="text-align: center;" >sdns://AgcAAAAAAAAAAAARZG5zLWNkbi50cmxpLmNsdWIJL2RvaDEvZG5z /<a href="sdns://AgcAAAAAAAAAAAARZG5zLWNkbi50cmxpLmNsdWIJL2RvaDEvZG5z">添加到AdGuard/Added to the AdGuard</a></td></tr>
+			            <tr><td style="text-align: center;">ios14-干净的dns-主doh/ios14-Clean the DNS - main doh </td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/trli/dns1-cdn-doh.mobileconfig">dns-cdn-doh.mobileconfig</a></td></tr>
+                        <tr><td style="text-align: center;">ios14-干净的dns-备doh/ios14-Clean the DNS - prepare doh </td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/trli/dns2-cdn-doh.mobileconfig">dns-cdn-doh1.mobileconfig</a></td></tr>
+			    </table>
+                    </code>
+                </details>
+                <details><summary>📃 去广告ad-dns-doh/To advertising AD DNS DOH</summary>
+                    <code>
+                        <table border="去广告ad-dns/To advertising AD DNS">
+                        <tr><td style="text-align: center;">去广告ad-dns/To advertising AD DNS </td><td style="text-align: center;">🚀 链接/Link</td></tr>
+                        <tr><td style="text-align: center;">主doh/main doh </td><td style="text-align: center;" >https://dns-cdn.trli.club/doh/ad-dns</td></tr>
+                        <tr><td style="text-align: center;">备doh/prepare doh </td><td style="text-align: center;" >https://dns-cdn.trli.club/doh1/ad-dns</td></tr>
+                        <tr><td style="text-align: center;">主stamps doh/main stamps doh </td><td style="text-align: center;" >sdns://AgcAAAAAAAAAAAARZG5zLWNkbi50cmxpLmNsdWILL2RvaC9hZC1kbnM /<a href="sdns://AgcAAAAAAAAAAAARZG5zLWNkbi50cmxpLmNsdWILL2RvaC9hZC1kbnM">添加到AdGuard/Added to the AdGuard</a></td></tr>
+                        <tr><td style="text-align: center;">备stamps doh/prepare stamps doh </td><td style="text-align: center;" >sdns://AgcAAAAAAAAAAAARZG5zLWNkbi50cmxpLmNsdWIML2RvaDEvYWQtZG5z /<a href="sdns://AgcAAAAAAAAAAAARZG5zLWNkbi50cmxpLmNsdWIML2RvaDEvYWQtZG5z">添加到AdGuard/Added to the AdGuard</a></td></tr>
+                        <tr><td style="text-align: center;">ios14-去广告dns-主doh/ios14-To advertising AD - main doh </td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/trli/ad-dns1-cdn-doh.mobileconfig">ad-dns-cdn-doh.mobileconfig</a></td></tr>
+                        <tr><td style="text-align: center;">ios14-去广告dns-备doh/ios14-To advertising AD - prepare doh </td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/trli/ad-dns2-cdn-doh.mobileconfig">ad-dns-cdn-doh1.mobileconfig</a></td></tr>
+                    </table>
+                    </code>
+                    </details>
+        </datalis>
+        </datalis>
+
+        <li>doh协议是采用了nginx反代理/The DOH protocol uses nGINx anti-proxy</li>
+        </code>
+        </details>
+        </h5>
+
+        <h5>
+            <details><summary>📃 dns其他服务/DNS other service</summary>
+                <details><summary>📃  阿里 DoT/DoH (Alidns)</summary>
+                    <code>
+                        <table border="alidns">
+                        <tr><td style="text-align: center;">阿里 DoT/DoH (Alidns)</td><td style="text-align: center;">🚀 链接/Link</td></tr>
+                        <tr><td style="text-align: center;">ios14-alidns-doh</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/dns.alidns.dns-doh.mobileconfig">dns.alidns.dns-doh.mobileconfig</a></td></tr>
+                        <tr><td style="text-align: center;">ios14-alidns-dot</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/dns.alidns.dns-dot.mobileconfig">dns.alidns.dns-dot.mobileconfig</a></td></tr>
+                    </table>
+                    </code>
+                </details>
+                <details><summary>📃  腾讯 DoT/DoH (DNSPod)</summary>
+                    <code>
+                        <table border="tx">
+                        <tr><td style="text-align: center;">腾讯 DoT/DoH (DNSPod)</td><td style="text-align: center;">🚀 链接/Link</td></tr>
+                        <tr><td style="text-align: center;">ios14-doh.pub-doh</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/doh.pub-doh.mobileconfig">doh.pub-doh.mobileconfig</a></td></tr>
+                        <tr><td style="text-align: center;">ios14-sm2-doh.pub-doh</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/sm2-doh.pub-doh.mobileconfig">sm2-doh.pub-doh.mobileconfig</a></td></tr>
+                        <tr><td style="text-align: center;">ios14-dot.pub-dot</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/dot.pub-dot.mobileconfig">dot.pub-dot.mobileconfig</a></td></tr>
+                    </table>
+                    </code>
+                </details>
+                <details><summary>📃  360 DoT/DoH (360)</summary>
+                    <code>
+                        <table border="360">
+                        <tr><td style="text-align: center;">360 DoT/DoH (360)</td><td style="text-align: center;">🚀 链接/Link</td></tr>
+                        <tr><td style="text-align: center;">ios14-doh.360.cn-doh</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/doh.360.cn-doh.mobileconfig">doh.360.cn-doh.mobileconfig</a></td></tr>
+                        <tr><td style="text-align: center;">ios14-dot.360.cn-dot</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/dot.360.cn-dot.mobileconfig">dot.360.cn-dot.mobileconfig</a></td></tr>
+                    </table>
+                    </code>
+                </details>
+            </details>
+        </h5>
+
+        <h5>
+        <details>
+        <summary>📃 群反馈</summary>
+        <li><a href="https://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&inviteCode=1NPqQe&from=246610&biz=ka">QQ频道【莫莫频道】</a></li>
+        </details>
+        </h5>
+        </ul>
+        <script async src="https://file-git.trli.club/file/js/pure.mini.js"></script>
+        <center>浏览量/views：<span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span>👀 | 访客数/visitors：<span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span>👦</center>
+        <center>系统时间/dateTime<div id="dateTime"></div></center>
+    </div>
+</body>
+</html>

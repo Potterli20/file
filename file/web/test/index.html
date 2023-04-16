@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <title>冷莫 DNS</title>
+</head>
+<script>
+        Date.prototype.format = function (fmt) {
+            var o = {
+                "y+": this.getFullYear, //年
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds() //秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        setInterval("document.getElementById('dateTime').innerHTML = (new Date()).format('yyyy-MM-dd hh:mm:ss');", 100);
+</script>
+
+<body>
+    <div class="container">
+        <div class="image">
+            <embed class="Svgimg" src="img/Terrorism.svg"/>
+        </div>
+        <div class="text">
+            <H2 id="info" >恭喜 </H2>
+            <p id="text"><strong>冷莫DNS</strong> 已经设置成功，正在守护您的网络。如果您在使用过程中遇到某些问题，请访问下面链接进行反馈。</p>
+            <strong>您的浏览器UA为：</strong> <script type="text/javascript"> document.write( navigator.userAgent); </script>
+            <strong>dns检查</strong><script src="https://nstool.netease.com/info.js">style="width: 100%; border: 0"></script>
+                <script type="text/javascript">
+                document.write('当前IP：'+ip+'  '+ip_province+' '+ip_city +' ' +ip_isp + '<br/>');
+                document.write('当前DNS：'+dns+'  '+dns_province+' '+dns_city +' ' +dns_isp + '<br/>');
+                document.write(msg + '<br/>');
+                </script>
+            <br/>
+            📃 群反馈<a href="https://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&inviteCode=1NPqQe&from=246610&biz=ka">QQ频道【莫莫频道】</a>
+            <p id="text">dns ipv4 测试地址<a href="https://test4.trli.club:2083">https://test4.trli.club:2083</a></p>
+            <p id="text">dns ipv6 测试地址<a href="https://test6.trli.club:2083">https://test6.trli.club:2083</a></p>
+            <p id="tip">冷莫DNS <a href='https://hosts.trli.club' target='_blank' rel='nofollow noopener noreferrer'>https://hosts.trli.club</a></p>
+            <center>系统时间/DateTime<div id="dateTime"></div></center>
+        </div>
+    </div>
+</body>
+</html>
