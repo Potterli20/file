@@ -38,6 +38,30 @@ jobs:
       #     curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-smartdns-domain-rules/blacklist_full.conf,dns-smartdns-domain-rules/whitelist_full.conf,dns-smartdns-domain-rules/whitelist_lite.conf,dns-smartdns-domain-rules/blacklist_lite.conf}"  https://${{ secrets.web }}/dns-hosts/dns-smartdns-domain-rules/
       #     curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{dns-unbound/blacklist_full.conf,dns-unbound/whitelist_full.conf}"  https://${{ secrets.web }}/dns-hosts/dns-unbound/
       #  continue-on-error: true
+      - name:  name GFWList2AGH
+        run: |
+            cp ./hosts-dns/dns-adguardhome/blacklist_full.txt ./dns-adguardhome-blacklist_full.txt
+            cp ./hosts-dns/dns-adguardhome/blacklist_full_combine.txt ./dns-adguardhome-blacklist_full_combine.txt
+            cp ./hosts-dns/dns-adguardhome/blacklist_full_split.txt ./dns-adguardhome-blacklist_full_split.txt
+            cp ./hosts-dns/dns-adguardhome/whitelist_full.txt ./dns-adguardhome-whitelist_full.txt
+            cp ./hosts-dns/dns-adguardhome/whitelist_full_combine.txt ./dns-adguardhome-whitelist_full_combine.txt
+            cp ./hosts-dns/dns-adguardhome/whitelist_full_split.txt ./dns-adguardhome-whitelist_full_split.txt
+            cp ./hosts-dns/dns-bind9/blacklist_full.conf ./dns-bind9-blacklist_full.conf
+            cp ./hosts-dns/dns-bind9/whitelist_full.conf ./dns-bind9-whitelist_full.conf
+            cp ./hosts-dns/dns-unbound/blacklist_full.conf ./dns-unbound-blacklist_full.conf
+            cp ./hosts-dns/dns-unbound/whitelist_full.conf ./dns-unbound-whitelist_full.conf
+            cp ./hosts-dns/dns-dnsmasq/blacklist_full.conf ./dns-dnsmasq-blacklist_full.conf
+            cp ./hosts-dns/dns-dnsmasq/whitelist_full.conf ./dns-dnsmasq-whitelist_full.conf
+            cp ./hosts-dns/dns-domain/blacklist_full.txt ./dns-domain-blacklist_full.txt
+            cp ./hosts-dns/dns-domain/whitelist_full.txt ./dns-domain-whitelist_full.txt
+            cp ./hosts-dns/dns-smartdns/blacklist_full.conf ./dns-smartdns-blacklist_full.conf
+            cp ./hosts-dns/dns-smartdns/whitelist_full.conf ./dns-smartdns-whitelist_full.conf
+            cp ./hosts-dns/dns-smartdns/blacklist_lite.conf ./dns-smartdns-blacklist_lite.conf
+            cp ./hosts-dns/dns-smartdns/whitelist_lite.conf ./dns-smartdns-whitelist_lite.conf
+            cp ./hosts-dns/dns-smartdns-domain-rules/blacklist_full.conf ./dns-smartdns-domain-rules-blacklist_full.conf
+            cp ./hosts-dns/dns-smartdns-domain-rules/whitelist_full.conf ./dns-smartdns-domain-rules-whitelist_full.conf
+            cp ./hosts-dns/dns-smartdns-domain-rules/blacklist_lite.conf ./dns-smartdns-domain-rules-blacklist_lite.conf
+            cp ./hosts-dns/dns-smartdns-domain-rules/whitelist_lite.conf ./dns-smartdns-domain-rules-whitelist_lite.conf
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:
