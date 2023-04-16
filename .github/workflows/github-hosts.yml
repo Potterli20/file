@@ -52,4 +52,5 @@ jobs:
           tag: github-hosts
           file: ./Domains/AccelerateHosts/github-hosts.txt
           file_glob: true
+          overwrite: true
           body: "update github-hosts"
