@@ -18,6 +18,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@main
       # Runs a single command using the runners shell
       - name:  Build AdHosts
         run: |
@@ -26,14 +28,22 @@ jobs:
         run: |
           bash ./file/bash/github-dns.sh
 
-      - name: update github
-        run: |
-          cp ./ad-youtube-* ./ad-hosts/ad-youtube/
-          git remote rm origin
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
-          git gc --aggressive
-          git add ./ad-hosts/ad-youtube/
-          git commit -m "update ad-youtube $(date +%Y.%m.%d.%H.%M)"
-          git push -f -u origin main
+      #- name: update github
+       # run: |
+          #cp ./ad-youtube-* ./ad-hosts/ad-youtube/
+          #git remote rm origin
+          #git config --local user.name "github-actions[bot]"
+          #git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          #git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
+          #git gc --aggressive
+          #git add ./ad-hosts/ad-youtube/
+          #git commit -m "update ad-youtube $(date +%Y.%m.%d.%H.%M)"
+          #git push -f -u origin main
+      - name: Release
+        uses: svenstaro/upload-release-action@master
+        with:
+          repo_token: ${{ secrets.GITHUBTOKEN }}
+          tag: ad-youtube-hosts
+          file: ./ad-hosts/ad-youtube/*
+          file_glob: true
+        
