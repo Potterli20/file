@@ -173,6 +173,7 @@ function GenerateRules() {
 		"tls://dot.pub"
             )
             foreign_dns=(
+                "https://firefox.dns.nextdns.io/dns-query"
                 "https://doh.opendns.com/dns-query"
                 "https://dns.google/dns-query"
 		"https://dns64.dns.google/dns-query"

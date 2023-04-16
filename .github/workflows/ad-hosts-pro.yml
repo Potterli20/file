@@ -38,4 +38,5 @@ jobs:
           tag: ad-hosts-pro
           file: ./ad-hosts-pro/ad-*
           file_glob: true
+          overwrite: true
           body: "update ad-hosts-pro"

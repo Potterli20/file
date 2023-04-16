@@ -24,10 +24,19 @@ jobs:
       - name:  Build AdHosts
         run: |
           bash ./file-hosts.sh/ad-hosts-sqlist.sh
-      - name:  Build dns
-        run: |
-           bash ./file/bash/github-dns.sh
-      - name:  push ad-hosts-coding
-        run: |
-           curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-hosts.txt,ad-adblock.txt,ad-adguardhome.txt,ad-clash.yaml,ad-clash-premium.yaml,ad-dnsmasq.conf,ad-domains.txt,ad-quantumult.yaml,ad-shadowrocket.list,ad-smartdns.conf,ad-surge.yaml,ad-unbound.conf,ad-bind9.conf,ad-adguardhome-dnstype.txt}" https://${{ secrets.web }}/ad-hosts/ad-hosts-sqlist/
-        continue-on-error: true
+      #- name:  Build dns
+      #  run: |
+      #     bash ./file/bash/github-dns.sh
+      #- name:  push ad-hosts-coding
+      #  run: |
+      #     curl -sSL -u ${{ secrets.user }}:${{ secrets.password }} -T "{ad-hosts.txt,ad-adblock.txt,ad-adguardhome.txt,ad-clash.yaml,ad-clash-premium.yaml,ad-dnsmasq.conf,ad-domains.txt,ad-quantumult.yaml,ad-shadowrocket.list,ad-smartdns.conf,ad-surge.yaml,ad-unbound.conf,ad-bind9.conf,ad-adguardhome-dnstype.txt}" https://${{ secrets.web }}/ad-hosts/ad-hosts-sqlist/
+      #  continue-on-error: true
+      - name: Release
+        uses: svenstaro/upload-release-action@master
+        with:
+          repo_token: ${{ secrets.GITHUBTOKEN }}
+          tag: ad-hosts-sqlist
+          file: ./ad-hosts-sqlist/ad-*
+          file_glob: true
+          overwrite: true
+          body: "update ad-hosts-sqlist"

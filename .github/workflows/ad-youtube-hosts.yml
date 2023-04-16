@@ -46,4 +46,5 @@ jobs:
           tag: ad-youtube-hosts
           file: ./ad-youtube-*
           file_glob: true
+          overwrite: true
           body: "update ad-youtube"
