@@ -46,4 +46,4 @@ jobs:
           tag: ad-youtube-hosts
           file: ./ad-hosts/ad-youtube/*
           file_glob: true
-          body: "update ad-youtube $(date +%Y.%m.%d.%H.%M)"
+          body: "update ad-youtube"
