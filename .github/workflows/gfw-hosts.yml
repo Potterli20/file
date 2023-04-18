@@ -34,14 +34,23 @@ jobs:
       run: |
         sh ./file-hosts.sh/github/gfw-hosts.sh
 
-    - name: update github
-      run: |
-         cp ./file-hosts.sh/github/gfw-Hosts.txt ./Domains/AccelerateHosts/gfw-hosts.txt
-         git remote rm origin
-         git config --local user.name "github-actions[bot]"
-         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-         git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
-         git gc --aggressive
-         git add ./Domains/AccelerateHosts/gfw-hosts.txt 
-         git commit -m "update gfw-hosts $(date +%Y.%m.%d.%H.%M)"
-         git push -f -u origin main
+    #- name: update github
+    #  run: |
+    #     cp ./file-hosts.sh/github/gfw-Hosts.txt ./Domains/AccelerateHosts/gfw-hosts.txt
+    #     git remote rm origin
+    #     git config --local user.name "github-actions[bot]"
+    #     git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    #     git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
+    #     git gc --aggressive
+    #     git add ./Domains/AccelerateHosts/gfw-hosts.txt 
+    #     git commit -m "update gfw-hosts $(date +%Y.%m.%d.%H.%M)"
+    #     git push -f -u origin main
+    - name: Release
+      uses: svenstaro/upload-release-action@master
+      with:
+          repo_token: ${{ secrets.GITHUBTOKEN }}
+          tag: github-hosts
+          file: ./file-hosts.sh/github/gfw-Hosts.txt
+          file_glob: true
+          overwrite: true
+          body: "update github-hosts"
