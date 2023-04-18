@@ -42,10 +42,8 @@ jobs:
         run: |
             mv ./dns-adguardhome/blacklist_full.txt ./dns-adguardhome-blacklist_full.txt
             mv ./dns-adguardhome/blacklist_full_combine.txt ./dns-adguardhome-blacklist_full_combine.txt
-            mv ./dns-adguardhome/blacklist_full_split.txt ./dns-adguardhome-blacklist_full_split.txt
             mv ./dns-adguardhome/whitelist_full.txt ./dns-adguardhome-whitelist_full.txt
             mv ./dns-adguardhome/whitelist_full_combine.txt ./dns-adguardhome-whitelist_full_combine.txt
-            mv ./dns-adguardhome/whitelist_full_split.txt ./dns-adguardhome-whitelist_full_split.txt
             mv ./dns-bind9/blacklist_full.conf ./dns-bind9-blacklist_full.conf
             mv ./dns-bind9/whitelist_full.conf ./dns-bind9-whitelist_full.conf
             mv ./dns-unbound/blacklist_full.conf ./dns-unbound-blacklist_full.conf
