@@ -35,8 +35,8 @@ jobs:
       #    git push -f -u origin main
       #  continue-on-error: true
       - name: Release
-      uses: svenstaro/upload-release-action@master
-      with:
+        uses: svenstaro/upload-release-action@master
+        with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
           tag: edge-hosts
           file: ./ad-edge-hosts.txt
