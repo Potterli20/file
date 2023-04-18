@@ -37,8 +37,8 @@ jobs:
       #   git commit -m "update pac $(date +%Y.%m.%d.%H.%M)"
       #   git push -f -u origin main
       - name: Release
-      uses: svenstaro/upload-release-action@master
-      with:
+        uses: svenstaro/upload-release-action@master
+        with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
           tag: listpac
           file: ./listpac_*
