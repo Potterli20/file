@@ -42,3 +42,4 @@ jobs:
           file: ./ad-edge-hosts.txt
           file_glob: true
           overwrite: true
+          body: "update github-hosts"
