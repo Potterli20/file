@@ -38,8 +38,7 @@ jobs:
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
-          tag: edge-hosts
+          tag: github-hosts
           file: ./ad-edge-hosts.txt
           file_glob: true
           overwrite: true
-          body: "update edge-hosts"
