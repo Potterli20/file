@@ -42,8 +42,8 @@ jobs:
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
-          tag: Allow
+          tag: github-hosts
           file: ./allow.txt
           file_glob: true
           overwrite: true
-          body: "update Allow"
+          body: "update github-hosts"
