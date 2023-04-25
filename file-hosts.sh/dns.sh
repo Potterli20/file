@@ -169,9 +169,11 @@ function GenerateRules() {
                 "https://doh.pub/dns-query"
 		"https://dns.pub/dns-query"
 		"https://sm2.doh.pub/dns-query"
+		"https://doh.360.cn/dns-query"
 		"tls://dns.alidns.com"
 		"tls://dns.pub"
 		"tls://dot.pub"
+		"tls://dot.360.cn"
             )
             foreign_dns=(
                 "https://firefox.dns.nextdns.io/dns-query"
