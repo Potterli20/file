@@ -1,5 +1,7 @@
 function GetData() {
     filter_adblock=(
+        "https://raw.githubusercontent.com/lennihein/LostAd/main/lostad.txt"
+        "https://raw.githubusercontent.com/lennihein/LostAd/main/lostad_dns.txt"
         "https://github.com/minoplhy/filters/releases/download/latest/ucate_adblock.txt"
         "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=1&mimetype=plaintext"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingLite/AdvertisingLite.txt"
