@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# coding:utf-8
+#   
+#   Author  :   Johy
+#   E-mail  :   c13340908272@outlook.com
+#   Date    :   2021-06-05
+#   Desc    :   parsing_hosts.py;从域名列解析出对应ip地址；
+
 import socket
 import argparse
 import sys
@@ -14,7 +22,7 @@ parser.add_argument('-o','--output',nargs=1,type=str,help='output name')
 args = parser.parse_args()
 
 domains = []
-name = "Accelerate-Hosts.txtt"
+name = "hosts.txt"
 
 if args.output:
   name = args.output[0]
@@ -60,7 +68,7 @@ def output_hosts():
             console.print('ip %s'%ip)
             f.write('%s %s\n'%(ip.ljust(30), domain.strip()))
         f.write('\n# Last update at %s (Beijing Time)'%(get_time()))
-        f.write('\n# Star me GitHub url: https://file.trli.club:2083/github')
+        f.write('\n# Star me GitHub url: https://github.com/JohyC/Hosts')
         f.write('\n# Hosts End \n\n')
 if __name__ == '__main__':
     output_hosts()
