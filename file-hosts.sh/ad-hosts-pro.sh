@@ -325,6 +325,8 @@ function GetData() {
         "https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt"
     )
     filter_domain=(
+        "https://raw.githubusercontent.com/jarelllama/Scam-Blocklist/main/domains.txt"
+        "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/ultimate.txt"
         "https://github.com/Potterli20/file/releases/download/github-hosts/ad-edge-hosts.txt"
         "https://raw.githubusercontent.com/slyfox1186/pihole-regex/main/domains/blacklist/exact-blacklist.txt"
         "https://raw.githubusercontent.com/groovy-sky/SaferDNS/main/blocklists/domains/Ultimate.Hosts.Blacklist.txt"
