@@ -1,5 +1,6 @@
 function GetData() {
     filter_adblock=(
+        "https://github.com/minoplhy/filters/releases/download/latest/ucate_adblock.txt"
         "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=1&mimetype=plaintext"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingLite/AdvertisingLite.txt"
         "https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Hosts.txt"
@@ -456,6 +457,7 @@ function GetData() {
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml"
     )
     filter_white=(
+        "https://github.com/minoplhy/filters/releases/download/latest/Allowlist_domains.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/whitelist/adblock.txt"
         "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.whitelist.txt"
         "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt"
