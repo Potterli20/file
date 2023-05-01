@@ -165,6 +165,7 @@ function GenerateRules() {
         case ${software_name} in
         adguardhome)
             domestic_dns=(
+	    	"https://doh-pure.onedns.net/dns-query"
                 "https://dns.alidns.com/dns-query"
                 "https://doh.pub/dns-query"
 		"https://dns.pub/dns-query"
@@ -174,6 +175,10 @@ function GenerateRules() {
 		"https://120.53.53.53/dns-query"
 		"https://223.5.5.5/dns-query"
 		"https://223.6.6.6/dns-query"
+		"h3://dns.alidns.com/dns-query"
+		"h3://223.5.5.5/dns-query"
+		"h3://223.6.6.6/dns-query"
+		"tls://dot-pure.onedns.net:853"
 		"tls://dns.alidns.com:853"
 		"tls://dns.pub:853"
 		"tls://dot.pub:853"
