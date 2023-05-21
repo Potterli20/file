@@ -21,6 +21,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
        # Runs a single command using the runners shell
+      - name: update
+        run: |
+                  sudo apt install jq whois -y
       - name:  Build GFWList2DHDb(2)
         run: |
           bash ./file-hosts.sh/DHDb-2.sh
