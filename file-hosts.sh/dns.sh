@@ -30,10 +30,11 @@ function GetData() {
         "https://raw.githubusercontent.com/Loukky/gfwlist-by-loukky/master/gfwlist.txt"
         "https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt"
         "https://raw.githubusercontent.com/poctopus/gfwlist-plus/master/gfwlist-plus.txt"
-	    "https://raw.githubusercontent.com/MoeKing/gfwlist/main/gfwlist.txt"
+	"https://raw.githubusercontent.com/MoeKing/gfwlist/main/gfwlist.txt"
 
     )
     gfwlist_domain=(
+    	"https://raw.githubusercontent.com/filteryab/ir-blocked-domain/main/data/ir-blocked-domain"
     	"https://raw.githubusercontent.com/Potterli20/file/main/Domains/apple/Domains"
     	"https://raw.githubusercontent.com/SukkaW/Surge/master/List/domainset/icloud_private_relay.conf"
     	"https://raw.githubusercontent.com/missdeer/blocklist/master/toblock-optimized.lst"
