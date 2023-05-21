@@ -23,10 +23,11 @@ jobs:
        # Runs a single command using the runners shell
       - name: update
         run: |
-                  sudo apt install jq whois -y
+                  sudo apt install jq whois dos2unix-y
       - name:  Build GFWList2DHDb(2)
         run: |
-          sh ./file-hosts.sh/DHDb-2.sh
+          dos2unix ./file-hosts.sh/DHDb-2.sh
+          bash ./file-hosts.sh/DHDb-2.sh
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:
