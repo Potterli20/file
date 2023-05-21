@@ -20,6 +20,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@main
+      - name: update
+        run: |
+                  sudo apt install jq whois -y
        # Runs a single command using the runners shell
       - name:  Build GFWList2DHDb(1)
         run: |
