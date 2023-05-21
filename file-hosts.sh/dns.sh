@@ -4,7 +4,7 @@ function GetData() {
         "https://raw.githubusercontent.com/Potterli20/file/main/Domains/bilibili/china"
     	"https://raw.githubusercontent.com/pexcn/daily/gh-pages/chinalist/chinalist.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
-        "https://raw.githubusercontent.com/hezhijie0327/DHDb/main/dhdb_domestic.txt"
+
         "https://raw.githubusercontent.com/hq450/fancyss/master/rules/WhiteList_new.txt"
         "https://raw.githubusercontent.com/hq450/fancyss/master/rules/apple_china.txt"
         "https://raw.githubusercontent.com/hq450/fancyss/master/rules/cdn.txt"
