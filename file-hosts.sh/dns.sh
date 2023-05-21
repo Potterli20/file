@@ -1,6 +1,7 @@
 # Get Data
 function GetData() {
     cnacc_domain=(
+        "https://raw.githubusercontent.com/Potterli20/file/main/Domains/bilibili/china"
     	"https://raw.githubusercontent.com/pexcn/daily/gh-pages/chinalist/chinalist.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
         "https://raw.githubusercontent.com/hezhijie0327/DHDb/main/dhdb_domestic.txt"
@@ -34,6 +35,7 @@ function GetData() {
 
     )
     gfwlist_domain=(
+        "https://raw.githubusercontent.com/Potterli20/file/main/Domains/bilibili/gfw"
     	"https://raw.githubusercontent.com/filteryab/ir-blocked-domain/main/data/ir-blocked-domain"
     	"https://raw.githubusercontent.com/Potterli20/file/main/Domains/apple/Domains"
     	"https://raw.githubusercontent.com/SukkaW/Surge/master/List/domainset/icloud_private_relay.conf"
