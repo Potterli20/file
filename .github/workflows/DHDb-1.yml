@@ -26,7 +26,7 @@ jobs:
        # Runs a single command using the runners shell
       - name:  Build GFWList2DHDb(1)
         run: |
-          bash ./file-hosts.sh/DHDb-1.sh
+          sh ./file-hosts.sh/DHDb-1.sh
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:

@@ -26,7 +26,7 @@ jobs:
                   sudo apt install jq whois -y
       - name:  Build GFWList2DHDb(2)
         run: |
-          bash ./file-hosts.sh/DHDb-2.sh
+          sh ./file-hosts.sh/DHDb-2.sh
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:
