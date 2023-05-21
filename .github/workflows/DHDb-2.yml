@@ -23,7 +23,7 @@ jobs:
        # Runs a single command using the runners shell
       - name: update
         run: |
-                  sudo apt install jq whois dos2unix-y
+                  sudo apt install jq whois dos2unix -y
       - name:  Build GFWList2DHDb(2)
         run: |
           dos2unix ./file-hosts.sh/DHDb-2.sh
