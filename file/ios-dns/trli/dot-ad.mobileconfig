@@ -13,7 +13,7 @@
 					<string>dot-dns.trli.club</string>
 				</dict>
 				<key>PayloadDescription</key>
-				<string>Configures device to use AdGuard Home</string>
+				<string>Configures device to use trli-dot-ad</string>
 				<key>PayloadDisplayName</key>
 				<string>dot-dns.trli.club DoT</string>
 				<key>PayloadIdentifier</key>
@@ -27,7 +27,7 @@
 			</dict>
 		</array>
 		<key>PayloadDescription</key>
-		<string>Adds AdGuard Home to macOS Big Sur and iOS 14 or newer systems</string>
+		<string>Adds trli-dot to macOS Big Sur and iOS 14 or newer systems. If you have any questions, please contact me in the https://hosts.trli.club group.</string>
 		<key>PayloadDisplayName</key>
 		<string>dot-dns.trli.club DoT</string>
 		<key>PayloadIdentifier</key>
