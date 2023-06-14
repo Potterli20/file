@@ -214,7 +214,7 @@ function GenerateRules() {
 		"quic://dns-unfiltered.adguard.com:853"
                 "quic://dns.nextdns.io:853"
 		"quic://doh3.dns.nextdns.io:853"
-		"h3://anycast.dns.nextdns.io"
+		"h3://anycast.dns.nextdns.io/dns-query"
 		"h3://doh3.dns.nextdns.io/dns-query"
 		"h3://dns.nextdns.io/dns-query"
 		"h3://cloudflare-dns.com/dns-query"
