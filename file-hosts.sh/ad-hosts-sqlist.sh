@@ -1,5 +1,8 @@
 function GetData() {
     filter_adblock=(
+        "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/BlockHttpDNS/BlockHttpDNS.txt"
+        "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/Privacy/Privacy.txt"
+        "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingTest/AdvertisingTest.txt"
         "https://raw.githubusercontent.com/lennihein/LostAd/main/lostad.txt"
         "https://raw.githubusercontent.com/lennihein/LostAd/main/lostad_dns.txt"
         "https://github.com/minoplhy/filters/releases/download/latest/ucate_adblock.txt"
