@@ -761,7 +761,6 @@ function GetData() {
         "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/optional-list.txt"
         "https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Whitelists/Filter"
         "https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Whitelists/Whitelist"
-        "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt"
         "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-list.txt"
         "https://raw.githubusercontent.com/Potterli20/file/main/allow/Domains"
         "https://github.com/T145/black-mirror/releases/download/latest/ALLOW_DOMAIN.txt"
