@@ -14,12 +14,12 @@ function GetData() {
 	"https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/icloud.txt"
 	"https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/geolocation-cn.txt"
 	"https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt"
-	"https://raw.githubusercontent.com/v2fly/domain-list-custom/release/apple.txt"
-	"https://raw.githubusercontent.com/v2fly/domain-list-custom/release/icloud.txt"
-	"https://raw.githubusercontent.com/v2fly/domain-list-custom/release/geolocation-cn.txt"
-	"https://raw.githubusercontent.com/v2fly/domain-list-custom/release/cn.txt"
+	"https://raw.githubusercontent.com/v2fly/domain-list-community/release/apple.txt"
+	"https://raw.githubusercontent.com/v2fly/domain-list-community/release/icloud.txt"
+	"https://raw.githubusercontent.com/v2fly/domain-list-community/release/cn.txt"
 	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/China/China_Domain.list"
 	"https://raw.githubusercontent.com/Potterli20/file/main/Domains/apple/Domains"
+        "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-tld-list.txt"
     )
     cnacc_trusted=(
         "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
@@ -31,21 +31,21 @@ function GetData() {
         "https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt"
         "https://raw.githubusercontent.com/poctopus/gfwlist-plus/master/gfwlist-plus.txt"
 	"https://raw.githubusercontent.com/MoeKing/gfwlist/main/gfwlist.txt"
+        "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/gfwlist.txt"
 
     )
     gfwlist_domain=(
+        "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-tld-list.txt"
         "https://raw.githubusercontent.com/Potterli20/file/main/Domains/bilibili/gfw"
     	"https://raw.githubusercontent.com/filteryab/ir-blocked-domain/main/data/ir-blocked-domain"
     	"https://raw.githubusercontent.com/Potterli20/file/main/Domains/apple/Domains"
     	"https://raw.githubusercontent.com/SukkaW/Surge/master/List/domainset/icloud_private_relay.conf"
     	"https://raw.githubusercontent.com/missdeer/blocklist/master/toblock-optimized.lst"
-    	"https://raw.githubusercontent.com/kenzok8/small-package/main/luci-app-mosdns/root/etc/mosdns/rule/serverlist.txt"
     	"https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
     	"https://raw.githubusercontent.com/smed79/blacklist/master/extra/facebook.txt"
         "https://dl.red.flag.domains/red.flag.domains.txt"
     	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global_Domain.list"
     	"https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/steam.txt"
-	 "https://raw.githubusercontent.com/v2fly/domain-list-custom/release/steam.txt"
     	"https://raw.githubusercontent.com/pexcn/daily/gh-pages/gfwlist/gfwlist.txt"
     	"https://raw.githubusercontent.com/Potterli20/file/main/Domains/gfw/Domains"
     	"https://github.com/Potterli20/file/releases/download/github-hosts/ad-edge-hosts.txt"
@@ -72,7 +72,7 @@ function GetData() {
         "https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt"
         "https://raw.githubusercontent.com/hq450/fancyss/master/rules/gfwlist.conf"
         "https://raw.githubusercontent.com/Ewpratten/youtube_ad_blocklist/master/blocklist.txt"
-        "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/greatfire.txt|"
+        "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/greatfire.txt"
         "https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt"
         "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt"
         "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt"
@@ -81,7 +81,6 @@ function GetData() {
         "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/youtubeblacklist.txt"
         "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/blockeverything.txt"
         "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter-dns.txt"
-        "https://raw.githubusercontent.com/sonofhelga/yicklist/master/yick.list"
         "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/ad-block-YouTube-Project.txt"
     )
     gfwlist2agh_modify=(
