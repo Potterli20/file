@@ -1,408 +1,408 @@
 function GetData() {
     filter_adblock=(
-    "https://filters.adtidy.org/android/filters/1_optimized.txt"
-    "https://filters.adtidy.org/android/filters/2_optimized.txt"
-    "https://filters.adtidy.org/android/filters/3_optimized.txt"
-    "https://filters.adtidy.org/android/filters/4_optimized.txt"
-    "https://filters.adtidy.org/android/filters/5_optimized.txt"
-    "https://filters.adtidy.org/android/filters/6_optimized.txt"
-    "https://filters.adtidy.org/android/filters/7_optimized.txt"
-    "https://filters.adtidy.org/android/filters/8_optimized.txt"
-    "https://filters.adtidy.org/android/filters/9_optimized.txt"
-    "https://filters.adtidy.org/android/filters/10_optimized.txt"
-    "https://filters.adtidy.org/android/filters/11_optimized.txt"
-    "https://filters.adtidy.org/android/filters/12_optimized.txt"
-    "https://filters.adtidy.org/android/filters/13_optimized.txt"
-    "https://filters.adtidy.org/android/filters/14_optimized.txt"
-    "https://filters.adtidy.org/android/filters/15_optimized.txt"
-    "https://filters.adtidy.org/android/filters/16_optimized.txt"
-    "https://filters.adtidy.org/android/filters/17_optimized.txt"
-    "https://filters.adtidy.org/android/filters/18_optimized.txt"
-    "https://filters.adtidy.org/android/filters/19_optimized.txt"
-    "https://filters.adtidy.org/android/filters/20_optimized.txt"
-    "https://filters.adtidy.org/android/filters/21_optimized.txt"
-    "https://filters.adtidy.org/android/filters/22_optimized.txt"
-    "https://filters.adtidy.org/android/filters/23_optimized.txt"
-    "https://filters.adtidy.org/android/filters/101_optimized.txt"
-    "https://filters.adtidy.org/android/filters/102_optimized.txt"
-    "https://filters.adtidy.org/android/filters/103_optimized.txt"
-    "https://filters.adtidy.org/android/filters/104_optimized.txt"
-    "https://filters.adtidy.org/android/filters/105_optimized.txt"
-    "https://filters.adtidy.org/android/filters/106_optimized.txt"
-    "https://filters.adtidy.org/android/filters/107_optimized.txt"
-    "https://filters.adtidy.org/android/filters/108_optimized.txt"
-    "https://filters.adtidy.org/android/filters/109_optimized.txt"
-    "https://filters.adtidy.org/android/filters/110_optimized.txt"
-    "https://filters.adtidy.org/android/filters/111_optimized.txt"
-    "https://filters.adtidy.org/android/filters/112_optimized.txt"
-    "https://filters.adtidy.org/android/filters/113_optimized.txt"
-    "https://filters.adtidy.org/android/filters/114_optimized.txt"
-    "https://filters.adtidy.org/android/filters/115_optimized.txt"
-    "https://filters.adtidy.org/android/filters/116_optimized.txt"
-    "https://filters.adtidy.org/android/filters/117_optimized.txt"
-    "https://filters.adtidy.org/android/filters/118_optimized.txt"
-    "https://filters.adtidy.org/android/filters/119_optimized.txt"
-    "https://filters.adtidy.org/android/filters/120_optimized.txt"
-    "https://filters.adtidy.org/android/filters/121_optimized.txt"
-    "https://filters.adtidy.org/android/filters/122_optimized.txt"
-    "https://filters.adtidy.org/android/filters/123_optimized.txt"
-    "https://filters.adtidy.org/android/filters/124_optimized.txt"
+        "https://filters.adtidy.org/android/filters/1_optimized.txt"
+        "https://filters.adtidy.org/android/filters/2_optimized.txt"
+        "https://filters.adtidy.org/android/filters/3_optimized.txt"
+        "https://filters.adtidy.org/android/filters/4_optimized.txt"
+        "https://filters.adtidy.org/android/filters/5_optimized.txt"
+        "https://filters.adtidy.org/android/filters/6_optimized.txt"
+        "https://filters.adtidy.org/android/filters/7_optimized.txt"
+        "https://filters.adtidy.org/android/filters/8_optimized.txt"
+        "https://filters.adtidy.org/android/filters/9_optimized.txt"
+        "https://filters.adtidy.org/android/filters/10_optimized.txt"
+        "https://filters.adtidy.org/android/filters/11_optimized.txt"
+        "https://filters.adtidy.org/android/filters/12_optimized.txt"
+        "https://filters.adtidy.org/android/filters/13_optimized.txt"
+        "https://filters.adtidy.org/android/filters/14_optimized.txt"
+        "https://filters.adtidy.org/android/filters/15_optimized.txt"
+        "https://filters.adtidy.org/android/filters/16_optimized.txt"
+        "https://filters.adtidy.org/android/filters/17_optimized.txt"
+        "https://filters.adtidy.org/android/filters/18_optimized.txt"
+        "https://filters.adtidy.org/android/filters/19_optimized.txt"
+        "https://filters.adtidy.org/android/filters/20_optimized.txt"
+        "https://filters.adtidy.org/android/filters/21_optimized.txt"
+        "https://filters.adtidy.org/android/filters/22_optimized.txt"
+        "https://filters.adtidy.org/android/filters/23_optimized.txt"
+        "https://filters.adtidy.org/android/filters/101_optimized.txt"
+        "https://filters.adtidy.org/android/filters/102_optimized.txt"
+        "https://filters.adtidy.org/android/filters/103_optimized.txt"
+        "https://filters.adtidy.org/android/filters/104_optimized.txt"
+        "https://filters.adtidy.org/android/filters/105_optimized.txt"
+        "https://filters.adtidy.org/android/filters/106_optimized.txt"
+        "https://filters.adtidy.org/android/filters/107_optimized.txt"
+        "https://filters.adtidy.org/android/filters/108_optimized.txt"
+        "https://filters.adtidy.org/android/filters/109_optimized.txt"
+        "https://filters.adtidy.org/android/filters/110_optimized.txt"
+        "https://filters.adtidy.org/android/filters/111_optimized.txt"
+        "https://filters.adtidy.org/android/filters/112_optimized.txt"
+        "https://filters.adtidy.org/android/filters/113_optimized.txt"
+        "https://filters.adtidy.org/android/filters/114_optimized.txt"
+        "https://filters.adtidy.org/android/filters/115_optimized.txt"
+        "https://filters.adtidy.org/android/filters/116_optimized.txt"
+        "https://filters.adtidy.org/android/filters/117_optimized.txt"
+        "https://filters.adtidy.org/android/filters/118_optimized.txt"
+        "https://filters.adtidy.org/android/filters/119_optimized.txt"
+        "https://filters.adtidy.org/android/filters/120_optimized.txt"
+        "https://filters.adtidy.org/android/filters/121_optimized.txt"
+        "https://filters.adtidy.org/android/filters/122_optimized.txt"
+        "https://filters.adtidy.org/android/filters/123_optimized.txt"
+        "https://filters.adtidy.org/android/filters/124_optimized.txt"
         "https://filters.adtidy.org/android/filters/200_optimized.txt"
-    "https://filters.adtidy.org/android/filters/201_optimized.txt"
-    "https://filters.adtidy.org/android/filters/203_optimized.txt"
-    "https://filters.adtidy.org/android/filters/204_optimized.txt"
-    "https://filters.adtidy.org/android/filters/205_optimized.txt"
-    "https://filters.adtidy.org/android/filters/206_optimized.txt"
-    "https://filters.adtidy.org/android/filters/207_optimized.txt"
-    "https://filters.adtidy.org/android/filters/208_optimized.txt"
-    "https://filters.adtidy.org/android/filters/209_optimized.txt"
-    "https://filters.adtidy.org/android/filters/210_optimized.txt"
-    "https://filters.adtidy.org/android/filters/211_optimized.txt"
-    "https://filters.adtidy.org/android/filters/212_optimized.txt"
-    "https://filters.adtidy.org/android/filters/213_optimized.txt"
-    "https://filters.adtidy.org/android/filters/214_optimized.txt"
-    "https://filters.adtidy.org/android/filters/215_optimized.txt"
-    "https://filters.adtidy.org/android/filters/216_optimized.txt"
-    "https://filters.adtidy.org/android/filters/217_optimized.txt"
-    "https://filters.adtidy.org/android/filters/218_optimized.txt"
-    "https://filters.adtidy.org/android/filters/219_optimized.txt"
-    "https://filters.adtidy.org/android/filters/220_optimized.txt"
-    "https://filters.adtidy.org/android/filters/221_optimized.txt"
-    "https://filters.adtidy.org/android/filters/222_optimized.txt"
-    "https://filters.adtidy.org/android/filters/223_optimized.txt"
-    "https://filters.adtidy.org/android/filters/224_optimized.txt"
-    "https://filters.adtidy.org/android/filters/225_optimized.txt"
-    "https://filters.adtidy.org/android/filters/226_optimized.txt"
-    "https://filters.adtidy.org/android/filters/227_optimized.txt"
-    "https://filters.adtidy.org/android/filters/228_optimized.txt"
-    "https://filters.adtidy.org/android/filters/229_optimized.txt"
-    "https://filters.adtidy.org/android/filters/230_optimized.txt"
-    "https://filters.adtidy.org/android/filters/231_optimized.txt"
-    "https://filters.adtidy.org/android/filters/232_optimized.txt"
-    "https://filters.adtidy.org/android/filters/233_optimized.txt"
-    "https://filters.adtidy.org/android/filters/234_optimized.txt"
-    "https://filters.adtidy.org/android/filters/235_optimized.txt"
-    "https://filters.adtidy.org/android/filters/236_optimized.txt"
-    "https://filters.adtidy.org/android/filters/237_optimized.txt"
-    "https://filters.adtidy.org/android/filters/238_optimized.txt"
-    "https://filters.adtidy.org/android/filters/239_optimized.txt"
-    "https://filters.adtidy.org/android/filters/240_optimized.txt"
-    "https://filters.adtidy.org/android/filters/241_optimized.txt"
-    "https://filters.adtidy.org/android/filters/242_optimized.txt"
-    "https://filters.adtidy.org/android/filters/243_optimized.txt"
-    "https://filters.adtidy.org/android/filters/244_optimized.txt"
-    "https://filters.adtidy.org/android/filters/245_optimized.txt"
-    "https://filters.adtidy.org/android/filters/246_optimized.txt"
-    "https://filters.adtidy.org/android/filters/247_optimized.txt"
-    "https://filters.adtidy.org/android/filters/249_optimized.txt"
-    "https://filters.adtidy.org/android/filters/250_optimized.txt"
-    "https://filters.adtidy.org/android/filters/251_optimized.txt"
-    "https://filters.adtidy.org/android/filters/252_optimized.txt"
-    "https://filters.adtidy.org/android/filters/253_optimized.txt"
-    "https://filters.adtidy.org/android/filters/254_optimized.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/1.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/2.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/3.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/4.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/5.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/6.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/7.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/8.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/9.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/10.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/11.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/12.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/13.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/14.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/15.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/16.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/17.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/18.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/19.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/20.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/21.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/22.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/23.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/101.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/102.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/103.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/104.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/105.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/106.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/107.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/108.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/109.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/110.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/111.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/112.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/113.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/114.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/115.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/116.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/117.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/118.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/119.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/120.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/121.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/122.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/123.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/124.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/200.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/201.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/203.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/204.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/205.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/206.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/207.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/208.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/209.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/210.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/211.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/212.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/213.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/214.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/215.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/216.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/217.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/218.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/219.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/220.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/221.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/222.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/223.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/224.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/225.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/226.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/227.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/228.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/229.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/230.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/231.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/232.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/233.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/234.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/235.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/236.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/237.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/238.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/239.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/240.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/241.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/242.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/243.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/244.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/245.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/246.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/247.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/249.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/250.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/251.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/252.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/253.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/254.txt"
-    "https://filters.adtidy.org/windows/filters/1.txt"
-    "https://filters.adtidy.org/windows/filters/2.txt"
-    "https://filters.adtidy.org/windows/filters/3.txt"
-    "https://filters.adtidy.org/windows/filters/4.txt"
-    "https://filters.adtidy.org/windows/filters/5.txt"
-    "https://filters.adtidy.org/windows/filters/6.txt"
-    "https://filters.adtidy.org/windows/filters/7.txt"
-    "https://filters.adtidy.org/windows/filters/8.txt"
-    "https://filters.adtidy.org/windows/filters/9.txt"
-    "https://filters.adtidy.org/windows/filters/10.txt"
-    "https://filters.adtidy.org/windows/filters/11.txt"
-    "https://filters.adtidy.org/windows/filters/14.txt"
-    "https://filters.adtidy.org/windows/filters/17.txt"
-    "https://filters.adtidy.org/windows/filters/12.txt"
-    "https://filters.adtidy.org/windows/filters/13.txt"
-    "https://filters.adtidy.org/windows/filters/15.txt"
-    "https://filters.adtidy.org/windows/filters/16.txt"
-    "https://filters.adtidy.org/windows/filters/18.txt"
-    "https://filters.adtidy.org/windows/filters/19.txt"
-    "https://filters.adtidy.org/windows/filters/20.txt"
-    "https://filters.adtidy.org/windows/filters/21.txt"
-    "https://filters.adtidy.org/windows/filters/22.txt"
-    "https://filters.adtidy.org/windows/filters/23.txt"
-    "https://filters.adtidy.org/windows/filters/101.txt"
-    "https://filters.adtidy.org/windows/filters/102.txt"
-    "https://filters.adtidy.org/windows/filters/103.txt"
-    "https://filters.adtidy.org/windows/filters/104.txt"
-    "https://filters.adtidy.org/windows/filters/105.txt"
-    "https://filters.adtidy.org/windows/filters/106.txt"
-    "https://filters.adtidy.org/windows/filters/107.txt"
-    "https://filters.adtidy.org/windows/filters/108.txt"
-    "https://filters.adtidy.org/windows/filters/109.txt"
-    "https://filters.adtidy.org/windows/filters/110.txt"
-    "https://filters.adtidy.org/windows/filters/111.txt"
-    "https://filters.adtidy.org/windows/filters/112.txt"
-    "https://filters.adtidy.org/windows/filters/113.txt"
-    "https://filters.adtidy.org/windows/filters/114.txt"
-    "https://filters.adtidy.org/windows/filters/115.txt"
-    "https://filters.adtidy.org/windows/filters/116.txt"
-    "https://filters.adtidy.org/windows/filters/117.txt"
-    "https://filters.adtidy.org/windows/filters/118.txt"
-    "https://filters.adtidy.org/windows/filters/119.txt"
-    "https://filters.adtidy.org/windows/filters/120.txt"
-    "https://filters.adtidy.org/windows/filters/121.txt"
-    "https://filters.adtidy.org/windows/filters/122.txt"
-    "https://filters.adtidy.org/windows/filters/123.txt"
-    "https://filters.adtidy.org/windows/filters/124.txt"
-    "https://filters.adtidy.org/windows/filters/200.txt"
-    "https://filters.adtidy.org/windows/filters/201.txt"
-    "https://filters.adtidy.org/windows/filters/202.txt"
-    "https://filters.adtidy.org/windows/filters/203.txt"
-    "https://filters.adtidy.org/windows/filters/204.txt"
-    "https://filters.adtidy.org/windows/filters/205.txt"
-    "https://filters.adtidy.org/windows/filters/206.txt"
-    "https://filters.adtidy.org/windows/filters/207.txt"
-    "https://filters.adtidy.org/windows/filters/208.txt"
-    "https://filters.adtidy.org/windows/filters/209.txt"
-    "https://filters.adtidy.org/windows/filters/210.txt"
-    "https://filters.adtidy.org/windows/filters/200.txt"
-    "https://filters.adtidy.org/windows/filters/211.txt"
-    "https://filters.adtidy.org/windows/filters/212.txt"
-    "https://filters.adtidy.org/windows/filters/213.txt"
-    "https://filters.adtidy.org/windows/filters/214.txt"
-    "https://filters.adtidy.org/windows/filters/215.txt"
-    "https://filters.adtidy.org/windows/filters/216.txt"
-    "https://filters.adtidy.org/windows/filters/217.txt"
-    "https://filters.adtidy.org/windows/filters/218.txt"
-    "https://filters.adtidy.org/windows/filters/219.txt"
-    "https://filters.adtidy.org/windows/filters/220.txt"
-    "https://filters.adtidy.org/windows/filters/221.txt"
-    "https://filters.adtidy.org/windows/filters/222.txt"
-    "https://filters.adtidy.org/windows/filters/223.txt"
-    "https://filters.adtidy.org/windows/filters/224.txt"
-    "https://filters.adtidy.org/windows/filters/225.txt"
-    "https://filters.adtidy.org/windows/filters/226.txt"
-    "https://filters.adtidy.org/windows/filters/227.txt"
-    "https://filters.adtidy.org/windows/filters/228.txt"
-    "https://filters.adtidy.org/windows/filters/229.txt"
-    "https://filters.adtidy.org/windows/filters/230.txt"
-    "https://filters.adtidy.org/windows/filters/231.txt"
-    "https://filters.adtidy.org/windows/filters/232.txt"
-    "https://filters.adtidy.org/windows/filters/233.txt"
-    "https://filters.adtidy.org/windows/filters/234.txt"
-    "https://filters.adtidy.org/windows/filters/235.txt"
-    "https://filters.adtidy.org/windows/filters/236.txt"
-    "https://filters.adtidy.org/windows/filters/237.txt"
-    "https://filters.adtidy.org/windows/filters/238.txt"
-    "https://filters.adtidy.org/windows/filters/239.txt"
-    "https://filters.adtidy.org/windows/filters/240.txt"
-    "https://filters.adtidy.org/windows/filters/241.txt"
-    "https://filters.adtidy.org/windows/filters/242.txt"
-    "https://filters.adtidy.org/windows/filters/243.txt"
-    "https://filters.adtidy.org/windows/filters/244.txt"
-    "https://filters.adtidy.org/windows/filters/245.txt"
-    "https://filters.adtidy.org/windows/filters/246.txt"
-    "https://filters.adtidy.org/windows/filters/247.txt"
-    "https://filters.adtidy.org/windows/filters/249.txt"
-    "https://filters.adtidy.org/windows/filters/250.txt"
-    "https://filters.adtidy.org/windows/filters/251.txt"
-    "https://filters.adtidy.org/windows/filters/252.txt"
-    "https://filters.adtidy.org/windows/filters/253.txt"
-    "https://filters.adtidy.org/windows/filters/254.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/1_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/2_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/3_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/4_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/5_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/6_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/7_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/8_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/9_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/10_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/11_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/12_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/13_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/14_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/15_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/16_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/17_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/18_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/19_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/20_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/21_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/22_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/23_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/101_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/102_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/103_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/104_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/105_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/106_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/107_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/108_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/109_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/110_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/111_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/112_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/113_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/114_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/115_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/116_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/117_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/118_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/119_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/120_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/121_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/122_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/123_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/124_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/200_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/201_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/203_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/204_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/205_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/206_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/207_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/208_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/209_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/210_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/211_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/212_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/213_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/214_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/215_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/216_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/217_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/218_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/219_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/220_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/221_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/222_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/223_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/225_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/226_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/227_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/228_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/229_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/230_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/231_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/232_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/233_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/234_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/235_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/236_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/237_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/238_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/239_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/240_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/241_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/242_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/243_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/244_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/245_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/246_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/247_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/249_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/250_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/251_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/252_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/253_optimized.txt"
-    "https://filters.adtidy.org/extension/ublock/filters/254_optimized.txt"
-    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/BlockHttpDNS/BlockHttpDNS.txt"
+        "https://filters.adtidy.org/android/filters/201_optimized.txt"
+        "https://filters.adtidy.org/android/filters/203_optimized.txt"
+        "https://filters.adtidy.org/android/filters/204_optimized.txt"
+        "https://filters.adtidy.org/android/filters/205_optimized.txt"
+        "https://filters.adtidy.org/android/filters/206_optimized.txt"
+        "https://filters.adtidy.org/android/filters/207_optimized.txt"
+        "https://filters.adtidy.org/android/filters/208_optimized.txt"
+        "https://filters.adtidy.org/android/filters/209_optimized.txt"
+        "https://filters.adtidy.org/android/filters/210_optimized.txt"
+        "https://filters.adtidy.org/android/filters/211_optimized.txt"
+        "https://filters.adtidy.org/android/filters/212_optimized.txt"
+        "https://filters.adtidy.org/android/filters/213_optimized.txt"
+        "https://filters.adtidy.org/android/filters/214_optimized.txt"
+        "https://filters.adtidy.org/android/filters/215_optimized.txt"
+        "https://filters.adtidy.org/android/filters/216_optimized.txt"
+        "https://filters.adtidy.org/android/filters/217_optimized.txt"
+        "https://filters.adtidy.org/android/filters/218_optimized.txt"
+        "https://filters.adtidy.org/android/filters/219_optimized.txt"
+        "https://filters.adtidy.org/android/filters/220_optimized.txt"
+        "https://filters.adtidy.org/android/filters/221_optimized.txt"
+        "https://filters.adtidy.org/android/filters/222_optimized.txt"
+        "https://filters.adtidy.org/android/filters/223_optimized.txt"
+        "https://filters.adtidy.org/android/filters/224_optimized.txt"
+        "https://filters.adtidy.org/android/filters/225_optimized.txt"
+        "https://filters.adtidy.org/android/filters/226_optimized.txt"
+        "https://filters.adtidy.org/android/filters/227_optimized.txt"
+        "https://filters.adtidy.org/android/filters/228_optimized.txt"
+        "https://filters.adtidy.org/android/filters/229_optimized.txt"
+        "https://filters.adtidy.org/android/filters/230_optimized.txt"
+        "https://filters.adtidy.org/android/filters/231_optimized.txt"
+        "https://filters.adtidy.org/android/filters/232_optimized.txt"
+        "https://filters.adtidy.org/android/filters/233_optimized.txt"
+        "https://filters.adtidy.org/android/filters/234_optimized.txt"
+        "https://filters.adtidy.org/android/filters/235_optimized.txt"
+        "https://filters.adtidy.org/android/filters/236_optimized.txt"
+        "https://filters.adtidy.org/android/filters/237_optimized.txt"
+        "https://filters.adtidy.org/android/filters/238_optimized.txt"
+        "https://filters.adtidy.org/android/filters/239_optimized.txt"
+        "https://filters.adtidy.org/android/filters/240_optimized.txt"
+        "https://filters.adtidy.org/android/filters/241_optimized.txt"
+        "https://filters.adtidy.org/android/filters/242_optimized.txt"
+        "https://filters.adtidy.org/android/filters/243_optimized.txt"
+        "https://filters.adtidy.org/android/filters/244_optimized.txt"
+        "https://filters.adtidy.org/android/filters/245_optimized.txt"
+        "https://filters.adtidy.org/android/filters/246_optimized.txt"
+        "https://filters.adtidy.org/android/filters/247_optimized.txt"
+        "https://filters.adtidy.org/android/filters/249_optimized.txt"
+        "https://filters.adtidy.org/android/filters/250_optimized.txt"
+        "https://filters.adtidy.org/android/filters/251_optimized.txt"
+        "https://filters.adtidy.org/android/filters/252_optimized.txt"
+        "https://filters.adtidy.org/android/filters/253_optimized.txt"
+        "https://filters.adtidy.org/android/filters/254_optimized.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/1.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/2.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/3.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/4.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/5.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/6.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/7.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/8.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/9.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/10.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/11.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/12.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/13.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/14.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/15.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/16.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/17.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/18.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/19.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/20.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/21.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/22.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/23.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/101.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/102.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/103.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/104.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/105.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/106.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/107.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/108.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/109.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/110.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/111.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/112.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/113.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/114.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/115.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/116.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/117.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/118.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/119.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/120.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/121.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/122.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/123.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/124.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/200.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/201.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/203.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/204.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/205.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/206.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/207.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/208.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/209.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/210.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/211.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/212.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/213.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/214.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/215.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/216.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/217.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/218.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/219.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/220.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/221.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/222.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/223.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/224.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/225.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/226.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/227.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/228.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/229.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/230.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/231.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/232.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/233.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/234.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/235.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/236.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/237.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/238.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/239.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/240.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/241.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/242.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/243.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/244.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/245.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/246.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/247.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/249.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/250.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/251.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/252.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/253.txt"
+        "https://filters.adtidy.org/extension/chromium/filters/254.txt"
+        "https://filters.adtidy.org/windows/filters/1.txt"
+        "https://filters.adtidy.org/windows/filters/2.txt"
+        "https://filters.adtidy.org/windows/filters/3.txt"
+        "https://filters.adtidy.org/windows/filters/4.txt"
+        "https://filters.adtidy.org/windows/filters/5.txt"
+        "https://filters.adtidy.org/windows/filters/6.txt"
+        "https://filters.adtidy.org/windows/filters/7.txt"
+        "https://filters.adtidy.org/windows/filters/8.txt"
+        "https://filters.adtidy.org/windows/filters/9.txt"
+        "https://filters.adtidy.org/windows/filters/10.txt"
+        "https://filters.adtidy.org/windows/filters/11.txt"
+        "https://filters.adtidy.org/windows/filters/14.txt"
+        "https://filters.adtidy.org/windows/filters/17.txt"
+        "https://filters.adtidy.org/windows/filters/12.txt"
+        "https://filters.adtidy.org/windows/filters/13.txt"
+        "https://filters.adtidy.org/windows/filters/15.txt"
+        "https://filters.adtidy.org/windows/filters/16.txt"
+        "https://filters.adtidy.org/windows/filters/18.txt"
+        "https://filters.adtidy.org/windows/filters/19.txt"
+        "https://filters.adtidy.org/windows/filters/20.txt"
+        "https://filters.adtidy.org/windows/filters/21.txt"
+        "https://filters.adtidy.org/windows/filters/22.txt"
+        "https://filters.adtidy.org/windows/filters/23.txt"
+        "https://filters.adtidy.org/windows/filters/101.txt"
+        "https://filters.adtidy.org/windows/filters/102.txt"
+        "https://filters.adtidy.org/windows/filters/103.txt"
+        "https://filters.adtidy.org/windows/filters/104.txt"
+        "https://filters.adtidy.org/windows/filters/105.txt"
+        "https://filters.adtidy.org/windows/filters/106.txt"
+        "https://filters.adtidy.org/windows/filters/107.txt"
+        "https://filters.adtidy.org/windows/filters/108.txt"
+        "https://filters.adtidy.org/windows/filters/109.txt"
+        "https://filters.adtidy.org/windows/filters/110.txt"
+        "https://filters.adtidy.org/windows/filters/111.txt"
+        "https://filters.adtidy.org/windows/filters/112.txt"
+        "https://filters.adtidy.org/windows/filters/113.txt"
+        "https://filters.adtidy.org/windows/filters/114.txt"
+        "https://filters.adtidy.org/windows/filters/115.txt"
+        "https://filters.adtidy.org/windows/filters/116.txt"
+        "https://filters.adtidy.org/windows/filters/117.txt"
+        "https://filters.adtidy.org/windows/filters/118.txt"
+        "https://filters.adtidy.org/windows/filters/119.txt"
+        "https://filters.adtidy.org/windows/filters/120.txt"
+        "https://filters.adtidy.org/windows/filters/121.txt"
+        "https://filters.adtidy.org/windows/filters/122.txt"
+        "https://filters.adtidy.org/windows/filters/123.txt"
+        "https://filters.adtidy.org/windows/filters/124.txt"
+        "https://filters.adtidy.org/windows/filters/200.txt"
+        "https://filters.adtidy.org/windows/filters/201.txt"
+        "https://filters.adtidy.org/windows/filters/202.txt"
+        "https://filters.adtidy.org/windows/filters/203.txt"
+        "https://filters.adtidy.org/windows/filters/204.txt"
+        "https://filters.adtidy.org/windows/filters/205.txt"
+        "https://filters.adtidy.org/windows/filters/206.txt"
+        "https://filters.adtidy.org/windows/filters/207.txt"
+        "https://filters.adtidy.org/windows/filters/208.txt"
+        "https://filters.adtidy.org/windows/filters/209.txt"
+        "https://filters.adtidy.org/windows/filters/210.txt"
+        "https://filters.adtidy.org/windows/filters/200.txt"
+        "https://filters.adtidy.org/windows/filters/211.txt"
+        "https://filters.adtidy.org/windows/filters/212.txt"
+        "https://filters.adtidy.org/windows/filters/213.txt"
+        "https://filters.adtidy.org/windows/filters/214.txt"
+        "https://filters.adtidy.org/windows/filters/215.txt"
+        "https://filters.adtidy.org/windows/filters/216.txt"
+        "https://filters.adtidy.org/windows/filters/217.txt"
+        "https://filters.adtidy.org/windows/filters/218.txt"
+        "https://filters.adtidy.org/windows/filters/219.txt"
+        "https://filters.adtidy.org/windows/filters/220.txt"
+        "https://filters.adtidy.org/windows/filters/221.txt"
+        "https://filters.adtidy.org/windows/filters/222.txt"
+        "https://filters.adtidy.org/windows/filters/223.txt"
+        "https://filters.adtidy.org/windows/filters/224.txt"
+        "https://filters.adtidy.org/windows/filters/225.txt"
+        "https://filters.adtidy.org/windows/filters/226.txt"
+        "https://filters.adtidy.org/windows/filters/227.txt"
+        "https://filters.adtidy.org/windows/filters/228.txt"
+        "https://filters.adtidy.org/windows/filters/229.txt"
+        "https://filters.adtidy.org/windows/filters/230.txt"
+        "https://filters.adtidy.org/windows/filters/231.txt"
+        "https://filters.adtidy.org/windows/filters/232.txt"
+        "https://filters.adtidy.org/windows/filters/233.txt"
+        "https://filters.adtidy.org/windows/filters/234.txt"
+        "https://filters.adtidy.org/windows/filters/235.txt"
+        "https://filters.adtidy.org/windows/filters/236.txt"
+        "https://filters.adtidy.org/windows/filters/237.txt"
+        "https://filters.adtidy.org/windows/filters/238.txt"
+        "https://filters.adtidy.org/windows/filters/239.txt"
+        "https://filters.adtidy.org/windows/filters/240.txt"
+        "https://filters.adtidy.org/windows/filters/241.txt"
+        "https://filters.adtidy.org/windows/filters/242.txt"
+        "https://filters.adtidy.org/windows/filters/243.txt"
+        "https://filters.adtidy.org/windows/filters/244.txt"
+        "https://filters.adtidy.org/windows/filters/245.txt"
+        "https://filters.adtidy.org/windows/filters/246.txt"
+        "https://filters.adtidy.org/windows/filters/247.txt"
+        "https://filters.adtidy.org/windows/filters/249.txt"
+        "https://filters.adtidy.org/windows/filters/250.txt"
+        "https://filters.adtidy.org/windows/filters/251.txt"
+        "https://filters.adtidy.org/windows/filters/252.txt"
+        "https://filters.adtidy.org/windows/filters/253.txt"
+        "https://filters.adtidy.org/windows/filters/254.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/1_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/2_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/3_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/4_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/5_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/6_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/7_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/8_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/9_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/10_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/11_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/12_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/13_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/14_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/15_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/16_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/17_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/18_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/19_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/20_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/21_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/22_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/23_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/101_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/102_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/103_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/104_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/105_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/106_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/107_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/108_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/109_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/110_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/111_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/112_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/113_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/114_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/115_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/116_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/117_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/118_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/119_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/120_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/121_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/122_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/123_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/124_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/200_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/201_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/203_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/204_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/205_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/206_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/207_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/208_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/209_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/210_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/211_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/212_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/213_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/214_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/215_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/216_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/217_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/218_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/219_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/220_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/221_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/222_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/223_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/224_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/225_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/226_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/227_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/228_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/229_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/230_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/231_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/232_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/233_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/234_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/235_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/236_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/237_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/238_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/239_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/240_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/241_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/242_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/243_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/244_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/245_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/246_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/247_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/249_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/250_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/251_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/252_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/253_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/254_optimized.txt"
+        "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/BlockHttpDNS/BlockHttpDNS.txt"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/Privacy/Privacy.txt"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingTest/AdvertisingTest.txt"
         "https://raw.githubusercontent.com/lennihein/LostAd/main/lostad.txt"
@@ -541,24 +541,24 @@ function GetData() {
         "https://hblock.molinero.dev/hosts_adblock.txt"
         "https://gitlab.com/malware-filter/phishing-filter/-/raw/master/dist/phishing-filter-agh.txt"
         "https://raw.githubusercontent.com/MkingSakura/AD-Hosts/main/Hosts/360Hosts.txt"
-    	"https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_adguard.txt"
+        "https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_adguard.txt"
         "https://raw.github.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt"
         "https://easylist-msie.adblockplus.org/abp-filters-anti-cv.txt"
         "https://raw.githubusercontent.com/abp-filters/abp-filters-anti-cv/master/english.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt"
         "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2020.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2021.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2022.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/lan-block.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/legacy.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badlists.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/quick-fixes.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt"
-    	"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2020.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2021.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2022.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/lan-block.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/legacy.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badlists.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/quick-fixes.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt"
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt"
         "https://raw.githubusercontent.com/Ealenn/AdGuard-Home-List/gh-pages/AdGuard-Home-List.Block.txt"
         "https://raw.githubusercontent.com/FutaGuard/FutaFilter/master/hosts.txt"
         "https://raw.githubusercontent.com/BlueSkyXN/AdGuardHomeRules/master/manhua.txt"
@@ -640,7 +640,7 @@ function GetData() {
         "https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
         "https://raw.githubusercontent.com/mtxadmin/ublock/master/hosts/subdomains/_marketing_ad-_all"
         "https://raw.githubusercontent.com/mtxadmin/ublock/master/hosts/subdomains/_marketing_a-d-_all"
-    	"https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-mikrotik-filters/forti_list.txt"
+        "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-mikrotik-filters/forti_list.txt"
         "https://raw.githubusercontent.com/damengzhu/banad/main/jiekouAD.txt"
         "https://gitlab.com/ZeroDot1/CoinBlockerLists/-/raw/master/list_browser.txt"
         "https://gitlab.com/ZeroDot1/CoinBlockerLists/-/raw/master/hosts"
@@ -676,15 +676,15 @@ function GetData() {
         "https://raw.githubusercontent.com/thisisu/hosts_adultxxx/master/hosts"
         "https://raw.githubusercontent.com/MkingSakura/AD-Hosts/main/Hosts/WzHost.txt"
         "https://www.github.developerdan.com/hosts/lists/ads-and-tracking-extended.txt"
-    	"https://raw.githubusercontent.com/FiltersHeroes/KADhosts/master/KADhosts.txt"
-    	"https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardApps.txt"
-    	"https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardCNAME.txt"
-    	"https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardDNS.txt"
-    	"https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardMobileAds.txt"
-    	"https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardMobileSpyware.txt"
-    	"https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/EasyPrivacyCNAME.txt"
-    	"https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/EasyPrivacySpecific.txt"
-    	"https://urlhaus.abuse.ch/downloads/hostfile"
+        "https://raw.githubusercontent.com/FiltersHeroes/KADhosts/master/KADhosts.txt"
+        "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardApps.txt"
+        "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardCNAME.txt"
+        "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardDNS.txt"
+        "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardMobileAds.txt"
+        "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardMobileSpyware.txt"
+        "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/EasyPrivacyCNAME.txt"
+        "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/EasyPrivacySpecific.txt"
+        "https://urlhaus.abuse.ch/downloads/hostfile"
         "https://dbl.oisd.nl"
         "https://orca.pet/notonmyshift/hosts.txt"
         "https://stopforumspam.com/downloads/toxic_domains_whole.txt"
@@ -754,49 +754,49 @@ function GetData() {
     )
     mkdir ./ad-hosts-pro && cd ./ad-hosts-pro
     for filter_adblock_task in "${!filter_adblock[@]}"; do
-        curl -s -L --connect-timeout 15 "${filter_adblock[$filter_adblock_task]}" >> ./filter_adblock.tmp
+        curl -s -L --connect-timeout 15 "${filter_adblock[$filter_adblock_task]}" >>./filter_adblock.tmp
     done
     for filter_domain_task in "${!filter_domain[@]}"; do
-        curl -s -L --connect-timeout 15 "${filter_domain[$filter_domain_task]}" >> ./filter_domain.tmp
+        curl -s -L --connect-timeout 15 "${filter_domain[$filter_domain_task]}" >>./filter_domain.tmp
     done
     for filter_hosts_task in "${!filter_hosts[@]}"; do
-        curl -s -L --connect-timeout 15 "${filter_hosts[$filter_hosts_task]}" >> ./filter_hosts.tmp
+        curl -s -L --connect-timeout 15 "${filter_hosts[$filter_hosts_task]}" >>./filter_hosts.tmp
     done
     for filter_other_task in "${!filter_other[@]}"; do
-        curl -s -L --connect-timeout 15 "${filter_other[$filter_other_task]}" >> ./filter_other.tmp
+        curl -s -L --connect-timeout 15 "${filter_other[$filter_other_task]}" >>./filter_other.tmp
     done
     for filter_white_task in "${!filter_white[@]}"; do
-        curl -s -L --connect-timeout 15 "${filter_white[$filter_white_task]}" >> ./filter_white.tmp
+        curl -s -L --connect-timeout 15 "${filter_white[$filter_white_task]}" >>./filter_white.tmp
     done
 }
 # Analyse Data
 function AnalyseData() {
     filter_data=(
         $(cat ./filter_white.tmp |
-        sed "s/[[:space:]]//g;s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/\:\:1//g;s/\:\://g" |
-        sed 's/[ ]*//g' |
-        sed '/^$/d' |
-        tr -d "@^|" |
-        tr "A-Z" "a-z" |
-        grep -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |
-        sort |
-        uniq > ./filter_allow.tmp &&
-        cat ./filter_adblock.tmp ./filter_domain.tmp ./filter_hosts.tmp ./filter_other.tmp |
-        sed 's/[ ]*//g' |
-        sed '/^$/d' |
-        sed "s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/255.255.255.255//g;s/local//g;s/localhost//g;s/localhost.localdomain//g;s/broadcasthost//g;s/ip6-localhost//g;s/::1//g;s/ip6-loopback//g;s/ip6-localnet//g;s/fe80::1%lo0//g;s/ff00::0//g;s/ff02::1//g;s/ff02::2//g;s/ff02::3//g;s/ip6-mcastprefix//g;s/ip6-allnodes//g;s/ip6-allrouters//g;s/ip6-allhosts//g;/^$/d;s/[[:space:]]//g;s/DOMAIN\,//g;s/DOMAIN\-SUFFIX\,//g;s/domain\://g;s/full\://g" |
-        tr -d "^|" |
-        tr "A-Z" "a-z" |
-        grep -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |
-        sort |
-        uniq > ./filter_block.tmp &&
-        awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' ./filter_allow.tmp ./filter_block.tmp |
-        sort |
-        uniq > ./filter_data.tmp &&
-        cat ./filter_data.tmp |
-        grep -v "\.\." |
-        awk "{ print $2 }")
-        )
+            sed "s/[[:space:]]//g;s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/\:\:1//g;s/\:\://g" |
+            sed 's/[ ]*//g' |
+            sed '/^$/d' |
+            tr -d "@^|" |
+            tr "A-Z" "a-z" |
+            grep -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |
+            sort |
+            uniq >./filter_allow.tmp &&
+            cat ./filter_adblock.tmp ./filter_domain.tmp ./filter_hosts.tmp ./filter_other.tmp |
+            sed 's/[ ]*//g' |
+                sed '/^$/d' |
+                sed "s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/255.255.255.255//g;s/local//g;s/localhost//g;s/localhost.localdomain//g;s/broadcasthost//g;s/ip6-localhost//g;s/::1//g;s/ip6-loopback//g;s/ip6-localnet//g;s/fe80::1%lo0//g;s/ff00::0//g;s/ff02::1//g;s/ff02::2//g;s/ff02::3//g;s/ip6-mcastprefix//g;s/ip6-allnodes//g;s/ip6-allrouters//g;s/ip6-allhosts//g;/^$/d;s/[[:space:]]//g;s/DOMAIN\,//g;s/DOMAIN\-SUFFIX\,//g;s/domain\://g;s/full\://g" |
+                tr -d "^|" |
+                tr "A-Z" "a-z" |
+                grep -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |
+                sort |
+                uniq >./filter_block.tmp &&
+            awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' ./filter_allow.tmp ./filter_block.tmp |
+            sort |
+                uniq >./filter_data.tmp &&
+            cat ./filter_data.tmp |
+            grep -v "\.\." |
+                awk "{ print $2 }")
+    )
 }
 # Generate Information
 function GenerateInformation() {
@@ -809,150 +809,150 @@ function GenerateInformation() {
     adfilter_total=$(sed -n '$=' ./filter_data.tmp)
     adfilter_version=$(TZ=UTC-8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%Y%m%d")-$((10#$(TZ=UTC-8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%H") / 3))
     function adfilter_adblock() {
-        echo "! Checksum: ${adfilter_checksum}" > ../ad-adblock.txt
-        echo "! Title: ${adfilter_title} for Adblock" >> ../ad-adblock.txt
-        echo "! Description: ${adfilter_description}" >> ../ad-adblock.txt
-        echo "! Version: ${adfilter_version}" >> ../ad-adblock.txt
-        echo "! TimeUpdated: ${adfilter_timeupdated}" >> ../ad-adblock.txt
-        echo "! Expires: ${adfilter_expires}" >> ../ad-adblock.txt
-        echo "! Homepage: ${adfilter_homepage}" >> ../ad-adblock.txt
-        echo "! Total: ${adfilter_total}" >> ../ad-adblock.txt
+        echo "! Checksum: ${adfilter_checksum}" >../ad-adblock.txt
+        echo "! Title: ${adfilter_title} for Adblock" >>../ad-adblock.txt
+        echo "! Description: ${adfilter_description}" >>../ad-adblock.txt
+        echo "! Version: ${adfilter_version}" >>../ad-adblock.txt
+        echo "! TimeUpdated: ${adfilter_timeupdated}" >>../ad-adblock.txt
+        echo "! Expires: ${adfilter_expires}" >>../ad-adblock.txt
+        echo "! Homepage: ${adfilter_homepage}" >>../ad-adblock.txt
+        echo "! Total: ${adfilter_total}" >>../ad-adblock.txt
     }
     function adfilter_adguardhome() {
-        echo "! Checksum: ${adfilter_checksum}" > ../ad-adguardhome.txt
-        echo "! Title: ${adfilter_title} for AdguardHome" >> ../ad-adguardhome.txt
-        echo "! Description: ${adfilter_description}" >> ../ad-adguardhome.txt
-        echo "! Version: ${adfilter_version}" >> ../ad-adguardhome.txt
-        echo "! TimeUpdated: ${adfilter_timeupdated}" >> ../ad-adguardhome.txt
-        echo "! Expires: ${adfilter_expires}" >> ../ad-adguardhome.txt
-        echo "! Homepage: ${adfilter_homepage}" >> ../ad-adguardhome.txt
-        echo "! Total: ${adfilter_total}" >> ../ad-adguardhome.txt
+        echo "! Checksum: ${adfilter_checksum}" >../ad-adguardhome.txt
+        echo "! Title: ${adfilter_title} for AdguardHome" >>../ad-adguardhome.txt
+        echo "! Description: ${adfilter_description}" >>../ad-adguardhome.txt
+        echo "! Version: ${adfilter_version}" >>../ad-adguardhome.txt
+        echo "! TimeUpdated: ${adfilter_timeupdated}" >>../ad-adguardhome.txt
+        echo "! Expires: ${adfilter_expires}" >>../ad-adguardhome.txt
+        echo "! Homepage: ${adfilter_homepage}" >>../ad-adguardhome.txt
+        echo "! Total: ${adfilter_total}" >>../ad-adguardhome.txt
     }
     function adfilter_clash() {
-        echo "payload:" > ../ad-clash.yaml
-        echo "# Checksum: ${adfilter_checksum}" >> ../ad-clash.yaml
-        echo "# Title: ${adfilter_title} for Clash " >> ../ad-clash.yaml
-        echo "# Description: ${adfilter_description}" >> ../ad-clash.yaml
-        echo "# Version: ${adfilter_version}" >> ../ad-clash.yaml
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-clash.yaml
-        echo "# Expires: ${adfilter_expires}" >> ../ad-clash.yaml
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-clash.yaml
-        echo "# Total: ${adfilter_total}" >> ../ad-clash.yaml
+        echo "payload:" >../ad-clash.yaml
+        echo "# Checksum: ${adfilter_checksum}" >>../ad-clash.yaml
+        echo "# Title: ${adfilter_title} for Clash " >>../ad-clash.yaml
+        echo "# Description: ${adfilter_description}" >>../ad-clash.yaml
+        echo "# Version: ${adfilter_version}" >>../ad-clash.yaml
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-clash.yaml
+        echo "# Expires: ${adfilter_expires}" >>../ad-clash.yaml
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-clash.yaml
+        echo "# Total: ${adfilter_total}" >>../ad-clash.yaml
     }
     function adfilter_clash_premium() {
-        echo "payload:" > ../ad-clash-premium.yaml
-        echo "# Checksum: ${adfilter_checksum}" >> ../ad-clash-premium.yaml
-        echo "# Title: ${adfilter_title} for Clash Premium" >> ../ad-clash-premium.yaml
-        echo "# Description: ${adfilter_description}" >> ../ad-clash-premium.yaml
-        echo "# Version: ${adfilter_version}" >> ../ad-clash-premium.yaml
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-clash-premium.yaml
-        echo "# Expires: ${adfilter_expires}" >> ../ad-clash-premium.yaml
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-clash-premium.yaml
-        echo "# Total: ${adfilter_total}" >> ../ad-clash-premium.yaml
+        echo "payload:" >../ad-clash-premium.yaml
+        echo "# Checksum: ${adfilter_checksum}" >>../ad-clash-premium.yaml
+        echo "# Title: ${adfilter_title} for Clash Premium" >>../ad-clash-premium.yaml
+        echo "# Description: ${adfilter_description}" >>../ad-clash-premium.yaml
+        echo "# Version: ${adfilter_version}" >>../ad-clash-premium.yaml
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-clash-premium.yaml
+        echo "# Expires: ${adfilter_expires}" >>../ad-clash-premium.yaml
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-clash-premium.yaml
+        echo "# Total: ${adfilter_total}" >>../ad-clash-premium.yaml
     }
     function adfilter_dnsmasq() {
-        echo "# Checksum: ${adfilter_checksum}" > ../ad-dnsmasq.conf
-        echo "# Title: ${adfilter_title} for Dnsmasq " >> ../ad-dnsmasq.conf
-        echo "# Description: ${adfilter_description}" >> ../ad-dnsmasq.conf
-        echo "# Version: ${adfilter_version}" >> ../ad-dnsmasq.conf
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-dnsmasq.conf
-        echo "# Expires: ${adfilter_expires}" >> ../ad-dnsmasq.conf
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-dnsmasq.conf
-        echo "# Total: ${adfilter_total}" >> ../ad-dnsmasq.conf
+        echo "# Checksum: ${adfilter_checksum}" >../ad-dnsmasq.conf
+        echo "# Title: ${adfilter_title} for Dnsmasq " >>../ad-dnsmasq.conf
+        echo "# Description: ${adfilter_description}" >>../ad-dnsmasq.conf
+        echo "# Version: ${adfilter_version}" >>../ad-dnsmasq.conf
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-dnsmasq.conf
+        echo "# Expires: ${adfilter_expires}" >>../ad-dnsmasq.conf
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-dnsmasq.conf
+        echo "# Total: ${adfilter_total}" >>../ad-dnsmasq.conf
     }
     function adfilter_domains() {
-        echo "# Checksum: ${adfilter_checksum}" > ../ad-domains.txt
-        echo "# Title: ${adfilter_title} for Domains " >> ../ad-domains.txt
-        echo "# Description: ${adfilter_description}" >> ../ad-domains.txt
-        echo "# Version: ${adfilter_version}" >> ../ad-domains.txt
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-domains.txt
-        echo "# Expires: ${adfilter_expires}" >> ../ad-domains.txt
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-domains.txt
-        echo "# Total: ${adfilter_total}" >> ../ad-domains.txt
+        echo "# Checksum: ${adfilter_checksum}" >../ad-domains.txt
+        echo "# Title: ${adfilter_title} for Domains " >>../ad-domains.txt
+        echo "# Description: ${adfilter_description}" >>../ad-domains.txt
+        echo "# Version: ${adfilter_version}" >>../ad-domains.txt
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-domains.txt
+        echo "# Expires: ${adfilter_expires}" >>../ad-domains.txt
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-domains.txt
+        echo "# Total: ${adfilter_total}" >>../ad-domains.txt
     }
     function adfilter_hosts() {
-        echo "# Checksum: ${adfilter_checksum}" > ../ad-hosts.txt
-        echo "# Title: ${adfilter_title} for Hosts " >> ../ad-hosts.txt
-        echo "# Description: ${adfilter_description}" >> ../ad-hosts.txt
-        echo "# Version: ${adfilter_version}" >> ../ad-hosts.txt
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-hosts.txt
-        echo "# Expires: ${adfilter_expires}" >> ../ad-hosts.txt
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-hosts.txt
-        echo "# Total: ${adfilter_total}" >> ../ad-hosts.txt
-        echo "# (DO NOT REMOVE)" >> ../ad-hosts.txt
+        echo "# Checksum: ${adfilter_checksum}" >../ad-hosts.txt
+        echo "# Title: ${adfilter_title} for Hosts " >>../ad-hosts.txt
+        echo "# Description: ${adfilter_description}" >>../ad-hosts.txt
+        echo "# Version: ${adfilter_version}" >>../ad-hosts.txt
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-hosts.txt
+        echo "# Expires: ${adfilter_expires}" >>../ad-hosts.txt
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-hosts.txt
+        echo "# Total: ${adfilter_total}" >>../ad-hosts.txt
+        echo "# (DO NOT REMOVE)" >>../ad-hosts.txt
     }
     function adfilter_quantumult() {
-        echo "# Checksum: ${adfilter_checksum}" > ../ad-quantumult.yaml
-        echo "# Title: ${adfilter_title} for Quantumult " >> ../ad-quantumult.yaml
-        echo "# Description: ${adfilter_description}" >> ../ad-quantumult.yaml
-        echo "# Version: ${adfilter_version}" >> ../ad-quantumult.yaml
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-quantumult.yaml
-        echo "# Expires: ${adfilter_expires}" >> ../ad-quantumult.yaml
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-quantumult.yaml
-        echo "# Total: ${adfilter_total}" >> ../ad-quantumult.yaml
+        echo "# Checksum: ${adfilter_checksum}" >../ad-quantumult.yaml
+        echo "# Title: ${adfilter_title} for Quantumult " >>../ad-quantumult.yaml
+        echo "# Description: ${adfilter_description}" >>../ad-quantumult.yaml
+        echo "# Version: ${adfilter_version}" >>../ad-quantumult.yaml
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-quantumult.yaml
+        echo "# Expires: ${adfilter_expires}" >>../ad-quantumult.yaml
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-quantumult.yaml
+        echo "# Total: ${adfilter_total}" >>../ad-quantumult.yaml
     }
     function adfilter_shadowrocket() {
-        echo "# Checksum: ${adfilter_checksum}" > ../ad-shadowrocket.list
-        echo "# Title: ${adfilter_title} for Shadowrocket " >> ../ad-shadowrocket.list
-        echo "# Description: ${adfilter_description}" >> ../ad-shadowrocket.list
-        echo "# Version: ${adfilter_version}" >> ../ad-shadowrocket.list
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-shadowrocket.list
-        echo "# Expires: ${adfilter_expires}" >> ../ad-shadowrocket.list
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-shadowrocket.list
-        echo "# Total: ${adfilter_total}" >> ../ad-shadowrocket.list
+        echo "# Checksum: ${adfilter_checksum}" >../ad-shadowrocket.list
+        echo "# Title: ${adfilter_title} for Shadowrocket " >>../ad-shadowrocket.list
+        echo "# Description: ${adfilter_description}" >>../ad-shadowrocket.list
+        echo "# Version: ${adfilter_version}" >>../ad-shadowrocket.list
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-shadowrocket.list
+        echo "# Expires: ${adfilter_expires}" >>../ad-shadowrocket.list
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-shadowrocket.list
+        echo "# Total: ${adfilter_total}" >>../ad-shadowrocket.list
     }
     function adfilter_smartdns() {
-        echo "# Checksum: ${adfilter_checksum}" > ../ad-smartdns.conf
-        echo "# Title: ${adfilter_title} for SmartDNS " >> ../ad-smartdns.conf
-        echo "# Description: ${adfilter_description}" >> ../ad-smartdns.conf
-        echo "# Version: ${adfilter_version}" >> ../ad-smartdns.conf
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-smartdns.conf
-        echo "# Expires: ${adfilter_expires}" >> ../ad-smartdns.conf
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-smartdns.conf
-        echo "# Total: ${adfilter_total}" >> ../ad-smartdns.conf
+        echo "# Checksum: ${adfilter_checksum}" >../ad-smartdns.conf
+        echo "# Title: ${adfilter_title} for SmartDNS " >>../ad-smartdns.conf
+        echo "# Description: ${adfilter_description}" >>../ad-smartdns.conf
+        echo "# Version: ${adfilter_version}" >>../ad-smartdns.conf
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-smartdns.conf
+        echo "# Expires: ${adfilter_expires}" >>../ad-smartdns.conf
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-smartdns.conf
+        echo "# Total: ${adfilter_total}" >>../ad-smartdns.conf
     }
     function adfilter_surge() {
-        echo "# Checksum: ${adfilter_checksum}" > ../ad-surge.yaml
-        echo "# Title: ${adfilter_title} for Surge " >> ../ad-surge.yaml
-        echo "# Description: ${adfilter_description}" >> ../ad-surge.yaml
-        echo "# Version: ${adfilter_version}" >> ../ad-surge.yaml
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-surge.yaml
-        echo "# Expires: ${adfilter_expires}" >> ../ad-surge.yaml
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-surge.yaml
-        echo "# Total: ${adfilter_total}" >> ../ad-surge.yaml
+        echo "# Checksum: ${adfilter_checksum}" >../ad-surge.yaml
+        echo "# Title: ${adfilter_title} for Surge " >>../ad-surge.yaml
+        echo "# Description: ${adfilter_description}" >>../ad-surge.yaml
+        echo "# Version: ${adfilter_version}" >>../ad-surge.yaml
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-surge.yaml
+        echo "# Expires: ${adfilter_expires}" >>../ad-surge.yaml
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-surge.yaml
+        echo "# Total: ${adfilter_total}" >>../ad-surge.yaml
     }
     function adfilter_unbound() {
-        echo "# Checksum: ${adfilter_checksum}" > ../ad-unbound.conf
-        echo "# Title: ${adfilter_title} for Unbound " >> ../ad-unbound.conf
-        echo "# Description: ${adfilter_description}" >> ../ad-unbound.conf
-        echo "# Version: ${adfilter_version}" >> ../ad-unbound.conf
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-unbound.conf
-        echo "# Expires: ${adfilter_expires}" >> ../ad-unbound.conf
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-unbound.conf
-        echo "# Total: ${adfilter_total}" >> ../ad-unbound.conf
+        echo "# Checksum: ${adfilter_checksum}" >../ad-unbound.conf
+        echo "# Title: ${adfilter_title} for Unbound " >>../ad-unbound.conf
+        echo "# Description: ${adfilter_description}" >>../ad-unbound.conf
+        echo "# Version: ${adfilter_version}" >>../ad-unbound.conf
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-unbound.conf
+        echo "# Expires: ${adfilter_expires}" >>../ad-unbound.conf
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-unbound.conf
+        echo "# Total: ${adfilter_total}" >>../ad-unbound.conf
     }
     function adfilter_bind9() {
-        echo "# Checksum: ${adfilter_checksum}" > ../ad-bind9.conf
-        echo "# Title: ${adfilter_title} for Dind9 " >> ../ad-bind9.conf
-        echo "# Description: ${adfilter_description}" >> ../ad-bind9.conf
-        echo "# Version: ${adfilter_version}" >> ../ad-bind9.conf
-        echo "# TimeUpdated: ${adfilter_timeupdated}" >> ../ad-bind9.conf
-        echo "# Expires: ${adfilter_expires}" >> ../ad-bind9.conf
-        echo "# Homepage: ${adfilter_homepage}" >> ../ad-bind9.conf
-        echo "# Total: ${adfilter_total}" >> ../ad-bind9.conf
-        echo "\$TTL 30" >> ../ad-bind9.conf
-        echo "@ IN SOA rpz.trli.home. hostmaster.rpz.trli.home. 1643540837 86400 3600 604800 30" >> ../ad-bind9.conf
-        echo "NS localhost." >> ../ad-bind9.conf
+        echo "# Checksum: ${adfilter_checksum}" >../ad-bind9.conf
+        echo "# Title: ${adfilter_title} for Dind9 " >>../ad-bind9.conf
+        echo "# Description: ${adfilter_description}" >>../ad-bind9.conf
+        echo "# Version: ${adfilter_version}" >>../ad-bind9.conf
+        echo "# TimeUpdated: ${adfilter_timeupdated}" >>../ad-bind9.conf
+        echo "# Expires: ${adfilter_expires}" >>../ad-bind9.conf
+        echo "# Homepage: ${adfilter_homepage}" >>../ad-bind9.conf
+        echo "# Total: ${adfilter_total}" >>../ad-bind9.conf
+        echo "\$TTL 30" >>../ad-bind9.conf
+        echo "@ IN SOA rpz.trli.home. hostmaster.rpz.trli.home. 1643540837 86400 3600 604800 30" >>../ad-bind9.conf
+        echo "NS localhost." >>../ad-bind9.conf
     }
     function adfilter_adguardhome_dnstype() {
-        echo "! Checksum: ${adfilter_checksum}" > ../ad-adguardhome-dnstype.txt
-        echo "! Title: ${adfilter_title} for AdguardHome dnstype" >> ../ad-adguardhome-dnstype.txt
-        echo "! Description: ${adfilter_description}" >> ../ad-adguardhome-dnstype.txt
-        echo "! Version: ${adfilter_version}" >> ../ad-adguardhome-dnstype.txt
-        echo "! TimeUpdated: ${adfilter_timeupdated}" >> ../ad-adguardhome-dnstype.txt
-        echo "! Expires: ${adfilter_expires}" >> ../ad-adguardhome-dnstype.txt
-        echo "! Homepage: ${adfilter_homepage}" >> ../ad-adguardhome-dnstype.txt
-        echo "! Total: ${adfilter_total}" >> ../ad-adguardhome-dnstype.txt
+        echo "! Checksum: ${adfilter_checksum}" >../ad-adguardhome-dnstype.txt
+        echo "! Title: ${adfilter_title} for AdguardHome dnstype" >>../ad-adguardhome-dnstype.txt
+        echo "! Description: ${adfilter_description}" >>../ad-adguardhome-dnstype.txt
+        echo "! Version: ${adfilter_version}" >>../ad-adguardhome-dnstype.txt
+        echo "! TimeUpdated: ${adfilter_timeupdated}" >>../ad-adguardhome-dnstype.txt
+        echo "! Expires: ${adfilter_expires}" >>../ad-adguardhome-dnstype.txt
+        echo "! Homepage: ${adfilter_homepage}" >>../ad-adguardhome-dnstype.txt
+        echo "! Total: ${adfilter_total}" >>../ad-adguardhome-dnstype.txt
     }
     adfilter_adblock
     adfilter_adguardhome
@@ -973,28 +973,28 @@ function GenerateInformation() {
 function OutputData() {
     function FormatedOutputData() {
         for filter_data_task in "${!filter_data[@]}"; do
-            echo "||${filter_data[$filter_data_task]}^" >> ../ad-adblock.txt
-            echo "|${filter_data[$filter_data_task]}^" >> ../ad-adguardhome.txt
-            echo "  - DOMAIN,${filter_data[$filter_data_task]}" >> ../ad-clash.yaml
-            echo "  - '+.${filter_data[$filter_data_task]}'" >> ../ad-clash-premium.yaml
-            echo "address=/${filter_data[$filter_data_task]}/" >> ../ad-dnsmasq.conf
-            echo "${filter_data[$filter_data_task]}" >> ../ad-domains.txt
-            echo "127.0.0.53 ${filter_data[$filter_data_task]}" >> ../ad-hosts.txt
-            echo "HOST-SUFFIX,${filter_data[$filter_data_task]},REJECT" >> ../ad-quantumult.yaml
-            echo "DOMAIN-SUFFIX,${filter_data[$filter_data_task]},REJECT" >> ../ad-shadowrocket.list
-            echo "address /${filter_data[$filter_data_task]}/#" >> ../ad-smartdns.conf
-            echo "DOMAIN,${filter_data[$filter_data_task]}" >> ../ad-surge.yaml
-            echo "local-zone: \"${filter_data[$filter_data_task]}\" always_nxdomain" >> ../ad-unbound.conf
-            echo "${filter_data[$filter_data_task]} CNAME ." >> ../ad-bind9.conf
-            echo "* ${filter_data[$filter_data_task]} CNAME ." >> ../ad-bind9.conf
-            echo "||${filter_data[$filter_data_task]}^$client=127.0.0.53,dnstype=A" >> ../ad-adguardhome-dnstype.txt
+            echo "||${filter_data[$filter_data_task]}^" >>../ad-adblock.txt
+            echo "|${filter_data[$filter_data_task]}^" >>../ad-adguardhome.txt
+            echo "  - DOMAIN,${filter_data[$filter_data_task]}" >>../ad-clash.yaml
+            echo "  - '+.${filter_data[$filter_data_task]}'" >>../ad-clash-premium.yaml
+            echo "address=/${filter_data[$filter_data_task]}/" >>../ad-dnsmasq.conf
+            echo "${filter_data[$filter_data_task]}" >>../ad-domains.txt
+            echo "127.0.0.53 ${filter_data[$filter_data_task]}" >>../ad-hosts.txt
+            echo "HOST-SUFFIX,${filter_data[$filter_data_task]},REJECT" >>../ad-quantumult.yaml
+            echo "DOMAIN-SUFFIX,${filter_data[$filter_data_task]},REJECT" >>../ad-shadowrocket.list
+            echo "address /${filter_data[$filter_data_task]}/#" >>../ad-smartdns.conf
+            echo "DOMAIN,${filter_data[$filter_data_task]}" >>../ad-surge.yaml
+            echo "local-zone: \"${filter_data[$filter_data_task]}\" always_nxdomain" >>../ad-unbound.conf
+            echo "${filter_data[$filter_data_task]} CNAME ." >>../ad-bind9.conf
+            echo "* ${filter_data[$filter_data_task]} CNAME ." >>../ad-bind9.conf
+            echo "||${filter_data[$filter_data_task]}^$client=127.0.0.53,dnstype=A" >>../ad-adguardhome-dnstype.txt
         done
     }
     if [ ! -f "../ad-domains.txt " ]; then
         GenerateInformation && FormatedOutputData
         cd .. && rm -rf ./ad-hosts-pro
     else
-        cat ../ad-domains.txt | head -n $(sed -n '$=' ../ad-domains.txt ) | tail -n +9 > ./filter_data.old
+        cat ../ad-domains.txt | head -n $(sed -n '$=' ../ad-domains.txt) | tail -n +9 >./filter_data.old
         if [ "$(diff ./filter_data.tmp ./filter_data.old)" == "" ]; then
             cd .. && rm -rf ./ad-hosts-pro
         else
