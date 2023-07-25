@@ -14,3 +14,8 @@ updates:
     directory: "./file-hosts.sh/github"
     schedule:
       interval: "daily"
+
+  - package-ecosystem: "npm" # GitHub Actions
+    directory: "./blog"
+    schedule:
+      interval: "daily"

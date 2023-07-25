@@ -1,0 +1,59 @@
+# This is a basic workflow to help you get started with Actions
+
+name: DnsHosts-lite
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+# A workflow run is mDnsh up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@main
+       # Runs a single command using the runners shell
+      - name:  Build GFWList2AGH
+        run: |
+          bash ./file-hosts.sh/dns-lite.sh
+      - name:  name GFWList2AGH
+        run: |
+            mv ./dns-adguardhome/blacklist_full.txt ./dnshosts-lite-adguardhome-blacklist_full.txt
+            mv ./dns-adguardhome/blacklist_full_combine.txt ./dnshosts-lite-adguardhome-blacklist_full_combine.txt
+            mv ./dns-adguardhome/whitelist_full.txt ./dnshosts-lite-adguardhome-whitelist_full.txt
+            mv ./dns-adguardhome/whitelist_full_combine.txt ./dnshosts-lite-adguardhome-whitelist_full_combine.txt
+            mv ./dns-bind9/blacklist_full.conf ./dnshosts-lite-bind9-blacklist_full.conf
+            mv ./dns-bind9/whitelist_full.conf ./dnshosts-lite-bind9-whitelist_full.conf
+            mv ./dns-unbound/blacklist_full.conf ./dnshosts-lite-unbound-blacklist_full.conf
+            mv ./dns-unbound/whitelist_full.conf ./dnshosts-lite-unbound-whitelist_full.conf
+            mv ./dns-dnsmasq/blacklist_full.conf ./dnshosts-lite-dnsmasq-blacklist_full.conf
+            mv ./dns-dnsmasq/whitelist_full.conf ./dnshosts-lite-dnsmasq-whitelist_full.conf
+            mv ./dns-domain/blacklist_full.txt ./dnshosts-lite-domain-blacklist_full.txt
+            mv ./dns-domain/whitelist_lite.txt ./dnshosts-lite-domain-whitelist_lite.txt
+            mv ./dns-domain/blacklist_lite.txt ./dnshosts-lite-domain-blacklist_lite.txt
+            mv ./dns-domain/whitelist_full.txt ./dnshosts-lite-domain-whitelist_full.txt
+            mv ./dns-smartdns/blacklist_full.conf ./dnshosts-lite-smartdns-blacklist_full.conf
+            mv ./dns-smartdns/whitelist_full.conf ./dnshosts-lite-smartdns-whitelist_full.conf
+            mv ./dns-smartdns/blacklist_lite.conf ./dnshosts-lite-smartdns-blacklist_lite.conf
+            mv ./dns-smartdns/whitelist_lite.conf ./dnshosts-lite-smartdns-whitelist_lite.conf
+            mv ./dns-smartdns-domain-rules/blacklist_full.conf ./dnshosts-lite-smartdns-domain-rules-blacklist_full.conf
+            mv ./dns-smartdns-domain-rules/whitelist_full.conf ./dnshosts-lite-smartdns-domain-rules-whitelist_full.conf
+            mv ./dns-smartdns-domain-rules/blacklist_lite.conf ./dnshosts-lite-smartdns-domain-rules-blacklist_lite.conf
+            mv ./dns-smartdns-domain-rules/whitelist_lite.conf ./dnshosts-lite-smartdns-domain-rules-whitelist_lite.conf
+      - name: Release
+        uses: svenstaro/upload-release-action@master
+        with:
+          repo_token: ${{ secrets.GITHUBTOKEN }}
+          tag: dns-hosts-lite
+          file: ./dnshosts-lite*
+          file_glob: true
+          overwrite: true
+          body: "update dns-hosts-lite"
