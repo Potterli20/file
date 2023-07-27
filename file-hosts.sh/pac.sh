@@ -1,9 +1,9 @@
 function GetData() {
     china_domain=(
-        "https://github.com/Potterli20/file/releases/download/dns-hosts/dns-adguardhome-blacklist_full_combine.txt"
+        "https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-blacklist_full_combine.txt"
     )
     gfwlist_domain=(
-        "https://github.com/Potterli20/file/releases/download/dns-hosts/dns-adguardhome-whitelist_full_combine.txt"
+        "https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-whitelist_full_combine.txt"
     )
     rm -rf ./listpac_* ./Temp && mkdir ./Temp && cd ./Temp
     for china_domain_task in "${!china_domain[@]}"; do
