@@ -1,5 +1,6 @@
 function GetData() {
     cnacc_domain=(
+        "https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-cdn.txt"
         "https://raw.githubusercontent.com/pexcn/daily/gh-pages/chinalist/chinalist.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
         "https://raw.githubusercontent.com/hq450/fancyss/master/rules/WhiteList_new.txt"
@@ -33,6 +34,7 @@ function GetData() {
 
     )
     gfwlist_domain=(
+        "https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-cdn.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-tld-list.txt"
         "https://raw.githubusercontent.com/filteryab/ir-blocked-domain/main/data/ir-blocked-domain"
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/apple/Domains"
