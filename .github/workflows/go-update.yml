@@ -16,7 +16,7 @@ jobs:
 
       - name: go
         run: |
-          cd /file-hosts.sh/cn-blocked-domain
+          cd ./file-hosts.sh/cn-blocked-domain
           go mod tidy -compat=1.20
           gofmt -w -r 'interface{} -> any' .
           go get -u

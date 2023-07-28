@@ -1,4 +1,4 @@
-module github.com/Potterli20/cn-blocked-domain
+module cn-blocked-domain
 
 go 1.20
 
