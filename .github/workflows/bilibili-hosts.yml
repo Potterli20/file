@@ -26,13 +26,14 @@ jobs:
       
       - name: Install dependencies
         run: |
+           cd file-hosts.sh/bilibili
            python -m pip install --upgrade pip
-           pip install -r requests
+           if [ -f requirements.txt  ]; then pip install -r requirements.txt; fi
            
       # Runs a single command using the runners shell
       - name:  Build bilibili
         run: |
-          python ./file-hosts.sh/bilibili-cdn.py
+          python ./file-hosts.sh/bilibili/bilibili-cdn.py
       #- name:  push ad-hosts-coding
       #  run: |
       #    cp ./ad-edge-hosts.txt ./ad-hosts/ad-edge-hosts.txt
