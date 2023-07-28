@@ -1,6 +1,5 @@
 function GetData() {
     cnacc_domain=(
-        "https://raw.githubusercontent.com/Potterli20/file/main/Domains/bilibili/china"
         "https://raw.githubusercontent.com/pexcn/daily/gh-pages/chinalist/chinalist.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
         "https://raw.githubusercontent.com/hq450/fancyss/master/rules/WhiteList_new.txt"
@@ -8,7 +7,7 @@ function GetData() {
         "https://raw.githubusercontent.com/hq450/fancyss/master/rules/cdn.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/win-update.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt"
-        "https://raw.githubusercontent.com/Potterli20/file/main/Domains/china/Domains"
+        "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/Domains"
         "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/apple.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/icloud.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/geolocation-cn.txt"
@@ -17,7 +16,7 @@ function GetData() {
         "https://raw.githubusercontent.com/v2fly/domain-list-community/release/icloud.txt"
         "https://raw.githubusercontent.com/v2fly/domain-list-community/release/cn.txt"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/China/China_Domain.list"
-        "https://raw.githubusercontent.com/Potterli20/file/main/Domains/apple/Domains"
+        "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/apple/Domains"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-tld-list.txt"
     )
     cnacc_trusted=(
@@ -35,9 +34,8 @@ function GetData() {
     )
     gfwlist_domain=(
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-tld-list.txt"
-        "https://raw.githubusercontent.com/Potterli20/file/main/Domains/bilibili/gfw"
         "https://raw.githubusercontent.com/filteryab/ir-blocked-domain/main/data/ir-blocked-domain"
-        "https://raw.githubusercontent.com/Potterli20/file/main/Domains/apple/Domains"
+        "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/apple/Domains"
         "https://raw.githubusercontent.com/SukkaW/Surge/master/List/domainset/icloud_private_relay.conf"
         "https://raw.githubusercontent.com/missdeer/blocklist/master/toblock-optimized.lst"
         "https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
@@ -46,7 +44,7 @@ function GetData() {
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global_Domain.list"
         "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/steam.txt"
         "https://raw.githubusercontent.com/pexcn/daily/gh-pages/gfwlist/gfwlist.txt"
-        "https://raw.githubusercontent.com/Potterli20/file/main/Domains/gfw/Domains"
+        "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/gfw/Domains"
         "https://github.com/Potterli20/file/releases/download/github-hosts/ad-edge-hosts.txt"
         "https://github.com/Potterli20/file/releases/download/cn-blocked-domain/domains.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt"

@@ -633,7 +633,7 @@ function GetData() {
         "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.dead.txt"
         "https://dl.red.flag.domains/red.flag.domains.txt"
         "https://raw.githubusercontent.com/gioxx/xfiles/master/domains/upd_domains.txt"
-        "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/hosts"
+        "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/ad-hosts/hosts"
         "https://raw.githubusercontent.com/badmojr/addons_1Hosts/main/kidSaf/domains.txt"
         "https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/domains"
         "https://v.firebog.net/hosts/static/w3kbl.txt"
@@ -761,7 +761,7 @@ function GetData() {
         "https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Whitelists/Filter"
         "https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Whitelists/Whitelist"
         "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-list.txt"
-        "https://raw.githubusercontent.com/Potterli20/file/main/allow/Domains"
+        "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/allow/Domains"
         "https://github.com/T145/black-mirror/releases/download/latest/ALLOW_DOMAIN.txt"
         "https://raw.githubusercontent.com/hl2guide/AdGuard-Home-Whitelist/main/whitelist.txt"
         "https://raw.githubusercontent.com/eded333/TheFuckingList/main/whitelist.txt"
@@ -833,7 +833,7 @@ function GenerateInformation() {
     adfilter_checksum=$(TZ=UTC-8 date "+%s" | base64)
     adfilter_description="HOSTS Project"
     adfilter_expires="24 hours (update frequency)"
-    adfilter_homepage="https://github.com/Potterli20/file/releases/tag/ad-hosts-sqlist"
+    adfilter_homepage="https://github.com/Potterli20/file/releases/tag/ad-hosts-lite"
     adfilter_timeupdated=$(TZ=UTC-8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%Y-%m-%dT%H:%M:%S%:z")
     adfilter_title="trli's Ad Filter for Sqlist"
     adfilter_total=$(sed -n '$=' ./filter_data.tmp)

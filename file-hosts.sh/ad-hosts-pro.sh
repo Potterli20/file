@@ -633,7 +633,7 @@ function GetData() {
         "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.dead.txt"
         "https://dl.red.flag.domains/red.flag.domains.txt"
         "https://raw.githubusercontent.com/gioxx/xfiles/master/domains/upd_domains.txt"
-        "https://raw.githubusercontent.com/Potterli20/file/main/ad-hosts/hosts"
+        "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/ad-hosts/hosts"
         "https://raw.githubusercontent.com/badmojr/addons_1Hosts/main/kidSaf/domains.txt"
         "https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/domains"
         "https://v.firebog.net/hosts/static/w3kbl.txt"
@@ -750,7 +750,7 @@ function GetData() {
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml"
     )
     filter_white=(
-        "https://raw.githubusercontent.com/Potterli20/file/main/allow/Domains"
+        "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/allow/Domains"
     )
     mkdir ./ad-hosts-pro && cd ./ad-hosts-pro
     for filter_adblock_task in "${!filter_adblock[@]}"; do

@@ -650,7 +650,7 @@ filter_domain=(
     "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.whitelist.txt"
     "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-list.txt"
     "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/blacklist/master/whitelisted.list"
-    "https://raw.githubusercontent.com/Potterli20/file/main/allow/Domains"
+    "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/allow/Domains"
     "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/whitelist/master/domains.list"
     "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt"
     "https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Whitelists/Whitelist"
