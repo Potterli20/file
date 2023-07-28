@@ -4,7 +4,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/Potterli20/cn-blocked-domain/utils"
+	"utils"
 )
 
 func buildTreeAndUnique(sortedDomainList []string) []string {
