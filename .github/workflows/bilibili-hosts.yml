@@ -34,6 +34,7 @@ jobs:
       - name:  Build bilibili
         run: |
           python ./file-hosts.sh/bilibili/bilibili-cdn.py
+
       #- name:  push ad-hosts-coding
       #  run: |
       #    cp ./ad-edge-hosts.txt ./ad-hosts/ad-edge-hosts.txt
@@ -46,7 +47,7 @@ jobs:
       #    git commit -m "update ad-edge-hosts $(date +%Y.%m.%d.%H.%M)"
       #    git push -f -u origin main
       #  continue-on-error: true
-      - name: Release
+      - name: Release update bilibili-cdn
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
@@ -55,3 +56,17 @@ jobs:
           file_glob: true
           overwrite: true
           body: "update github-hosts"
+
+      - name: update hosts
+        run: |
+          sh ./file-hosts.sh/github/bilibili-hosts.sh
+
+      - name: Release update bilibili-cdn
+        uses: svenstaro/upload-release-action@master
+        with:
+            repo_token: ${{ secrets.GITHUBTOKEN }}
+            tag: github-hosts
+            file: ./file-hosts.sh/github/bilibili-hosts.txt
+            file_glob: true
+            overwrite: true
+            body: "update github-hosts"
