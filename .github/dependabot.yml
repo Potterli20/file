@@ -23,16 +23,6 @@ updates:
     pull-request-branch-name:
       separator: "-"
 
-  - package-ecosystem: "npm" # GitHub Actions
-    directory: "./blog"
-    schedule:
-      interval: "daily"
-      timezone: "Asia/Shanghai"
-      time: "07:00"
-    pull-request-branch-name:
-      separator: "-"
-
-
   - package-ecosystem: "gomod"
     directory: "/file-hosts.sh/cn-blocked-domain"
     schedule:
