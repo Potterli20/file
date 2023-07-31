@@ -41,8 +41,8 @@ updates:
       time: "07:00"
     pull-request-branch-name:
       separator: "-"
-
-    - package-ecosystem: "pip" # GitHub Actions
+      
+  - package-ecosystem: "pip" # GitHub Actions
     directory: "./file-hosts.sh/bilibili"
     schedule:
       interval: "daily"
