@@ -784,19 +784,19 @@ function GetData() {
     )
     mkdir ./ad-hosts-sqlist && cd ./ad-hosts-sqlist
     for filter_adblock_task in "${!filter_adblock[@]}"; do
-        curl -s -L --connect-timeout 15 "${filter_adblock[$filter_adblock_task]}" >>./filter_adblock.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${filter_adblock[$filter_adblock_task]}" >>./filter_adblock.tmp
     done
     for filter_domain_task in "${!filter_domain[@]}"; do
-        curl -s -L --connect-timeout 15 "${filter_domain[$filter_domain_task]}" >>./filter_domain.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${filter_domain[$filter_domain_task]}" >>./filter_domain.tmp
     done
     for filter_hosts_task in "${!filter_hosts[@]}"; do
-        curl -s -L --connect-timeout 15 "${filter_hosts[$filter_hosts_task]}" >>./filter_hosts.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${filter_hosts[$filter_hosts_task]}" >>./filter_hosts.tmp
     done
     for filter_other_task in "${!filter_other[@]}"; do
-        curl -s -L --connect-timeout 15 "${filter_other[$filter_other_task]}" >>./filter_other.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${filter_other[$filter_other_task]}" >>./filter_other.tmp
     done
     for filter_white_task in "${!filter_white[@]}"; do
-        curl -s -L --connect-timeout 15 "${filter_white[$filter_white_task]}" >>./filter_white.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${filter_white[$filter_white_task]}" >>./filter_white.tmp
     done
 }
 # Analyse Data
