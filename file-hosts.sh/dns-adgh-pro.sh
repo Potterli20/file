@@ -187,6 +187,8 @@ function GenerateRules() {
             "tls://120.53.53.53:853"
             "tls://223.5.5.5:853"
             "tls://223.6.6.6:853"
+            "tls://101.198.198.198:853"
+            "tls://101.198.199.200:853"
         )
         foreign_dns=(
             "https://firefox.dns.nextdns.io/dns-query"
