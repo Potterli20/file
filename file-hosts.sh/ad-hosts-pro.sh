@@ -435,7 +435,7 @@ function GetData() {
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/nextdns/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/nrd/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/ofac/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/oisd/adblock.txt"
+        "https://raw.githubusercontent.com/alexsannikov/adguardhome-filters/master/porn.txt	"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/private-only/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/quantum/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/spamhaus/adblock.txt"
