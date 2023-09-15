@@ -171,10 +171,6 @@ function GenerateRules() {
             "https://dns.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
             "https://doh.360.cn/dns-query"
-            "https://1.12.12.12/dns-query"
-            "https://120.53.53.53/dns-query"
-            "https://223.5.5.5/dns-query"
-            "https://223.6.6.6/dns-query"
         )
         foreign_dns=(
             "https://firefox.dns.nextdns.io/dns-query"
