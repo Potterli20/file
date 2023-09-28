@@ -216,6 +216,7 @@ function GenerateRules() {
             "h3://dns-unfiltered.adguard.com/dns-query"
             "h3://unfiltered.adguard-dns.com/dns-query"
             "h3://odoh.cloudflare-dns.com/dns-query"
+            "tls://common.dot.dns.yandex.net:853"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
