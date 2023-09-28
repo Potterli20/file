@@ -1,5 +1,6 @@
 function GetData() {
     cnacc_domain=(
+        "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/china-root"
         "https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-cdn.txt"
         "https://raw.githubusercontent.com/pexcn/daily/gh-pages/chinalist/chinalist.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
