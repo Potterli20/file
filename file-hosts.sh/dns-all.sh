@@ -230,6 +230,7 @@ function GenerateRules() {
             "tls://1dot1dot1dot1.cloudflare-dns.com:853"
             "tls://dns11.quad9.net:853"
             "tls://dns.twnic.tw:853"
+            "tls://common.dot.dns.yandex.net:853"
             "h3://anycast.dns.nextdns.io/dns-query"
             "h3://doh3.dns.nextdns.io/dns-query"
             "h3://dns.nextdns.io/dns-query"
