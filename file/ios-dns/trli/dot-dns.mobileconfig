@@ -10,7 +10,7 @@
 					<key>DNSProtocol</key>
 					<string>TLS</string>
 					<key>ServerName</key>
-					<string>dot-dns.trli.club:854</string>
+					<string>dot-dns.trli.club</string>
 				</dict>
 				<key>PayloadDescription</key>
 				<string>Configures device to use trli-dot-dns</string>
