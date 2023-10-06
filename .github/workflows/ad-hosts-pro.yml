@@ -27,7 +27,7 @@ jobs:
 
       - name:  Build AdHosts
         run: |
-          bash ./file-hosts.sh/ad-hosts-pro.sh
+          bash ./file-hosts.sh/ad-hosts/ad-hosts-pro.sh
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:

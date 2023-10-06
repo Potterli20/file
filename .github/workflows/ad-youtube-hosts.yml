@@ -23,7 +23,7 @@ jobs:
       # Runs a single command using the runners shell
       - name:  Build AdHosts
         run: |
-          bash ./file-hosts.sh/ad-youtube-hosts.sh
+          bash ./file-hosts.sh/ad-hosts/ad-youtube-hosts.sh
       #- name:  Build dns
       #  run: |
       #    bash ./file/bash/github-dns.sh

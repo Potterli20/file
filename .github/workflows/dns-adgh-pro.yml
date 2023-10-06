@@ -23,7 +23,7 @@ jobs:
        # Runs a single command using the runners shell
       - name:  Build GFWList2AGH
         run: |
-          bash ./file-hosts.sh/dns-adgh-pro.sh
+          bash ./file-hosts.sh/dns-hosts/dns-adgh-pro.sh
       - name:  name GFWList2AGH
         run: |
             mv ./dns-adguardhome/blacklist_full.txt ./dnshosts-adgh-pro-adguardhome-blacklist_full.txt
