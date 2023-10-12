@@ -1,5 +1,6 @@
 function GetData() {
     filter_adblock=(
+"https://xiaoshangyin.github.io/adguard-hosts.txt"
  "https://filters.adtidy.org/android/filters/1_optimized.txt"
         "https://filters.adtidy.org/android/filters/2_optimized.txt"
         "https://filters.adtidy.org/android/filters/3_optimized.txt"
