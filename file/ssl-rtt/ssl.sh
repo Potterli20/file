@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo "请输入需要检测的域名 (比如. www.baidu.com):"
 read host
 echo "请输入域名的端口 (比如. 80，443):"
