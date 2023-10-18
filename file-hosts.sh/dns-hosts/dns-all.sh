@@ -197,6 +197,7 @@ function GenerateRules() {
             "tls://101.198.199.200:853"
         )
         foreign_dns=(
+            "https://77.88.8.8:443/dns-query"
             "https://firefox.dns.nextdns.io/dns-query"
             "https://doh.opendns.com/dns-query"
             "https://dns.google/dns-query"
