@@ -175,6 +175,7 @@ function GenerateRules() {
             "h3://dns.alidns.com/dns-query"
         )
         foreign_dns=(
+            "https://77.88.8.8:443/dns-query"
             "https://firefox.dns.nextdns.io/dns-query"
             "https://doh.opendns.com/dns-query"
             "https://dns.google/dns-query"
