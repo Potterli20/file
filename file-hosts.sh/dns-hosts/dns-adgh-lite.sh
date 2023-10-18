@@ -172,6 +172,7 @@ function GenerateRules() {
             "https://dns.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
             "https://doh.360.cn/dns-query"
+            "h3://dns.alidns.com/dns-query"
         )
         foreign_dns=(
             "https://firefox.dns.nextdns.io/dns-query"
@@ -192,6 +193,13 @@ function GenerateRules() {
             "https://dns.twnic.tw/dns-query"
             "https://doh3.dns.nextdns.io/dns-query"
             "https://anycast.dns.nextdns.io/dns-query"
+            "h3://anycast.dns.nextdns.io/dns-query"
+            "h3://doh3.dns.nextdns.io/dns-query"
+            "h3://dns.nextdns.io/dns-query"
+            "h3://cloudflare-dns.com/dns-query"
+            "h3://dns-unfiltered.adguard.com/dns-query"
+            "h3://unfiltered.adguard-dns.com/dns-query"
+            "h3://odoh.cloudflare-dns.com/dns-query"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
