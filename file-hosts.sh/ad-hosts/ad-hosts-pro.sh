@@ -665,6 +665,7 @@ function GetData() {
         "https://raw.githubusercontent.com/stamparm/blackbook/master/blackbook.txt"
     )
     filter_hosts=(
+    "https://xiaoshangyin.github.io/adguard-hosts.txt"
    "https://schakal.ru/hosts/alive_hosts.txt"
      "https://raw.githubusercontent.com/symbuzzer/Turkish-Ad-Hosts/main/hosts"
         "https://raw.githubusercontent.com/lingeringsound/10007_auto/master/all"
