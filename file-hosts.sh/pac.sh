@@ -7,10 +7,10 @@ function GetData() {
     )
     rm -rf ./listpac_* ./Temp && mkdir ./Temp && cd ./Temp
     for china_domain_task in "${!china_domain[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 -0 ./china_domain.tmp "${china_domain[$china_domain_task]}"
+        wget -O ./china_domain.tmp "${china_domain[$china_domain_task]}"
     done
     for gfwlist_domain_task in "${!gfwlist_domain[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 -0 ./gfwlist_domain.tmp "${gfwlist_domain[$gfwlist_domain_task]}"
+        wget -O ./gfwlist_domain.tmp "${gfwlist_domain[$gfwlist_domain_task]}"
     done
 }
 # Analyse Data
