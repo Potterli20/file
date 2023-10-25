@@ -34,7 +34,7 @@ jobs:
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
-          tag: dns-hosts-adgh-lite-hott
+          tag: dns-hosts-adgh-lite-https
           file: ./dnshosts-adgh-lite*
           file_glob: true
           overwrite: true
