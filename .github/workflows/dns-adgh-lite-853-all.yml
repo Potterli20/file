@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: DnsHosts-adgh-lite
+name: DnsHosts-adgh-lite-853-all
 
 # Controls when the workflow will run
 on:
@@ -23,7 +23,7 @@ jobs:
        # Runs a single command using the runners shell
       - name:  Build GFWList2AGH
         run: |
-          bash ./file-hosts.sh/dns-hosts/dns-adgh-lite.sh
+          bash ./file-hosts.sh/dns-hosts/dns-adgh-lite-853-all.sh
       - name:  name GFWList2AGH
         run: |
             mv ./dns-adguardhome/blacklist_full.txt ./dnshosts-adgh-lite-adguardhome-blacklist_full.txt
@@ -34,7 +34,7 @@ jobs:
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
-          tag: dns-hosts-adgh-lite
+          tag: dns-hosts-adgh-lite-853-all
           file: ./dnshosts-adgh-lite*
           file_glob: true
           overwrite: true
