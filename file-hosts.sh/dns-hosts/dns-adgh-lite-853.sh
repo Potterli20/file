@@ -171,12 +171,6 @@ function GenerateRules() {
             "tls://dns.pub:853"
             "tls://dot.pub:853"
             "tls://dot.360.cn:853"
-            "tls://1.12.12.12:853"
-            "tls://120.53.53.53:853"
-            "tls://223.5.5.5:853"
-            "tls://223.6.6.6:853"
-            "tls://101.198.198.198:853"
-            "tls://101.198.199.200:853"
         )
         foreign_dns=(
             "tls://dns.google:853"
