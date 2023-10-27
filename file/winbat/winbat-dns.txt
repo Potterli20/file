@@ -31,50 +31,40 @@ echo 更新时间 2023-10-27
 :: 显示bat版本号
 echo 当前bat版本号：%version%
 echo 以下是更新说明：
-
 :: 获取更新说明
 curl -s https://file-git.trli.club/file/winbat/update.txt > update_info.txt
-
 :: 显示更新说明
 type update_info.txt
-
 :: 删除临时文件
 del update_info.txt
-
 :: 检查版本号
-
 if /i "%version%" neq "0.1" (
    echo 正在更新版本号...
-   set version=0.1-bate1
+   set version=0.2
    echo 版本号已更新至 %version%
 ) else (
-   echo 版本号已为 %version%，无需更新
+   echo 版本号已为 0.2，无需更新
 )
-
 :: 下载最新版本
 for /f "delims=" %%a in ('curl -s https://file-git.trli.club/file/winbat/update.txt ^| findstr /c:"[0-9]+\.[0-9]+"') do (
    set latest_version=%%a
-   if !latest_version! == "" (
-       echo 获取到的最新bat版本号：%latest_version%
-       curl -o new_winbat-dns.bat file-git.trli.club/file/winbat/winbat-dns.bat 
-       new_winbat-dns.bat > winbat-dns.bat
-       :: 删除最新版本
-       del new_winbat.bat
+   if not "!latest_version!"=="" (
+       echo 获取到的最新bat版本号：!latest_version!
+       curl -o new_winbat-dns.bat https://file-git.trli.club/file/winbat/winbat-dns.txt
        if errorlevel 1 (
            echo bat更新下载失败
+           exit /b
        ) else (
            echo bat更新下载成功
+           move /Y new_winbat-dns.bat winbat-dns.bat
+           if errorlevel 1 (
+               echo 更新bat文件失败
+           ) else (
+               echo 更新bat文件成功
+           )
        )
    ) 
-) 
-
-
-:: 显示bat更新说明
-echo 以下是bat更新说明：
-type update_info.txt
-
-:: 删除临时文件
-del update_info.txt
+)
 
 :: 显示操作选项
 echo 请选择以下操作：
