@@ -28,7 +28,8 @@ echo 全部win系统适用
 echo 此程序为bat程序，请不要使用exe程序
 echo 请不要随意修改代码
 echo 更新时间 2023-10-27
-echo 版本号 0.1
+:: 显示bat版本号
+echo 当前bat版本号：%version%
 echo 以下是更新说明：
 
 :: 获取更新说明
@@ -44,10 +45,10 @@ del update_info.txt
 
 if /i "%version%" neq "0.1" (
    echo 正在更新版本号...
-   set version=0.1
+   set version=0.1-bate
    echo 版本号已更新至 0.1
 ) else (
-   echo 版本号已为 0.1，无需更新
+   echo 版本号已为 %version%，无需更新
 )
 
 :: 下载最新版本
@@ -55,7 +56,7 @@ for /f "delims=" %%a in ('curl -s https://file-git.trli.club/file/winbat/update.
    set latest_version=%%a
    if !latest_version! == "" (
        echo 获取到的最新bat版本号：%latest_version%
-       curl -O https://example.com/new_file.zip
+       curl -O file-git.trli.club/file/winbat/winbat-dns.bat
        if errorlevel 1 (
            echo bat更新下载失败
        ) else (
@@ -64,7 +65,16 @@ for /f "delims=" %%a in ('curl -s https://file-git.trli.club/file/winbat/update.
    ) 
 ) 
 :: 删除最新版本
-del new_file.zip
+del new_winbat.bat
+
+:: 显示bat更新说明
+echo 以下是bat更新说明：
+type update_info.txt
+
+:: 删除临时文件
+del update_info.txt
+
+
 
 :: 显示操作选项
 echo 请选择以下操作：
