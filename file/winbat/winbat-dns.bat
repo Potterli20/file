@@ -1,0 +1,153 @@
+@echo off
+chcp 65001 > null
+:: 检查是否以管理员权限运行
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+if '%errorlevel%' NEQ '0' (
+   echo 请求管理员权限...
+   goto UACPrompt
+) else ( goto gotAdmin )
+
+:UACPrompt
+   echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+   echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
+   "%temp%\getadmin.vbs"
+   exit /B
+
+:gotAdmin
+   if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
+   pushd "%CD%"
+   CD /D "%~dp0"
+
+:: 设置随机颜色
+color 0a
+
+:: 显示欢迎信息
+echo 欢迎使用win的dns加密纯bat程序
+echo 此程序由冷莫制作，仅用于学习交流，请勿用于商业用途 
+echo 全部win系统适用
+echo 此程序为bat程序，请不要使用exe程序
+echo 请不要随意修改代码
+echo 更新时间 2023-10-27
+echo 版本号 0.1
+echo 以下是更新说明：
+
+:: 获取更新说明
+curl -s https://file-git.trli.club/file/winbat/update.txt > update_info.txt
+
+:: 显示更新说明
+type update_info.txt
+
+:: 删除临时文件
+del update_info.txt
+
+:: 检查版本号
+
+if /i "%version%" neq "0.1" (
+   echo 正在更新版本号...
+   set version=0.1
+   echo 版本号已更新至 0.1
+) else (
+   echo 版本号已为 0.1，无需更新
+)
+
+:: 下载最新版本
+for /f "delims=" %%a in ('curl -s https://file-git.trli.club/file/winbat/update.txt ^| findstr /c:"[0-9]+\.[0-9]+"') do (
+   set latest_version=%%a
+   if !latest_version! == "" (
+       echo 获取到的最新bat版本号：%latest_version%
+       curl -O https://example.com/new_file.zip
+       if errorlevel 1 (
+           echo bat更新下载失败
+       ) else (
+           echo bat更新下载成功
+       )
+   ) 
+) 
+:: 删除最新版本
+del new_file.zip
+
+:: 显示操作选项
+echo 请选择以下操作：
+echo 1. 开启自动开启DNS加密
+echo 2. 开启手工开启DNS加密
+echo 3. 还原DNS
+:: 获取用户输入的操作序号
+set /p choice=请输入操作序号：
+
+if "%choice%"=="1" (
+   echo 正在开启自动开启DNS加密...
+   :: 开启自动开启DNS加密的代码
+
+) else if "%choice%"=="2" (
+   echo 正在开启手工开启DNS加密...
+   :: 开启手工开启DNS加密的代码
+) else if "%choice%"=="3" (
+   echo 正在还原DNS...
+   :: 还原DNS的代码
+) else (
+   echo 输入的序号无效，请重新输入
+   goto start
+)
+
+
+echo 请选择一个网络接口（输入数字）：
+setlocal enabledelayedexpansion
+set i=0
+
+:: 初始化变量
+set interfaceName=
+
+:: 循环显示网络接口列表
+for /f "tokens=2 delims==:" %%a in ('wmic nic where "NetConnectionStatus=2 and AdapterTypeId=0" get NetConnectionID /format:list') do (
+   set /a i+=1
+   set "interfaceName[!i!]=%%a"
+   echo !i!. %%a
+)
+
+:: 等待用户输入
+set /p choice=
+
+:: 将用户输入的数字转换为网络接口名称
+set interfaceName=!interfaceName[%choice%]!
+
+:: 输出用户选择的网络接口名称
+echo 你选择的网络接口是 %interfaceName%
+
+set /a count=0
+
+:: 初始化变量
+set file=
+
+:: 循环显示dns文件列表
+for /f "delims=" %%i in ('dir /b *.txt') do (
+  set /a count+=1
+  set "file[!count!]=%%i"
+  echo !count!. %%i
+)
+
+:: 显示选择DNS服务器列表文件的提示
+echo 请选择DNS服务器列表文件（输入数字）：
+set /p choice=
+
+echo 检测本地DNS服务器地址:
+ipconfig /all | findstr /R "DNS\ Servers" 
+ipconfig /all | findstr /R "DNS Servers\ [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" > local-dns.txt
+
+echo 请输入你想要设置的主DNS服务器IP地址：
+set /p primaryDNS= 
+echo 请输入你想要设置的备用DNS服务器IP地址：
+set /p secondaryDNS=
+
+echo 正在开启DNS代理...
+echo 正在设置dnsproxy服务
+nssm.exe start dnsproxy.exe -l "%primaryDNS%" -l "%secondaryDNS%" -p 53 -b local-dns.txt -b 114.114.114.114  -u "!file[%choice%]!" --all-servers --edns --edns-addr=0.0.0.0 --cache --cache-optimistic
+
+echo 正在设置dns ip..
+netsh interface ipv4 set dns name="%interfaceName%" static %primaryDNS% primary
+netsh interface ipv4 add dns name="%interfaceName%" %secondaryDNS% index=2
+
+echo DNS服务器已设置为：
+echo 主DNS服务器: %primaryDNS%
+echo 备用DNS服务器: %secondaryDNS%
+
+pause
