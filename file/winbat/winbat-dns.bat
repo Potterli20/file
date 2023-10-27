@@ -45,8 +45,8 @@ del update_info.txt
 
 if /i "%version%" neq "0.1" (
    echo 正在更新版本号...
-   set version=0.1-bate
-   echo 版本号已更新至 0.1
+   set version=0.1-bate1
+   echo 版本号已更新至 %version%
 ) else (
    echo 版本号已为 %version%，无需更新
 )
@@ -56,7 +56,10 @@ for /f "delims=" %%a in ('curl -s https://file-git.trli.club/file/winbat/update.
    set latest_version=%%a
    if !latest_version! == "" (
        echo 获取到的最新bat版本号：%latest_version%
-       curl -O file-git.trli.club/file/winbat/winbat-dns.bat
+       curl -o new_winbat-dns.bat file-git.trli.club/file/winbat/winbat-dns.bat 
+       new_winbat-dns.bat > winbat-dns.bat
+       :: 删除最新版本
+       del new_winbat.bat
        if errorlevel 1 (
            echo bat更新下载失败
        ) else (
@@ -64,8 +67,7 @@ for /f "delims=" %%a in ('curl -s https://file-git.trli.club/file/winbat/update.
        )
    ) 
 ) 
-:: 删除最新版本
-del new_winbat.bat
+
 
 :: 显示bat更新说明
 echo 以下是bat更新说明：
@@ -73,8 +75,6 @@ type update_info.txt
 
 :: 删除临时文件
 del update_info.txt
-
-
 
 :: 显示操作选项
 echo 请选择以下操作：
