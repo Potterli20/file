@@ -1,2 +1,4 @@
+0.1-bate
+测试 winbat-dns.bat 更新
 0.1
 测试 update.txt
