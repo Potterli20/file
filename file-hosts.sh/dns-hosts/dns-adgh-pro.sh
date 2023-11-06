@@ -313,7 +313,7 @@ function GenerateRules() {
             done
         fi
         ;;
-    adguardhome_new)
+adguardhome_new)
         domestic_dns=(
             "https://doh-pure.onedns.net/dns-query"
             "https://dns.alidns.com/dns-query"
