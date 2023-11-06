@@ -310,7 +310,6 @@ adguardhome_new)
             "h3://anycast.dns.nextdns.io/dns-query"
             "h3://doh3.dns.nextdns.io/dns-query"
             "h3://dns.nextdns.io/dns-query"
-            "h3://cloudflare-dns.com/dns-query"
             "h3://dns-unfiltered.adguard.com/dns-query"
             "h3://unfiltered.adguard-dns.com/dns-query"
             "h3://odoh.cloudflare-dns.com/dns-query"
