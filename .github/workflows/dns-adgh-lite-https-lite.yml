@@ -26,14 +26,14 @@ jobs:
           bash ./file-hosts.sh/dns-hosts/dns-adgh-lite-https-lite.sh
       - name:  name GFWList2AGH
         run: |
-            mv ./dns-adguardhome/blacklist_full.txt ./dnshosts-all-adguardhome-blacklist_full.txt
-            mv ./dns-adguardhome/blacklist_full_combine.txt ./dnshosts-all-adguardhome-blacklist_full_combine.txt
-            mv ./dns-adguardhome/whitelist_full.txt ./dnshosts-all-adguardhome-whitelist_full.txt
-            mv ./dns-adguardhome/whitelist_full_combine.txt ./dnshosts-all-adguardhome-whitelist_full_combine.txt
-            mv ./dns-adguardhome_new/blacklist_full.txt ./dnshosts-all-adguardhome-new-blacklist_full.txt
-            mv ./dns-adguardhome_new/blacklist_full_combine.txt ./dnshosts-all-adguardhome-new-blacklist_full_combine.txt
-            mv ./dns-adguardhome_new/whitelist_full.txt ./dnshosts-all-adguardhome-new-whitelist_full.txt
-            mv ./dns-adguardhome_new/whitelist_full_combine.txt ./dnshosts-all-adguardhome-new-whitelist_full_combine.txt
+            mv ./dns-adguardhome/blacklist_full.txt ./dnshosts-adgh-lite-adguardhome-blacklist_full.txt
+            mv ./dns-adguardhome/blacklist_full_combine.txt ./dnshosts-adgh-lite-adguardhome-blacklist_full_combine.txt
+            mv ./dns-adguardhome/whitelist_full.txt ./dnshosts-adgh-lite-adguardhome-whitelist_full.txt
+            mv ./dns-adguardhome/whitelist_full_combine.txt ./dnshosts-adgh-lite-adguardhome-whitelist_full_combine.txt
+            mv ./dns-adguardhome_new/blacklist_full.txt ./dnshosts-adgh-lite-adguardhome-new-blacklist_full.txt
+            mv ./dns-adguardhome_new/blacklist_full_combine.txt ./dnshosts-adgh-lite-adguardhome-new-blacklist_full_combine.txt
+            mv ./dns-adguardhome_new/whitelist_full.txt ./dnshosts-adgh-lite-adguardhome-new-whitelist_full.txt
+            mv ./dns-adguardhome_new/whitelist_full_combine.txt ./dnshosts-adgh-lite-adguardhome-new-whitelist_full_combine.txt
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:
