@@ -186,7 +186,8 @@ function GenerateRules() {
                 exit 1
             ;;
         esac
-    }    case ${software_name} in
+    }    
+    case ${software_name} in
 adguardhome)
         domestic_dns=(
             "https://doh-pure.onedns.net/dns-query"
