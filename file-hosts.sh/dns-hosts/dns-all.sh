@@ -137,57 +137,57 @@ function GenerateRules() {
     }
     function GenerateDefaultUpstream() {
         case ${software_name} in
-            adguardhome)
-                if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "lite" ]; then
-                    if [ "${generate_file}" == "blackwhite" ]; then
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo "${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                        done
-                    elif [ "${generate_file}" == "whiteblack" ]; then
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo "${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                        done
-                    fi
-                else
-                    if [ "${generate_file}" == "black" ]; then
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo "${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                        done
-                    elif [ "${generate_file}" == "white" ]; then
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo "${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                        done
-                    fi
+        adguardhome)
+            if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "lite" ]; then
+                if [ "${generate_file}" == "blackwhite" ]; then
+                    for foreign_dns_task in "${!foreign_dns[@]}"; do
+                        echo "${foreign_dns[$foreign_dns_task]}" >>"${file_path}"
+                    done
+                elif [ "${generate_file}" == "whiteblack" ]; then
+                    for domestic_dns_task in "${!domestic_dns[@]}"; do
+                        echo "${domestic_dns[$domestic_dns_task]}" >>"${file_path}"
+                    done
                 fi
-            ;;
-            adguardhome_new)
-                if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "lite" ]; then
-                    if [ "${generate_file}" == "blackwhite" ]; then
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo "${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                        done
-                    elif [ "${generate_file}" == "whiteblack" ]; then
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo "${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                        done
-                    fi
-                else
-                    if [ "${generate_file}" == "black" ]; then
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo "${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                        done
-                    elif [ "${generate_file}" == "white" ]; then
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo "${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                        done
-                    fi
+            else
+                if [ "${generate_file}" == "black" ]; then
+                    for domestic_dns_task in "${!domestic_dns[@]}"; do
+                        echo "${domestic_dns[$domestic_dns_task]}" >>"${file_path}"
+                    done
+                elif [ "${generate_file}" == "white" ]; then
+                    for foreign_dns_task in "${!foreign_dns[@]}"; do
+                        echo "${foreign_dns[$foreign_dns_task]}" >>"${file_path}"
+                    done
                 fi
+            fi
             ;;
-            *)
-                exit 1
+        adguardhome_new)
+            if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "lite" ]; then
+                if [ "${generate_file}" == "blackwhite" ]; then
+                    for foreign_dns_task in "${!foreign_dns[@]}"; do
+                        echo "${foreign_dns[$foreign_dns_task]}" >>"${file_path}"
+                    done
+                elif [ "${generate_file}" == "whiteblack" ]; then
+                    for domestic_dns_task in "${!domestic_dns[@]}"; do
+                        echo "${domestic_dns[$domestic_dns_task]}" >>"${file_path}"
+                    done
+                fi
+            else
+                if [ "${generate_file}" == "black" ]; then
+                    for domestic_dns_task in "${!domestic_dns[@]}"; do
+                        echo "${domestic_dns[$domestic_dns_task]}" >>"${file_path}"
+                    done
+                elif [ "${generate_file}" == "white" ]; then
+                    for foreign_dns_task in "${!foreign_dns[@]}"; do
+                        echo "${foreign_dns[$foreign_dns_task]}" >>"${file_path}"
+                    done
+                fi
+            fi
+            ;;
+        *)
+            exit 1
             ;;
         esac
-    }    
+    }
     case ${software_name} in
     adguardhome)
         domestic_dns=(
@@ -390,53 +390,53 @@ function GenerateRules() {
             "h3://unfiltered.adguard-dns.com/dns-query"
             "h3://odoh.cloudflare-dns.com/dns-query"
         )
-            function GenerateRulesHeader() {
-                echo -n "[/" >> "${file_path}"
-            }
-            function GenerateRulesBody() {
-                if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
-                    if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                        for cnacc_data_task in "${!cnacc_data[@]}"; do
-                            echo -n "${cnacc_data[$cnacc_data_task]}/" >> "${file_path}"
-                        done
-                    elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                        for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                            echo -n "${gfwlist_data[$gfwlist_data_task]}/" >> "${file_path}"
-                        done
-                    fi
-                elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-                    if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                        for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                            echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >> "${file_path}"
-                        done
-                    elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                        for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                            echo -n "${lite_gfwlist_data[$lite_gfwlist_data_task]}/" >> "${file_path}"
-                        done
-                    fi
+        function GenerateRulesHeader() {
+            echo -n "[/" >>"${file_path}"
+        }
+        function GenerateRulesBody() {
+            if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
+                if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+                    for cnacc_data_task in "${!cnacc_data[@]}"; do
+                        echo -n "${cnacc_data[$cnacc_data_task]}/" >>"${file_path}"
+                    done
+                elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
+                    for gfwlist_data_task in "${!gfwlist_data[@]}"; do
+                        echo -n "${gfwlist_data[$gfwlist_data_task]}/" >>"${file_path}"
+                    done
                 fi
-            }
-            function GenerateRulesFooter() {
-                if [ "${dns_mode}" == "default" ]; then
-                    echo -e "]#" >> "${file_path}"
-                elif [ "${dns_mode}" == "domestic" ]; then
-                    echo -e "]${domestic_dns[*]}" >> "${file_path}"
-                elif [ "${dns_mode}" == "foreign" ]; then
-                    echo -e "]${foreign_dns[*]}" >> "${file_path}"
+            elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
+                if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+                    for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
+                        echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >>"${file_path}"
+                    done
+                elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
+                    for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
+                        echo -n "${lite_gfwlist_data[$lite_gfwlist_data_task]}/" >>"${file_path}"
+                    done
                 fi
-            }
-            function GenerateRulesProcess() {
-                GenerateRulesHeader
-                GenerateRulesBody
-                GenerateRulesFooter
-            }
-            if [ "${dns_mode}" == "default" ]; then
-                FileName && GenerateDefaultUpstream && GenerateRulesProcess
-            elif [ "${dns_mode}" == "domestic" ]; then
-                FileName && GenerateDefaultUpstream && GenerateRulesProcess
-            elif [ "${dns_mode}" == "foreign" ]; then
-                FileName && GenerateDefaultUpstream && GenerateRulesProcess
             fi
+        }
+        function GenerateRulesFooter() {
+            if [ "${dns_mode}" == "default" ]; then
+                echo -e "]#" >>"${file_path}"
+            elif [ "${dns_mode}" == "domestic" ]; then
+                echo -e "]${domestic_dns[*]}" >>"${file_path}"
+            elif [ "${dns_mode}" == "foreign" ]; then
+                echo -e "]${foreign_dns[*]}" >>"${file_path}"
+            fi
+        }
+        function GenerateRulesProcess() {
+            GenerateRulesHeader
+            GenerateRulesBody
+            GenerateRulesFooter
+        }
+        if [ "${dns_mode}" == "default" ]; then
+            FileName && GenerateDefaultUpstream && GenerateRulesProcess
+        elif [ "${dns_mode}" == "domestic" ]; then
+            FileName && GenerateDefaultUpstream && GenerateRulesProcess
+        elif [ "${dns_mode}" == "foreign" ]; then
+            FileName && GenerateDefaultUpstream && GenerateRulesProcess
+        fi
         ;;
     bind9)
         domestic_dns=(
