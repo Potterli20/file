@@ -30,18 +30,10 @@ jobs:
          mv ./dns-adguardhome/blacklist_full_combine.txt ./dnshosts-all-adguardhome-blacklist_full_combine.txt
          mv ./dns-adguardhome/whitelist_full.txt ./dnshosts-all-adguardhome-whitelist_full.txt
          mv ./dns-adguardhome/whitelist_full_combine.txt ./dnshosts-all-adguardhome-whitelist_full_combine.txt
-         mv ./dns-adguardhome/blacklist_lite.txt ./dnshosts-all-adguardhome-blacklist_lite.txt
-         mv ./dns-adguardhome/blacklist_lite_combine.txt ./dnshosts-all-adguardhome-blacklist_lite_combine.txt
-         mv ./dns-adguardhome/whitelist_lite.txt ./dnshosts-all-adguardhome-whitelist_lite.txt
-         mv ./dns-adguardhome/whitelist_lite_combine.txt ./dnshosts-all-adguardhome-whitelist_lite_combine.txt
          mv ./dns-adguardhome_new/blacklist_full.txt ./dnshosts-all-adguardhome-new-blacklist_full.txt
          mv ./dns-adguardhome_new/blacklist_full_combine.txt ./dnshosts-all-adguardhome-new-blacklist_full_combine.txt
          mv ./dns-adguardhome_new/whitelist_full.txt ./dnshosts-all-adguardhome-new-whitelist_full.txt
          mv ./dns-adguardhome_new/whitelist_full_combine.txt ./dnshosts-all-adguardhome-new-whitelist_full_combine.txt
-         mv ./dns-adguardhome_new/blacklist_lite.txt ./dnshosts-all-adguardhome-new-blacklist_lite.txt
-         mv ./dns-adguardhome_new/blacklist_lite_combine.txt ./dnshosts-all-adguardhome-new-blacklist_lite_combine.txt
-         mv ./dns-adguardhome_new/whitelist_lite.txt ./dnshosts-all-adguardhome-new-whitelist_lite.txt
-         mv ./dns-adguardhome_new/whitelist_lite_combine.txt ./dnshosts-all-adguardhom-new-whitelist_lite_combine.txt     
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:
