@@ -88,6 +88,7 @@ function GetData() {
         "https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt"
         "https://raw.githubusercontent.com/jimmyshjj/GFWList2AGH/source/data/data_modify.txt"
     )
+
     mkdir ./hosts-dns && cd ./hosts-dns
     for cnacc_domain_task in "${!cnacc_domain[@]}"; do
         curl -m 10 -s -L --connect-timeout 15 "${cnacc_domain[$cnacc_domain_task]}" | sed "s/^\.//g" >>./cnacc_domain.tmp
@@ -177,14 +178,9 @@ function GenerateRules() {
             "https://77.88.8.8:443/dns-query"
             "https://doh.opendns.com/dns-query"
             "https://dns.google/dns-query"
-            "https://dns64.dns.google/dns-query"
-            "https://dns.google.com/dns-query"
-            "https://1dot1dot1dot1.cloudflare-dns.com/dns-query"
             "https://cloudflare-dns.com/dns-query"
             "https://dns11.quad9.net/dns-query"
-            "https://dns.nextdns.io/dns-query"
             "https://dns-unfiltered.adguard.com/dns-query"
-            "https://unfiltered.adguard-dns.com/dns-query"
             "https://odoh.cloudflare-dns.com/dns-query"
             "https://dns.twnic.tw/dns-query"
             "https://doh3.dns.nextdns.io/dns-query"

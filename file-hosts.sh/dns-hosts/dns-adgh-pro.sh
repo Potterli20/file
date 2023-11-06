@@ -39,7 +39,7 @@ function GetData() {
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-tld-list.txt"
         "https://raw.githubusercontent.com/filteryab/ir-blocked-domain/main/data/ir-blocked-domain"
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/apple/Domains"
-        "https://raw.githubusercontent.com/SukkaW/Surge/master/List/domainset/icloud_private_relay.conf"
+        "https://raw.githubusercontent.com/SukkaW/Surge/master/Source/domainset/icloud_private_relay.conf"
         "https://raw.githubusercontent.com/missdeer/blocklist/master/toblock-optimized.lst"
         "https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
         "https://raw.githubusercontent.com/smed79/blacklist/master/extra/facebook.txt"
