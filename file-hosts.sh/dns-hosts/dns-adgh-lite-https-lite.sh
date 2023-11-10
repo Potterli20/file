@@ -201,7 +201,7 @@ function GenerateRules() {
             "https://dns.google/dns-query"
             "https://dns11.quad9.net/dns-query"
             "https://dns-unfiltered.adguard.com/dns-query"
-            "https://odoh.cloudflare-dns.com/dns-query"
+            "https://1dot1dot1dot1.cloudflare-dns.com/dns-query"
             "https://dns.twnic.tw/dns-query"
             "https://anycast.dns.nextdns.io/dns-query"
         )
@@ -270,7 +270,7 @@ function GenerateRules() {
             "https://dns.google/dns-query"
             "https://dns11.quad9.net/dns-query"
             "https://dns-unfiltered.adguard.com/dns-query"
-            "https://odoh.cloudflare-dns.com/dns-query"
+            "https://1dot1dot1dot1.cloudflare-dns.com/dns-query"
             "https://dns.twnic.tw/dns-query"
             "https://anycast.dns.nextdns.io/dns-query"
         )

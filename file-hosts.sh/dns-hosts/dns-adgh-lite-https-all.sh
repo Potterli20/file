@@ -213,7 +213,6 @@ function GenerateRules() {
             "https://sepfvn6g5a.cloudflare-gateway.com/dns-query"
             "https://dns-unfiltered.adguard.com/dns-query"
             "https://unfiltered.adguard-dns.com/dns-query"
-            "https://odoh.cloudflare-dns.com/dns-query"
             "https://dns.twnic.tw/dns-query"
             "https://doh3.dns.nextdns.io/dns-query"
             "https://anycast.dns.nextdns.io/dns-query"
@@ -223,7 +222,6 @@ function GenerateRules() {
             "h3://cloudflare-dns.com/dns-query"
             "h3://dns-unfiltered.adguard.com/dns-query"
             "h3://unfiltered.adguard-dns.com/dns-query"
-            "h3://odoh.cloudflare-dns.com/dns-query"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
@@ -303,7 +301,6 @@ function GenerateRules() {
             "https://sepfvn6g5a.cloudflare-gateway.com/dns-query"
             "https://dns-unfiltered.adguard.com/dns-query"
             "https://unfiltered.adguard-dns.com/dns-query"
-            "https://odoh.cloudflare-dns.com/dns-query"
             "https://dns.twnic.tw/dns-query"
             "https://doh3.dns.nextdns.io/dns-query"
             "https://anycast.dns.nextdns.io/dns-query"
@@ -312,7 +309,6 @@ function GenerateRules() {
             "h3://dns.nextdns.io/dns-query"
             "h3://dns-unfiltered.adguard.com/dns-query"
             "h3://unfiltered.adguard-dns.com/dns-query"
-            "h3://odoh.cloudflare-dns.com/dns-query"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
