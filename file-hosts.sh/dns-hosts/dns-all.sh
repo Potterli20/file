@@ -235,7 +235,6 @@ function GenerateRules() {
             "https://sepfvn6g5a.cloudflare-gateway.com/dns-query"
             "https://dns-unfiltered.adguard.com/dns-query"
             "https://unfiltered.adguard-dns.com/dns-query"
-            "https://odoh.cloudflare-dns.com/dns-query"
             "https://dns.twnic.tw/dns-query"
             "https://doh3.dns.nextdns.io/dns-query"
             "https://anycast.dns.nextdns.io/dns-query"
