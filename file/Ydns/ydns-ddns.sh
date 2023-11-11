@@ -1,6 +1,5 @@
 #!/bin/bash
 # https://ydns.io 域名解析，双域名版，by：小贝塔
-cd "$(cd $(dirname $0);pwd)"
 
 YDNS_USER="邮箱"
 YDNS_PASSWD="密钥"
