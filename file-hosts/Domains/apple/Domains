@@ -75,7 +75,6 @@ guzzoni.apple.com
 app-site-association.cdn-apple.com	
 app-site-association.networking.apple	
 pos-device.apple.com	
-humb.apple.com	
 phonesubmissions.apple.com	
 audiocontentdownload.apple.com	
 devimages-cdn.apple.com
@@ -86,7 +85,6 @@ sylvan.apple.com
 *.appattest.apple.com	
 itunes.com	
 gg.apple.com	
-gs.apple.com	
 ig.apple.com	
 mesu.apple.com	
 ns.itunes.apple.com	
@@ -97,12 +95,9 @@ swcdn.apple.com
 swdist.apple.com	
 swdownload.apple.com	
 swscan.apple.com	
-updates-http.cdn-apple.com	
-updates.cdn-apple.com	
 xp.apple.com	
 *.itunes.apple.com	
 *.apps.apple.com	
-itunes.apple.com	
 ppq.apple.com	
 appldnld.apple.com	
 appldnld.apple.com.edgesuite.net	
