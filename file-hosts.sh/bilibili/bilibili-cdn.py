@@ -4,7 +4,7 @@ from lxml import etree
 headers = {
     'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.37'
     }
-url = "https://rec.danmuji.org/dev/bilibili-cdn/"
+url = "https://rec.danmuji.org/dev/cdn-info/"
 pattern = r"(.+bilivideo.com)"
 r = requests.get(url,headers=headers)
 encoding = r.encoding
