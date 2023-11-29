@@ -189,7 +189,8 @@ function GenerateRules() {
     case ${software_name} in
     adguardhome)
         domestic_dns=(
-            "https://doh-pure.onedns.net/dns-query"
+           "https://dns.ipv6dns.com/dns-query"
+ "https://doh-pure.onedns.net/dns-query"
             "https://dns.alidns.com/dns-query"
             "https://doh.pub/dns-query"
             "https://dns.pub/dns-query"
