@@ -1,7 +1,6 @@
 function GetData() {
     filter_adblock=(
         "https://raw.githubusercontent.com/yokoffing/filterlists/main/privacy_essentials.txt"
-        "https://xiaoshangyin.github.io/adguard-hosts.txt"
         "https://easylist-downloads.adblockplus.org/advblock.txt"
         "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
         "https://easylist-downloads.adblockplus.org/bulgarian_list.txt"
@@ -419,7 +418,7 @@ function GetData() {
         "https://filters.adtidy.org/extension/ublock/filters/242_optimized.txt"
         "https://filters.adtidy.org/extension/ublock/filters/243_optimized.txt"
         "https://filters.adtidy.org/extension/ublock/filters/244_optimized.txt"
-\        "https://filters.adtidy.org/extension/ublock/filters/246_optimized.txt"
+        "https://filters.adtidy.org/extension/ublock/filters/246_optimized.txt"
         "https://filters.adtidy.org/extension/ublock/filters/247_optimized.txt"
         "https://filters.adtidy.org/extension/ublock/filters/249_optimized.txt"
         "https://filters.adtidy.org/extension/ublock/filters/250_optimized.txt"
@@ -444,7 +443,6 @@ function GetData() {
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/bogons/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/cloak/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/covid/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/deugniets/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/dutch/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/easylist/adblock.txt"
         "https://raw.githubusercontent.com/cbuijs/accomplist/master/family-safe/adblock.txt"
