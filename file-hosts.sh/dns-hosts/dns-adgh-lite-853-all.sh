@@ -189,7 +189,7 @@ function GenerateRules() {
     case ${software_name} in
     adguardhome)
         domestic_dns=(
-"tls://dns.ipv6dns.com:853"
+            "tls://dns.ipv6dns.com:853"
             "tls://dot-pure.onedns.net:853"
             "tls://dns.alidns.com:853"
             "tls://dns.pub:853"
