@@ -199,6 +199,7 @@ function GenerateRules() {
             "h3://dns.alidns.com/dns-query"
         )
         foreign_dns=(
+            "https://dns64.cloudflare-dns.com/dns-query"
             "https://77.88.8.8:443/dns-query"
             "https://firefox.dns.nextdns.io/dns-query"
             "https://doh.opendns.com/dns-query"
