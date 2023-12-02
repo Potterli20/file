@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import contextlib
-import glob
 import os
 from pathlib import Path
 import platform
@@ -28,6 +27,7 @@ class LLVMBuilder(Builder):
 
         self.bolt = False
         self.bolt_builder = None
+        self.build_targets = ['all']
         self.ccache = False
         self.check_targets = []
         # Removes system dependency on terminfo to keep the dynamic library
@@ -115,6 +115,9 @@ class LLVMBuilder(Builder):
             self.bolt_builder.bolt_sampling_output.unlink()
 
         # Now actually optimize clang
+        bolt_readme = Path(self.folders.source, 'bolt/README.md').read_text(encoding='utf-8')
+        use_cache_plus = '-reorder-blocks=cache+' in bolt_readme
+        use_sf_val = '-split-functions=2' in bolt_readme
         clang_opt_cmd = [
             self.tools.llvm_bolt,
             f"--data={bolt_profile}",
@@ -122,10 +125,10 @@ class LLVMBuilder(Builder):
             '--icf=1',
             '-o',
             clang_bolt,
-            '--reorder-blocks=cache+',
+            f"--reorder-blocks={'cache+' if use_cache_plus else 'ext-tsp'}",
             '--reorder-functions=hfsort+',
             '--split-all-cold',
-            '--split-functions=3',
+            f"--split-functions{'=3' if use_sf_val else ''}",
             '--use-gnu-stack',
             clang,
         ]
@@ -143,12 +146,12 @@ class LLVMBuilder(Builder):
             raise RuntimeError('BOLT requested without a builder?')
 
         build_start = time.time()
-        ninja_cmd = ['ninja', '-C', self.folders.build]
-        self.run_cmd(ninja_cmd)
+        base_ninja_cmd = ['ninja', '-C', self.folders.build]
+        self.run_cmd([*base_ninja_cmd, *self.build_targets])
 
         if self.check_targets:
             check_targets = [f"check-{target}" for target in self.check_targets]
-            self.run_cmd([*ninja_cmd, *check_targets])
+            self.run_cmd([*base_ninja_cmd, *check_targets])
 
         tc_build.utils.print_info(f"Build duration: {tc_build.utils.get_duration(build_start)}")
 
@@ -160,7 +163,7 @@ class LLVMBuilder(Builder):
                 install_targets = [f"install-{target}" for target in self.install_targets]
             else:
                 install_targets = ['install']
-            self.run_cmd([*ninja_cmd, *install_targets], capture_output=True)
+            self.run_cmd([*base_ninja_cmd, *install_targets], capture_output=True)
             tc_build.utils.create_gitignore(self.folders.install)
 
     def can_use_perf(self):
@@ -227,6 +230,16 @@ class LLVMBuilder(Builder):
 
         if self.tools.ar:
             self.cmake_defines['CMAKE_AR'] = self.tools.ar
+        # Utilize thin archives to save space. Use the deprecated -T for
+        # compatibility with binutils<2.38 and llvm-ar<14. Unfortunately, thin
+        # archives make compiler-rt archives not easily distributable, so we
+        # disable the optimization when compiler-rt is enabled and there is an
+        # install directory. Ideally thin archives should still be usable for
+        # non-compiler-rt projects.
+        if not (self.folders.install and self.project_is_enabled('compiler-rt')):
+            self.cmake_defines['CMAKE_CXX_ARCHIVE_CREATE'] = '<CMAKE_AR> DqcT <TARGET> <OBJECTS>'
+        self.cmake_defines['CMAKE_CXX_ARCHIVE_FINISH'] = 'true'
+
         if self.tools.ranlib:
             self.cmake_defines['CMAKE_RANLIB'] = self.tools.ranlib
         if 'CMAKE_BUILD_TYPE' not in self.cmake_defines:
@@ -255,7 +268,7 @@ class LLVMBuilder(Builder):
         # Clear Linux needs a different target to find all of the C++ header files, otherwise
         # stage 2+ compiles will fail without this
         # We figure this out based on the existence of x86_64-generic-linux in the C++ headers path
-        if glob.glob('/usr/include/c++/*/x86_64-generic-linux'):
+        if list(Path('/usr/include/c++').glob('*/x86_64-generic-linux')):
             self.cmake_defines['LLVM_HOST_TRIPLE'] = 'x86_64-generic-linux'
 
         # By default, the Linux triples are for glibc, which might not work on
@@ -363,7 +376,34 @@ class LLVMSlimBuilder(LLVMBuilder):
             'CLANG_PLUGIN_SUPPORT': 'OFF',
         }
 
+        llvm_build_runtime = self.cmake_defines.get('LLVM_BUILD_RUNTIME', 'ON') == 'ON'
+        build_compiler_rt = self.project_is_enabled('compiler-rt') and llvm_build_runtime
+
+        llvm_build_tools = self.cmake_defines.get('LLVM_BUILD_TOOLS', 'ON') == 'ON'
+
+        distribution_components = []
+        if llvm_build_tools:
+            distribution_components += [
+                'llvm-ar',
+                'llvm-nm',
+                'llvm-objcopy',
+                'llvm-objdump',
+                'llvm-ranlib',
+                'llvm-readelf',
+                'llvm-strip',
+            ]
+        if self.project_is_enabled('bolt'):
+            distribution_components.append('bolt')
+        if self.project_is_enabled('clang'):
+            distribution_components += ['clang', 'clang-resource-headers']
+        if self.project_is_enabled('lld'):
+            distribution_components.append('lld')
+        if build_compiler_rt:
+            distribution_components += ['llvm-profdata', 'profile']
+
         slim_llvm_defines = {
+            # Tools needed by bootstrapping
+            'LLVM_DISTRIBUTION_COMPONENTS': ';'.join(distribution_components),
             # Don't build bindings; they are for other languages that the kernel does not use
             'LLVM_ENABLE_BINDINGS': 'OFF',
             # Don't build Ocaml documentation
@@ -389,8 +429,7 @@ class LLVMSlimBuilder(LLVMBuilder):
         self.cmake_defines.update(slim_llvm_defines)
         if self.project_is_enabled('clang'):
             self.cmake_defines.update(slim_clang_defines)
-        if self.project_is_enabled('compiler-rt') and self.cmake_defines.get(
-                'LLVM_BUILD_RUNTIME', 'ON') == 'ON':
+        if build_compiler_rt:
             self.cmake_defines.update(slim_compiler_rt_defines)
 
         super().configure()
