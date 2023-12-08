@@ -1,4 +1,4 @@
-jits-sa-cn.heytapmobi.com
+
 gslb-cn.cdo.heytapmobi.com
 appconf.heytapdownload.com
 api-cn.cdo.heytapmobi.com
@@ -6,7 +6,6 @@ api-cn.theme.heytapmobi.com
 ifind.heytapmobi.com
 omes-sec.heytapmobi.com
 apisnd.heytapmobi.com
-mdp-upgrade-cn.heytapmobi.com
 openapi-slp.heytapmobi.com
 cloudkit-api-cn.ocloud.heytapmobi.com
 weather-server.allawntech.com
@@ -14,10 +13,8 @@ component-ota-cn.allawntech.com
 *.kwaicdn.com
 *.yximgs.com
 static-cpc.heytapimage.com
-ocloud-backup-cn.heytapmobi.com
 cloudi.browser.heytapmobi.com
 client-uc.heytapmobi.com
-obus-cn.dc.heytapmobi.com
 wb.amap.com
 api5-normal-lf.fqnovel.com
 cards.iqiyi.com
