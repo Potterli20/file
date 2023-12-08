@@ -10,30 +10,20 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
-
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.11.0]
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@main
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@main
-        with:
-         python-version: ${{ matrix.python-version }}
-      
-      - name: Install dependencies
-        run: |
-           cd file-hosts.sh/bilibili
-           python -m pip install --upgrade pip
-           if [ -f requirements.txt  ]; then pip install -r requirements.txt; fi
-           
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@main
       # Runs a single command using the runners shell
-      - name:  Build bilibili
+      - name:  Build bilibiloi-cdn
         run: |
-          python ./file-hosts.sh/bilibili/bilibili-cdn.py
+          bash ./file-hosts.sh/bilibili/bilibili.sh
 
       #- name:  push ad-hosts-coding
       #  run: |
