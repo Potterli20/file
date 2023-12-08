@@ -47,16 +47,3 @@ jobs:
           overwrite: true
           body: "update github-hosts"
 
-      - name: update hosts
-        run: |
-          sh ./file-hosts.sh/github/bilibili-hosts.sh
-
-      - name: Release update bilibili-cdn
-        uses: svenstaro/upload-release-action@master
-        with:
-            repo_token: ${{ secrets.GITHUBTOKEN }}
-            tag: github-hosts
-            file: ./file-hosts.sh/github/bilibili-hosts.txt
-            file_glob: true
-            overwrite: true
-            body: "update github-hosts"

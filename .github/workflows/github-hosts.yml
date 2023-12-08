@@ -30,9 +30,13 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt  ]; then pip install -r requirements.txt; fi
 
-    - name: update hosts
+    - name: update Accelerate-hosts
       run: |
         sh ./file-hosts.sh/github/hosts.sh
+
+    - name: update bilibili-hosts
+      run: |
+        sh ./file-hosts.sh/github/bilibili-hosts.sh
 
     #- name: update github
      # run: |
@@ -51,6 +55,16 @@ jobs:
           repo_token: ${{ secrets.GITHUBTOKEN }}
           tag: github-hosts
           file: ./file-hosts.sh/github/Accelerate-Hosts.txt
+          file_glob: true
+          overwrite: true
+          body: "update github-hosts"
+    
+    - name: Release update bilibili-cdn
+      uses: svenstaro/upload-release-action@master
+      with:
+          repo_token: ${{ secrets.GITHUBTOKEN }}
+          tag: github-hosts
+          file: ./file-hosts.sh/github/bilibili-hosts.txt
           file_glob: true
           overwrite: true
           body: "update github-hosts"
