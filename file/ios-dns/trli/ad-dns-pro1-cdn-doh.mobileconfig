@@ -10,34 +10,34 @@
 					<key>DNSProtocol</key>
 					<string>HTTPS</string>
 					<key>ServerURL</key>
-					<string>https://dns-cdn.trli.club/doh1/ad-dns</string>
+					<string>https://dns-cdn.trli.club/doh/ad-dns-pro</string>
 				</dict>
 				<key>PayloadDescription</key>
-				<string>Configures device to use trli-doh-cdn-dns2</string>
+				<string>Configures device to use trli-doh-cdn-ad-dns-pro1</string>
 				<key>PayloadDisplayName</key>
 				<string>dns-cdn.trli.club DoH</string>
 				<key>PayloadIdentifier</key>
-				<string>com.apple.dnsSettings.managed.ad3df2c1-c3f6-48c7-8b80-76af915ec068</string>
+				<string>com.apple.dnsSettings.managed.989159a2-7bbc-424d-9b53-4bf6dea486f5</string>
 				<key>PayloadType</key>
 				<string>com.apple.dnsSettings.managed</string>
 				<key>PayloadUUID</key>
-				<string>13267085-0eaa-471c-89d3-d6c44cf41e0c</string>
+				<string>4d8a9cd4-509f-4732-9f50-36f4b0367974</string>
 				<key>PayloadVersion</key>
 				<integer>1</integer>
 			</dict>
 		</array>
 		<key>PayloadDescription</key>
-		<string>Adds trli-doh-cdn-dns2 to macOS Big Sur and iOS 14 or newer systems. If you have any questions, please contact me in the https://index.trli.club group.</string>
+		<string>Adds trli-doh-cdn-ad-dns-pro1 to macOS Big Sur and iOS 14 or newer systems. If you have any questions, please contact me in the https://hosts.trli.club group.</string>
 		<key>PayloadDisplayName</key>
 		<string>dns-cdn.trli.club DoH</string>
 		<key>PayloadIdentifier</key>
-		<string>1203d73e-47e5-4364-8b9b-67790734c936</string>
+		<string>d58f41fb-6ab2-4a92-b03d-7ba0512a7040</string>
 		<key>PayloadRemovalDisallowed</key>
 		<false/>
 		<key>PayloadType</key>
 		<string>Configuration</string>
 		<key>PayloadUUID</key>
-		<string>29b466b4-b85f-48fe-b92c-b179fa7ca4c7</string>
+		<string>a035dbda-c9e2-4930-b3d6-69add8f4bfe8</string>
 		<key>PayloadVersion</key>
 		<integer>1</integer>
 	</dict>

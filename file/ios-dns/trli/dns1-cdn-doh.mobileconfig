@@ -27,7 +27,7 @@
 			</dict>
 		</array>
 		<key>PayloadDescription</key>
-		<string>Adds trli-doh-cdn-dns1 to macOS Big Sur and iOS 14 or newer systems. If you have any questions, please contact me in the https://index.trli.club group.</string>
+		<string>Adds trli-doh-cdn-dns1 to macOS Big Sur and iOS 14 or newer systems. If you have any questions, please contact me in the https://hosts.trli.club group.</string>
 		<key>PayloadDisplayName</key>
 		<string>dns-cdn.trli.club DoH</string>
 		<key>PayloadIdentifier</key>
