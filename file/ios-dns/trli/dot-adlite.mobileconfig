@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/litepertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
 		<key>PayloadContent</key>
@@ -7,37 +7,37 @@
 			<dict>
 				<key>DNSSettings</key>
 				<dict>
-					<key>DNSProtocol</key>
+					<key>DNSlitetocol</key>
 					<string>TLS</string>
 					<key>ServerName</key>
-					<string>dot-dns.trli.club</string>
+					<string>dot-adlite.trli.club</string>
 				</dict>
 				<key>PayloadDescription</key>
-				<string>Configures device to use trli-dns</string>
+				<string>Configures device to use trli-ad-lite</string>
 				<key>PayloadDisplayName</key>
-				<string>dot-dns.trli.club DoT</string>
+				<string>dot-adlite.trli.club DoT</string>
 				<key>PayloadIdentifier</key>
-				<string>com.apple.dnsSettings.managed.37db59e9-f6e8-4532-80a3-602cc9aa1b31</string>
+				<string>com.apple.dnsSettings.managed.6d6e7cd3-65f5-4527-9fb0-8c46abb9bfb9</string>
 				<key>PayloadType</key>
 				<string>com.apple.dnsSettings.managed</string>
 				<key>PayloadUUID</key>
-				<string>6a2878db-35cb-40f8-96df-755a4a69debe</string>
+				<string>22a25fe5-0849-45c9-9045-26823ea50ea0</string>
 				<key>PayloadVersion</key>
 				<integer>1</integer>
 			</dict>
 		</array>
 		<key>PayloadDescription</key>
-		<string>Adds trli-dns to macOS Big Sur and iOS 14 or newer systems. If you have any questions, please contact me in the https://hosts.trli.club group.</string>
+		<string>Adds trli-ad-lite to macOS Big Sur and iOS 14 or newer systems. If you have any questions, please contact me in the https://hosts.trli.club group.</string>
 		<key>PayloadDisplayName</key>
-		<string>dot-dns.trli.club DoT</string>
+		<string>dot-adlite.trli.club DoT</string>
 		<key>PayloadIdentifier</key>
-		<string>a7072832-4dba-42cb-962c-b5c8f786e410</string>
+		<string>11e3185f-5226-4d54-8133-aa050af1cc4b</string>
 		<key>PayloadRemovalDisallowed</key>
 		<false/>
 		<key>PayloadType</key>
 		<string>Configuration</string>
 		<key>PayloadUUID</key>
-		<string>022261ed-f7a7-4b44-ad39-9cfa521b8aba</string>
+		<string>99fc2019-7c55-4aab-adc8-58ad0af0c259</string>
 		<key>PayloadVersion</key>
 		<integer>1</integer>
 	</dict>
