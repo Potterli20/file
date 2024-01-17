@@ -1,3 +1,5 @@
+*.allawntech.com
+allawntech.com
 icota-sg.coloros.com
 icosa-sg.coloros.com
 ifrus-sg.coloros.com
