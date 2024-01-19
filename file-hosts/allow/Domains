@@ -32,12 +32,9 @@ ipv4.music.163.com
 statistic.live.126.net
 iadmusicmat.music.126.net
 breeno.apps.coloros.com
-i.magazine.heytapmobi.com
-ibrowser.feeds.heytapmobi.com
-smarthome.iot.heytapmobi.com
 smartcard.apps.coloros.com
 telegra.ph
-cf.aliyun.com^
+cf.aliyun.com
 sf3-cdn-tos.douyinstatic.com
 sf6-cdn-tos.douyinstatic.com
 pic5.40017.cn
@@ -52,12 +49,9 @@ appconf.heytapdownload.com
 api-cn.cdo.heytapmobi.com
 api-cn.theme.heytapmobi.com
 ifind.heytapmobi.com
-omes-sec.heytapmobi.com
 apisnd.heytapmobi.com
 openapi-slp.heytapmobi.com
 cloudkit-api-cn.ocloud.heytapmobi.com
-weather-server.allawntech.com
-component-ota-cn.allawntech.com
 *.kwaicdn.com
 *.yximgs.com
 static-cpc.heytapimage.com
@@ -65,7 +59,6 @@ cloudi.browser.heytapmobi.com
 client-uc.heytapmobi.com
 wb.amap.com
 api5-normal-lf.fqnovel.com
-cards.iqiyi.com
 beacon-api.aliyuncs.com
 d.kugou.com
 access1.tpns.sh.tencent.com
