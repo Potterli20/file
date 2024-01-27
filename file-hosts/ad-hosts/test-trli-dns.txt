@@ -1,0 +1,3 @@
+||test.trli.club^$dnsrewrite=NOERROR;CNAME;home-all.trli.club
+||test4.trli.club^$dnsrewrite=NOERROR;CNAME;home-ddns-ipv4.trli.club
+||test6.trli.club^$dnsrewrite=NOERROR;CNAME;home-ddns-ipv6.trli.club
