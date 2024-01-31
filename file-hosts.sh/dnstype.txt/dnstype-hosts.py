@@ -10,9 +10,13 @@ lines = response.text.split('\n')
 
 # 定义你的替换函数
 def replace_text(line):
-    pattern = r"((?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[0-9a-fA-F]{1,4}:[0-9a-fA-F:]{1,39})\s+)(\S+)"
-    replacement = "||\\2^$dnsrewrite=NOERROR;A;\\1"
-    return re.sub(pattern, replacement, line)
+    ipv4_pattern = r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\s+)(\S+)"
+    ipv6_pattern = r"([0-9a-fA-F]{1,4}:[0-9a-fA-F:]{1,39}\s+)(\S+)"
+    ipv4_replacement = "||\\2^$dnsrewrite=NOERROR;A;\\1"
+    ipv6_replacement = "||\\2^$dnsrewrite=NOERROR;AAAA;\\1"
+    line = re.sub(ipv4_pattern, ipv4_replacement, line)
+    line = re.sub(ipv6_pattern, ipv6_replacement, line)
+    return line
 
 # 获取当前的北京时间
 def get_time():
