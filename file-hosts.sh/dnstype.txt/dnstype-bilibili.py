@@ -1,6 +1,8 @@
 # 导入必要的库
 import re
 import requests
+from datetime import datetime
+import pytz
 
 # 获取网络文件的内容
 response = requests.get('https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-hosts.txt')
@@ -11,6 +13,12 @@ def replace_text(line):
     pattern = r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\s+)(\S+)"
     replacement = "||\\2^$dnsrewrite=NOERROR;A;\\1"
     return re.sub(pattern, replacement, line)
+
+# 获取当前的北京时间
+def get_time():
+    beijing_tz = pytz.timezone('Asia/Shanghai')
+    beijing_time = datetime.now(beijing_tz)
+    return beijing_time.strftime('%Y-%m-%d %H:%M:%S')
 
 # 应用替换函数到每一行
 new_lines = [replace_text(line) for line in lines]
