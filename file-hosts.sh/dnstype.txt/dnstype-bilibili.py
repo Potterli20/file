@@ -8,6 +8,9 @@ import pytz
 response = requests.get('https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-hosts.txt')
 lines = response.text.split('\n')
 
+# 去掉以#开始的行
+lines = [line for line in lines if not line.strip().startswith('#')]
+
 # 定义你的替换函数
 def replace_text(line):
     ipv4_pattern = r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\s+)(\S+)"
