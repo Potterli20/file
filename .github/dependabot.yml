@@ -40,3 +40,12 @@ updates:
       time: "07:00"
     pull-request-branch-name:
       separator: "-"
+
+  - package-ecosystem: "pip" # GitHub Actions
+    directory: "./file-hosts.sh/dnstype.txt"
+    schedule:
+      interval: "daily"
+      timezone: "Asia/Shanghai"
+      time: "07:00"
+    pull-request-branch-name:
+      separator: "-"

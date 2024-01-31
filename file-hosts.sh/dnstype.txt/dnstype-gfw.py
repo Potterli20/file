@@ -10,7 +10,7 @@ lines = response.text.split('\n')
 
 # 定义你的替换函数
 def replace_text(line):
-    pattern = r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\s+)(\S+)"
+    pattern = r"((?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[0-9a-fA-F]{1,4}:[0-9a-fA-F:]{1,39})\s+)(\S+)"
     replacement = "||\\2^$dnsrewrite=NOERROR;A;\\1"
     return re.sub(pattern, replacement, line)
 
@@ -29,5 +29,5 @@ with open('./file-hosts.sh/dnstype.txt/gfw-Hosts-dnstype.txt', 'w') as file:
     for line in new_lines:
         file.write(line + '\n')
     file.write('\n# Last update at %s (Beijing Time)\n'%(get_time()))
-    file.write('# Star me GitHub url: https://github.com/Potterli20/file/releases/download/github-hosts-dnstype\n')
+    file.write('# Star me GitHub url: https://github.com/Potterli20/file/releases/download/github--dnstype\n')
     file.write('# Hosts End \n\n')

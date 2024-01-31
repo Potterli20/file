@@ -29,5 +29,5 @@ with open('./file-hosts.sh/dnstype.txt/bilibili-Hosts-dnstype.txt', 'w') as file
     for line in new_lines:
         file.write(line + '\n')
     file.write('\n# Last update at %s (Beijing Time)\n'%(get_time()))
-    file.write('# Star me GitHub url: https://github.com/Potterli20/file/releases/download/github-hosts-dnstype\n')
+    file.write('# Star me GitHub url: https://github.com/Potterli20/file/releases/download/github--dnstype\n')
     file.write('# Hosts End \n\n')
