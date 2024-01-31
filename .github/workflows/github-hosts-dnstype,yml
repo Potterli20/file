@@ -1,4 +1,4 @@
-name: GithubbHosts-dnstype
+name: Github-dnstype
 
 on:
   workflow_dispatch:
