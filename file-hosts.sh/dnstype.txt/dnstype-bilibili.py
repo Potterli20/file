@@ -24,7 +24,7 @@ def get_time():
 new_lines = [replace_text(line) for line in lines]
 
 # 写入新的文件
-with open('bilibili-Hosts-dnstype.txt', 'w') as file:
+with open('./file-hosts.sh/dnstype.txt/bilibili-Hosts-dnstype.txt', 'w') as file:
     file.write('# Hosts Start \n')
     for line in new_lines:
         file.write(line + '\n')
