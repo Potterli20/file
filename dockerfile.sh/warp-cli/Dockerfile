@@ -1,6 +1,5 @@
 FROM ubuntu:latest
 
-# install dependencies
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y curl gnupg lsb-release && \
@@ -13,7 +12,6 @@ RUN apt-get update && \
     bash <(curl -fsSL https://github.com/go-gost/gost/raw/master/install.sh) --install && \
     chmod +x /usr/local/bin/gost
 
-# Accept Cloudflare WARP TOS
 RUN mkdir -p /root/.local/share/warp && \
     echo -n 'yes' > /root/.local/share/warp/accepted-tos.txt
 
