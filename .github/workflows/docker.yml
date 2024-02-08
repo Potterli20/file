@@ -29,7 +29,7 @@ jobs:
         id: build-image
         run: |
           cd ./dockerfile.sh/warp-cli &&
-          docker buildx build --platform ${{ steps.prepare.outputs.docker_platforms }} \
+          docker build --platform ${{ steps.prepare.outputs.docker_platforms }} \
             --output "type=image,push=true" \
             --tag ${{ steps.prepare.outputs.docker_image }}:latest \
             --file Dockerfile . \
