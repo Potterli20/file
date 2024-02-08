@@ -5,12 +5,6 @@ on:
     schedule:
        - cron: "0 0 * *  */7"
 
-    inputs:
-      GOST_VERSION:
-        description: 'Version of gost. If empty, the latest version will be used.'
-        required: false
-        type: string
-
 jobs:
   build:
     runs-on: ubuntu-latest
