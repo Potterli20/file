@@ -29,7 +29,7 @@ jobs:
       - name: Prepare
         id: prepare
         run: |
-            echo ::set-output name=docker_platforms::linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386
+            echo ::set-output name=docker_platforms::linux/amd64,linux/arm64,linux/ppc64le,linux/s390x
             echo ::set-output name=docker_image::${{ secrets.DOCKER_USERNAME }}/warp-cil      
 
       - name: Build Docker image
