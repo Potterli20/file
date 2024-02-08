@@ -1,0 +1,52 @@
+name: docker-release-warp-cli
+
+on:
+  workflow_dispatch:
+    schedule:
+       - cron: "0 0 * *  */7"
+
+    inputs:
+      GOST_VERSION:
+        description: 'Version of gost. If empty, the latest version will be used.'
+        required: false
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        
+      - name: Checkout repository
+        uses: actions/checkout@main
+
+      - name: Log into registry ${{ vars.REGISTRY }}
+        uses: docker/login-action@master
+        with:
+          registry: ${{ vars.REGISTRY }}
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        id: build-image
+        run: |
+          cd ./dockerfile.sh/warp-cli &&
+          docker build \
+            --tag ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}:latest \
+            --file Dockerfile \
+            .
+
+      - name: Get WARP client version
+        id: get-warp-client-version
+        run: |
+          echo "WARP_VERSION=$(docker run --rm --entrypoint='' trliwork/warp-cli:latest warp-cli --version | cut -d ' ' -f 2)" >> "$GITHUB_OUTPUT"
+
+      - name: Tag Docker image
+        id: tag-image
+        run: |
+          docker tag \
+            ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}:latest
+
+      - name: Push Docker image
+        id: push-image
+        run: |
+          docker push ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}:latest
