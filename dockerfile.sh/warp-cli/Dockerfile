@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get install -y cloudflare-warp && \
     apt-get clean && \
     apt-get autoremove -y && \
-    bash <(curl -fsSL https://github.com/go-gost/gost/raw/master/install.sh) --install && \
+    bash <(curl -fsSL https://github.com/go-gost/gost/raw/master/install.sh) --install> && \
     chmod +x /usr/local/bin/gost
 
 RUN mkdir -p /root/.local/share/warp && \
