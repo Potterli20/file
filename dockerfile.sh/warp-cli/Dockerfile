@@ -1,7 +1,5 @@
 FROM ubuntu:latest
 
-ARG GOST_VERSION
-
 # install dependencies
 RUN apt-get update && \
     apt-get upgrade -y && \
