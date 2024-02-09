@@ -10,7 +10,7 @@ RUN set -ex &&\
     apt install -y cloudflare-warp && \
     apt clean && \
     apt autoremove -y  && \
-    bash <(curl -fsSL https://github.com/go-gost/gost/raw/master/install.sh) --install 
+    sh <(curl -fsSL https://github.com/go-gost/gost/raw/master/install.sh) --install 
 
 RUN mkdir -p /root/.local/share/warp && \
     echo -n 'yes' > /root/.local/share/warp/accepted-tos.txt
