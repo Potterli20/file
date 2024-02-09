@@ -1,8 +1,4 @@
-FROM  --platform=${TARGETPLATFORM} debian:latest
-
-ARG TARGETPLATFORM
-WORKDIR /root
-COPY gost-install.sh /root/gost-install.sh
+FROM   debian:latest
 
 RUN set -ex &&\
     apt update && \
@@ -14,8 +10,7 @@ RUN set -ex &&\
     apt install -y cloudflare-warp && \
     apt clean && \
     apt autoremove -y  && \
-    chmod +x /root/gost-install.sh && \
-    /root/gost-install.sh  "${TARGETPLATFORM}"
+    bash <(curl -fsSL https://github.com/go-gost/gost/raw/master/install.sh) --install
 
 RUN mkdir -p /root/.local/share/warp && \
     echo -n 'yes' > /root/.local/share/warp/accepted-tos.txt
