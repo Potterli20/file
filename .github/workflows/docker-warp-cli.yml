@@ -39,7 +39,7 @@ jobs:
           docker buildx build  --platform ${{ steps.prepare.outputs.docker_platforms }} \
             --output "type=image,push=true" \
             --tag ${{ steps.prepare.outputs.docker_image }}:latest \
-            --file Dockerfile \
+            --file Dockerfile . 
 
       - name: Get WARP client version
         id: get-warp-client-version
