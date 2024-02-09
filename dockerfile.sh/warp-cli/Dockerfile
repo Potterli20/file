@@ -1,17 +1,21 @@
-FROM debian:latest
+FROM  --platform=${TARGETPLATFORM} debian:latest
+
+ARG TARGETPLATFORM
+WORKDIR /root
+COPY gost-install.sh /root/gost-install.sh
 
 RUN set -ex &&\
     apt update && \
     apt upgrade -y && \
-    apt install -y curl gnupg lsb-release bash tar gzip && \
+    apt install -y curl gnupg lsb-release bash tar gzip systemd && \
     curl https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
     echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
     apt update && \
     apt install -y cloudflare-warp && \
     apt clean && \
     apt autoremove -y  && \
-    bash <(curl -fsSL https://raw.githubusercontent.com/go-gost/gost/master/install.sh) --install &&\
-    exit 0
+    chmod +x /root/gost-install.sh && \
+    /root/gost-install.sh  "${TARGETPLATFORM}"
 
 RUN mkdir -p /root/.local/share/warp && \
     echo -n 'yes' > /root/.local/share/warp/accepted-tos.txt
