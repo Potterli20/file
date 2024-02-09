@@ -88,8 +88,15 @@ if [ "$1" = "--install" ]; then
 else
     # Display available versions to the user
     echo "Available gost versions:"
-    select version in $versions; do
-        if [ -n "$version" ]; then
+    i=1
+    for version in $versions; do
+        echo "$i) $version"
+        i=$((i+1))
+    done
+    while true; do
+        read -p "Please select a version (1-$((i-1))): " choice
+        if [ "$choice" -ge 1 ] && [ "$choice" -lt "$i" ]; then
+            version=$(echo "$versions" | sed -n "${choice}p")
             install_gost $version
             break
         else
