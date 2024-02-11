@@ -22,7 +22,7 @@ COPY entrypoint.sh /entrypoint.sh
 ENV GOST_ARGS="-L :1080"
 ENV WARP_SLEEP=2
 
-VOLUME /etc/privoxy
+VOLUME ["/etc/privoxy"]
 
 HEALTHCHECK --interval=15s --timeout=5s --start-period=30s --retries=3 \
   CMD curl -fsS "https://cloudflare.com/cdn-cgi/trace" | grep -qE "warp=(plus|on)" || exit 1
