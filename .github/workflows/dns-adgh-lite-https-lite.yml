@@ -6,7 +6,7 @@ name: DnsHosts-adgh-lite-https-lite
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */4 * * *"
 
 # A workflow run is mDnsh up of one or more jobs that can run sequentially or in parallel
 jobs:

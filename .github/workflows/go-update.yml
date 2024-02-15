@@ -10,14 +10,14 @@ jobs:
       - name: Setup Go 1.x.y
         uses: actions/setup-go@main
         with:
-          go-version: ^1.21
+          go-version: ^1.22
       - name: Checkout codebase
         uses: actions/checkout@main
 
       - name: go
         run: |
           cd ./file-hosts.sh/cn-blocked-domain
-          go mod tidy -compat=1.21
+          go mod tidy -compat=1.22
           gofmt -w -r 'interface{} -> any' .
           go get -u
           go mod download
