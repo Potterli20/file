@@ -190,12 +190,12 @@ function GenerateRules() {
     case ${software_name} in
     adguardhome)
         domestic_dns=(
-            "udp://127.0.0.1:5555"
-            "tcp://127.0.0.1:5555"
+            "udp://192.168.2.2:5555"
+            "tcp://192.168.2.2:5555"
         )
         foreign_dns=(
-            "udp://127.0.0.1:5454"
-            "tcp://127.0.0.1:5454"
+            "udp://192.168.2.2:5454"
+            "tcp://192.168.2.2:5454"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
@@ -251,12 +251,12 @@ function GenerateRules() {
         ;;
     adguardhome_new)
         domestic_dns=(
-            "udp://127.0.0.1:5555"
-            "tcp://127.0.0.1:5555"
+            "udp://192.168.2.2:5555"
+            "tcp://192.168.2.2:5555"
         )
         foreign_dns=(
-            "udp://127.0.0.1:5454"
-            "tcp://127.0.0.1:5454"
+            "udp://192.168.2.2:5454"
+            "tcp://192.168.2.2:5454"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
