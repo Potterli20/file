@@ -190,6 +190,8 @@ function GenerateRules() {
     case ${software_name} in
     adguardhome)
         domestic_dns=(
+            "udp://192.168.2.2:5656"
+            "tcp://192.168.2.2:5656"
             "udp://192.168.2.2:5555"
             "tcp://192.168.2.2:5555"
         )
@@ -251,6 +253,8 @@ function GenerateRules() {
         ;;
     adguardhome_new)
         domestic_dns=(
+            "udp://192.168.2.2:5656"
+            "tcp://192.168.2.2:5656"
             "udp://192.168.2.2:5555"
             "tcp://192.168.2.2:5555"
         )
