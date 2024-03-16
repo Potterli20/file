@@ -1,0 +1,10 @@
+doh.360.cn
+dot.360.cn
+doh.dns.apple.com.v.aaplimg.com
+doh.dns.apple.com
+dns.adguard.com
+dns-unfiltered.adguard.com
+adguard-dns.com
+dns.alidns.com
+dot.pub
+doh.pub
