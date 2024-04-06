@@ -195,7 +195,6 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
             "https://dns.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
-            "https://doh.360.cn/dns-query"
         )
         foreign_dns=(
             "https://dns64.cloudflare-dns.com/dns-query"
@@ -304,7 +303,6 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
             "https://dns.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
-            "https://doh.360.cn/dns-query"
         )
         foreign_dns=(
             "https://dns64.cloudflare-dns.com/dns-query"
