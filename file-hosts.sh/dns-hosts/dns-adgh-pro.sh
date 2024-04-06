@@ -189,35 +189,18 @@ function GenerateRules() {
     case ${software_name} in
     adguardhome)
         domestic_dns=(
-            "https://dns.ipv6dns.com/dns-query"
-            "tls://dns.ipv6dns.com:853"
             "https://doh-pure.onedns.net/dns-query"
             "https://dns.alidns.com/dns-query"
             "https://doh.pub/dns-query"
             "https://dns.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
             "https://doh.360.cn/dns-query"
-            "https://1.12.12.12/dns-query"
-            "https://120.53.53.53/dns-query"
-            "https://223.5.5.5/dns-query"
-            "https://223.6.6.6/dns-query"
             "h3://dns.alidns.com/dns-query"
-            "h3://223.5.5.5/dns-query"
-            "h3://223.6.6.6/dns-query"
             "quic://dns.alidns.com:853"
-            "quic://223.5.5.5:853"
-            "quic://223.6.6.6:853"
             "tls://dot-pure.onedns.net:853"
             "tls://dns.alidns.com:853"
             "tls://dns.pub:853"
             "tls://dot.pub:853"
-            "tls://dot.360.cn:853"
-            "tls://1.12.12.12:853"
-            "tls://120.53.53.53:853"
-            "tls://223.5.5.5:853"
-            "tls://223.6.6.6:853"
-            "tls://101.198.198.198:853"
-            "tls://101.198.199.200:853"
         )
         foreign_dns=(
             "https://dns64.cloudflare-dns.com/dns-query"
@@ -382,8 +365,7 @@ function GenerateRules() {
             "tls://dns.alidns.com:853"
             "tls://dns.pub:853"
             "tls://dot.pub:853"
-            "tls://dot.360.cn:853"
-        )
+            )
         foreign_dns=(
             "https://dns64.cloudflare-dns.com/dns-query"
             "https://77.88.8.8:443/dns-query"
