@@ -195,7 +195,6 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
             "https://dns.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
-            "https://doh.360.cn/dns-query"
             "h3://dns.alidns.com/dns-query"
         )
         foreign_dns=(
@@ -337,7 +336,6 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
             "https://dns.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
-            "https://doh.360.cn/dns-query"
             "h3://dns.alidns.com/dns-query"
         )
         foreign_dns=(
