@@ -194,7 +194,6 @@ function GenerateRules() {
             "tls://dns.alidns.com:853"
             "tls://dns.pub:853"
             "tls://dot.pub:853"
-            "tls://dot.360.cn:853"
         )
         foreign_dns=(
             "tls://dns.google:853"
@@ -268,7 +267,6 @@ function GenerateRules() {
             "tls://dns.alidns.com:853"
             "tls://dns.pub:853"
             "tls://dot.pub:853"
-            "tls://dot.360.cn:853"
         )
         foreign_dns=(
             "tls://dns.google:853"
