@@ -1,3 +1,10 @@
+apple-mapkit.com
+cdn-apple.com
+ml-cn.lb-apple.com.akadns.net
+lb-apple.com
+gsp10.apple-mapkit.com
+publicassets.cdn-apple.com
+push.apple.com
 mask.icloud.com
 mask-h2.icloud.com
 mask.apple-dns.net
@@ -34,7 +41,7 @@ tbsc.apple.com
 time-ios.apple.com	
 time.apple.com	
 time-macos.apple.com	
-*.push.apple.com	
+*.	
 deviceenrollment.apple.com	
 deviceservices-external.apple.com	
 gdmf.apple.com
