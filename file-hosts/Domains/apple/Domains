@@ -1,3 +1,4 @@
+#https://doh.dns.apple.com/dns-query
 apple-mapkit.com
 cdn-apple.com
 ml-cn.lb-apple.com.akadns.net
@@ -41,8 +42,7 @@ tbsc.apple.com
 time-ios.apple.com	
 time.apple.com	
 time-macos.apple.com	
-*.	
-deviceenrollment.apple.com	
+*.deviceenrollment.apple.com	
 deviceservices-external.apple.com	
 gdmf.apple.com
 itunes.apple.com	
