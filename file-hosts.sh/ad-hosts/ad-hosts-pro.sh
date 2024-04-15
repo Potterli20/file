@@ -650,7 +650,7 @@ function GetData() {
         "https://v.firebog.net/hosts/neohostsbasic.txt"
         "https://raw.githubusercontent.com/matomo-org/referrer-spam-blacklist/master/spammers.txt"
         "https://malware-filter.gitlab.io/malware-filter/phishing-filter.txt"
-        "https://raw.githubusercontent.com/jarelllama/Scam-Blocklist/main/domains.txt"
+        "https://raw.githubusercontent.com/jarelllama/Scam-Blocklist/main/lists/wildcard_domains/scams.txt"
         "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/ultimate.txt"
         "https://github.com/Potterli20/file/releases/download/github-hosts/ad-edge-hosts.txt"
         "https://raw.githubusercontent.com/groovy-sky/SaferDNS/main/blocklists/domains/Ultimate.Hosts.Blacklist.txt"
