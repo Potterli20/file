@@ -198,7 +198,7 @@ function GenerateRules() {
             "https://dns.pub/dns-query"
         )
         foreign_dns=(
-            "https://dns64.cloudflare-dns.com/dns-query"
+            
             "https://77.88.8.8:443/dns-query"
             "https://doh.opendns.com/dns-query"
             "https://dns.google/dns-query"
