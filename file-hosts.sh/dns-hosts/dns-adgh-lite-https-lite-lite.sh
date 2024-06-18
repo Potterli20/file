@@ -197,7 +197,6 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "https://doh.opendns.com/dns-query"
             "https://dns.google/dns-query"
             "https://dns-unfiltered.adguard.com/dns-query"
             "https://dns.twnic.tw/dns-query"
@@ -263,7 +262,6 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "https://doh.opendns.com/dns-query"
             "https://dns.google/dns-query"
             "https://dns-unfiltered.adguard.com/dns-query"
             "https://dns.twnic.tw/dns-query"
