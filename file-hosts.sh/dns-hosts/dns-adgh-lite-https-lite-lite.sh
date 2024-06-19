@@ -199,7 +199,6 @@ function GenerateRules() {
         foreign_dns=(
             "https://dns.google/dns-query"
             "https://dns-unfiltered.adguard.com/dns-query"
-            "https://dns.twnic.tw/dns-query"
             "https://anycast.dns.nextdns.io/dns-query"
         )
         function GenerateRulesHeader() {
@@ -264,7 +263,6 @@ function GenerateRules() {
         foreign_dns=(
             "https://dns.google/dns-query"
             "https://dns-unfiltered.adguard.com/dns-query"
-            "https://dns.twnic.tw/dns-query"
             "https://anycast.dns.nextdns.io/dns-query"
         )
         function GenerateRulesHeader() {
