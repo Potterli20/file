@@ -199,8 +199,8 @@ function GenerateRules() {
         foreign_dns=(
             "tcp://vpn:6000"
             "udp://vpn:6000"
-            "tcp://vpn:6001"
-            "udp://vpn:6001"
+            "tcp://vpn:60001"
+            "udp://vpn:60001"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
@@ -264,8 +264,8 @@ function GenerateRules() {
         foreign_dns=(
             "tcp://vpn:6000"
             "udp://vpn:6000"
-            "tcp://vpn:6001"
-            "udp://vpn:6001"
+            "tcp://vpn:60001"
+            "udp://vpn:60001"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
