@@ -197,10 +197,10 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "tcp://vpn:6000"
-            "udp://vpn:6000"
-            "tcp://vpn:6001"
-            "udp://vpn:6001"
+            "tcp://vpn:70"
+            "udp://vpn:70"
+            "tcp://vpn:71"
+            "udp://vpn:71"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
@@ -262,10 +262,10 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "tcp://vpn:6000"
-            "udp://vpn:6000"
-            "tcp://vpn:6001"
-            "udp://vpn:6001"
+            "tcp://vpn:70"
+            "udp://vpn:70"
+            "tcp://vpn:71"
+            "udp://vpn:71"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
