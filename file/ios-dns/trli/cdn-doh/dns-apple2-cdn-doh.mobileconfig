@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>PayloadContent</key>
+		<array>
+			<dict>
+				<key>DNSSettings</key>
+				<dict>
+					<key>DNSProtocol</key>
+					<string>HTTPS</string>
+					<key>ServerURL</key>
+					<string>https://dns-cdn.trli.club/doh1/dns-apple</string>
+				</dict>
+				<key>PayloadDescription</key>
+				<string>Configures device to use trli-doh-cdn-dns2-apple</string>
+				<key>PayloadDisplayName</key>
+				<string>dns-cdn.trli.club DoH</string>
+				<key>PayloadIdentifier</key>
+				<string>com.apple.dnsSettings.managed.17dc105c-2ee7-4c9a-ac61-a2a788c5eb5e</string>
+				<key>PayloadType</key>
+				<string>com.apple.dnsSettings.managed</string>
+				<key>PayloadUUID</key>
+				<string>741e0a66-daf4-46e4-8dcd-29860376e615</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+			</dict>
+		</array>
+		<key>PayloadDescription</key>
+		<string>Adds trli-doh-cdn-dns2-apple to macOS Big Sur and iOS 14 or newer systems. If you have any questions, please contact me in the https://hosts.trli.club group.</string>		<key>PayloadDisplayName</key>
+		<key>PayloadDisplayName</key>
+		<string>dns-cdn.trli.club DoH</string>
+		<key>PayloadIdentifier</key>
+		<string>e6fbe153-0bd9-4b56-af34-3483be7c2bff</string>
+		<key>PayloadRemovalDisallowed</key>
+		<false/>
+		<key>PayloadType</key>
+		<string>Configuration</string>
+		<key>PayloadUUID</key>
+		<string>07426a5d-6b2e-4e52-9260-f8aba6809506</string>
+		<key>PayloadVersion</key>
+		<integer>1</integer>
+	</dict>
+</plist>
