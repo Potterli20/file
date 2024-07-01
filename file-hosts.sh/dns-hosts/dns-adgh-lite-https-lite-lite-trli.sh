@@ -196,10 +196,8 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "tcp://vpn:70"
-            "udp://vpn:70"
-            "tcp://vpn:71"
-            "udp://vpn:71"
+            "https://qzs.trli.club/doh/dns"
+            "https://qzs.trli.club/doh1/dns"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
@@ -260,10 +258,8 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "tcp://vpn:70"
-            "udp://vpn:70"
-            "tcp://vpn:71"
-            "udp://vpn:71"
+            "https://qzs.trli.club/doh/dns"
+            "https://qzs.trli.club/doh1/dns"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
