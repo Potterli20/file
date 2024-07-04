@@ -196,8 +196,7 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "https://qzs.trli.club/doh/dns"
-            "https://qzs.trli.club/doh1/dns"
+            "192.168.2.3:1053"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
@@ -258,8 +257,7 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "https://qzs.trli.club/doh/dns"
-            "https://qzs.trli.club/doh1/dns"
+            "192.168.2.3:1053＂
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
