@@ -257,7 +257,7 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "https://doh.trli.cloudns.ch/dns-query＂
+            "https://doh.trli.cloudns.ch/dns-query"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
