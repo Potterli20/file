@@ -196,7 +196,7 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "192.168.2.3:1053"
+            "https://doh.trli.cloudns.ch/dns-query"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
@@ -257,7 +257,7 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "192.168.2.3:1053＂
+            "https://doh.trli.cloudns.ch/dns-query＂
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
