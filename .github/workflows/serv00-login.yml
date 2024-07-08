@@ -18,7 +18,7 @@ jobs:
       - name: 设置 Python 环境
         uses: actions/setup-python@main
         with:
-          python-version: '3.x'  # 设置你希望使用的 Python 版本，建议使用稳定版本
+          python-version: '3.13.0-beta.3'  # 设置你希望使用的 Python 版本，建议使用稳定版本
 
       - name: Create accounts.json from environment variable
         run: echo "$ACCOUNTS_JSON" > accounts.json
