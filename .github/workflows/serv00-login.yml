@@ -35,4 +35,4 @@ jobs:
         env:
           ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
         run: |
-          python login_script.py
+          python file/serv00-login/login.py
