@@ -196,9 +196,8 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "https://anycast.dns.nextdns.io/dns-query"
-            "https://unfiltered.adguard-dns.com/dns-query"
-            "https://dns.twnic.tw/dns-query"
+            "https://https://qzs.trli.club/doh/dns-all"
+            "https://https://qzs.trli.club/doh1/dns-all"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
@@ -259,9 +258,8 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "https://anycast.dns.nextdns.io/dns-query"
-            "https://unfiltered.adguard-dns.com/dns-query"
-            "https://dns.twnic.tw/dns-query"
+            "https://https://qzs.trli.club/doh/dns-all"
+            "https://https://qzs.trli.club/doh1/dns-all"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
