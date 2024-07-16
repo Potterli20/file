@@ -192,12 +192,12 @@ function GenerateRules() {
     adguardhome)
         domestic_dns=(
             "https://doh-pure.onedns.net/dns-query"
-            "https://dns.alidns.com/dns-query"
+            "h3://dns.alidns.com/dns-query"
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "https://qzs.trli.club/doh/dns-all"
-            "https://qzs.trli.club/doh1/dns-all"
+            "h3://qzs.trli.club/doh/dns-all"
+            "h3://qzs.trli.club/doh1/dns-all"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
@@ -254,12 +254,12 @@ function GenerateRules() {
     adguardhome_new)
         domestic_dns=(
             "https://doh-pure.onedns.net/dns-query"
-            "https://dns.alidns.com/dns-query"
+            "h3://dns.alidns.com/dns-query"
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "https://qzs.trli.club/doh/dns-all"
-            "https://qzs.trli.club/doh1/dns-all"
+            "h3://qzs.trli.club/doh/dns-all"
+            "h3://qzs.trli.club/doh1/dns-all"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
