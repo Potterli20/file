@@ -196,8 +196,8 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "h3://qzs.trli.club/doh/dns-all"
-            "h3://qzs.trli.club/doh1/dns-all"
+            "h3://qzs.trli.cloudns.biz/doh1/dns-all"
+            "h3://qzs.trli.cloudns.biz/doh1/dns-all"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >>"${file_path}"
@@ -258,8 +258,8 @@ function GenerateRules() {
             "https://doh.pub/dns-query"
         )
         foreign_dns=(
-            "h3://qzs.trli.club/doh/dns-all"
-            "h3://qzs.trli.club/doh1/dns-all"
+            "h3://qzs.trli.cloudns.biz/doh1/dns-all"
+            "h3://qzs.trli.cloudns.biz/doh1/dns-all"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
