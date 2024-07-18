@@ -1,4 +1,4 @@
-name: go-update(cn-blocked-domain)
+name: git-clean
 on:
   workflow_dispatch:
   schedule:
