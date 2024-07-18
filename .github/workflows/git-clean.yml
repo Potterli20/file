@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: "0 */3 * * *"
 jobs:
-  go:
+  git-clean:
     runs-on: ubuntu-latest
     steps:
       - name: Git push 
@@ -14,7 +14,6 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote rm origin
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
-          git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | sed -n 's/^blob //p' | sort --numeric-sort --key=2 --reverse | head -n 10
           git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin    
           git reflog expire --expire=now --all
           git gc --prune=now
