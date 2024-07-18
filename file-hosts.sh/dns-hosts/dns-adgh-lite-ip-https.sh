@@ -205,8 +205,6 @@ function GenerateRules() {
             "https://2001:4860:4860::8844/dns-query"
             "https://94.140.14.140/dns-query"
             "https://94.140.14.141/dns-query"
-            "https://2a10:50c0::2:ff/dns-query"
-            "https://2a10:50c0::1:ff/dns-query"
             "https://77.88.8.8:443/dns-query"
             "https://146.112.41.2/dns-query"
             "https://9.9.9.11/dns-query"
@@ -267,7 +265,7 @@ function GenerateRules() {
             done
         fi
         ;;
-    adguardhome_new)
+    adguardhome)
         domestic_dns=(
             "https://223.5.5.5/dns-query"
             "https://223.6.6.6/dns-query"
@@ -283,8 +281,6 @@ function GenerateRules() {
             "https://2001:4860:4860::8844/dns-query"
             "https://94.140.14.140/dns-query"
             "https://94.140.14.141/dns-query"
-            "https://2a10:50c0::2:ff/dns-query"
-            "https://2a10:50c0::1:ff/dns-query"
             "https://77.88.8.8:443/dns-query"
             "https://146.112.41.2/dns-query"
             "https://9.9.9.11/dns-query"
