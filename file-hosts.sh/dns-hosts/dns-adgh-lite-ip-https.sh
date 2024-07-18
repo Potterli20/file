@@ -189,7 +189,7 @@ function GenerateRules() {
         esac
     }
     case ${software_name} in
-    adguardhome_new)
+    adguardhome)
         domestic_dns=(
             "https://223.5.5.5/dns-query"
             "https://223.6.6.6/dns-query"
@@ -265,7 +265,7 @@ function GenerateRules() {
             done
         fi
         ;;
-    adguardhome)
+    adguardhome_new)
         domestic_dns=(
             "https://223.5.5.5/dns-query"
             "https://223.6.6.6/dns-query"
