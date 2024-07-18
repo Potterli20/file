@@ -4,9 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 0 */3 * *"  # 每三天运行一次，可以根据需求调整时间
-  push:
-    branches:
-      - main
+
 jobs:
   login:
     runs-on: ubuntu-latest
