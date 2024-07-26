@@ -24,9 +24,7 @@ jobs:
       - name:  Build trli-dns.bash
         run: |
           echo -e "AdGuard Home_new"
-          bash ./file-hosts.sh/dns-hosts/trli-dns/trli-adgh-dns.sh
-          echo -e "Unbound"
-          bash ./file-hosts.sh/dns-hosts/trli-dns/trli-adgh-dns.sh
+          bash ./file-hosts.sh/dns-hosts/trli-dns/trli-dns.sh
       - name:  name trli-dns
         run: |
             mv ./dns-adguardhome_new/blacklist_full.txt ./dnshosts-adgh-trli-new-blacklist_full.txt
@@ -35,6 +33,8 @@ jobs:
             mv ./dns-adguardhome_new/whitelist_full_combine.txt ./dnshosts-adgh-trli-new-whitelist_full_combine.txt
             mv ./dns-unbound/blacklist_full.conf ./dnshosts-all-unbound-blacklist_full.conf
             mv ./dns-unbound/whitelist_full.conf ./dnshosts-all-unbound-whitelist_full.conf
+            mv ./dns-bind9/blacklist_full.conf ./dnshosts-all-bind9-blacklist_full.conf
+            mv ./dns-bind9/whitelist_full.conf ./dnshosts-all-bind9-whitelist_full.conf
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:

@@ -123,8 +123,9 @@ function GenerateRules() {
         else
             generate_temp="debug"
         fi
-
-        if [ "${software_name}" == "unbound" ]; then
+        if [ "${software_name}" == "adguardhome_new" ]  ]; then
+            file_extension="txt"
+        elif [ "${software_name}" == "bind9" ] || [ "${software_name}" == "unbound" ]; then
             file_extension="conf"
         else
             file_extension="dev"
@@ -135,7 +136,146 @@ function GenerateRules() {
         file_name="${generate_temp}list_${generate_mode}.${file_extension}"
         file_path="../dns-${software_name}/${file_name}"
     }
+    function GenerateDefaultUpstream() {
+        case ${software_name} in
+        adguardhome_new)
+            if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "lite" ]; then
+                if [ "${generate_file}" == "blackwhite" ]; then
+                    for foreign_dns_task in "${!foreign_dns[@]}"; do
+                        echo "${foreign_dns[$foreign_dns_task]}" >>"${file_path}"
+                    done
+                elif [ "${generate_file}" == "whiteblack" ]; then
+                    for domestic_dns_task in "${!domestic_dns[@]}"; do
+                        echo "${domestic_dns[$domestic_dns_task]}" >>"${file_path}"
+                    done
+                fi
+            else
+                if [ "${generate_file}" == "black" ]; then
+                    for domestic_dns_task in "${!domestic_dns[@]}"; do
+                        echo "${domestic_dns[$domestic_dns_task]}" >>"${file_path}"
+                    done
+                elif [ "${generate_file}" == "white" ]; then
+                    for foreign_dns_task in "${!foreign_dns[@]}"; do
+                        echo "${foreign_dns[$foreign_dns_task]}" >>"${file_path}"
+                    done
+                fi
+            fi
+            ;;
+        *)
+            exit 1
+            ;;
+        esac
+    }
     case ${software_name} in
+    adguardhome_new)
+        domestic_dns=(
+            "https://dns.alidns.com/dns-query"
+            "tls://1.12.12.12:853"
+            "tls://120.53.53.53:853"
+            "quic://dns.alidns.com:853"
+            "tls://dns.alidns.com:853"
+        )
+        foreign_dns=(
+            "https://dns.google/dns-query"
+            "https://dns.google.com/dns-query"
+            "https://dns12.quad9.net/dns-query"
+            "https://unfiltered.adguard-dns.com/dns-query"
+            "https://dns.twnic.tw/dns-query"
+            "https://doh3.dns.nextdns.io/dns-query"
+            "https://anycast.dns.nextdns.io/dns-query"
+        )
+        function GenerateRulesHeader() {
+            echo -n "[/" >> "${file_path}"
+        }
+        function GenerateRulesBody() {
+            if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
+                if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+                    for cnacc_data_task in "${!cnacc_data[@]}"; do
+                        echo -n "${cnacc_data[$cnacc_data_task]}/" >> "${file_path}"
+                    done
+                elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
+                    for gfwlist_data_task in "${!gfwlist_data[@]}"; do
+                        echo -n "${gfwlist_data[$gfwlist_data_task]}/" >> "${file_path}"
+                    done
+                fi
+            elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
+                if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+                    for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
+                        echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >> "${file_path}"
+                    done
+                elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
+                    for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
+                        echo -n "${lite_gfwlist_data[$lite_gfwlist_data_task]}/" >> "${file_path}"
+                    done
+                fi
+            fi
+        }
+        function GenerateRulesFooter() {
+            if [ "${dns_mode}" == "default" ]; then
+                echo -e "]#" >> "${file_path}"
+            elif [ "${dns_mode}" == "domestic" ]; then
+                echo -e "]${domestic_dns[*]}" >> "${file_path}"
+            elif [ "${dns_mode}" == "foreign" ]; then
+                echo -e "]${foreign_dns[*]}" >> "${file_path}"
+            fi
+        }
+        function GenerateRulesProcess() {
+            GenerateRulesHeader
+            GenerateRulesBody
+            GenerateRulesFooter
+        }
+        if [ "${dns_mode}" == "default" ]; then
+            FileName && GenerateDefaultUpstream && GenerateRulesProcess
+        elif [ "${dns_mode}" == "domestic" ]; then
+            FileName && GenerateDefaultUpstream && GenerateRulesProcess
+        elif [ "${dns_mode}" == "foreign" ]; then
+            FileName && GenerateDefaultUpstream && GenerateRulesProcess
+        fi
+        ;;
+    bind9)
+        domestic_dns=(
+            "119.29.29.29 port 53"
+            "223.5.5.5 port 53"
+            "223.6.6.6 port 53"
+            "101.226.4.6 port 53"
+            "123.125.81.6 port 53"
+            "114.114.114.114 port 53"
+            "114.114.115.115 port 53"
+            "117.50.11.11 port 53"
+            "52.80.66.66 port 53"
+        )
+        foreign_dns=(
+            "208.67.222.222 port 53"
+            "8.8.4.4 port 53"
+            "8.8.8.8 port 53"
+            "1.1.1.1 port 53"
+            "1.0.0.1 port 53"
+            "9.9.9.10 port 53"
+            "94.140.14.140 port 53"
+            "94.140.14.141 port 53"
+            "74.82.42.42 prot 53"
+            "185.222.222.222 prot 53"
+        )
+        if [ "${generate_mode}" == "full" ]; then
+            if [ "${generate_file}" == "black" ]; then
+                FileName && for gfwlist_data_task in "${!gfwlist_data[@]}"; do
+                    echo -n "zone \"${gfwlist_data[$gfwlist_data_task]}.\" {type forward; forwarders { " >>"${file_path}"
+                    for foreign_dns_task in "${!foreign_dns[@]}"; do
+                        echo -n "${foreign_dns[$foreign_dns_task]}; " >>"${file_path}"
+                    done
+                    echo "}; };" >>"${file_path}"
+                done
+            elif [ "${generate_file}" == "white" ]; then
+                FileName && for cnacc_data_task in "${!cnacc_data[@]}"; do
+                    echo -n "zone \"${cnacc_data[$cnacc_data_task]}.\" {type forward; forwarders { " >>"${file_path}"
+                    for domestic_dns_task in "${!domestic_dns[@]}"; do
+                        echo -n "${domestic_dns[$domestic_dns_task]}; " >>"${file_path}"
+                    done
+                    echo "}; };" >>"${file_path}"
+                done
+            fi
+        fi
+        ;;
     unbound)
         domestic_dns=(
             "223.5.5.5@853"
@@ -217,6 +357,24 @@ function GenerateRules() {
 }
 # Output Data
 function OutputData() {
+    ## AdGuard Home (New)
+    echo -e "AdGuard Home_new"
+    software_name="adguardhome_new" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome_new" && generate_file="black" && generate_mode="full_split_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome_new" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome_new" && generate_file="white" && generate_mode="full_split_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full_split_combine" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full_split_combine" && dns_mode="foreign" && GenerateRules
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
+    ## Bind9
+    echo -e "Bind9"
+    software_name="bind9" && generate_file="black" && generate_mode="full" && GenerateRules
+    software_name="bind9" && generate_file="white" && generate_mode="full" && GenerateRules
     ## Unbound
     echo -e "Unbound"
     software_name="unbound" && generate_file="black" && generate_mode="full" && dns_mode="foreign" && GenerateRules
