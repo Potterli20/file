@@ -123,7 +123,7 @@ function GenerateRules() {
         else
             generate_temp="debug"
         fi
-        if [ "${software_name}" == "adguardhome_new" ]  ]; then
+        if [ "${software_name}" == "adguardhome_new" ] ; then
             file_extension="txt"
         elif [ "${software_name}" == "bind9" ] || [ "${software_name}" == "unbound" ]; then
             file_extension="conf"
