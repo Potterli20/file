@@ -177,8 +177,8 @@ function GenerateRules() {
         )
         foreign_dns=(
             "https://dns.google/dns-query"
-            "https://dns.google.com/dns-query"
             "https://dns12.quad9.net/dns-query"
+            "https://dns.cloudflare.com/dns-query"
             "https://unfiltered.adguard-dns.com/dns-query"
             "https://dns.twnic.tw/dns-query"
             "https://doh3.dns.nextdns.io/dns-query"
