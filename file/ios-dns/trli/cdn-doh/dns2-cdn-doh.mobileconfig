@@ -29,7 +29,7 @@
 		<key>PayloadDescription</key>
 		<string>Adds trli-doh-cdn-dns2 to macOS Big Sur and iOS 14 or newer systems. If you have any questions, please contact me in the https://hosts.trli.club group.</string>
 		<key>PayloadDisplayName</key>
-		<string>dns-cdn.trli.club DoH</string>
+		<string>dns-cdn.trli.club/doh1/dns DoH服务</string>
 		<key>PayloadIdentifier</key>
 		<string>967f8d24-11be-4602-97b6-5035630c0ada</string>
 		<key>PayloadRemovalDisallowed</key>

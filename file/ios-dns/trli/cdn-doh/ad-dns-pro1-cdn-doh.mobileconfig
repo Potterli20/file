@@ -29,7 +29,7 @@
 		<key>PayloadDescription</key>
 		<string>Adds trli-doh-cdn-ad-dns-pro1 to macOS Big Sur and iOS 14 or newer systems. If you have any questions, please contact me in the https://hosts.trli.club group.</string>
 		<key>PayloadDisplayName</key>
-		<string>dns-cdn.trli.club DoH</string>
+		<string>dns-cdn.trli.club/doh/ad-dns-pro DoH服务</string>
 		<key>PayloadIdentifier</key>
 		<string>d58f41fb-6ab2-4a92-b03d-7ba0512a7040</string>
 		<key>PayloadRemovalDisallowed</key>
