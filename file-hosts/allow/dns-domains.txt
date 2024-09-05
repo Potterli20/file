@@ -1,3 +1,4 @@
+cloudflare-dns.com
 doh.360.cn
 dot.360.cn
 doh.dns.apple.com.v.aaplimg.com
