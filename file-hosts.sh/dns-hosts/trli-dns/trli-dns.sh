@@ -177,13 +177,8 @@ function GenerateRules() {
             "udp://192.168.3.148"
         )
         foreign_dns=(
-            "https://dns.google/dns-query"
-            "https://dns12.quad9.net/dns-query"
-            "https://dns.cloudflare.com/dns-query"
-            "https://unfiltered.adguard-dns.com/dns-query"
-            "https://dns.twnic.tw/dns-query"
-            "https://doh3.dns.nextdns.io/dns-query"
-            "https://anycast.dns.nextdns.io/dns-query"
+            "tcp://192.168.3.146"
+            "udp://192.168.3.146"
         )
         function GenerateRulesHeader() {
             echo -n "[/" >> "${file_path}"
