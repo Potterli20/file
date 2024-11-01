@@ -169,25 +169,12 @@ function GenerateRules() {
     case ${software_name} in
     adguardhome_new)
         domestic_dns=(
-            "udp://dns.alidns.com"
-            "tcp://dns.alidns.com"
-            "tcp://52.80.53.83"
-            "tcp://71.131.215.228"
-            "tcp://113.31.119.88"
-            "tcp://42.240.136.88"
-            "tcp://[2400:7fc0:849e:200:62fd:1de3:1c90:1]"
-            "tcp://[2400:7fc0:849e:200:62fd:1de3:1c90:2]"
-            "udp://52.80.53.83"
-            "udp://71.131.215.228"
-            "udp://113.31.119.88"
-            "udp://42.240.136.88"
-            "udp://[2400:7fc0:849e:200:62fd:1de3:1c90:1]"
-            "udp://[2400:7fc0:849e:200:62fd:1de3:1c90:2]"
-            "https://dns.alidns.com/dns-query"
-            "tls://1.12.12.12:853"
-            "tls://120.53.53.53:853"
-            "quic://dns.alidns.com:853"
-            "tls://dns.alidns.com:853"
+            "udp://192.168.3.145"
+            "tcp://192.168.3.145"
+            "tcp://192.168.3.147"
+            "tcp://192.168.3.148"
+            "udp://192.168.3.147"
+            "udp://192.168.3.148"
         )
         foreign_dns=(
             "https://dns.google/dns-query"
