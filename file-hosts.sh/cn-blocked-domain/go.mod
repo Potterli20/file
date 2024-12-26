@@ -3,7 +3,7 @@ module cn-blocked-domain
 go 1.23
 
 require (
-	github.com/PuerkitoBio/goquery v1.10.0
+	github.com/PuerkitoBio/goquery v1.10.1
 	gopkg.in/yaml.v3 v3.0.1
 )
 
