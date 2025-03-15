@@ -50,164 +50,33 @@ function GenerateInformation() {
         echo "$@" > "../$filename"
     }
 
-    generate_file "ad-youtube-adblock.txt" \
-        "! Checksum: ${adfilter_checksum}" \
-        "! Title: ${adfilter_title} for adblock" \
-        "! Description: ${adfilter_description}" \
-        "! Version: ${adfilter_version}" \
-        "! TimeUpdated: ${adfilter_timeupdated}" \
-        "! Expires: ${adfilter_expires}" \
-        "! Homepage: ${adfilter_homepage}" \
-        "! Total: ${adfilter_total}"
+    function generate_common_headers() {
+        local title_suffix=$1
+        echo "! Checksum: ${adfilter_checksum}"
+        echo "! Title: ${adfilter_title} for ${title_suffix}"
+        echo "! Description: ${adfilter_description}"
+        echo "! Version: ${adfilter_version}"
+        echo "! TimeUpdated: ${adfilter_timeupdated}"
+        echo "! Expires: ${adfilter_expires}"
+        echo "! Homepage: ${adfilter_homepage}"
+        echo "! Total: ${adfilter_total}"
+    }
 
-    generate_file "ad-youtube-adguardhome.txt" \
-        "! Checksum: ${adfilter_checksum}" \
-        "! Title: ${adfilter_title} for adguardhome" \
-        "! Description: ${adfilter_description}" \
-        "! Version: ${adfilter_version}" \
-        "! TimeUpdated: ${adfilter_timeupdated}" \
-        "! Expires: ${adfilter_expires}" \
-        "! Homepage: ${adfilter_homepage}" \
-        "! Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-clash.yaml" \
-        "payload:" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for Clash " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-clash-premium.yaml" \
-        "payload:" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for Clash " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-dnsmasq.conf" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for Dnsmasq " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-domains.txt" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for Pi-hole " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-hosts.txt" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for hosts " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}" \
-        "# (DO NOT REMOVE)"
-
-    generate_file "ad-youtube-quantumult.yaml" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for Quantumult " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-shadowrocket.list" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for shadowrocket " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-smartdns.conf" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for SmartDNS " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-surge.yaml" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for Surge " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-unbound.conf" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for Unbound " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-bind9.conf" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for Dind9 " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}" \
-        "\$TTL 30" \
-        "@ IN SOA rpz.trli.home. hostmaster.rpz.trli.home. 1643540837 86400 3600 604800 30" \
-        "NS localhost."
-
-    generate_file "ad-youtube-adguardhome-dnstype.txt" \
-        "! Checksum: ${adfilter_checksum}" \
-        "! Title: ${adfilter_title} for AdguardHome dnstype" \
-        "! Description: ${adfilter_description}" \
-        "! Version: ${adfilter_version}" \
-        "! TimeUpdated: ${adfilter_timeupdated}" \
-        "! Expires: ${adfilter_expires}" \
-        "! Homepage: ${adfilter_homepage}" \
-        "! Total: ${adfilter_total}"
-
-    generate_file "ad-youtube-singbox.json" \
-        "{" \
-        "  \"checksum\": \"${adfilter_checksum}\"," \
-        "  \"title\": \"${adfilter_title} for Singbox\"," \
-        "  \"description\": \"${adfilter_description}\"," \
-        "  \"version\": \"${adfilter_version}\"," \
-        "  \"timeUpdated\": \"${adfilter_timeupdated}\"," \
-        "  \"expires\": \"${adfilter_expires}\"," \
-        "  \"homepage\": \"${adfilter_homepage}\"," \
-        "  \"total\": ${adfilter_total}," \
-        "  \"rules\": []" \
-        "}"
+    generate_file "ad-youtube-adblock.txt" "$(generate_common_headers "adblock")"
+    generate_file "ad-youtube-adguardhome.txt" "$(generate_common_headers "adguardhome")"
+    generate_file "ad-youtube-clash.yaml" "payload:" "$(generate_common_headers "Clash")"
+    generate_file "ad-youtube-clash-premium.yaml" "payload:" "$(generate_common_headers "Clash")"
+    generate_file "ad-youtube-dnsmasq.conf" "$(generate_common_headers "Dnsmasq")"
+    generate_file "ad-youtube-domains.txt" "$(generate_common_headers "Pi-hole")"
+    generate_file "ad-youtube-hosts.txt" "$(generate_common_headers "hosts")" "# (DO NOT REMOVE)"
+    generate_file "ad-youtube-quantumult.yaml" "$(generate_common_headers "Quantumult")"
+    generate_file "ad-youtube-shadowrocket.list" "$(generate_common_headers "shadowrocket")"
+    generate_file "ad-youtube-smartdns.conf" "$(generate_common_headers "SmartDNS")"
+    generate_file "ad-youtube-surge.yaml" "$(generate_common_headers "Surge")"
+    generate_file "ad-youtube-unbound.conf" "$(generate_common_headers "Unbound")"
+    generate_file "ad-youtube-bind9.conf" "$(generate_common_headers "Dind9")" "\$TTL 30" "@ IN SOA rpz.trli.home. hostmaster.rpz.trli.home. 1643540837 86400 3600 604800 30" "NS localhost."
+    generate_file "ad-youtube-adguardhome-dnstype.txt" "$(generate_common_headers "AdguardHome dnstype")"
+    generate_file "ad-youtube-singbox.json" "{" "  \"checksum\": \"${adfilter_checksum}\"," "  \"title\": \"${adfilter_title} for Singbox\"," "  \"description\": \"${adfilter_description}\"," "  \"version\": \"${adfilter_version}\"," "  \"timeUpdated\": \"${adfilter_timeupdated}\"," "  \"expires\": \"${adfilter_expires}\"," "  \"homepage\": \"${adfilter_homepage}\"," "  \"total\": ${adfilter_total}," "  \"rules\": []" "}"
 }
 
 # Output Data
