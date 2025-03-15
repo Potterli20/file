@@ -196,16 +196,18 @@ function GenerateInformation() {
         "! Homepage: ${adfilter_homepage}" \
         "! Total: ${adfilter_total}"
 
-    generate_file "ad-youtube-singbox.yaml" \
-        "payload:" \
-        "# Checksum: ${adfilter_checksum}" \
-        "# Title: ${adfilter_title} for Singbox " \
-        "# Description: ${adfilter_description}" \
-        "# Version: ${adfilter_version}" \
-        "# TimeUpdated: ${adfilter_timeupdated}" \
-        "# Expires: ${adfilter_expires}" \
-        "# Homepage: ${adfilter_homepage}" \
-        "# Total: ${adfilter_total}"
+    generate_file "ad-youtube-singbox.json" \
+        "{" \
+        "  \"checksum\": \"${adfilter_checksum}\"," \
+        "  \"title\": \"${adfilter_title} for Singbox\"," \
+        "  \"description\": \"${adfilter_description}\"," \
+        "  \"version\": \"${adfilter_version}\"," \
+        "  \"timeUpdated\": \"${adfilter_timeupdated}\"," \
+        "  \"expires\": \"${adfilter_expires}\"," \
+        "  \"homepage\": \"${adfilter_homepage}\"," \
+        "  \"total\": ${adfilter_total}," \
+        "  \"rules\": []" \
+        "}"
 }
 
 # Output Data
@@ -227,8 +229,15 @@ function OutputData() {
             echo "${filter_data[$filter_data_task]} CNAME ." >>../ad-youtube-bind9.conf
             echo "* ${filter_data[$filter_data_task]} CNAME ." >>../ad-youtube-bind9.conf
             echo "||${filter_data[$filter_data_task]}^$client=127.0.0.1,dnstype=A" >>../ad-youtube-adguardhome-dnstype.txt
-            echo "  - DOMAIN,${filter_data[$filter_data_task]}" >>../ad-youtube-singbox.yaml
+            echo "  - DOMAIN,${filter_data[$filter_data_task]}" >>../ad-youtube-singbox.srs
         done
+
+        # Append rules to JSON file
+        sed -i '$ s/]/,/' ../ad-youtube-singbox.json
+        for filter_data_task in "${!filter_data[@]}"; do
+            echo "    \"DOMAIN-SUFFIX,${filter_data[$filter_data_task]},REJECT\"," >>../ad-youtube-singbox.json
+        done
+        sed -i '$ s/,$/]/' ../ad-youtube-singbox.json
     }
     if [ ! -f "../ad-youtube-domains.txt" ]; then
         GenerateInformation && FormatedOutputData
