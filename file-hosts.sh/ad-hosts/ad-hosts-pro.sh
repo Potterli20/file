@@ -399,7 +399,7 @@ function GetData() {
     function fetch_data() {
         local filter_array=("${!1}")
         local output_file=$2
-        echo "${filter_array[@]}" | xargs -n 1 -P 10 -I {} curl -m 10 -s -L --connect-timeout 15 "{}" >>"$output_file"
+        echo "${filter_array[@]}" | xargs -P 10 -I {} curl -m 10 -s -L --connect-timeout 15 "{}" >>"$output_file"
     }
 
     fetch_data filter_adblock[@] ./filter_adblock.tmp
