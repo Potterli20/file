@@ -457,20 +457,32 @@ function GenerateInformation() {
         echo "$header" >"$file_path"
     }
 
-    generate_file ../ad-adblock.txt "! Checksum: ${adfilter_checksum}\n! Title: ${adfilter_title} for Adblock\n! Description: ${adfilter_description}\n! Version: ${adfilter_version}\n! TimeUpdated: ${adfilter_timeupdated}\n! Expires: ${adfilter_expires}\n! Homepage: ${adfilter_homepage}\n! Total: ${adfilter_total}"
-    generate_file ../ad-adguardhome.txt "! Checksum: ${adfilter_checksum}\n! Title: ${adfilter_title} for AdguardHome\n! Description: ${adfilter_description}\n! Version: ${adfilter_version}\n! TimeUpdated: ${adfilter_timeupdated}\n! Expires: ${adfilter_expires}\n! Homepage: ${adfilter_homepage}\n! Total: ${adfilter_total}"
-    generate_file ../ad-clash.yaml "payload:\n# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Clash\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
-    generate_file ../ad-clash-premium.yaml "payload:\n# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Clash Premium\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
-    generate_file ../ad-dnsmasq.conf "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Dnsmasq\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
-    generate_file ../ad-domains.txt "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Domains\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
-    generate_file ../ad-hosts.txt "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Hosts\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}\n# (DO NOT REMOVE)"
-    generate_file ../ad-quantumult.yaml "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Quantumult\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
-    generate_file ../ad-shadowrocket.list "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Shadowrocket\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
-    generate_file ../ad-smartdns.conf "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for SmartDNS\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
-    generate_file ../ad-surge.yaml "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Surge\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
-    generate_file ../ad-unbound.conf "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Unbound\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
-    generate_file ../ad-bind9.conf "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Bind9\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}\n\$TTL 30\n@ IN SOA rpz.trli.home. hostmaster.rpz.trli.home. 1643540837 86400 3600 604800 30\nNS localhost."
-    generate_file ../ad-adguardhome-dnstype.txt "! Checksum: ${adfilter_checksum}\n! Title: ${adfilter_title} for AdguardHome dnstype\n! Description: ${adfilter_description}\n! Version: ${adfilter_version}\n! TimeUpdated: ${adfilter_timeupdated}\n! Expires: ${adfilter_expires}\n! Homepage: ${adfilter_homepage}\n! Total: ${adfilter_total}"
+    function generate_common_headers() {
+        local title_suffix=$1
+        echo "! Checksum: ${adfilter_checksum}"
+        echo "! Title: ${adfilter_title} for ${title_suffix}"
+        echo "! Description: ${adfilter_description}"
+        echo "! Version: ${adfilter_version}"
+        echo "! TimeUpdated: ${adfilter_timeupdated}"
+        echo "! Expires: ${adfilter_expires}"
+        echo "! Homepage: ${adfilter_homepage}"
+        echo "! Total: ${adfilter_total}"
+    }
+
+    generate_file ../ad-adblock.txt "$(generate_common_headers "Adblock")"
+    generate_file ../ad-adguardhome.txt "$(generate_common_headers "AdguardHome")"
+    generate_file ../ad-clash.yaml "payload:\n$(generate_common_headers "Clash")"
+    generate_file ../ad-clash-premium.yaml "payload:\n$(generate_common_headers "Clash Premium")"
+    generate_file ../ad-dnsmasq.conf "$(generate_common_headers "Dnsmasq")"
+    generate_file ../ad-domains.txt "$(generate_common_headers "Domains")"
+    generate_file ../ad-hosts.txt "$(generate_common_headers "Hosts")\n# (DO NOT REMOVE)"
+    generate_file ../ad-quantumult.yaml "$(generate_common_headers "Quantumult")"
+    generate_file ../ad-shadowrocket.list "$(generate_common_headers "Shadowrocket")"
+    generate_file ../ad-smartdns.conf "$(generate_common_headers "SmartDNS")"
+    generate_file ../ad-surge.yaml "$(generate_common_headers "Surge")"
+    generate_file ../ad-unbound.conf "$(generate_common_headers "Unbound")"
+    generate_file ../ad-bind9.conf "$(generate_common_headers "Bind9")\n\$TTL 30\n@ IN SOA rpz.trli.home. hostmaster.rpz.trli.home. 1643540837 86400 3600 604800 30\nNS localhost."
+    generate_file ../ad-adguardhome-dnstype.txt "$(generate_common_headers "AdguardHome dnstype")"
     
     # 优化 ad-singbox.json 文件生成逻辑
     generate_file ../ad-singbox.json "{\n  \"version\": \"1\",\n  \"rules\": [\n    {\n      \"domain_suffix\": [\n"
