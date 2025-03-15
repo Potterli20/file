@@ -392,7 +392,25 @@ function GetData() {
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml"
     )
     filter_white=(
+        "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/TurkishFilter/sections/allowlist.txt"
+        "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/SpywareFilter/sections/allowlist.txt"
+        "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/GermanFilter/sections/allowlist.txt"
+        "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/ChineseFilter/sections/allowlist.txt"
+        "https://raw.githubusercontent.com/cbuijs/accomplist/master/whitelist/adblock.txt"
+        "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.whitelist.txt"
+        "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt"
+        "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/optional-list.txt"
+        "https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Whitelists/Filter"
+        "https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Whitelists/Whitelist"
+        "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-list.txt"
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/allow/Domains"
+        "https://github.com/T145/black-mirror/releases/download/latest/ALLOW_DOMAIN.txt"
+        "https://raw.githubusercontent.com/hl2guide/AdGuard-Home-Whitelist/main/whitelist.txt"
+        "https://raw.githubusercontent.com/eded333/TheFuckingList/main/whitelist.txt"
+        "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/blacklist/master/whitelisted.list"
+        "https://raw.githubusercontent.com/ookangzheng/blahdns/master/hosts/whitelist.txt"
+        "https://warui.intaa.net/adhosts/whitelist.txt"
+        "https://raw.githubusercontent.com/ricardbejarano/hosts/master/whitelist"
     )
     mkdir ./ad-hosts-lite && cd ./ad-hosts-lite
 
