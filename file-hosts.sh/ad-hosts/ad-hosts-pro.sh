@@ -247,6 +247,7 @@ function GetData() {
         "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt"
         "https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/adguard.txt"
         "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
+        "https://raw.githubusercontent.com/ppfeufer/adguard-filter-list/refs/heads/master/blocklist"
     )
     filter_domain=(
         "https://raw.githubusercontent.com/cenk/bad-hosts/main/bad-hosts-domains"
