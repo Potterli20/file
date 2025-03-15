@@ -1,4 +1,5 @@
 function GetData() {
+    echo "Starting GetData function..."
     filter_adblock=(
         "https://raw.githubusercontent.com/yokoffing/filterlists/main/privacy_essentials.txt"
         "https://easylist-downloads.adblockplus.org/advblock.txt"
@@ -407,28 +408,19 @@ function GetData() {
         "https://raw.githubusercontent.com/hl2guide/AdGuard-Home-Whitelist/main/whitelist.txt"
         "https://raw.githubusercontent.com/eded333/TheFuckingList/main/whitelist.txt"
         "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/blacklist/master/whitelisted.list"
-        "https://easylist-downloads.adblockplus.org/exceptionrules.txt"
-        "https://filters.adtidy.org/extension/chromium/filters/10.txt"
-        "https://gitlab.com/ZeroDot1/CoinBlockerLists/-/raw/master/white_list.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exceptions.txt"
-        "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exclusions.txt"
-        "https://raw.githubusercontent.com/EnergizedProtection/unblock/master/basic/formats/domains.txt"
-        "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/whitelist/master/domains.list"
-        "https://raw.githubusercontent.com/VeleSila/yhosts/master/whitelist.txt"
-        "https://raw.githubusercontent.com/WildcardTech/Filter-Domain-List/master/whitelist.txt"
-        "https://raw.githubusercontent.com/hezhijie0327/AdFilter/source/data/data_allow.txt"
-        "https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/whitelist_domains.txt"
-        "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_allowlist.txt"
-        "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_allowlist_international.txt"
-        "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_allowlist.txt"
         "https://raw.githubusercontent.com/ookangzheng/blahdns/master/hosts/whitelist.txt"
+        "https://warui.intaa.net/adhosts/whitelist.txt"
+        "https://raw.githubusercontent.com/ricardbejarano/hosts/master/whitelist"
     )
     mkdir ./ad-hosts-sqlist && cd ./ad-hosts-sqlist
     for filter_type in filter_adblock filter_domain filter_hosts filter_other filter_white; do
+        echo "Processing $filter_type..."
         for url in "${!filter_type[@]}"; do
+            echo "Downloading $url..."
             curl -m 10 -s -L --connect-timeout 15 "$url" >>"./${filter_type}.tmp"
         done
     done
+    echo "GetData function completed."
 }
 
 # Analyse Data
@@ -441,86 +433,86 @@ function AnalyseData() {
             tr -d "@^|" |
             tr "A-Z" "a-z" |
             grep -a -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |
-            sort |
+            sort |g AnalyseData function..."
             uniq >./filter_allow.tmp &&
             cat ./filter_adblock.tmp ./filter_domain.tmp ./filter_hosts.tmp ./filter_other.tmp |
-            sed 's/[ ]*//g' |
-            sed '/^$/d' |
+            sed 's/[ ]*//g' |]//g;s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/\:\:1//g;s/\:\://g" |
+            sed '/^$/d' |g' |
             sed "s/0\.0\.0\.0//g;s/127\.0\.0\.1//g;s/255.255.255.255//g;s/local//g;s/localhost//g;s/localhost.localdomain//g;s/broadcasthost//g;s/ip6-localhost//g;s/::1//g;s/ip6-loopback//g;s/ip6-localnet//g;s/fe80::1%lo0//g;s/ff00::0//g;s/ff02::1//g;s/ff02::2//g;s/ff02::3//g;s/ip6-mcastprefix//g;s/ip6-allnodes//g;s/ip6-allrouters//g;s/ip6-allhosts//g;/^$/d;s/[[:space:]]//g;s/DOMAIN\,//g;s/DOMAIN\-SUFFIX\,//g;s/domain\://g;s/full\://g" |
             tr -d "^|" |
             tr "A-Z" "a-z" |
-            grep -a -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |
+            grep -a -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |a -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |
             sort |
             uniq >./filter_block.tmp &&
-            awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' ./filter_allow.tmp ./filter_block.tmp |
-            sort |
+            awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' ./filter_allow.tmp ./filter_block.tmp |ock.tmp ./filter_domain.tmp ./filter_hosts.tmp ./filter_other.tmp |
+            sort |g' |
             uniq >./filter_data.tmp &&
-            cat ./filter_data.tmp |
+            cat ./filter_data.tmp |.0\.0//g;s/127\.0\.0\.1//g;s/255.255.255.255//g;s/local//g;s/localhost//g;s/localhost.localdomain//g;s/broadcasthost//g;s/ip6-localhost//g;s/::1//g;s/ip6-loopback//g;s/ip6-localnet//g;s/fe80::1%lo0//g;s/ff00::0//g;s/ff02::1//g;s/ff02::2//g;s/ff02::3//g;s/ip6-mcastprefix//g;s/ip6-allnodes//g;s/ip6-allrouters//g;s/ip6-allhosts//g;/^$/d;s/[[:space:]]//g;s/DOMAIN\,//g;s/DOMAIN\-SUFFIX\,//g;s/domain\://g;s/full\://g" |
             grep -v "\.\." |
             awk "{ print $2 }")
-    )
+    )a -E "^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" |
 }
 
-# Generate Information
+# Generate InformationR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' ./filter_allow.tmp ./filter_block.tmp |
 function GenerateInformation() {
-    adfilter_checksum=$(TZ=UTC-8 date "+%s" | base64)
-    adfilter_description="HOSTS Project"
+    adfilter_checksum=$(TZ=UTC-8 date "+%s" | base64) &&
+    adfilter_description="HOSTS Project"a.tmp |
     adfilter_expires="24 hours (update frequency)"
-    adfilter_homepage="https://github.com/Potterli20/file/releases/tag/ad-hosts-pro"
-    adfilter_timeupdated=$(TZ=UTC-8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%Y-%m-%dT%H:%M:%S%:z")
-    adfilter_title="trli's Ad Filter for Pro"
+    adfilter_homepage="https://github.com/Potterli20/file/releases/tag/ad-hosts-pro"       awk "{ print $2 }")
+    adfilter_timeupdated=$(TZ=UTC-8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%Y-%m-%dT%H:%M:%S%:z")   )
+    adfilter_title="trli's Ad Filter for Pro"    echo "AnalyseData function completed."
     adfilter_total=$(sed -n '$=' ./filter_data.tmp)
     adfilter_version=$(TZ=UTC-8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%Y%m%d")-$((10#$(TZ=UTC-8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%H") / 3))
 
     function generate_file() {
-        local file_path=$1
+        local file_path=$164)
         local header=$2
         echo "$header" >"$file_path"
-    }
-
+    }terli20/file/releases/tag/ad-hosts-pro"
+ "${adfilter_checksum}" | base64 -d) "+%Y-%m-%dT%H:%M:%S%:z")
     function generate_common_headers() {
-        local title_suffix=$1
-        echo "! Checksum: ${adfilter_checksum}"
+        local title_suffix=$1    adfilter_total=$(sed -n '$=' ./filter_data.tmp)
+        echo "! Checksum: ${adfilter_checksum}"8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%Y%m%d")-$((10#$(TZ=UTC-8 date -d @$(echo "${adfilter_checksum}" | base64 -d) "+%H") / 3))
         echo "! Title: ${adfilter_title} for ${title_suffix}"
-        echo "! Description: ${adfilter_description}"
+        echo "! Description: ${adfilter_description}"ile() {
         echo "! Version: ${adfilter_version}"
-        echo "! TimeUpdated: ${adfilter_timeupdated}"
-        echo "! Expires: ${adfilter_expires}"
+        echo "! TimeUpdated: ${adfilter_timeupdated}"   local header=$2
+        echo "! Expires: ${adfilter_expires}"        echo "$header" >"$file_path"
         echo "! Homepage: ${adfilter_homepage}"
         echo "! Total: ${adfilter_total}"
     }
 
     generate_file ../ad-adblock.txt "$(generate_common_headers "Adblock")"
-    generate_file ../ad-adguardhome.txt "$(generate_common_headers "AdguardHome")"
+    generate_file ../ad-adguardhome.txt "$(generate_common_headers "AdguardHome")"${title_suffix}"
     generate_file ../ad-clash.yaml "payload:\n$(generate_common_headers "Clash")"
     generate_file ../ad-clash-premium.yaml "payload:\n$(generate_common_headers "Clash Premium")"
-    generate_file ../ad-dnsmasq.conf "$(generate_common_headers "Dnsmasq")"
-    generate_file ../ad-domains.txt "$(generate_common_headers "Domains")"
-    generate_file ../ad-hosts.txt "$(generate_common_headers "Hosts")\n# (DO NOT REMOVE)"
-    generate_file ../ad-quantumult.yaml "$(generate_common_headers "Quantumult")"
+    generate_file ../ad-dnsmasq.conf "$(generate_common_headers "Dnsmasq")"ated}"
+    generate_file ../ad-domains.txt "$(generate_common_headers "Domains")"es}"
+    generate_file ../ad-hosts.txt "$(generate_common_headers "Hosts")\n# (DO NOT REMOVE)"   echo "! Homepage: ${adfilter_homepage}"
+    generate_file ../ad-quantumult.yaml "$(generate_common_headers "Quantumult")"        echo "! Total: ${adfilter_total}"
     generate_file ../ad-shadowrocket.list "$(generate_common_headers "Shadowrocket")"
     generate_file ../ad-smartdns.conf "$(generate_common_headers "SmartDNS")"
     generate_file ../ad-surge.yaml "$(generate_common_headers "Surge")"
     generate_file ../ad-unbound.conf "$(generate_common_headers "Unbound")"
-    generate_file ../ad-bind9.conf "$(generate_common_headers "Bind9")\n\$TTL 30\n@ IN SOA rpz.trli.home. hostmaster.rpz.trli.home. 1643540837 86400 3600 604800 30\nNS localhost."
-    generate_file ../ad-adguardhome-dnstype.txt "$(generate_common_headers "AdguardHome dnstype")"
+    generate_file ../ad-bind9.conf "$(generate_common_headers "Bind9")\n\$TTL 30\n@ IN SOA rpz.trli.home. hostmaster.rpz.trli.home. 1643540837 86400 3600 604800 30\nNS localhost."ash")"
+    generate_file ../ad-adguardhome-dnstype.txt "$(generate_common_headers "AdguardHome dnstype")"aders "Clash Premium")"
     
     # 优化 ad-singbox.json 文件生成逻辑
-    generate_file ../ad-singbox.json "{\n  \"version\": \"1\",\n  \"rules\": [\n    {\n      \"domain_suffix\": [\n"
-    local json_header="{\n  \"checksum\": \"${adfilter_checksum}\",\n  \"title\": \"${adfilter_title} for Singbox\",\n  \"description\": \"${adfilter_description}\",\n  \"version\": \"${adfilter_version}\",\n  \"timeUpdated\": \"${adfilter_timeupdated}\",\n  \"expires\": \"${adfilter_expires}\",\n  \"homepage\": \"${adfilter_homepage}\",\n  \"total\": ${adfilter_total},\n  \"rules\": []\n}"
-    echo -e "$json_header" >> ../ad-singbox.json
-    truncate -s-2 ../ad-singbox.json
+    generate_file ../ad-singbox.json "{\n  \"version\": \"1\",\n  \"rules\": [\n    {\n      \"domain_suffix\": [\n"VE)"
+    local json_header="{\n  \"checksum\": \"${adfilter_checksum}\",\n  \"title\": \"${adfilter_title} for Singbox\",\n  \"description\": \"${adfilter_description}\",\n  \"version\": \"${adfilter_version}\",\n  \"timeUpdated\": \"${adfilter_timeupdated}\",\n  \"expires\": \"${adfilter_expires}\",\n  \"homepage\": \"${adfilter_homepage}\",\n  \"total\": ${adfilter_total},\n  \"rules\": []\n}"t")"
+    echo -e "$json_header" >> ../ad-singbox.jsonhadowrocket")"
+    truncate -s-2 ../ad-singbox.json)"
     echo "\n      ]\n    }\n  ]\n}" >>../ad-singbox.json
 }
-
-# Output Data
+generate_file ../ad-bind9.conf "$(generate_common_headers "Bind9")\n\$TTL 30\n@ IN SOA rpz.trli.home. hostmaster.rpz.trli.home. 1643540837 86400 3600 604800 30\nNS localhost."
+# Output Datahome-dnstype.txt "$(generate_common_headers "AdguardHome dnstype")"
 function OutputData() {
     function FormatedOutputData() {
-        for filter_data_task in "${!filter_data[@]}"; do
-            echo "||${filter_data[$filter_data_task]}^" >>../ad-adblock.txt
+        for filter_data_task in "${!filter_data[@]}"; dosion\": \"1\",\n  \"rules\": [\n    {\n      \"domain_suffix\": [\n"
+            echo "||${filter_data[$filter_data_task]}^" >>../ad-adblock.txtum\": \"${adfilter_checksum}\",\n  \"title\": \"${adfilter_title} for Singbox\",\n  \"description\": \"${adfilter_description}\",\n  \"version\": \"${adfilter_version}\",\n  \"timeUpdated\": \"${adfilter_timeupdated}\",\n  \"expires\": \"${adfilter_expires}\",\n  \"homepage\": \"${adfilter_homepage}\",\n  \"total\": ${adfilter_total},\n  \"rules\": []\n}"
             echo "|${filter_data[$filter_data_task]}^" >>../ad-adguardhome.txt
-            echo "  - DOMAIN,${filter_data[$filter_data_task]}" >>../ad-clash.yaml
-            echo "  - '+.${filter_data[$filter_data_task]}'" >>../ad-clash-premium.yaml
+            echo "  - DOMAIN,${filter_data[$filter_data_task]}" >>../ad-clash.yaml   truncate -s-2 ../ad-singbox.json
+            echo "  - '+.${filter_data[$filter_data_task]}'" >>../ad-clash-premium.yaml    echo "\n      ]\n    }\n  ]\n}" >>../ad-singbox.json
             echo "address=/${filter_data[$filter_data_task]}/" >>../ad-dnsmasq.conf
             echo "${filter_data[$filter_data_task]}" >>../ad-domains.txt
             echo "127.0.0.53 ${filter_data[$filter_data_task]}" >>../ad-hosts.txt
@@ -530,33 +522,35 @@ function OutputData() {
             echo "DOMAIN,${filter_data[$filter_data_task]}" >>../ad-surge.yaml
             echo "local-zone: \"${filter_data[$filter_data_task]}\" always_nxdomain" >>../ad-unbound.conf
             echo "${filter_data[$filter_data_task]} CNAME ." >>../ad-bind9.conf
-            echo "* ${filter_data[$filter_data_task]} CNAME ." >>../ad-bind9.conf
-            echo "||${filter_data[$filter_data_task]}^$client=127.0.0.53,dnstype=A" >>../ad-adguardhome-dnstype.txt
+            echo "* ${filter_data[$filter_data_task]} CNAME ." >>../ad-bind9.confclash.yaml
+            echo "||${filter_data[$filter_data_task]}^$client=127.0.0.53,dnstype=A" >>../ad-adguardhome-dnstype.txtm.yaml
             echo "        \"${filter_data[$filter_data_task]}\"," >>../ad-singbox.json
         done
         # Remove the last comma and close the JSON array
-        truncate -s-2 ../ad-singbox.json
+        truncate -s-2 ../ad-singbox.jsond-quantumult.yaml
         echo "\n      ]\n    }\n  ]\n}" >>../ad-singbox.json
-    }
+    }s.conf
 
     if [ ! -f "../ad-domains.txt" ]; then
         GenerateInformation && FormatedOutputData
-        cd .. && rm -rf ./ad-hosts-pro
-    else
-        cat ../ad-domains.txt | head -n $(sed -n '$=' ../ad-domains.txt) | tail -n +9 >./filter_data.old
+        cd .. && rm -rf ./ad-hosts-proecho "* ${filter_data[$filter_data_task]} CNAME ." >>../ad-bind9.conf
+    elselient=127.0.0.53,dnstype=A" >>../ad-adguardhome-dnstype.txt
+        cat ../ad-domains.txt | head -n $(sed -n '$=' ../ad-domains.txt) | tail -n +9 >./filter_data.olda[$filter_data_task]}\"," >>../ad-singbox.json
         if [ "$(diff ./filter_data.tmp ./filter_data.old)" == "" ]; then
-            cd .. && rm -rf ./ad-hosts-pro
-        else
-            GenerateInformation && FormatedOutputData
+            cd .. && rm -rf ./ad-hosts-pro   # Remove the last comma and close the JSON array
+        else        truncate -s-2 ../ad-singbox.json
+            GenerateInformation && FormatedOutputData>../ad-singbox.json
             cd .. && rm -rf ./ad-hosts-pro ./ad-hosts
         fi
-    fi
+    fi ! -f "../ad-domains.txt" ]; then
 }
 
 ## Process
-# Call GetData
-GetData
+# Call GetData../ad-domains.txt | head -n $(sed -n '$=' ../ad-domains.txt) | tail -n +9 >./filter_data.old
+GetDataold)" == "" ]; then
 # Call AnalyseData
+AnalyseDatase
+# Call OutputData      GenerateInformation && FormatedOutputData
 AnalyseData
 # Call OutputData
 OutputData

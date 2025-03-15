@@ -486,7 +486,7 @@ function GenerateInformation() {
     
     # 优化 ad-singbox.json 文件生成逻辑
     generate_file ../ad-singbox.json "{\n  \"version\": \"1\",\n  \"rules\": [\n    {\n      \"domain_suffix\": [\n"
-    local json_header="{\n  \"checksum\": \"${adfilter_checksum}\",\n  \"title\": \"${adfilter_title} for Singbox\",\n  \"description\": \"${adfilter_description}\",\n  \"version\": \"${adfilter_version}\",\n  \"timeUpdated\": \"${adfilter_timeupdated}\",\n  \"expires\": \"${adfilter_expires}\",\n  \"homepage\": \"${adfilter_homepage}\",\n  \"total\": ${adfilter_total},\n  \"rules\": []\n}"
+    local json_header="{\n  \"checksum\": \"${adfilter_checksum}\",\n  \"title\": \"${adfilter_title} for Singbox\",\n  \"description\": \"${adfilter_description}\",\n  \"version\": \"${adfilter_version}\",\n  \"timeUpdated\": \"${adfilter_timeupdated}\",\n  \"expires\": \"${adfilter_expires}\",\n  \"homepage\": \"${adfilter_homepage}\",\n  \"total\": ${adfilter_total}\n}"
     echo -e "$json_header" >> ../ad-singbox.json
     truncate -s-2 ../ad-singbox.json
     echo "\n      ]\n    }\n  ]\n}" >>../ad-singbox.json
