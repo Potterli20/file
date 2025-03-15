@@ -471,6 +471,13 @@ function GenerateInformation() {
     generate_file ../ad-unbound.conf "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Unbound\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
     generate_file ../ad-bind9.conf "# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Bind9\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}\n\$TTL 30\n@ IN SOA rpz.trli.home. hostmaster.rpz.trli.home. 1643540837 86400 3600 604800 30\nNS localhost."
     generate_file ../ad-adguardhome-dnstype.txt "! Checksum: ${adfilter_checksum}\n! Title: ${adfilter_title} for AdguardHome dnstype\n! Description: ${adfilter_description}\n! Version: ${adfilter_version}\n! TimeUpdated: ${adfilter_timeupdated}\n! Expires: ${adfilter_expires}\n! Homepage: ${adfilter_homepage}\n! Total: ${adfilter_total}"
+    
+    # 优化 ad-singbox.json 文件生成逻辑
+    generate_file ../ad-singbox.json "{\n  \"version\": \"1\",\n  \"rules\": [\n    {\n      \"domain_suffix\": [\n"
+    local json_header="# Checksum: ${adfilter_checksum}\n# Title: ${adfilter_title} for Domains\n# Description: ${adfilter_description}\n# Version: ${adfilter_version}\n# TimeUpdated: ${adfilter_timeupdated}\n# Expires: ${adfilter_expires}\n# Homepage: ${adfilter_homepage}\n# Total: ${adfilter_total}"
+    echo -e "$json_header" >> ../ad-singbox.json
+    truncate -s-2 ../ad-singbox.json
+    echo "\n      ]\n    }\n  ]\n}" >>../ad-singbox.json
 }
 
 # Output Data
@@ -492,7 +499,11 @@ function OutputData() {
             echo "${filter_data[$filter_data_task]} CNAME ." >>../ad-bind9.conf
             echo "* ${filter_data[$filter_data_task]} CNAME ." >>../ad-bind9.conf
             echo "||${filter_data[$filter_data_task]}^$client=127.0.0.53,dnstype=A" >>../ad-adguardhome-dnstype.txt
+            echo "        \"${filter_data[$filter_data_task]}\"," >>../ad-singbox.json
         done
+        # Remove the last comma and close the JSON array
+        truncate -s-2 ../ad-singbox.json
+        echo "\n      ]\n    }\n  ]\n}" >>../ad-singbox.json
     }
 
     if [ ! -f "../ad-domains.txt" ]; then
