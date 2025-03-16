@@ -1,5 +1,6 @@
 function GetData() {
-    declare -A urls=(
+    declare -A urls
+    urls=(
         [cnacc_domain]=(
             "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/video-domains"
             "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/china-root"
