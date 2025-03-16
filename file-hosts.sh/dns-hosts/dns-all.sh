@@ -17,13 +17,13 @@ function GetData() {
             for i in {1..3}; do
                 case $category in
                     cnacc_domain|gfwlist_domain)
-                        curl -m 10 -s -L --connect-timeout 15 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" "$url" | sed "s/^\.//g" >>"$output_file" && break || echo "Failed to download $url" >> ../download_errors.log
+                        curl -m 10 -s -L --connect-timeout 15 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" -o temp_file "$url" && cat temp_file | sed "s/^\.//g" >>"$output_file" && break || echo "Failed to download $url" >> ../download_errors.log
                         ;;
                     cnacc_trusted|gfwlist2agh_modify)
-                        curl -m 10 -s -L --connect-timeout 15 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" "$url" >>"$output_file" && break || echo "Failed to download $url" >> ../download_errors.log
+                        curl -m 10 -s -L --connect-timeout 15 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" -o temp_file "$url" && cat temp_file >>"$output_file" && break || echo "Failed to download $url" >> ../download_errors.log
                         ;;
                     gfwlist_base64)
-                        curl -m 10 -s -L --connect-timeout 15 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" "$url" | base64 -d 2>/dev/null >>"$output_file" && break || echo "Failed to download $url" >> ../download_errors.log
+                        curl -m 10 -s -L --connect-timeout 15 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" -o temp_file "$url" && cat temp_file | base64 -d 2>/dev/null >>"$output_file" && break || echo "Failed to download $url" >> ../download_errors.log
                         ;;
                 esac
                 sleep 5
