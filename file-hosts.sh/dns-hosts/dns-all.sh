@@ -13,23 +13,22 @@ function GetData() {
     for category in "${!urls[@]}"; do
         output_file="./${category}.tmp"
         filter_array=(${urls[$category]})
-        case $category in
-            cnacc_domain|gfwlist_domain)
-                for url in "${filter_array[@]}"; do
-                    curl -m 10 -s -L --connect-timeout 15 "$url" | sed "s/^\.//g" >>"$output_file"
-                done
-                ;;
-            cnacc_trusted|gfwlist2agh_modify)
-                for url in "${filter_array[@]}"; do
-                    curl -m 10 -s -L --connect-timeout 15 "$url" >>"$output_file"
-                done
-                ;;
-            gfwlist_base64)
-                for url in "${filter_array[@]}"; do
-                    curl -m 10 -s -L --connect-timeout 15 "$url" | base64 -d 2>/dev/null >>"$output_file"
-                done
-                ;;
-        esac
+        for url in "${filter_array[@]}"; do
+            for i in {1..3}; do
+                case $category in
+                    cnacc_domain|gfwlist_domain)
+                        curl -m 10 -s -L --connect-timeout 15 "$url" | sed "s/^\.//g" >>"$output_file" && break
+                        ;;
+                    cnacc_trusted|gfwlist2agh_modify)
+                        curl -m 10 -s -L --connect-timeout 15 "$url" >>"$output_file" && break
+                        ;;
+                    gfwlist_base64)
+                        curl -m 10 -s -L --connect-timeout 15 "$url" | base64 -d 2>/dev/null >>"$output_file" && break
+                        ;;
+                esac
+                sleep 5
+            done
+        done
     done
 }
 
@@ -88,10 +87,10 @@ function AnalyseData() {
     awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_subtraction.tmp" "./lite_cnacc_added.tmp" > "./lite_cnacc_data.tmp"
     awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./gfwlist_subtraction.tmp" "./lite_gfwlist_added.tmp" > "./lite_gfwlist_data.tmp"
 
-    cnacc_data=($(cat "./cnacc_data.tmp" "./lite_cnacc_data.tmp" | sort | uniq | awk "{ print $2 }"))
-    gfwlist_data=($(cat "./gfwlist_data.tmp" "./lite_gfwlist_data.tmp" | sort | uniq | awk "{ print $2 }"))
-    lite_cnacc_data=($(cat "./lite_cnacc_data.tmp" | sort | uniq | awk "{ print $2 }"))
-    lite_gfwlist_data=($(cat "./lite_gfwlist_data.tmp" | sort | uniq | awk "{ print $2 }"))
+    cnacc_data=($(cat "./cnacc_data.tmp" "./lite_cnacc_data.tmp" | sort | uniq))
+    gfwlist_data=($(cat "./gfwlist_data.tmp" "./lite_gfwlist_data.tmp" | sort | uniq))
+    lite_cnacc_data=($(cat "./lite_cnacc_data.tmp" | sort | uniq))
+    lite_gfwlist_data=($(cat "./lite_gfwlist_data.tmp" | sort | uniq))
 }
 
 # Generate Rules
