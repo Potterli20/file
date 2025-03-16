@@ -99,6 +99,16 @@ function GetData() {
                             break
                         else
                             echo "Failed to download $url" >> ../download_errors.log
+                            # 尝试备用 URL
+                            backup_url="${url/githubusercontent.com/raw.githubusercontent.com}"
+                            curl -m 10 -s -L --connect-timeout 15 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" -o temp_file "$backup_url"
+                            if [ $? -eq 0 ]; then
+                                cat temp_file | sed "s/^\.//g" >>"$output_file"
+                                echo "Downloaded $backup_url successfully" >> ../download_log.log
+                                break
+                            else
+                                echo "Failed to download $backup_url" >> ../download_errors.log
+                            fi
                         fi
                         ;;
                     cnacc_trusted|gfwlist2agh_modify)
@@ -109,6 +119,16 @@ function GetData() {
                             break
                         else
                             echo "Failed to download $url" >> ../download_errors.log
+                            # 尝试备用 URL
+                            backup_url="${url/githubusercontent.com/raw.githubusercontent.com}"
+                            curl -m 10 -s -L --connect-timeout 15 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" -o temp_file "$backup_url"
+                            if [ $? -eq 0 ]; then
+                                cat temp_file >>"$output_file"
+                                echo "Downloaded $backup_url successfully" >> ../download_log.log
+                                break
+                            else
+                                echo "Failed to download $backup_url" >> ../download_errors.log
+                            fi
                         fi
                         ;;
                     gfwlist_base64)
@@ -119,6 +139,16 @@ function GetData() {
                             break
                         else
                             echo "Failed to download $url" >> ../download_errors.log
+                            # 尝试备用 URL
+                            backup_url="${url/githubusercontent.com/raw.githubusercontent.com}"
+                            curl -m 10 -s -L --connect-timeout 15 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" -o temp_file "$backup_url"
+                            if [ $? -eq 0 ]; then
+                                cat temp_file | base64 -d 2>/dev/null >>"$output_file"
+                                echo "Downloaded $backup_url successfully" >> ../download_log.log
+                                break
+                            else
+                                echo "Failed to download $backup_url" >> ../download_errors.log
+                            fi
                         fi
                         ;;
                 esac
@@ -144,7 +174,7 @@ function AnalyseData() {
             return
         fi
 
-        cat "$input_file" | grep -v "\#" | grep "$regex" | tr -d "\!\%\&\(\)\*\@" | grep -E "$domain_regex" | sort | uniq > "$output_file"
+        cat "$input_file" | grep -v "\#" | grep -a "$regex" | tr -d "\!\%\&\(\)\*\@" | grep -E "$domain_regex" | sort | uniq > "$output_file"
         if [ -n "$transform" ]; then
             cat "$output_file" | xargs | sed "s/\ /\|/g" | sort | uniq > "$output_file"
         fi
