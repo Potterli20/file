@@ -1,102 +1,18 @@
 function GetData() {
     declare -A urls
     urls=(
-        [cnacc_domain]=(
-            "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/video-domains"
-            "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/china-root"
-            "https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-cdn.txt"
-            "https://raw.githubusercontent.com/pexcn/daily/gh-pages/chinalist/chinalist.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
-            "https://raw.githubusercontent.com/hq450/fancyss/master/rules/WhiteList_new.txt"
-            "https://raw.githubusercontent.com/hq450/fancyss/master/rules/apple_china.txt"
-            "https://raw.githubusercontent.com/hq450/fancyss/master/rules/cdn.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/win-update.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt"
-            "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/Domains"
-            "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/apple.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/icloud.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/geolocation-cn.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt"
-            "https://raw.githubusercontent.com/v2fly/domain-list-community/release/apple.txt"
-            "https://raw.githubusercontent.com/v2fly/domain-list-community/release/icloud.txt"
-            "https://raw.githubusercontent.com/v2fly/domain-list-community/release/cn.txt"
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/China/China_Domain.list"
-            "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/apple/Domains"
-            "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-tld-list.txt"
-        )
-        [cnacc_trusted]=(
-            "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
-            "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf"
-            "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf"
-        )
-        [gfwlist_base64]=(
-            "https://raw.githubusercontent.com/Loukky/gfwlist-by-loukky/master/gfwlist.txt"
-            "https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt"
-            "https://raw.githubusercontent.com/poctopus/gfwlist-plus/master/gfwlist-plus.txt"
-            "https://raw.githubusercontent.com/MoeKing/gfwlist/main/gfwlist.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/gfwlist.txt"
-        )
-        [gfwlist_domain]=(
-            "https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-cdn.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-tld-list.txt"
-            "https://raw.githubusercontent.com/filteryab/ir-blocked-domain/main/data/ir-blocked-domain"
-            "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/apple/Domains"
-            "https://raw.githubusercontent.com/SukkaW/Surge/master/Source/domainset/icloud_private_relay.conf"
-            "https://raw.githubusercontent.com/missdeer/blocklist/master/toblock-optimized.lst"
-            "https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts"
-            "https://raw.githubusercontent.com/smed79/blacklist/master/extra/facebook.txt"
-            "https://dl.red.flag.domains/red.flag.domains.txt"
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global_Domain.list"
-            "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/steam.txt"
-            "https://raw.githubusercontent.com/pexcn/daily/gh-pages/gfwlist/gfwlist.txt"
-            "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/gfw/Domains"
-            "https://github.com/Potterli20/file/releases/download/github-hosts/ad-edge-hosts.txt"
-            "https://github.com/Potterli20/file/releases/download/cn-blocked-domain/domains.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt"
-            "https://raw.githubusercontent.com/schrebra/Windows.10.DNS.Block.List/main/hosts.txt"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/pihole-google.txt"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/youtubeparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/shortlinksparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/proxiesparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/productsparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/mailparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/generalparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/fontsparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/firebaseparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/doubleclickparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/domainsparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/dnsparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/androidparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/analyticsparsed"
-            "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/fiberparsed"
-            "https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"
-            "https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt"
-            "https://raw.githubusercontent.com/hq450/fancyss/master/rules/gfwlist.conf"
-            "https://raw.githubusercontent.com/Ewpratten/youtube_ad_blocklist/master/blocklist.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/greatfire.txt"
-            "https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt"
-            "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt"
-            "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/win-spy.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/win-extra.txt"
-            "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/youtubeblacklist.txt"
-            "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/blockeverything.txt"
-            "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter-dns.txt"
-            "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/ad-block-YouTube-Project.txt"
-        )
-        [gfwlist2agh_modify]=(
-            "https://raw.githubusercontent.com/hezhijie0327/GFWList2AGH/source/data/data_modify.txt"
-            "https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt"
-            "https://raw.githubusercontent.com/jimmyshjj/GFWList2AGH/source/data/data_modify.txt"
-        )
+        [cnacc_domain]="https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/video-domains https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/china-root https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-cdn.txt https://raw.githubusercontent.com/pexcn/daily/gh-pages/chinalist/chinalist.txt https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt https://raw.githubusercontent.com/hq450/fancyss/master/rules/WhiteList_new.txt https://raw.githubusercontent.com/hq450/fancyss/master/rules/apple_china.txt https://raw.githubusercontent.com/hq450/fancyss/master/rules/cdn.txt https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/win-update.txt https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/Domains https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/apple.txt https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/icloud.txt https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/geolocation-cn.txt https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt https://raw.githubusercontent.com/v2fly/domain-list-community/release/apple.txt https://raw.githubusercontent.com/v2fly/domain-list-community/release/icloud.txt https://raw.githubusercontent.com/v2fly/domain-list-community/release/cn.txt https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/China/China_Domain.list https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/apple/Domains https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-tld-list.txt"
+        [cnacc_trusted]="https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf"
+        [gfwlist_base64]="https://raw.githubusercontent.com/Loukky/gfwlist-by-loukky/master/gfwlist.txt https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt https://raw.githubusercontent.com/poctopus/gfwlist-plus/master/gfwlist-plus.txt https://raw.githubusercontent.com/MoeKing/gfwlist/main/gfwlist.txt https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/gfwlist.txt"
+        [gfwlist_domain]="https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-cdn.txt https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-tld-list.txt https://raw.githubusercontent.com/filteryab/ir-blocked-domain/main/data/ir-blocked-domain https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/apple/Domains https://raw.githubusercontent.com/SukkaW/Surge/master/Source/domainset/icloud_private_relay.conf https://raw.githubusercontent.com/missdeer/blocklist/master/toblock-optimized.lst https://gitlab.com/Wiggum27/blockers/-/raw/master/hosts https://raw.githubusercontent.com/smed79/blacklist/master/extra/facebook.txt https://dl.red.flag.domains/red.flag.domains.txt https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global_Domain.list https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/steam.txt https://raw.githubusercontent.com/pexcn/daily/gh-pages/gfwlist/gfwlist.txt https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/gfw/Domains https://github.com/Potterli20/file/releases/download/github-hosts/ad-edge-hosts.txt https://github.com/Potterli20/file/releases/download/cn-blocked-domain/domains.txt https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt https://raw.githubusercontent.com/schrebra/Windows.10.DNS.Block.List/main/hosts.txt https://raw.githubusercontent.com/nickspaargaren/no-google/master/pihole-google.txt https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/youtubeparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/shortlinksparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/proxiesparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/productsparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/mailparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/generalparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/fontsparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/firebaseparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/doubleclickparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/domainsparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/dnsparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/androidparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/analyticsparsed https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/fiberparsed https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt https://raw.githubusercontent.com/hq450/fancyss/master/rules/gfwlist.conf https://raw.githubusercontent.com/Ewpratten/youtube_ad_blocklist/master/blocklist.txt https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/greatfire.txt https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/win-spy.txt https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/win-extra.txt https://raw.githubusercontent.com/RootFiber/youtube-ads/main/youtubeblacklist.txt https://raw.githubusercontent.com/RootFiber/youtube-ads/main/blockeverything.txt https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter-dns.txt https://raw.githubusercontent.com/RootFiber/youtube-ads/main/ad-block-YouTube-Project.txt"
+        [gfwlist2agh_modify]="https://raw.githubusercontent.com/hezhijie0327/GFWList2AGH/source/data/data_modify.txt https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt https://raw.githubusercontent.com/jimmyshjj/GFWList2AGH/source/data/data_modify.txt"
     )
 
     mkdir -p ./hosts-dns && cd ./hosts-dns
 
     for category in "${!urls[@]}"; do
         output_file="./${category}.tmp"
-        filter_array=("${urls[$category][@]}")
+        filter_array=(${urls[$category]})
         case $category in
             cnacc_domain|gfwlist_domain)
                 for url in "${filter_array[@]}"; do
