@@ -17,13 +17,13 @@ function GetData() {
             for i in {1..3}; do
                 case $category in
                     cnacc_domain|gfwlist_domain)
-                        curl -m 10 -s -L --connect-timeout 15 "$url" | sed "s/^\.//g" >>"$output_file" && break
+                        curl -m 10 -s -L --connect-timeout 15 "$url" | sed "s/^\.//g" >>"$output_file" && break || echo "Failed to download $url" >> ../download_errors.log
                         ;;
                     cnacc_trusted|gfwlist2agh_modify)
-                        curl -m 10 -s -L --connect-timeout 15 "$url" >>"$output_file" && break
+                        curl -m 10 -s -L --connect-timeout 15 "$url" >>"$output_file" && break || echo "Failed to download $url" >> ../download_errors.log
                         ;;
                     gfwlist_base64)
-                        curl -m 10 -s -L --connect-timeout 15 "$url" | base64 -d 2>/dev/null >>"$output_file" && break
+                        curl -m 10 -s -L --connect-timeout 15 "$url" | base64 -d 2>/dev/null >>"$output_file" && break || echo "Failed to download $url" >> ../download_errors.log
                         ;;
                 esac
                 sleep 5
