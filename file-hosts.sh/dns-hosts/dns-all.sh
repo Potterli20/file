@@ -720,32 +720,30 @@ function OutputData() {
     software_name="unbound" && generate_file="white" && generate_mode="full" && dns_mode="domestic" && GenerateRules
 
     ## Move files
-    mv ./dns-adguardhome/blacklist_full.txt ./dnshosts-all-adguardhome-blacklist_full.txt
-    mv ./dns-adguardhome/blacklist_full_combine.txt ./dnshosts-all-adguardhome-blacklist_full_combine.txt
-    mv ./dns-adguardhome/whitelist_full.txt ./dnshosts-all-adguardhome-whitelist_full.txt
-    mv ./dns-adguardhome/whitelist_full_combine.txt ./dnshosts-all-adguardhome-whitelist_full_combine.txt
-    mv ./dns-adguardhome_new/blacklist_full.txt ./dnshosts-all-adguardhome-new-blacklist_full.txt
-    mv ./dns-adguardhome_new/blacklist_full_combine.txt ./dnshosts-all-adguardhome-new-blacklist_full_combine.txt
-    mv ./dns-adguardhome_new/whitelist_full.txt ./dnshosts-all-adguardhome-new-whitelist_full.txt
-    mv ./dns-adguardhome_new/whitelist_full_combine.txt ./dnshosts-all-adguardhome-new-whitelist_full_combine.txt
-    mv ./dns-bind9/blacklist_full.conf ./dnshosts-all-bind9-blacklist_full.conf
-    mv ./dns-bind9/whitelist_full.conf ./dnshosts-all-bind9-whitelist_full.conf
-    mv ./dns-unbound/blacklist_full.conf ./dnshosts-all-unbound-blacklist_full.conf
-    mv ./dns-unbound/whitelist_full.conf ./dnshosts-all-unbound-whitelist_full.conf
-    mv ./dns-dnsmasq/blacklist_full.conf ./dnshosts-all-dnsmasq-blacklist_full.conf
-    mv ./dns-dnsmasq/whitelist_full.conf ./dnshosts-all-dnsmasq-whitelist_full.conf
-    mv ./dns-domain/blacklist_full.txt ./dnshosts-all-domain-blacklist_full.txt
-    mv ./dns-domain/whitelist_lite.txt ./dnshosts-all-domain-whitelist_lite.txt || true
-    mv ./dns-domain/blacklist_lite.txt ./dnshosts-all-domain-blacklist_lite.txt
-    mv ./dns-domain/whitelist_full.txt ./dnshosts-all-domain-whitelist_full.txt
-    mv ./dns-smartdns/blacklist_full.conf ./dnshosts-all-smartdns-blacklist_full.conf
-    mv ./dns-smartdns/whitelist_full.conf ./dnshosts-all-smartdns-whitelist_full.conf
-    mv ./dns-smartdns/blacklist_lite.conf ./dnshosts-all-smartdns-blacklist_lite.conf
-    mv ./dns-smartdns/whitelist_lite.conf ./dnshosts-all-smartdns-whitelist_lite.conf
-    mv ./dns-smartdns-domain-rules/blacklist_full.conf ./dnshosts-all-smartdns-domain-rules-blacklist_full.conf
-    mv ./dns-smartdns-domain-rules/whitelist_full.conf ./dnshosts-all-smartdns-domain-rules-whitelist_full.conf
-    mv ./dns-smartdns-domain-rules/blacklist_lite.conf ./dnshosts-all-smartdns-domain-rules-blacklist_lite.conf
-    mv ./dns-smartdns-domain-rules/whitelist_lite.conf ./dnshosts-all-smartdns-domain-rules-whitelist_lite.conf
+    for file in ./dns-adguardhome/blacklist_full.txt ./dns-adguardhome/blacklist_full_combine.txt ./dns-adguardhome/whitelist_full.txt ./dns-adguardhome/whitelist_full_combine.txt; do
+        [ -f "$file" ] && mv "$file" "./dnshosts-all-adguardhome-$(basename $file)"
+    done
+    for file in ./dns-adguardhome_new/blacklist_full.txt ./dns-adguardhome_new/blacklist_full_combine.txt ./dns-adguardhome_new/whitelist_full.txt ./dns-adguardhome_new/whitelist_full_combine.txt; do
+        [ -f "$file" ] && mv "$file" "./dnshosts-all-adguardhome-new-$(basename $file)"
+    done
+    for file in ./dns-bind9/blacklist_full.conf ./dns-bind9/whitelist_full.conf; do
+        [ -f "$file" ] && mv "$file" "./dnshosts-all-bind9-$(basename $file)"
+    done
+    for file in ./dns-unbound/blacklist_full.conf ./dns-unbound/whitelist_full.conf; do
+        [ -f "$file" ] && mv "$file" "./dnshosts-all-unbound-$(basename $file)"
+    done
+    for file in ./dns-dnsmasq/blacklist_full.conf ./dns-dnsmasq/whitelist_full.conf; do
+        [ -f "$file" ] && mv "$file" "./dnshosts-all-dnsmasq-$(basename $file)"
+    done
+    for file in ./dns-domain/blacklist_full.txt ./dns-domain/whitelist_lite.txt ./dns-domain/blacklist_lite.txt ./dns-domain/whitelist_full.txt; do
+        [ -f "$file" ] && mv "$file" "./dnshosts-all-domain-$(basename $file)"
+    done
+    for file in ./dns-smartdns/blacklist_full.conf ./dns-smartdns/whitelist_full.conf ./dns-smartdns/blacklist_lite.conf ./dns-smartdns/whitelist_lite.conf; do
+        [ -f "$file" ] && mv "$file" "./dnshosts-all-smartdns-$(basename $file)"
+    done
+    for file in ./dns-smartdns-domain-rules/blacklist_full.conf ./dns-smartdns-domain-rules/whitelist_full.conf ./dns-smartdns-domain-rules/blacklist_lite.conf ./dns-smartdns-domain-rules/whitelist_lite.conf; do
+        [ -f "$file" ] && mv "$file" "./dnshosts-all-smartdns-domain-rules-$(basename $file)"
+    done
 }
 ## Process
 # Call GetData
