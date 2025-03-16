@@ -99,17 +99,17 @@ function GetData() {
         filter_array=("${urls[$category][@]}")
         case $category in
             cnacc_domain|gfwlist_domain)
-                echo "${filter_array[@]}" | while read -r url; do
+                for url in "${filter_array[@]}"; do
                     curl -m 10 -s -L --connect-timeout 15 "$url" | sed "s/^\.//g" >>"$output_file"
                 done
                 ;;
             cnacc_trusted|gfwlist2agh_modify)
-                echo "${filter_array[@]}" | while read -r url; do
+                for url in "${filter_array[@]}"; do
                     curl -m 10 -s -L --connect-timeout 15 "$url" >>"$output_file"
                 done
                 ;;
             gfwlist_base64)
-                echo "${filter_array[@]}" | while read -r url; do
+                for url in "${filter_array[@]}"; do
                     curl -m 10 -s -L --connect-timeout 15 "$url" | base64 -d >>"$output_file"
                 done
                 ;;
