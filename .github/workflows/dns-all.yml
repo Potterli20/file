@@ -24,34 +24,7 @@ jobs:
       - name:  Build GFWList2AGH
         run: |
           bash ./file-hosts.sh/dns-hosts/dns-all.sh
-      - name:  name GFWList2AGH
-        run: |
-            mv ./dns-adguardhome/blacklist_full.txt ./dnshosts-all-adguardhome-blacklist_full.txt
-            mv ./dns-adguardhome/blacklist_full_combine.txt ./dnshosts-all-adguardhome-blacklist_full_combine.txt
-            mv ./dns-adguardhome/whitelist_full.txt ./dnshosts-all-adguardhome-whitelist_full.txt
-            mv ./dns-adguardhome/whitelist_full_combine.txt ./dnshosts-all-adguardhome-whitelist_full_combine.txt
-            mv ./dns-adguardhome_new/blacklist_full.txt ./dnshosts-all-adguardhome-new-blacklist_full.txt
-            mv ./dns-adguardhome_new/blacklist_full_combine.txt ./dnshosts-all-adguardhome-new-blacklist_full_combine.txt
-            mv ./dns-adguardhome_new/whitelist_full.txt ./dnshosts-all-adguardhome-new-whitelist_full.txt
-            mv ./dns-adguardhome_new/whitelist_full_combine.txt ./dnshosts-all-adguardhome-new-whitelist_full_combine.txt
-            mv ./dns-bind9/blacklist_full.conf ./dnshosts-all-bind9-blacklist_full.conf
-            mv ./dns-bind9/whitelist_full.conf ./dnshosts-all-bind9-whitelist_full.conf
-            mv ./dns-unbound/blacklist_full.conf ./dnshosts-all-unbound-blacklist_full.conf
-            mv ./dns-unbound/whitelist_full.conf ./dnshosts-all-unbound-whitelist_full.conf
-            mv ./dns-dnsmasq/blacklist_full.conf ./dnshosts-all-dnsmasq-blacklist_full.conf
-            mv ./dns-dnsmasq/whitelist_full.conf ./dnshosts-all-dnsmasq-whitelist_full.conf
-            mv ./dns-domain/blacklist_full.txt ./dnshosts-all-domain-blacklist_full.txt
-            mv ./dns-domain/whitelist_lite.txt ./dnshosts-all-domain-whitelist_lite.txt
-            mv ./dns-domain/blacklist_lite.txt ./dnshosts-all-domain-blacklist_lite.txt
-            mv ./dns-domain/whitelist_full.txt ./dnshosts-all-domain-whitelist_full.txt
-            mv ./dns-smartdns/blacklist_full.conf ./dnshosts-all-smartdns-blacklist_full.conf
-            mv ./dns-smartdns/whitelist_full.conf ./dnshosts-all-smartdns-whitelist_full.conf
-            mv ./dns-smartdns/blacklist_lite.conf ./dnshosts-all-smartdns-blacklist_lite.conf
-            mv ./dns-smartdns/whitelist_lite.conf ./dnshosts-all-smartdns-whitelist_lite.conf
-            mv ./dns-smartdns-domain-rules/blacklist_full.conf ./dnshosts-all-smartdns-domain-rules-blacklist_full.conf
-            mv ./dns-smartdns-domain-rules/whitelist_full.conf ./dnshosts-all-smartdns-domain-rules-whitelist_full.conf
-            mv ./dns-smartdns-domain-rules/blacklist_lite.conf ./dnshosts-all-smartdns-domain-rules-blacklist_lite.conf
-            mv ./dns-smartdns-domain-rules/whitelist_lite.conf ./dnshosts-all-smartdns-domain-rules-whitelist_lite.conf
+
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:
