@@ -26,7 +26,7 @@ function GetData() {
                 ;;
             gfwlist_base64)
                 for url in "${filter_array[@]}"; do
-                    curl -m 10 -s -L --connect-timeout 15 "$url" | base64 -d >>"$output_file"
+                    curl -m 10 -s -L --connect-timeout 15 "$url" | base64 -d 2>/dev/null >>"$output_file"
                 done
                 ;;
         esac
@@ -48,6 +48,8 @@ function AnalyseData() {
             cat "$output_file" | xargs | sed "s/\ /\|/g" | sort | uniq > "$output_file"
         fi
     }
+
+    touch ./lite_cnacc_checklist.tmp ./lite_gfwlist_checklist.tmp
 
     process_data "./gfwlist2agh_modify.tmp" "./cnacc_addition.tmp" "\(\@\%\@\)\|\(\@\%\!\)\|\(\!\&\@\)\|\(\@\@\@\)"
     process_data "./gfwlist2agh_modify.tmp" "./cnacc_subtraction.tmp" "\(\!\%\!\)\|\(\@\&\!\)\|\(\!\%\@\)\|\(\!\!\!\)"
