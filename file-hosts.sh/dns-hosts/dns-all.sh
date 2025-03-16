@@ -42,6 +42,12 @@ function AnalyseData() {
         local regex=$3
         local transform=$4
 
+        # 添加对二进制文件的处理
+        if file "$input_file" | grep -q "binary"; then
+            echo "Skipping binary file: $input_file" >> ../binary_files.log
+            return
+        fi
+
         cat "$input_file" | grep -v "\#" | grep "$regex" | tr -d "\!\%\&\(\)\*\@" | grep -E "$domain_regex" | sort | uniq > "$output_file"
         if [ -n "$transform" ]; then
             cat "$output_file" | xargs | sed "s/\ /\|/g" | sort | uniq > "$output_file"
