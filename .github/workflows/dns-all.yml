@@ -25,12 +25,6 @@ jobs:
         run: |
           bash ./file-hosts.sh/dns-hosts/dns-all.sh
 
-      - name: Output download log
-        run: cat ./file-hosts.sh/dns-hosts/download_log.log
-
-      - name: Output download errors
-        run: cat ./file-hosts.sh/dns-hosts/download_errors.log
-
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:
