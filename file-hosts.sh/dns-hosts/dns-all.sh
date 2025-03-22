@@ -1,3 +1,8 @@
+# 定义基础路径
+BASE_DIR="c:/Users/wwwli/file"
+TEMP_DIR="${BASE_DIR}/temp"
+OUTPUT_DIR="${BASE_DIR}/output"
+
 function GetData() {
     cnacc_domain=(
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/video-domains"
@@ -67,7 +72,6 @@ function GetData() {
         "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/dnsparsed"
         "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/androidparsed"
         "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/analyticsparsed"
-        "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/fiberparsed"
         "https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"
         "https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt"
@@ -89,21 +93,23 @@ function GetData() {
         "https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt"
         "https://raw.githubusercontent.com/jimmyshjj/GFWList2AGH/source/data/data_modify.txt"
     )
-    mkdir ./hosts-dns && cd ./hosts-dns
+    # 创建临时目录
+    mkdir -p "${TEMP_DIR}"
+    cd "${TEMP_DIR}"
     for cnacc_domain_task in "${!cnacc_domain[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${cnacc_domain[$cnacc_domain_task]}" | sed "s/^\.//g" >>./cnacc_domain.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${cnacc_domain[$cnacc_domain_task]}" | sed "s/^\.//g" >>"${TEMP_DIR}/cnacc_domain.tmp"
     done
     for cnacc_trusted_task in "${!cnacc_trusted[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${cnacc_trusted[$cnacc_trusted_task]}" >>./cnacc_trusted.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${cnacc_trusted[$cnacc_trusted_task]}" >>"${TEMP_DIR}/cnacc_trusted.tmp"
     done
     for gfwlist_base64_task in "${!gfwlist_base64[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${gfwlist_base64[$gfwlist_base64_task]}" | base64 -d >>./gfwlist_base64.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${gfwlist_base64[$gfwlist_base64_task]}" | base64 -d >>"${TEMP_DIR}/gfwlist_base64.tmp"
     done
     for gfwlist_domain_task in "${!gfwlist_domain[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${gfwlist_domain[$gfwlist_domain_task]}" | sed "s/^\.//g" >>./gfwlist_domain.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${gfwlist_domain[$gfwlist_domain_task]}" | sed "s/^\.//g" >>"${TEMP_DIR}/gfwlist_domain.tmp"
     done
     for gfwlist2agh_modify_task in "${!gfwlist2agh_modify[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${gfwlist2agh_modify[$gfwlist2agh_modify_task]}" >>./gfwlist2agh_modify.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${gfwlist2agh_modify[$gfwlist2agh_modify_task]}" >>"${TEMP_DIR}/gfwlist2agh_modify.tmp"
     done
 }
 # Analyse Data
@@ -130,11 +136,11 @@ function GenerateRules() {
         else
             file_extension="dev"
         fi
-        if [ ! -d "../dns-${software_name}" ]; then
-            mkdir "../dns-${software_name}"
+        if [ ! -d "${TEMP_DIR}/dns-${software_name}" ]; then
+            mkdir "${TEMP_DIR}/dns-${software_name}"
         fi
         file_name="${generate_temp}list_${generate_mode}.${file_extension}"
-        file_path="../dns-${software_name}/${file_name}"
+        file_path="${TEMP_DIR}/dns-${software_name}/${file_name}"
     }
     function GenerateDefaultUpstream() {
         case ${software_name} in
@@ -733,31 +739,15 @@ function OutputData() {
     software_name="unbound" && generate_file="black" && generate_mode="full" && dns_mode="foreign" && GenerateRules
     software_name="unbound" && generate_file="white" && generate_mode="full" && dns_mode="domestic" && GenerateRules
 
+    ## 创建输出目录
+    mkdir -p "${OUTPUT_DIR}/dns-{adguardhome,bind9,dnsmasq,domain,smartdns,unbound}"
+
     ## Move files
-    for file in ./dns-adguardhome/blacklist_full.txt ./dns-adguardhome/blacklist_full_combine.txt ./dns-adguardhome/whitelist_full.txt ./dns-adguardhome/whitelist_full_combine.txt; do
-        [ -f "$file" ] && mv "$file" "./dnshosts-all-adguardhome-$(basename $file)" || :
-    done
-    for file in ./dns-adguardhome_new/blacklist_full.txt ./dns-adguardhome_new/blacklist_full_combine.txt ./dns-adguardhome_new/whitelist_full.txt ./dns-adguardhome_new/whitelist_full_combine.txt; do
-        [ -f "$file" ] && mv "$file" "./dnshosts-all-adguardhome-new-$(basename $file)" || :
-    done
-    for file in ./dns-bind9/blacklist_full.conf ./dns-bind9/whitelist_full.conf; do
-        [ -f "$file" ] && mv "$file" "./dnshosts-all-bind9-$(basename $file)" || :
-    done
-    for file in ./dns-unbound/blacklist_full.conf ./dns-unbound/whitelist_full.conf; do
-        [ -f "$file" ] && mv "$file" "./dnshosts-all-unbound-$(basename $file)" || :
-    done
-    for file in ./dns-dnsmasq/blacklist_full.conf ./dns-dnsmasq/whitelist_full.conf; do
-        [ -f "$file" ] && mv "$file" "./dnshosts-all-dnsmasq-$(basename $file)" || :
-    done
-    for file in ./dns-domain/blacklist_full.txt ./dns-domain/whitelist_lite.txt ./dns-domain/blacklist_lite.txt ./dns-domain/whitelist_full.txt; do
-        [ -f "$file" ] && mv "$file" "./dnshosts-all-domain-$(basename $file)" || :
-    done
-    for file in ./dns-smartdns/blacklist_full.conf ./dns-smartdns/whitelist_full.conf ./dns-smartdns/blacklist_lite.conf ./dns-smartdns/whitelist_lite.conf; do
-        [ -f "$file" ] && mv "$file" "./dnshosts-all-smartdns-$(basename $file)" || :
-    done
-    for file in ./dns-smartdns-domain-rules/blacklist_full.conf ./dns-smartdns-domain-rules/whitelist_full.conf ./dns-smartdns-domain-rules/blacklist_lite.conf ./dns-smartdns-domain-rules/whitelist_lite.conf; do
-        [ -f "$file" ] && mv "$file" "./dnshosts-all-smartdns-domain-rules-$(basename $file)" || :
-    done
+    mv "${TEMP_DIR}"/dns-*/blacklist*.{txt,conf} "${OUTPUT_DIR}/"
+    mv "${TEMP_DIR}"/dns-*/whitelist*.{txt,conf} "${OUTPUT_DIR}/"
+    
+    ## 清理临时文件
+    rm -rf "${TEMP_DIR}"
 }
 ## Process
 # Call GetData
