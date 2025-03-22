@@ -1,5 +1,5 @@
 # 定义基础路径
-BASE_DIR="c:/Users/wwwli/file"
+BASE_DIR="/"
 TEMP_DIR="${BASE_DIR}/temp"
 OUTPUT_DIR="${BASE_DIR}/output"
 
