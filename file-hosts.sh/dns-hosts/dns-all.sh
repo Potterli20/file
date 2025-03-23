@@ -130,11 +130,11 @@ function GenerateRules() {
         else
             file_extension="dev"
         fi
-        if [ ! -d "../dns-${software_name}" ]; then
-            mkdir "../dns-${software_name}"
+        if [ ! -d "./output/dns-${software_name}" ]; then
+            mkdir -p "./output/dns-${software_name}"
         fi
         file_name="${generate_temp}list_${generate_mode}.${file_extension}"
-        file_path="../dns-${software_name}/${file_name}"
+        file_path="./output/dns-${software_name}/${file_name}"
     }
     function GenerateDefaultUpstream() {
         case ${software_name} in
@@ -734,7 +734,8 @@ function OutputData() {
     software_name="unbound" && generate_file="white" && generate_mode="full" && dns_mode="domestic" && GenerateRules
 
     ## Move files
-    DEST="./"
+    DEST="./output"
+    mkdir -p "${DEST}"
     for TYPE in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns smartdns-domain-rules; do
         SRC="./dns-${TYPE}"
         case ${TYPE} in

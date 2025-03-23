@@ -30,7 +30,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
           tag: dns-hosts-all
-          file: ./dnshosts-all*
+          file: ./output/dnshosts*
           file_glob: true
           overwrite: true
           body: "update dns-hosts-all"
