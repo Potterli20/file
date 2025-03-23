@@ -743,22 +743,22 @@ function OutputData() {
         case ${TYPE} in
             adguardhome|adguardhome_new)
                 for file in "${SRC}"/blacklist_full*.txt "${SRC}"/whitelist_full*.txt; do
-                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
+                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" && echo "Moved: ${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
                 done
                 ;;
             bind9|unbound|dnsmasq)
                 for file in "${SRC}"/blacklist_full.conf "${SRC}"/whitelist_full.conf; do
-                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
+                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" && echo "Moved: ${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
                 done
                 ;;
             domain)
                 for file in "${SRC}"/blacklist_{full,lite}.txt "${SRC}"/whitelist_{full,lite}.txt; do
-                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
+                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" && echo "Moved: ${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
                 done
                 ;;
             smartdns*) 
                 for file in "${SRC}"/blacklist_{full,lite}.conf "${SRC}"/whitelist_{full,lite}.conf; do
-                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
+                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" && echo "Moved: ${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
                 done
                 ;;
         esac
