@@ -677,93 +677,83 @@ function GenerateRules() {
 # Output Data
 function OutputData() {
     echo -e "Generating output..."
-    ## AdGuard Home
-    echo -e "AdGuard Home"
-    software_name="adguardhome" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="black" && generate_mode="full_split_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="white" && generate_mode="full_split_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_split_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full_split_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
-    ## AdGuard Home (New)
-    echo -e "AdGuard Home_new"
-    software_name="adguardhome_new" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="black" && generate_mode="full_split_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="white" && generate_mode="full_split_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full_split_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full_split_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
-    ## Bind9
-    echo -e "Bind9"
-    software_name="bind9" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="bind9" && generate_file="white" && generate_mode="full" && GenerateRules
-    ## DNSMasq
-    echo -e "DNSMasq"
-    software_name="dnsmasq" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="dnsmasq" && generate_file="white" && generate_mode="full" && GenerateRules
-    ## Domain
-    software_name="domain" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="domain" && generate_file="black" && generate_mode="lite" && GenerateRules
-    software_name="domain" && generate_file="white" && generate_mode="full" && GenerateRules
-    software_name="domain" && generate_file="white" && generate_mode="lite" && GenerateRules
-    ## SmartDNS
-    echo -e "SmartDNS"
-    software_name="smartdns" && generate_file="black" && generate_mode="full" && foreign_group="foreign" && GenerateRules
-    software_name="smartdns" && generate_file="black" && generate_mode="lite" && foreign_group="foreign" && GenerateRules
-    software_name="smartdns" && generate_file="white" && generate_mode="full" && domestic_group="domestic" && GenerateRules
-    software_name="smartdns" && generate_file="white" && generate_mode="lite" && domestic_group="domestic" && GenerateRules
-    ## SmartDNS
-    echo -e "Smartdns-domain-rules"
-    software_name="smartdns-domain-rules" && generate_file="black" && generate_mode="full" && foreign_group="foreign" && GenerateRules
-    software_name="smartdns-domain-rules" && generate_file="black" && generate_mode="lite" && foreign_group="foreign" && GenerateRules
-    software_name="smartdns-domain-rules" && generate_file="white" && generate_mode="full" && domestic_group="domestic" && GenerateRules
-    software_name="smartdns-domain-rules" && generate_file="white" && generate_mode="lite" && domestic_group="domestic" && GenerateRules
-    ## Unbound
-    echo -e "Unbound"
-    software_name="unbound" && generate_file="black" && generate_mode="full" && dns_mode="foreign" && GenerateRules
-    software_name="unbound" && generate_file="white" && generate_mode="full" && dns_mode="domestic" && GenerateRules
 
-    ## Move files
-    DEST="./output"
-    mkdir -p "${DEST}"
-    for TYPE in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns smartdns-domain-rules; do
-        SRC="./dns-${TYPE}"
-        case ${TYPE} in
+    # AdGuard Home
+    echo -e "AdGuard Home"
+    GenerateRulesForSoftware "adguardhome" "full_combine full_split_combine" "black white blackwhite whiteblack" "dns_mode=default"
+    GenerateRulesForSoftware "adguardhome" "full lite" "blackwhite whiteblack" "dns_mode=domestic"
+    GenerateRulesForSoftware "adguardhome" "full lite" "whiteblack" "dns_mode=foreign"
+
+    # AdGuard Home (New)
+    echo -e "AdGuard Home_new"
+    GenerateRulesForSoftware "adguardhome_new" "full_combine full_split_combine" "black white blackwhite whiteblack" "dns_mode=default"
+    GenerateRulesForSoftware "adguardhome_new" "full lite" "blackwhite whiteblack" "dns_mode=domestic"
+    GenerateRulesForSoftware "adguardhome_new" "full lite" "whiteblack" "dns_mode=foreign"
+
+    # Bind9
+    echo -e "Bind9"
+    GenerateRulesForSoftware "bind9" "full" "black white"
+
+    # DNSMasq
+    echo -e "DNSMasq"
+    GenerateRulesForSoftware "dnsmasq" "full" "black white"
+
+    # Domain
+    GenerateRulesForSoftware "domain" "full lite" "black white"
+
+    # SmartDNS
+    echo -e "SmartDNS"
+    GenerateRulesForSoftware "smartdns" "full lite" "black white" "foreign_group=foreign domestic_group=domestic"
+
+    # SmartDNS Domain Rules
+    echo -e "Smartdns-domain-rules"
+    GenerateRulesForSoftware "smartdns-domain-rules" "full lite" "black white" "foreign_group=foreign domestic_group=domestic"
+
+    # Unbound
+    echo -e "Unbound"
+    GenerateRulesForSoftware "unbound" "full" "black white" "dns_mode=foreign dns_mode=domestic"
+
+    # Move files
+    MoveGeneratedFiles
+}
+
+# Function to generate rules for a specific software
+function GenerateRulesForSoftware() {
+    local software=$1
+    local modes=$2
+    local files=$3
+    local extra_params=$4
+
+    for mode in ${modes}; do
+        for file in ${files}; do
+            software_name="${software}" && generate_file="${file}" && generate_mode="${mode}" ${extra_params} && GenerateRules
+        done
+    done
+}
+
+# Function to move generated files
+function MoveGeneratedFiles() {
+    local dest="./output"
+    mkdir -p "${dest}"
+    for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns smartdns-domain-rules; do
+        local src="./dns-${type}"
+        case ${type} in
             adguardhome|adguardhome_new)
-                for file in "${SRC}"/blacklist_full*.txt "${SRC}"/whitelist_full*.txt; do
-                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" && echo "Moved: ${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
-                done
+                mv "${src}"/blacklist_full*.txt "${src}"/whitelist_full*.txt "${dest}/" 2>/dev/null || :
                 ;;
             bind9|unbound|dnsmasq)
-                for file in "${SRC}"/blacklist_full.conf "${SRC}"/whitelist_full.conf; do
-                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" && echo "Moved: ${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
-                done
+                mv "${src}"/blacklist_full.conf "${src}"/whitelist_full.conf "${dest}/" 2>/dev/null || :
                 ;;
             domain)
-                for file in "${SRC}"/blacklist_{full,lite}.txt "${SRC}"/whitelist_{full,lite}.txt; do
-                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" && echo "Moved: ${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
-                done
+                mv "${src}"/blacklist_{full,lite}.txt "${src}"/whitelist_{full,lite}.txt "${dest}/" 2>/dev/null || :
                 ;;
-            smartdns*) 
-                for file in "${SRC}"/blacklist_{full,lite}.conf "${SRC}"/whitelist_{full,lite}.conf; do
-                    [ -f "$file" ] && mv "$file" "${DEST}/dnshosts-all-${TYPE}-$(basename $file)" && echo "Moved: ${DEST}/dnshosts-all-${TYPE}-$(basename $file)" || :
-                done
+            smartdns*)
+                mv "${src}"/blacklist_{full,lite}.conf "${src}"/whitelist_{full,lite}.conf "${dest}/" 2>/dev/null || :
                 ;;
         esac
     done
 }
+
 ## Process
 # Call GetData
 GetData
