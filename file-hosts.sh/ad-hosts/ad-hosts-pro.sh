@@ -1,5 +1,6 @@
 function GetData() {
     filter_adblock=(
+        "https://malware-filter.gitlab.io/malware-filter/phishing-filter-agh.txt"
         "https://raw.githubusercontent.com/yokoffing/filterlists/main/privacy_essentials.txt"
         "https://easylist-downloads.adblockplus.org/advblock.txt"
         "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
