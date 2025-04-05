@@ -680,15 +680,15 @@ function OutputData() {
 
     # AdGuard Home
     echo -e "AdGuard Home"
-    GenerateRulesForSoftware "adguardhome" "full_combine full_split_combine" "black white blackwhite whiteblack" "dns_mode=default"
-    GenerateRulesForSoftware "adguardhome" "full lite" "blackwhite whiteblack" "dns_mode=domestic"
-    GenerateRulesForSoftware "adguardhome" "full lite" "whiteblack" "dns_mode=foreign"
+    GenerateRulesForSoftware "adguardhome" "full_combine full_split_combine" "black white blackwhite whiteblack" "dns_mode='default'"
+    GenerateRulesForSoftware "adguardhome" "full lite" "blackwhite whiteblack" "dns_mode='domestic'"
+    GenerateRulesForSoftware "adguardhome" "full lite" "whiteblack" "dns_mode='foreign'"
 
     # AdGuard Home (New)
     echo -e "AdGuard Home_new"
-    GenerateRulesForSoftware "adguardhome_new" "full_combine full_split_combine" "black white blackwhite whiteblack" "dns_mode=default"
-    GenerateRulesForSoftware "adguardhome_new" "full lite" "blackwhite whiteblack" "dns_mode=domestic"
-    GenerateRulesForSoftware "adguardhome_new" "full lite" "whiteblack" "dns_mode=foreign"
+    GenerateRulesForSoftware "adguardhome_new" "full_combine full_split_combine" "black white blackwhite whiteblack" "dns_mode='default'"
+    GenerateRulesForSoftware "adguardhome_new" "full lite" "blackwhite whiteblack" "dns_mode='domestic'"
+    GenerateRulesForSoftware "adguardhome_new" "full lite" "whiteblack" "dns_mode='foreign'"
 
     # Bind9
     echo -e "Bind9"
@@ -703,15 +703,15 @@ function OutputData() {
 
     # SmartDNS
     echo -e "SmartDNS"
-    GenerateRulesForSoftware "smartdns" "full lite" "black white" "foreign_group=foreign domestic_group=domestic"
+    GenerateRulesForSoftware "smartdns" "full lite" "black white" "foreign_group='foreign'; domestic_group='domestic'"
 
     # SmartDNS Domain Rules
     echo -e "Smartdns-domain-rules"
-    GenerateRulesForSoftware "smartdns-domain-rules" "full lite" "black white" "foreign_group=foreign domestic_group=domestic"
+    GenerateRulesForSoftware "smartdns-domain-rules" "full lite" "black white" "foreign_group='foreign'; domestic_group='domestic'"
 
     # Unbound
     echo -e "Unbound"
-    GenerateRulesForSoftware "unbound" "full" "black white" "dns_mode=foreign dns_mode=domestic"
+    GenerateRulesForSoftware "unbound" "full" "black white" "dns_mode='foreign'; dns_mode='domestic'"
 
     # Move files
     MoveGeneratedFiles
@@ -726,7 +726,11 @@ function GenerateRulesForSoftware() {
 
     for mode in ${modes}; do
         for file in ${files}; do
-            software_name="${software}" && generate_file="${file}" && generate_mode="${mode}" ${extra_params} && GenerateRules
+            software_name="${software}"
+            generate_file="${file}"
+            generate_mode="${mode}"
+            eval "${extra_params}" # 使用 eval 执行额外参数
+            GenerateRules
         done
     done
 }
