@@ -401,7 +401,13 @@ function GetData() {
         local filter_array=("${!1}")
         local output_file=$2
         for url in "${filter_array[@]}"; do
-            curl -m 30 -s -L --connect-timeout 15 "$url" >>"$output_file"
+            # 添加重试机制，最多重试3次，每次间隔5秒
+            for attempt in {1..3}; do
+                curl -m 30 -s -L --connect-timeout 15 "$url" >>"$output_file" && break || {
+                    echo "Retrying ($attempt/3): $url" >&2
+                    sleep 5
+                }
+            done
         done
     }
 
