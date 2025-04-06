@@ -194,6 +194,10 @@ function GenerateRules() {
     adguardhome)
         domestic_dns=(
             $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://223.6.6.6:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://114.114.114.114:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://114.114.115.115:53"; done)
             $(for protocol in tls quic; do echo "${protocol}://dns.alidns.com:853"; done)
             $(for protocol in https h3; do echo "${protocol}://dns.alidns.com/dns-query"; done)
             $(for protocol in https h3; do echo "${protocol}://223.5.5.5/dns-query"; done)
@@ -321,6 +325,10 @@ function GenerateRules() {
     adguardhome_new)
         domestic_dns=(
             $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://223.6.6.6:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://114.114.114.114:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://114.114.115.115:53"; done)
             $(for protocol in tls quic; do echo "${protocol}://dns.alidns.com:853"; done)
             $(for protocol in https h3; do echo "${protocol}://dns.alidns.com/dns-query"; done)
             $(for protocol in https h3; do echo "${protocol}://223.5.5.5/dns-query"; done)
