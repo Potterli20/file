@@ -740,19 +740,19 @@ function MoveGeneratedFiles() {
     local dest="./output"
     mkdir -p "${dest}"
     for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns smartdns-domain-rules; do
-        local src="./dns-${type}"
+        local src="./output/dns-${type}"
         case ${type} in
             adguardhome|adguardhome_new)
-                mv "${src}"/blacklist_full*.txt "${src}"/whitelist_full*.txt "${dest}/" 2>/dev/null || :
+                mv "${src}"/blacklist_full*.txt "${src}"/whitelist_full*.txt "${dest}/dns-${type}/" 2>/dev/null || :
                 ;;
             bind9|unbound|dnsmasq)
-                mv "${src}"/blacklist_full.conf "${src}"/whitelist_full.conf "${dest}/" 2>/dev/null || :
+                mv "${src}"/blacklist_full.conf "${src}"/whitelist_full.conf "${dest}/dns-${type}/" 2>/dev/null || :
                 ;;
             domain)
-                mv "${src}"/blacklist_{full,lite}.txt "${src}"/whitelist_{full,lite}.txt "${dest}/" 2>/dev/null || :
+                mv "${src}"/blacklist_{full,lite}.txt "${src}"/whitelist_{full,lite}.txt "${dest}/dns-${type}/" 2>/dev/null || :
                 ;;
             smartdns*)
-                mv "${src}"/blacklist_{full,lite}.conf "${src}"/whitelist_{full,lite}.conf "${dest}/" 2>/dev/null || :
+                mv "${src}"/blacklist_{full,lite}.conf "${src}"/whitelist_{full,lite}.conf "${dest}/dns-${type}/" 2>/dev/null || :
                 ;;
         esac
     done
