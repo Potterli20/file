@@ -740,19 +740,28 @@ function MoveGeneratedFiles() {
     local dest="./output"
     mkdir -p "${dest}"
     for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns smartdns-domain-rules; do
-        local src="./output/dns-${type}"
+        local src="${dest}/dns-${type}" # 优化路径定义
+        mkdir -p "${src}" # 确保目录存在
         case ${type} in
             adguardhome|adguardhome_new)
-                mv "${src}"/blacklist_full*.txt "${src}"/whitelist_full*.txt "${dest}/dns-${type}/" 2>/dev/null || :
+                for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt"; do
+                    [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
+                done
                 ;;
             bind9|unbound|dnsmasq)
-                mv "${src}"/blacklist_full.conf "${src}"/whitelist_full.conf "${dest}/dns-${type}/" 2>/dev/null || :
+                for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf"; do
+                    [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
+                done
                 ;;
             domain)
-                mv "${src}"/blacklist_{full,lite}.txt "${src}"/whitelist_{full,lite}.txt "${dest}/dns-${type}/" 2>/dev/null || :
+                for file in "${src}/blacklist_full.txt" "${src}/blacklist_lite.txt" "${src}/whitelist_full.txt" "${src}/whitelist_lite.txt"; do
+                    [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
+                done
                 ;;
             smartdns*)
-                mv "${src}"/blacklist_{full,lite}.conf "${src}"/whitelist_{full,lite}.conf "${dest}/dns-${type}/" 2>/dev/null || :
+                for file in "${src}/blacklist_full.conf" "${src}/blacklist_lite.conf" "${src}/whitelist_full.conf" "${src}/whitelist_lite.conf"; do
+                    [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
+                done
                 ;;
         esac
     done
