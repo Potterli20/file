@@ -409,12 +409,13 @@ function GetData() {
     mkdir ./ad-hosts-lite && cd ./ad-hosts-lite
 
     function fetch_data() {
+    function fetch_data() {
         local filter_array=("${!1}")
         local output_file=$2
         for url in "${filter_array[@]}"; do
             # 添加重试机制，最多重试3次，每次间隔5秒
             for attempt in {1..3}; do
-                curl -m 30 -s -L --connect-timeout 15 "$url" >>"$output_file" && break || {
+                curl -m 30 -s -L --connect-timeout 15 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0" "$url" >>"$output_file" && break || {
                     echo "Retrying ($attempt/3): $url" >&2
                     sleep 5
                 }
