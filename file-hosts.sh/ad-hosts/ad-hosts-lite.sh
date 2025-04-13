@@ -149,7 +149,7 @@ function GetData() {
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/360SpeedBrowserRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/ADSLJFRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/AdFiltersRules.txt"
-        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/3AdRulesListHosts.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/AdRulesListHosts.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/AdbybyRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/CfGgRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/CfSpRules.txt"
@@ -212,7 +212,6 @@ function GetData() {
         "https://raw.githubusercontent.com/o0HalfLife0o/list/master/ad.txt"
         "https://raw.githubusercontent.com/o0HalfLife0o/list/master/ad2.txt"
         "https://raw.githubusercontent.com/o0HalfLife0o/list/master/ad3.txt"
-        "https://sub.adtchrome.com/adt-chinalist-easylist.txt"
         "https://www.fanboy.co.nz/enhancedstats.txt"
         "https://secure.fanboy.co.nz/fanboy-social.txt"
         "https://www.fanboy.co.nz/fanboy-annoyance.txt"
@@ -235,7 +234,7 @@ function GetData() {
         "https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_original_trackers.txt"
         "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/YouTubeEvenMorePureVideoExperience.txt"
         "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/AdGuard%20Home%20Compilation%20List/AdGuardHomeCompilationList.txt"
-        "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter-dns.txt"
+        "https://raw.githubusercontent.com/hufilter/hufilter/refs/heads/gh-pages/hufilter-adguard.txt"
         "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/SpywareFilter/sections/mobile.txt"
         "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_thirdparty.txt"
         "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_specific.txt"
@@ -393,7 +392,6 @@ function GetData() {
         "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/SpywareFilter/sections/allowlist.txt"
         "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/GermanFilter/sections/allowlist.txt"
         "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/ChineseFilter/sections/allowlist.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/whitelist/adblock.txt"
         "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.whitelist.txt"
         "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt"
         "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/optional-list.txt"
@@ -407,7 +405,6 @@ function GetData() {
         "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/blacklist/master/whitelisted.list"
         "https://raw.githubusercontent.com/ookangzheng/blahdns/master/hosts/whitelist.txt"
         "https://warui.intaa.net/adhosts/whitelist.txt"
-        "https://raw.githubusercontent.com/ricardbejarano/hosts/master/whitelist"
     )
     mkdir ./ad-hosts-lite && cd ./ad-hosts-lite
 
