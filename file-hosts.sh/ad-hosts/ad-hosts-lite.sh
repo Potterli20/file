@@ -1,5 +1,6 @@
 function GetData() {
     filter_adblock=(
+        "https://malware-filter.gitlab.io/malware-filter/phishing-filter-agh.txt"
         "https://raw.githubusercontent.com/yokoffing/filterlists/main/privacy_essentials.txt"
         "https://easylist-downloads.adblockplus.org/advblock.txt"
         "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
@@ -32,6 +33,7 @@ function GetData() {
         $(for i in {1..300}; do echo "https://filters.adtidy.org/extension/chromium/filters/${i}.txt"; done)
         $(for i in {1..300}; do echo "https://filters.adtidy.org/windows/filters/${i}.txt"; done)
         $(for i in {1..300}; do echo "https://filters.adtidy.org/extension/ublock/filters/${i}_optimized.txt"; done)
+        $(for i in {1..300}; do echo "https://filters.adtidy.org/extension/ublock/filters/${i}.txt"; done)
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/BlockHttpDNS/BlockHttpDNS.txt"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/Privacy/Privacy.txt"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingTest/AdvertisingTest.txt"
@@ -44,32 +46,7 @@ function GetData() {
         "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_adservers.txt"
         "https://raw.githubusercontent.com/easylist/easylistchina/master/easylistchina.txt"
         "https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/adservers.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/adult-themed/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/autodiscover/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/bogons/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/cloak/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/covid/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/dutch/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/easylist/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/family-safe/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/firebogtick/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/french/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/homograph/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/mal-ip-tiny/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/malicious-dom/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/my-routedns-regexp/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/my-routedns/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/nasty/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/nextdns-recommended/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/nextdns/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/nrd/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/ofac/adblock.txt"
         "https://raw.githubusercontent.com/alexsannikov/adguardhome-filters/master/porn.txt	"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/private-only/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/spamhaus/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/tlds/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/top/adblock.txt"
-        "https://raw.githubusercontent.com/cbuijs/accomplist/master/typosquat/adblock.txt"
         "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_10_Useful/filter.txt"
         "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_11_Mobile/filter.txt"
         "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_12_Safari/filter.txt"
@@ -168,7 +145,28 @@ function GetData() {
         "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_253_IndianList/filter.txt"
         "https://hblock.molinero.dev/hosts_adblock.txt"
         "https://gitlab.com/malware-filter/phishing-filter/-/raw/master/dist/phishing-filter-agh.txt"
-        "https://raw.githubusercontent.com/MkingSakura/AD-Hosts/main/Hosts/360Hosts.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/360Rules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/360SpeedBrowserRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/ADSLJFRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/AdFiltersRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/3AdRulesListHosts.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/AdbybyRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/CfGgRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/CfSpRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/CoolapkRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/DivineMachineRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/IndifferentRulesPart01.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/IndifferentRulesPart02.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/IndifferentYouTubeRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/NetizensRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/NextIDSeeRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/OceanMerge.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/QingYaMerge.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/QuarkRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/TomatoNovelRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/WzRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/GatherRules/XXKillerMerge.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/FuLingRules/FuLingBlockList.txt"
         "https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_adguard.txt"
         "https://raw.github.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt"
         "https://easylist-msie.adblockplus.org/abp-filters-anti-cv.txt"
@@ -318,7 +316,6 @@ function GetData() {
         "https://adm.dimonvideo.ru/alive_hosts.txt"
         "https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/newhosts-final.hosts"
         "https://raw.githubusercontent.com/thisisu/hosts_adultxxx/master/hosts"
-        "https://raw.githubusercontent.com/MkingSakura/AD-Hosts/main/Hosts/WzHost.txt"
         "https://www.github.developerdan.com/hosts/lists/ads-and-tracking-extended.txt"
         "https://raw.githubusercontent.com/FiltersHeroes/KADhosts/master/KADhosts.txt"
         "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardApps.txt"
@@ -328,12 +325,15 @@ function GetData() {
         "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardMobileSpyware.txt"
         "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/EasyPrivacyCNAME.txt"
         "https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/EasyPrivacySpecific.txt"
-        "https://dbl.oisd.nl"
+        "https://big.oisd.nl/domainswild2"
+        "https://small.oisd.nl/domainswild2"
+        "https://nsfw.oisd.nl/domainswild2"
+        "https://nsfw-small.oisd.nl/domainswild2"
         "https://orca.pet/notonmyshift/hosts.txt"
         "https://stopforumspam.com/downloads/toxic_domains_whole.txt"
         "https://hblock.molinero.dev/hosts"
         "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/ad-block-YouTube-Project.txt"
-        "https://raw.githubusercontent.com/vdbhb59/hosts/master/hblock"
+        "https://hosts.flossboxin.org.in/files/hosts"
         "https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt"
         "https://hostfiles.frogeye.fr/multiparty-only-trackers-hosts.txt"
         "https://hostfiles.frogeye.fr/multiparty-trackers-hosts.txt"
@@ -384,14 +384,11 @@ function GetData() {
         "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyList.list"
         "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyListChina.list"
         "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list"
-        "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Quantumult/Filter/Guard/Advertising.list"
-        "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Advertising.list"
-        "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Hijacking.list"
-        "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Privacy.list"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Privacy/Privacy_Classical.yaml"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml"
     )
     filter_white=(
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/FuLingRules/FuLingAllowList.txt"
         "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/TurkishFilter/sections/allowlist.txt"
         "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/SpywareFilter/sections/allowlist.txt"
         "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/GermanFilter/sections/allowlist.txt"
@@ -418,8 +415,15 @@ function GetData() {
         local filter_array=("${!1}")
         local output_file=$2
         for url in "${filter_array[@]}"; do
-            curl -m 30 -s -L --connect-timeout 15 "$url" >>"$output_file"
-        done    }
+            # 添加重试机制，最多重试3次，每次间隔5秒
+            for attempt in {1..3}; do
+                curl -m 30 -s -L --connect-timeout 15 "$url" >>"$output_file" && break || {
+                    echo "Retrying ($attempt/3): $url" >&2
+                    sleep 5
+                }
+            done
+        done
+    }
 
     fetch_data filter_adblock[@] ./filter_adblock.tmp
     fetch_data filter_domain[@] ./filter_domain.tmp
