@@ -32,9 +32,7 @@ function GetData() {
         "https://raw.githubusercontent.com/Loukky/gfwlist-by-loukky/master/gfwlist.txt"
         "https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt"
         "https://raw.githubusercontent.com/poctopus/gfwlist-plus/master/gfwlist-plus.txt"
-        "https://raw.githubusercontent.com/MoeKing/gfwlist/main/gfwlist.txt"
         "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/gfwlist.txt"
-
     )
     gfwlist_domain=(
         "https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-cdn.txt"
@@ -81,7 +79,6 @@ function GetData() {
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/win-extra.txt"
         "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/youtubeblacklist.txt"
         "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/blockeverything.txt"
-        "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter-dns.txt"
         "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/ad-block-YouTube-Project.txt"
     )
     gfwlist2agh_modify=(
