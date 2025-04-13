@@ -409,7 +409,6 @@ function GetData() {
     mkdir ./ad-hosts-lite && cd ./ad-hosts-lite
 
     function fetch_data() {
-    function fetch_data() {
         local filter_array=("${!1}")
         local output_file=$2
         for url in "${filter_array[@]}"; do
