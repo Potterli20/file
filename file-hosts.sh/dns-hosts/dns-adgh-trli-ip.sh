@@ -120,6 +120,7 @@ function GenerateRules() {
     )
     foreign_dns=(
         $(for protocol in tcp udp; do echo "${protocol}://192.168.3.146:53"; done)
+        $(for protocol in tcp udp; do echo "${protocol}://192.168.3.149:53"; done)
     )
 
     function GenerateRulesHeader() {
