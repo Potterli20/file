@@ -240,6 +240,17 @@ function GenerateRulesForSoftware() {
     done
 }
 
+# Function to move generated files
+function MoveGeneratedFiles() {
+    local dest="./output"
+    mkdir -p "${dest}"
+    local src="${dest}/dns-adguardhome_new" # 优化路径定义
+    mkdir -p "${src}" # 确保目录存在
+    for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt"; do
+        [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-adguardhome_new-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
+    done
+}
+
 ## Process
 # Call GetData
 GetData
@@ -247,3 +258,5 @@ GetData
 AnalyseData
 # Call OutputData
 OutputData
+# Call MoveGeneratedFiles
+MoveGeneratedFiles
