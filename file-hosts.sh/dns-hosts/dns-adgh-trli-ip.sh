@@ -170,6 +170,27 @@ function GenerateRules() {
         FileName && GenerateDefaultUpstream && GenerateRulesProcess
     fi
 }
+
+function FileName() {
+    if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "whiteblack" ]; then
+        generate_temp="black"
+    elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "blackwhite" ]; then
+        generate_temp="white"
+    else
+        generate_temp="debug"
+    fi
+    if [ "${software_name}" == "adguardhome_new" ]; then
+        file_extension="txt"
+    else
+        file_extension="conf"
+    fi
+    if [ ! -d "./output/dns-${software_name}" ]; then
+        mkdir -p "./output/dns-${software_name}"
+    fi
+    file_name="${generate_temp}list_${generate_mode}.${file_extension}"
+    file_path="./output/dns-${software_name}/${file_name}"
+}
+
 # Output Data
 function OutputData() {
     echo -e "Generating output..."
