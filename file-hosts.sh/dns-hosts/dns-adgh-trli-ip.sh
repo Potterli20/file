@@ -246,7 +246,10 @@ function MoveGeneratedFiles() {
     mkdir -p "${dest}"
     local src="${dest}/dns-adguardhome_new" # 优化路径定义
     mkdir -p "${src}" # 确保目录存在
-    for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt"; do
+    for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt" \
+                "${src}/blacklist_full_combine.txt" "${src}/blacklist_lite.txt" \
+                "${src}/whitelist_full_split_combine.txt" "${src}/whitelist_full_combine.txt" \
+                "${src}/whitelist_lite.txt"; do
         [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-adguardhome_new-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
     done
 }
