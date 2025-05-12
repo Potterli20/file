@@ -1,15 +1,3 @@
-(!!!)example.org
-(!%!)example.org
-(!%*)example.org
-(!%@)example.org
-(!&!)example.org
-(!&*)example.org
-(!&@)example.org
-(!**)example.org
-(*%*)example.org
-(*&*)com.cn
-(*&*)example.org
-(***)example.org
 (@%!)18-courier.push.apple.com
 (@%!)301.sh
 (@%!)alibabadns.com
