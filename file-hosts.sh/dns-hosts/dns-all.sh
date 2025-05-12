@@ -665,23 +665,23 @@ function OutputData() {
 
     # AdGuard Home
     echo -e "AdGuard Home"
-    GenerateRulesForSoftware "adguardhome" "full_combine full_split_combine lite_combine" "black white blackwhite whiteblack" "dns_mode='default'"
+    GenerateRulesForSoftware "adguardhome" "full_combine full_split_combine" "black white blackwhite whiteblack" "dns_mode='default'"
     GenerateRulesForSoftware "adguardhome" "full lite" "blackwhite whiteblack" "dns_mode='domestic'"
     GenerateRulesForSoftware "adguardhome" "full lite" "whiteblack" "dns_mode='foreign'"
 
     # AdGuard Home (New)
     echo -e "AdGuard Home_new"
-    GenerateRulesForSoftware "adguardhome_new" "full_combine full_split_combine lite_combine" "black white blackwhite whiteblack" "dns_mode='default'"
+    GenerateRulesForSoftware "adguardhome_new" "full_combine full_split_combine" "black white blackwhite whiteblack" "dns_mode='default'"
     GenerateRulesForSoftware "adguardhome_new" "full lite" "blackwhite whiteblack" "dns_mode='domestic'"
     GenerateRulesForSoftware "adguardhome_new" "full lite" "whiteblack" "dns_mode='foreign'"
 
     # Bind9
     echo -e "Bind9"
-    GenerateRulesForSoftware "bind9" "full lite" "black white"
+    GenerateRulesForSoftware "bind9" "full" "black white"
 
     # DNSMasq
     echo -e "DNSMasq"
-    GenerateRulesForSoftware "dnsmasq" "full lite" "black white"
+    GenerateRulesForSoftware "dnsmasq" "full" "black white"
 
     # Domain
     GenerateRulesForSoftware "domain" "full lite" "black white"
@@ -696,7 +696,7 @@ function OutputData() {
 
     # Unbound
     echo -e "Unbound"
-    GenerateRulesForSoftware "unbound" "full lite" "black white" "dns_mode='foreign'; dns_mode='domestic'"
+    GenerateRulesForSoftware "unbound" "full" "black white" "dns_mode='foreign'; dns_mode='domestic'"
 
     # Move files
     MoveGeneratedFiles
@@ -729,14 +729,14 @@ function MoveGeneratedFiles() {
         mkdir -p "${src}" # 确保目录存在
         case ${type} in
             adguardhome|adguardhome_new)
-                for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt" "${src}/blacklist_lite.txt" "${src}/whitelist_lite.txt"; do
+                for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt"; do
                     if [ -f "${file}" ]; then
                         mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
                     fi
                 done
                 ;;
             bind9|unbound|dnsmasq)
-                for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf" "${src}/blacklist_lite.conf" "${src}/whitelist_lite.conf"; do
+                for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf"; do
                     if [ -f "${file}" ]; then
                         mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
                     fi
