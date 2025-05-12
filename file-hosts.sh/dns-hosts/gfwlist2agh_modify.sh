@@ -17,8 +17,8 @@ done
 # 确保输出目录存在
 mkdir -p ./file-hosts/gfwlist2agh_modify
 
-# 去重并去除空格和#号后输出到最终文件
-sort "$tmpfile" | uniq | sed 's/[[:space:]]//g' | sed '/^#/d;/^$/d' > ./file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt
+# 去重并去除空格和#号后输出到最终文件，并删除前12行
+sort "$tmpfile" | uniq | sed 's/[[:space:]]//g' | sed '/^#/d;/^$/d' | tail -n +13 > ./file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt
 
 # 可选：删除临时文件
 rm "$tmpfile"
