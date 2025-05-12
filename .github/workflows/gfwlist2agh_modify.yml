@@ -44,6 +44,6 @@ jobs:
           git remote rm origin
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
           git gc --aggressive
-          git add ./file-hosts/gfwlist2agh_modify
+          git add ./file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt
           git commit -m "$(date +%Y%m%d%H%M)"
           git push -f -u origin main
