@@ -730,22 +730,30 @@ function MoveGeneratedFiles() {
         case ${type} in
             adguardhome|adguardhome_new)
                 for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt"; do
-                    [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
+                    if [ -f "${file}" ]; then
+                        mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
+                    fi
                 done
                 ;;
             bind9|unbound|dnsmasq)
                 for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf"; do
-                    [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
+                    if [ -f "${file}" ]; then
+                        mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
+                    fi
                 done
                 ;;
             domain)
                 for file in "${src}/blacklist_full.txt" "${src}/blacklist_lite.txt" "${src}/whitelist_full.txt" "${src}/whitelist_lite.txt"; do
-                    [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
+                    if [ -f "${file}" ]; then
+                        mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
+                    fi
                 done
                 ;;
             smartdns*)
                 for file in "${src}/blacklist_full.conf" "${src}/blacklist_lite.conf" "${src}/whitelist_full.conf" "${src}/whitelist_lite.conf"; do
-                    [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
+                    if [ -f "${file}" ]; then
+                        mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
+                    fi
                 done
                 ;;
         esac
