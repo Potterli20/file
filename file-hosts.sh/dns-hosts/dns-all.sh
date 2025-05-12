@@ -349,7 +349,7 @@ function GenerateRules() {
                 # gfwlist数据
                 if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
                     for domain in "${gfwlist_data[@]}"; do
-                        echo "[/${domain-gfw}/]#" >>"${file_path}"
+                        echo "[/${domain}/]#" >>"${file_path}"
                         for dns in "${foreign_dns[@]}"; do
                             echo "[/${domain}/]${dns}" >>"${file_path}"
                             echo "[/${cnacc_data}/]${domestic_dns}" >>"${file_path}"
