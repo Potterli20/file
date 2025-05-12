@@ -15,7 +15,7 @@ for url in "${gfwlist2agh_modify[@]}"; do
 done
 
 # 去重并输出到最终文件
-sort "$tmpfile" | uniq > gfwlist2agh_modify_final.txt
+sort "$tmpfile" | uniq > ./file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt
 
 # 可选：删除临时文件
 rm "$tmpfile"
