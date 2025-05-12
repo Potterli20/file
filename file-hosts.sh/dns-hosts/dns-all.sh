@@ -104,51 +104,15 @@ function GetData() {
 # Analyse Data
 function AnalyseData() {
     echo -e "Analyzing data..."
-    
-    # 设置域名正则表达式
-    domain_regex="^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$|^[a-zA-Z0-9]+\.(cn|org\.cn|ac\.cn|mil\.cn|net\.cn|gov\.cn|com\.cn|edu\.cn)$"
-    lite_domain_regex="^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$"
-
-    # 处理国内域名
-    cat "./cnacc_domain.tmp" | grep -v "^#" | sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' \
-        | sed -E 's/^(domain:|full:|\.)//g' | grep -E "${domain_regex}" | sort -u > "./cnacc_data.tmp"
-    
-    # 处理受信任的国内域名
-    cat "./cnacc_trusted.tmp" | grep -v "^#" | sed -E 's/^server=\///;s/\/114\.114\.114\.114$//' \
-        | grep -E "${domain_regex}" | sort -u > "./cnacc_trust.tmp"
-    
-    # 处理 base64 编码的域名列表
-    cat "./gfwlist_base64.tmp" | while IFS= read -r line; do
-        echo "$line" | grep -q "^#" && continue
-        echo "$line" | base64 -d 2>/dev/null | sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' \
-            | sed -E 's/^(|\|\||@@|\.|http:\/\/|https:\/\/)//g' \
-            | grep -E "${domain_regex}" >> "./gfwlist_decoded.tmp"
+    # 检查依赖的临时文件是否存在，不存在则创建空文件，避免cat报错
+    for f in ./gfwlist_data.tmp ./lite_gfwlist_data.tmp ./lite_cnacc_data.tmp; do
+        [ -f "$f" ] || touch "$f"
     done
-
-    # 处理普通域名列表
-    cat "./gfwlist_domain.tmp" | grep -v "^#" \
-        | sed -E 's/^(domain:|full:|https?:\/\/|\.)//g' | grep -E "${domain_regex}" \
-        | sort -u > "./gfwlist_normal.tmp"
-    
-    # 合并所有 GFW 域名并去重
-    cat "./gfwlist_decoded.tmp" "./gfwlist_normal.tmp" | sort -u > "./gfwlist_data.tmp"
-    
-    # 生成精简版数据
-    cat "./cnacc_data.tmp" "./cnacc_trust.tmp" | sort -u > "./cnacc_full.tmp"
-    cat "./cnacc_full.tmp" | rev | cut -d. -f1,2 | rev | sort -u > "./lite_cnacc_data.tmp"
-    cat "./gfwlist_data.tmp" | rev | cut -d. -f1,2 | rev | sort -u > "./lite_gfwlist_data.tmp"
-
-    # 读取数据到数组
-    cnacc_data=($(cat "./cnacc_full.tmp"))
-    gfwlist_data=($(cat "./gfwlist_data.tmp"))
-    lite_cnacc_data=($(cat "./lite_cnacc_data.tmp"))
-    lite_gfwlist_data=($(cat "./lite_gfwlist_data.tmp"))
-
-    # 删除临时文件
-    rm -f ./gfwlist_decoded.tmp ./gfwlist_normal.tmp
-
-    # 删除临时文件中的空行
-    sed -i '/^$/d' ./cnacc_data.tmp ./gfwlist_data.tmp ./lite_cnacc_data.tmp ./lite_gfwlist_data.tmp
+    # 修改 domain_regex，使其支持单独的顶级域和常见二级公共后缀
+    cnacc_data=($(domain_regex="^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$|^(cn|org\.cn|ac\.cn|mil\.cn|net\.cn|gov\.cn|com\.cn|edu\.cn)$" && lite_domain_regex="^([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\@\%\@\)\|\(\@\%\!\)\|\(\!\&\@\)\|\(\@\@\@\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | sort | uniq >"./cnacc_addition.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\%\!\)\|\(\@\&\!\)\|\(\!\%\@\)\|\(\!\!\!\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | sort | uniq >"./cnacc_subtraction.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\*\%\*\)\|\(\*\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./cnacc_exclusion.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\*\%\*\)\|\(\*\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${lite_domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./lite_cnacc_exclusion.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\%\*\)\|\(\!\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./cnacc_keyword.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\%\*\)\|\(\!\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${lite_domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./lite_cnacc_keyword.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\@\&\@\)\|\(\@\&\!\)\|\(\!\%\@\)\|\(\@\@\@\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | sort | uniq >"./gfwlist_addition.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\&\!\)\|\(\@\%\!\)\|\(\!\&\@\)\|\(\!\!\!\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | sort | uniq >"./gfwlist_subtraction.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\*\&\*\)\|\(\*\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./gfwlist_exclusion.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\*\&\*\)\|\(\*\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${lite_domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./lite_gfwlist_exclusion.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\&\*\)\|\(\!\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./gfwlist_keyword.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\&\*\)\|\(\!\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${lite_domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./lite_gfwlist_keyword.tmp" && cat "./cnacc_addition.tmp" | grep -E "${lite_domain_regex}" | sort | uniq >"./lite_cnacc_addition.tmp" && cat "./gfwlist_addition.tmp" | grep -E "${lite_domain_regex}" | sort | uniq >"./lite_gfwlist_addition.tmp" && cat "./cnacc_trusted.tmp" | sed "s/\/114\.114\.114\.114//g;s/server\=\///g" | tr "A-Z" "a-z" | grep -E "${domain_regex}" | sort | uniq >"./cnacc_trust.tmp" && cat "./cnacc_trust.tmp" | grep -E "${lite_domain_regex}" | sort | uniq >"./lite_cnacc_trust.tmp" && cat "./cnacc_domain.tmp" | sed "s/domain\://g;s/full\://g" | tr "A-Z" "a-z" | grep -E "${domain_regex}" | sort | uniq >"./cnacc_checklist.tmp" && cat "./gfwlist_base64.tmp" "./gfwlist_domain.tmp" | sed "s/domain\://g;s/full\://g;s/http\:\/\///g;s/https\:\/\///g" | tr -d "|" | tr "A-Z" "a-z" | grep -E "${domain_regex}" | sort | uniq >"./gfwlist_checklist.tmp" && cat "./cnacc_checklist.tmp" | rev | cut -d "." -f 1,2 | rev | sort | uniq >"./lite_cnacc_checklist.tmp" && cat "./gfwlist_checklist.tmp" | rev | cut -d "." -f 1,2 | rev | sort | uniq >"./lite_gfwlist_checklist.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_checklist.tmp" "./gfwlist_checklist.tmp" >"./gfwlist_raw.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./gfwlist_checklist.tmp" "./cnacc_checklist.tmp" | grep -Ev "(\.($(cat './cnacc_exclusion.tmp'))$)|(^$(cat './cnacc_exclusion.tmp')$)|($(cat './cnacc_keyword.tmp'))" >"./cnacc_raw.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./lite_cnacc_checklist.tmp" "./lite_gfwlist_checklist.tmp" >"./lite_gfwlist_raw.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./lite_gfwlist_checklist.tmp" "./lite_cnacc_checklist.tmp" | grep -Ev "(\.($(cat './lite_cnacc_exclusion.tmp'))$)|(^$(cat './lite_cnacc_exclusion.tmp')$)|($(cat './lite_cnacc_keyword.tmp'))" >"./lite_cnacc_raw.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_trust.tmp" "./gfwlist_raw.tmp" | grep -Ev "(\.($(cat './gfwlist_exclusion.tmp'))$)|(^$(cat './gfwlist_exclusion.tmp')$)|($(cat './gfwlist_keyword.tmp'))" >"./gfwlist_raw_new.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_trust.tmp" "./lite_gfwlist_raw.tmp" | grep -Ev "(\.($(cat './lite_gfwlist_exclusion.tmp'))$)|(^$(cat './lite_gfwlist_exclusion.tmp')$)|($(cat './lite_gfwlist_keyword.tmp'))" >"./lite_gfwlist_raw_new.tmp" && cat "./cnacc_raw.tmp" "./lite_cnacc_raw.tmp" "./cnacc_addition.tmp" "./lite_cnacc_addition.tmp" "./cnacc_trust.tmp" "./lite_cnacc_trust.tmp" | sort | uniq >"./cnacc_added.tmp" && cat "./gfwlist_raw_new.tmp" "./lite_gfwlist_raw_new.tmp" "./gfwlist_addition.tmp" "./lite_gfwlist_addition.tmp" | sort | uniq >"./gfwlist_added.tmp" && cat "./lite_cnacc_raw.tmp" "./lite_cnacc_addition.tmp" "./lite_cnacc_trust.tmp" | sort | uniq >"./lite_cnacc_added.tmp" && cat "./lite_gfwlist_raw_new.tmp" "./lite_gfwlist_addition.tmp" | sort | uniq >"./lite_gfwlist_added.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_subtraction.tmp" "./cnacc_added.tmp" >"./cnacc_data.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./gfwlist_subtraction.tmp" "./gfwlist_added.tmp" >"./gfwlist_data.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_subtraction.tmp" "./lite_cnacc_added.tmp" >"./lite_cnacc_data.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./gfwlist_subtraction.tmp" "./lite_gfwlist_added.tmp" >"./lite_gfwlist_data.tmp" && cat "./cnacc_data.tmp" "./lite_cnacc_data.tmp" | sort | uniq | awk "{ print $2 }"))
+    gfwlist_data=($(cat "./gfwlist_data.tmp" "./lite_gfwlist_data.tmp" | sort | uniq | awk "{ print \$2 }"))
+    lite_cnacc_data=($(cat "./lite_cnacc_data.tmp" | sort | uniq | awk "{ print \$2 }"))
+    lite_gfwlist_data=($(cat "./lite_gfwlist_data.tmp" | sort | uniq | awk "{ print \$2 }"))
 }
 # Generate Rules
 function GenerateRules() {
@@ -298,7 +262,6 @@ function GenerateRules() {
                     done
                 fi
             elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-                # 精简版数据处理
                 if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
                     for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
                         echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >>"${file_path}"
@@ -430,7 +393,6 @@ function GenerateRules() {
                     done
                 fi
             elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-                # 精简版数据处理
                 if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
                     for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
                         echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >> "${file_path}"
@@ -703,23 +665,23 @@ function OutputData() {
 
     # AdGuard Home
     echo -e "AdGuard Home"
-    GenerateRulesForSoftware "adguardhome" "full_combine full_split_combine lite_combine" "black white blackwhite whiteblack" "dns_mode='default'"
+    GenerateRulesForSoftware "adguardhome" "full_combine full_split_combine" "black white blackwhite whiteblack" "dns_mode='default'"
     GenerateRulesForSoftware "adguardhome" "full lite" "blackwhite whiteblack" "dns_mode='domestic'"
     GenerateRulesForSoftware "adguardhome" "full lite" "whiteblack" "dns_mode='foreign'"
 
     # AdGuard Home (New)
     echo -e "AdGuard Home_new"
-    GenerateRulesForSoftware "adguardhome_new" "full_combine full_split_combine lite_combine" "black white blackwhite whiteblack" "dns_mode='default'"
+    GenerateRulesForSoftware "adguardhome_new" "full_combine full_split_combine" "black white blackwhite whiteblack" "dns_mode='default'"
     GenerateRulesForSoftware "adguardhome_new" "full lite" "blackwhite whiteblack" "dns_mode='domestic'"
     GenerateRulesForSoftware "adguardhome_new" "full lite" "whiteblack" "dns_mode='foreign'"
 
     # Bind9
     echo -e "Bind9"
-    GenerateRulesForSoftware "bind9" "full lite" "black white"
+    GenerateRulesForSoftware "bind9" "full" "black white"
 
     # DNSMasq
     echo -e "DNSMasq"
-    GenerateRulesForSoftware "dnsmasq" "full lite" "black white"
+    GenerateRulesForSoftware "dnsmasq" "full" "black white"
 
     # Domain
     GenerateRulesForSoftware "domain" "full lite" "black white"
@@ -734,7 +696,7 @@ function OutputData() {
 
     # Unbound
     echo -e "Unbound"
-    GenerateRulesForSoftware "unbound" "full lite" "black white" "dns_mode='foreign'; dns_mode='domestic'"
+    GenerateRulesForSoftware "unbound" "full" "black white" "dns_mode='foreign'; dns_mode='domestic'"
 
     # Move files
     MoveGeneratedFiles
@@ -767,14 +729,14 @@ function MoveGeneratedFiles() {
         mkdir -p "${src}" # 确保目录存在
         case ${type} in
             adguardhome|adguardhome_new)
-                for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt" "${src}/blacklist_lite.txt" "${src}/whitelist_lite.txt"; do
+                for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt"; do
                     if [ -f "${file}" ]; then
                         mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
                     fi
                 done
                 ;;
             bind9|unbound|dnsmasq)
-                for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf" "${src}/blacklist_lite.conf" "${src}/whitelist_lite.conf"; do
+                for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf"; do
                     if [ -f "${file}" ]; then
                         mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
                     fi
