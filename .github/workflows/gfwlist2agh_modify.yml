@@ -23,7 +23,7 @@ jobs:
       # Runs a single command using the runners shell
       - name:  Build pac
         run: |
-          bash ./file-hosts.sh/gfwlist2agh_modify.sh
+          bash ./file-hosts.sh/dns-hosts/gfwlist2agh_modify.sh
 
       #- name: update github
       #  run: |
