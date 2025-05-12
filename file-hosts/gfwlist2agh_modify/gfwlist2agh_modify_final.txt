@@ -1,0 +1,198 @@
+
+#
+# (!!!) | 向 C 及 G 列表移除域名
+# (!%!) | 仅向 C 列表移除域名
+# (!%*) | 仅向 C 列表排除关键词 (*example.org*)
+# (!%@) | 向 C 列表移除域名并将其从 G 列表中添加
+# (!&!) | 仅向 G 列表移除域名
+# (!&*) | 仅向 G 列表排除关键词 (*example.org*)
+# (!&@) | 向 G 列表移除域名并将其从 C 列表中添加
+# (!**) | 向 C 及 G 列表排除关键词 (*example.org*)
+# (*%*) | 仅向 C 列表排除域名 (*.example.org & example.org)
+# (*&*) | 仅向 G 列表排除域名 (*.example.org & example.org)
+# (***) | 向 C 及 G 列表排除域名 (*.example.org & example.org)
+# (@%!) | 向 C 列表添加域名并将其从 G 列表中移除
+# (@%@) | 仅向 C 列表添加域名
+# (@&!) | 向 G 列表添加域名并将其从 C 列表中移除
+# (@&@) | 仅向 G 列表添加域名
+# (@@@) | 向 C 及 G 列表添加域名
+# AcgnX
+# AniDB
+# AniX.Moe
+# Apple
+# COM.CN
+# Cloudflare
+# Cloudflare Workers
+# DNSPod
+# Denpasoft
+# FastGit
+# GitHub
+# Google
+# Google 
+# Manual
+# Miro
+# OpenDNS
+# ServiceNow
+# SmartSheet
+# UC 浏览器 #8
+# UUP dump
+# VCB-S
+# Vercel
+# cityline
+# fanart.tv
+# hardwarezone.com.sg
+# hellotalk
+# it-global.cn #8
+# jing.rocks
+# jsDelivr
+# privacyredirect.com
+# slate.com
+# sol-ict.com #8
+# 上海闪耀信息科技有限公司 / 闪耀科技 #8
+# 必应
+# 抖音 #10
+# 支付宝
+# 治杰 Online
+# 移除(!) > 添加(@) > 排除(*)
+# 钱美流量 #8
+# 阿里 DNS
+# 阿里云
+## 自定义规则 - 开始
+## 自定义规则 - 结束
+## 自定义规则优先级 - 开始
+## 自定义规则优先级 - 结束
+## 自定义规则语法 - 开始
+## 自定义规则语法 - 结束
+(!!!)example.org
+(!%!)example.org
+(!%*)example.org
+(!%@)example.org
+(!&!)example.org
+(!&*)example.org
+(!&@)example.org
+(!**)example.org
+(*%*)example.org
+(*&*)com.cn
+(*&*)example.org
+(***)example.org
+(@%!)18-courier.push.apple.com
+(@%!)301.sh
+(@%!)alibabadns.com
+(@%!)amp-api-edge.music.apple.com
+(@%!)apple-dns.cn
+(@%!)apple-dns.net
+(@%!)apple.com
+(@%!)apple.com.cn
+(@%!)apps.mzstatic.com.mwcname.com
+(@%!)b-b.win
+(@%!)beian.gov.cn
+(@%!)cl3.apple.com.mwcname.com
+(@%!)cl5.apple.com.mwcname.com
+(@%!)client-api.itunes.apple.com.mwcname.com
+(@%!)cn.bing.com
+(@%!)cn.bing.net
+(@%!)cname.vercel-dns.com
+(@%!)dns.alidns.com
+(@%!)dns.pub
+(@%!)doh.pub
+(@%!)dot.pub
+(@%!)douyincdn.com
+(@%!)example.org
+(@%!)g.cn
+(@%!)global-ict.cn
+(@%!)global-idc.net
+(@%!)global-idt.net
+(@%!)google.cn
+(@%!)gov.cn
+(@%!)gsa.apple.com.akadns.net
+(@%!)gstatic.cn
+(@%!)hi-res.net.cn
+(@%!)icloud.com
+(@%!)init-p01md.apple.com
+(@%!)init-p01md.apple.com.mwcname.com
+(@%!)init.ess.apple.com
+(@%!)init.itunes.apple.com
+(@%!)init.itunes.apple.com.mwcname.com
+(@%!)iphone-ld.apple.com.mwcname.com
+(@%!)it-global.cn
+(@%!)it-global.xyz
+(@%!)jamcz.com
+(@%!)jimmyshjj.top
+(@%!)mcdn.bilivideo.cn
+(@%!)mesu.apple.com.mwcname.com
+(@%!)mobilegw.alipay.com
+(@%!)paypal.com
+(@%!)paypalobjects.com
+(@%!)pd.itunes.apple.com.mwcname.com
+(@%!)play.itunes.apple.com.mwcname.com
+(@%!)se-edge.itunes-apple.com
+(@%!)se-edge.itunes.apple.com.mwcname.com
+(@%!)search.itunes.apple.com.mwcname.com
+(@%!)securemetrics.apple.com.cn
+(@%!)ssnm.xyz
+(@%!)uc.cn
+(@%!)vercel.com
+(@%!)www-cdn.icloud.com.akadns.net
+(@%!)www.apple.com.cn
+(@%!)www.beian.gov.cn
+(@%!)www.bing.com
+(@%!)www.icloud.com
+(@%!)xssx.win
+(@%!)yuanshen.com
+(@%@)example.org
+(@&!)1dot1dot1dot1.cloudflare-dns.com
+(@&!)adminforge.de
+(@&!)anidb.net
+(@&!)app.smartsheet.com
+(@&!)archive.fastgit.org
+(@&!)assets.fanart.tv
+(@&!)assets.fastgit.org
+(@&!)bbs.acgrip.com
+(@&!)bing.com
+(@&!)cdn.jsdelivr.net
+(@&!)cityline.com
+(@&!)cloudflare-dns.com
+(@&!)customer-stories-feed.fastgit.org
+(@&!)dash.cloudflare.com
+(@&!)denpasoft.com
+(@&!)desktop.githubusercontent.com
+(@&!)dns.cloudflare.com
+(@&!)dns.google
+(@&!)dns.opendns.com
+(@&!)dockerproxy.com
+(@&!)doh.opendns.com
+(@&!)download.fastgit.org
+(@&!)example.org
+(@&!)fanart.tv
+(@&!)fastgit.org
+(@&!)froth.zone
+(@&!)funami.tech
+(@&!)github.com
+(@&!)githubusercontent.com
+(@&!)google.com
+(@&!)googleads.g.doubleclick.net
+(@&!)hardwarezone.com.sg
+(@&!)hellotalk.com
+(@&!)hub.fastgit.org
+(@&!)jing.rocks
+(@&!)jotform.com
+(@&!)jsdelivr.net
+(@&!)library.ac.cn
+(@&!)miro.com
+(@&!)privacyredirect.com
+(@&!)r4fo.com
+(@&!)raw.fastgit.org
+(@&!)redirector.googlevideo.com
+(@&!)service-now.com
+(@&!)share.acgnx.net
+(@&!)share.acgnx.se
+(@&!)slate.com
+(@&!)smartsheet.com
+(@&!)uupdump.net
+(@&!)workers.dev
+(@&!)www.acgnx.se
+(@&!)www.anix.moe
+(@&!)www.bing.com
+(@&!)zhijie.online
+(@&@)example.org
+(@@@)example.org
