@@ -1,3 +1,4 @@
+*.dns.yandex.net
 cloudflare-dns.com
 doh.360.cn
 dot.360.cn
