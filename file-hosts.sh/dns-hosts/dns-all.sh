@@ -82,9 +82,7 @@ function GetData() {
         "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/ad-block-YouTube-Project.txt"
     )
     gfwlist2agh_modify=(
-        "https://raw.githubusercontent.com/hezhijie0327/GFWList2AGH/source/data/data_modify.txt"
-        "https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt"
-        "https://raw.githubusercontent.com/jimmyshjj/GFWList2AGH/source/data/data_modify.txt"
+        "https://raw.githubusercontent.com/Potterli20/file/refs/heads/main/file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt"
     )
     mkdir ./hosts-dns && cd ./hosts-dns
     for cnacc_domain_task in "${!cnacc_domain[@]}"; do
