@@ -1,0 +1,49 @@
+# This is a basic workflow to help you get started with Actions
+
+name: gfwlist2agh_modify
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */4 * * *"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@main
+      # Runs a single command using the runners shell
+      - name:  Build pac
+        run: |
+          bash ./file-hosts.sh/gfwlist2agh_modify.sh
+
+      #- name: update github
+      #  run: |
+      #   cp ./listpac_* ./file/pac/
+      #   git remote rm origin
+      #   git config --local user.name "github-actions[bot]"
+      #   git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      #   git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
+      #   git gc --aggressive
+      #   git add ./file/pac/
+      #   git commit -m "update pac $(date +%Y.%m.%d.%H.%M)"
+      #   git push -f -u origin main
+      - name: Git push 
+        run: |
+          git init
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote rm origin
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}"
+          git gc --aggressive
+          git add ./file-hosts/gfwlist2agh_modify
+          git commit -m "$(date +%Y%m%d%H%M)"
+          git push -f -u origin main
