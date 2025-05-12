@@ -1,3 +1,4 @@
+(*&*)com.cn
 (@%!)18-courier.push.apple.com
 (@%!)301.sh
 (@%!)alibabadns.com
@@ -20,7 +21,6 @@
 (@%!)doh.pub
 (@%!)dot.pub
 (@%!)douyincdn.com
-(@%!)example.org
 (@%!)g.cn
 (@%!)global-ict.cn
 (@%!)global-idc.net
@@ -62,7 +62,6 @@
 (@%!)www.icloud.com
 (@%!)xssx.win
 (@%!)yuanshen.com
-(@%@)example.org
 (@&!)1dot1dot1dot1.cloudflare-dns.com
 (@&!)adminforge.de
 (@&!)anidb.net
@@ -85,7 +84,6 @@
 (@&!)dockerproxy.com
 (@&!)doh.opendns.com
 (@&!)download.fastgit.org
-(@&!)example.org
 (@&!)fanart.tv
 (@&!)fastgit.org
 (@&!)froth.zone
@@ -117,5 +115,3 @@
 (@&!)www.anix.moe
 (@&!)www.bing.com
 (@&!)zhijie.online
-(@&@)example.org
-(@@@)example.org
