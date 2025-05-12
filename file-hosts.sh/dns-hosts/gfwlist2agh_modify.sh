@@ -14,6 +14,9 @@ for url in "${gfwlist2agh_modify[@]}"; do
     curl -sL "$url" >> "$tmpfile"
 done
 
+# 确保输出目录存在
+mkdir -p ./file-hosts/gfwlist2agh_modify
+
 # 去重并输出到最终文件
 sort "$tmpfile" | uniq > ./file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt
 
