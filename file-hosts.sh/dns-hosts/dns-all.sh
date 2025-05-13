@@ -120,40 +120,46 @@ function AnalyseData() {
     domain_regex="^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$|^[a-zA-Z0-9]+\.(cn|org\.cn|ac\.cn|mil\.cn|net\.cn|gov\.cn|com\.cn|edu\.cn)$"
     lite_domain_regex="^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$"
 
-    # 使用进程替换来并行处理数据
-    {
-        # 并行处理国内域名
-        cat "./output/cnacc_domain.tmp" | grep -v "^#" | \
-            sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-            sed -E 's/^(domain:|full:|\.)//g' | \
-            grep -E "${domain_regex}" | sort -u > "./output/cnacc_data.tmp" &
-
-        # 并行处理受信任的国内域名  
-        cat "./output/cnacc_trusted.tmp" | grep -v "^#" | \
-            sed -E 's/^server=\///;s/\/114\.114\.114\.114$//' | \
-            grep -E "${domain_regex}" | sort -u > "./output/cnacc_trust.tmp" &
-
-        # 并行处理普通域名列表
-        cat "./output/gfwlist_domain.tmp" | grep -v "^#" | \
-            sed -E 's/^(domain:|full:|https?:\/\/|\.)//g' | \
-            grep -E "${domain_regex}" | sort -u > "./output/gfwlist_data.tmp" &
-    }
-    wait
-
-    # 使用内存数组代替临时文件
-    mapfile -t cnacc_data < "./output/cnacc_data.tmp" 
-    mapfile -t gfwlist_data < "./output/gfwlist_data.tmp"
+    # 处理国内域名
+    cat "./output/cnacc_domain.tmp" | grep -v "^#" | sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' \
+        | sed -E 's/^(domain:|full:|\.)//g' | grep -E "${domain_regex}" | sort -u > "./output/cnacc_data.tmp"
     
-    # 并行生成精简数据
-    {
-        awk -F. '{print $(NF-1)"."$NF}' "./output/cnacc_data.tmp" | sort -u > "./output/lite_cnacc_data.tmp" &
-        awk -F. '{print $(NF-1)"."$NF}' "./output/gfwlist_data.tmp" | sort -u > "./output/lite_gfwlist_data.tmp" &
-    }
-    wait
+    # 处理受信任的国内域名
+    cat "./output/cnacc_trusted.tmp" | grep -v "^#" | sed -E 's/^server=\///;s/\/114\.114\.114\.114$//' \
+        | grep -E "${domain_regex}" | sort -u > "./output/cnacc_trust.tmp"
+    
+    # 处理 base64 编码的域名列表
+    cat "./output/gfwlist_base64.tmp" | while IFS= read -r line; do
+        echo "$line" | grep -q "^#" && continue
+        echo "$line" | base64 -d 2>/dev/null | sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' \
+            | sed -E 's/^(|\|\||@@|\.|http:\/\/|https:\/\/)//g' \
+            | grep -E "${domain_regex}" >> "./output/gfwlist_decoded.tmp"
+    done
 
-    # 读取精简数据到数组
-    mapfile -t lite_cnacc_data < "./output/lite_cnacc_data.tmp"
-    mapfile -t lite_gfwlist_data < "./output/lite_gfwlist_data.tmp"
+    # 处理普通域名列表
+    cat "./output/gfwlist_domain.tmp" | grep -v "^#" \
+        | sed -E 's/^(domain:|full:|https?:\/\/|\.)//g' | grep -E "${domain_regex}" \
+        | sort -u > "./output/gfwlist_normal.tmp"
+    
+    # 合并所有 GFW 域名并去重
+    cat "./output/gfwlist_decoded.tmp" "./output/gfwlist_normal.tmp" | sort -u > "./output/gfwlist_data.tmp"
+    
+    # 生成精简版数据
+    cat "./output/cnacc_data.tmp" "./output/cnacc_trust.tmp" | sort -u > "./output/cnacc_full.tmp"
+    cat "./output/cnacc_full.tmp" | rev | cut -d. -f1,2 | rev | sort -u > "./output/lite_cnacc_data.tmp"
+    cat "./output/gfwlist_data.tmp" | rev | cut -d. -f1,2 | rev | sort -u > "./output/lite_gfwlist_data.tmp"
+
+    # 读取数据到数组
+    cnacc_data=($(cat "./output/cnacc_full.tmp"))
+    gfwlist_data=($(cat "./output/gfwlist_data.tmp"))
+    lite_cnacc_data=($(cat "./output/lite_cnacc_data.tmp"))
+    lite_gfwlist_data=($(cat "./output/lite_gfwlist_data.tmp"))
+
+    # 删除临时文件
+    rm -f ./output/gfwlist_decoded.tmp ./output/gfwlist_normal.tmp
+
+    # 删除临时文件中的空行
+    sed -i '/^$/d' ./output/cnacc_data.tmp ./output/gfwlist_data.tmp ./output/lite_cnacc_data.tmp ./output/lite_gfwlist_data.tmp
 }
 # Generate Rules
 function GenerateRules() {
