@@ -867,32 +867,42 @@ function MoveGeneratedFiles() {
     local dest="./output"
     mkdir -p "${dest}"
     for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns smartdns-domain-rules; do
-        local src="${dest}/dns-${type}" # 优化路径定义
-        mkdir -p "${src}" # 确保目录存在
+        local src="${dest}/dns-${type}"
+        mkdir -p "${src}"
         case ${type} in
             adguardhome|adguardhome_new)
-                for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt" "${src}/blacklist_lite.txt" "${src}/whitelist_lite.txt"; do
+                # 添加完整的文件列表，包括full和lite版本
+                for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt" \
+                           "${src}/blacklist_lite.txt" "${src}/whitelist_lite.txt" \
+                           "${src}/blacklist_full_combine.txt" "${src}/whitelist_full_combine.txt" \
+                           "${src}/blacklist_lite_combine.txt" "${src}/whitelist_lite_combine.txt"; do
                     if [ -f "${file}" ]; then
                         mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
                     fi
                 done
                 ;;
             bind9|unbound|dnsmasq)
-                for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf" "${src}/blacklist_lite.conf" "${src}/whitelist_lite.conf"; do
+                # 添加完整的文件列表，包括full和lite版本
+                for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf" \
+                           "${src}/blacklist_lite.conf" "${src}/whitelist_lite.conf"; do
                     if [ -f "${file}" ]; then
                         mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
                     fi
                 done
                 ;;
             domain)
-                for file in "${src}/blacklist_full.txt" "${src}/blacklist_lite.txt" "${src}/whitelist_full.txt" "${src}/whitelist_lite.txt"; do
+                # 添加完整的文件列表，包括full和lite版本
+                for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt" \
+                           "${src}/blacklist_lite.txt" "${src}/whitelist_lite.txt"; do
                     if [ -f "${file}" ]; then
                         mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
                     fi
                 done
                 ;;
             smartdns*)
-                for file in "${src}/blacklist_full.conf" "${src}/blacklist_lite.conf" "${src}/whitelist_full.conf" "${src}/whitelist_lite.conf"; do
+                # 添加完整的文件列表，包括full和lite版本
+                for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf" \
+                           "${src}/blacklist_lite.conf" "${src}/whitelist_lite.conf"; do
                     if [ -f "${file}" ]; then
                         mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
                     fi
