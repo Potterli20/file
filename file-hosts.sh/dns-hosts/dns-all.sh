@@ -473,23 +473,26 @@ function GenerateRules() {
         function GenerateRulesBody() {
             if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
                 if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                    for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                        echo -n "${gfwlist_data[$gfwlist_data_task]}/" >> "${file_path}"
+                    # 只生成一次gfwlist数据
+                    for domain in "${gfwlist_data[@]}"; do
+                        echo -n "${domain}/" >> "${file_path}"
                     done
                 elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                    for cnacc_data_task in "${!cnacc_data[@]}"; do
-                        echo -n "${cnacc_data[$cnacc_data_task]}/" >> "${file_path}"
+                    # 只生成一次cnacc数据
+                    for domain in "${cnacc_data[@]}"; do
+                        echo -n "${domain}/" >> "${file_path}"
                     done
                 fi
             elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-                # 精简版数据处理
                 if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                    for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                        echo -n "${lite_gfwlist_data[$lite_gfwlist_data_task]}/" >> "${file_path}"
+                    # 只生成一次精简版gfwlist数据
+                    for domain in "${lite_gfwlist_data[@]}"; do
+                        echo -n "${domain}/" >> "${file_path}"
                     done
                 elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                    for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                        echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >> "${file_path}"
+                    # 只生成一次精简版cnacc数据
+                    for domain in "${lite_cnacc_data[@]}"; do
+                        echo -n "${domain}/" >> "${file_path}"
                     done
                 fi
             fi
@@ -498,23 +501,40 @@ function GenerateRules() {
             if [ "${dns_mode}" == "default" ]; then
                 echo -e "]#" >> "${file_path}"
             elif [ "${dns_mode}" == "domestic" ]; then
-                if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                    echo -e "]${foreign_dns[*]}" >> "${file_path}"
-                elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                    echo -e "]${domestic_dns[*]}" >> "${file_path}"
-                fi
+                for dns in "${domestic_dns[@]}"; do
+                    echo -e "]${dns}" >> "${file_path}"
+                done
             elif [ "${dns_mode}" == "foreign" ]; then
-                if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                    echo -e "]${foreign_dns[*]}" >> "${file_path}"
-                elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                    echo -e "]${domestic_dns[*]}" >> "${file_path}"
-                fi
+                for dns in "${foreign_dns[@]}"; do
+                    echo -e "]${dns}" >> "${file_path}"
+                done
             fi
         }
         function GenerateRulesProcess() {
             GenerateRulesHeader
             GenerateRulesBody
             GenerateRulesFooter
+            
+            # 如果是组合模式，添加对应的另一组规则
+            if [ "${generate_file}" == "blackwhite" ]; then
+                # 为gfwlist添加国内DNS
+                for domain in "${cnacc_data[@]}"; do
+                    GenerateRulesHeader
+                    echo -n "${domain}/" >> "${file_path}"
+                    for dns in "${domestic_dns[@]}"; do
+                        echo -e "]${dns}" >> "${file_path}"
+                    done
+                done
+            elif [ "${generate_file}" == "whiteblack" ]; then
+                # 为cnacc添加国外DNS
+                for domain in "${gfwlist_data[@]}"; do
+                    GenerateRulesHeader
+                    echo -n "${domain}/" >> "${file_path}"
+                    for dns in "${foreign_dns[@]}"; do
+                        echo -e "]${dns}" >> "${file_path}"
+                    done
+                done
+            fi
         }
         if [ "${dns_mode}" == "default" ]; then
             FileName && GenerateDefaultUpstream && GenerateRulesProcess
