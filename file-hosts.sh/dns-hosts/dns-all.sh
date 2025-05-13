@@ -884,52 +884,47 @@ function GenerateRulesForSoftware() {
 
 # Function to move generated files
 function MoveGeneratedFiles() {
-    local dest="./output"
+    # 修改输出目录为相对于脚本所在目录的路径
+    local base_dir="./hosts-dns"
+    local dest="${base_dir}/output"
+    
+    # 确保目录存在
     mkdir -p "${dest}"
+    
     for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns smartdns-domain-rules; do
         local src="${dest}/dns-${type}"
+        
+        # 确保源目录存在
         mkdir -p "${src}"
+        
         case ${type} in
             adguardhome|adguardhome_new)
-                # 添加完整的文件列表，包括full和lite版本
-                for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt" \
-                           "${src}/blacklist_lite.txt" "${src}/whitelist_lite.txt" \
-                           "${src}/blacklist_full_combine.txt" "${src}/whitelist_full_combine.txt" \
-                           "${src}/blacklist_lite_combine.txt" "${src}/whitelist_lite_combine.txt"; do
+                for file in "${src}"/blacklist_*.txt "${src}"/whitelist_*.txt; do
                     if [ -f "${file}" ]; then
-                        mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
+                        cp "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
                     fi
                 done
                 ;;
-            bind9|unbound|dnsmasq)
-                # 添加完整的文件列表，包括full和lite版本
-                for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf" \
-                           "${src}/blacklist_lite.conf" "${src}/whitelist_lite.conf"; do
+            bind9|unbound|dnsmasq|smartdns*)
+                for file in "${src}"/blacklist_*.conf "${src}"/whitelist_*.conf; do
                     if [ -f "${file}" ]; then
-                        mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
+                        cp "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
                     fi
                 done
                 ;;
             domain)
-                # 添加完整的文件列表，包括full和lite版本
-                for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt" \
-                           "${src}/blacklist_lite.txt" "${src}/whitelist_lite.txt"; do
+                for file in "${src}"/blacklist_*.txt "${src}"/whitelist_*.txt; do
                     if [ -f "${file}" ]; then
-                        mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
-                    fi
-                done
-                ;;
-            smartdns*)
-                # 添加完整的文件列表，包括full和lite版本
-                for file in "${src}/blacklist_full.conf" "${src}/whitelist_full.conf" \
-                           "${src}/blacklist_lite.conf" "${src}/whitelist_lite.conf"; do
-                    if [ -f "${file}" ]; then
-                        mv "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")" 2>/dev/null
+                        cp "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
                     fi
                 done
                 ;;
         esac
     done
+    
+    # 显示生成的文件列表以便调试
+    echo "Generated files:"
+    ls -la "${dest}/dnshosts-all-*"
 }
 
 ## Process
