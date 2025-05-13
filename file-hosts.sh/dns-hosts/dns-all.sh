@@ -338,7 +338,7 @@ function GenerateRules() {
             if [ "${software_name}" == "adguardhome" ]; then
                 # cnacc数据
                 if [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                    for domain- in "${cnacc_data[@]}"; do
+                    for domain in "${cnacc_data[@]}"; do
                         echo "[/${domain}/]#" >>"${file_path}"
                         for dns in "${domestic_dns[@]}"; do
                             echo "[/${domain}/]${dns}" >>"${file_path}"
@@ -938,4 +938,3 @@ GetData
 # Call AnalyseData
 AnalyseData
 # Call OutputData
-OutputData
