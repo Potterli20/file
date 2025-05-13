@@ -871,6 +871,10 @@ function OutputData() {
 
     # Move files
     MoveGeneratedFiles
+
+    # 立即列出所有生成的文件，便于CI日志调试
+    echo "Final output files:"
+    find "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/hosts-dns/output" -type f -ls
 }
 
 # Function to generate rules for a specific software
