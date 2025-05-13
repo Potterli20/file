@@ -160,6 +160,11 @@ function GenerateRules() {
         else
             generate_temp="debug"
         fi
+        
+        # 获取脚本所在目录
+        local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+        local base_dir="${script_dir}/hosts-dns"
+        
         if [ "${software_name}" == "adguardhome" ] || [ "${software_name}" == "adguardhome_new" ] || [ "${software_name}" == "domain" ]; then
             file_extension="txt"
         elif [ "${software_name}" == "bind9" ] || [ "${software_name}" == "dnsmasq" ] || [ "${software_name}" == "smartdns" ] || [ "${software_name}" == "smartdns-domain-rules" ] || [ "${software_name}" == "unbound" ]; then
@@ -167,11 +172,15 @@ function GenerateRules() {
         else
             file_extension="dev"
         fi
-        if [ ! -d "./output/dns-${software_name}" ]; then
-            mkdir -p "./output/dns-${software_name}"
-        fi
+        
+        local output_dir="${base_dir}/output/dns-${software_name}"
+        mkdir -p "${output_dir}"
+        
         file_name="${generate_temp}list_${generate_mode}.${file_extension}"
-        file_path="./output/dns-${software_name}/${file_name}"
+        file_path="${output_dir}/${file_name}"
+        
+        # Debug输出
+        echo "Creating file: ${file_path}"
     }
     function GenerateDefaultUpstream() {
         case ${software_name} in
@@ -884,47 +893,60 @@ function GenerateRulesForSoftware() {
 
 # Function to move generated files
 function MoveGeneratedFiles() {
-    # 修改输出目录为相对于脚本所在目录的路径
-    local base_dir="./hosts-dns"
+    # 使用绝对路径
+    local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    local base_dir="${script_dir}/hosts-dns"
     local dest="${base_dir}/output"
     
-    # 确保目录存在
-    mkdir -p "${dest}"
+    # Debug输出
+    echo "Script directory: ${script_dir}"
+    echo "Base directory: ${base_dir}"
+    echo "Destination directory: ${dest}"
+    
+    # 确保目录存在并显示创建过程
+    mkdir -p "${dest}" && echo "Created directory: ${dest}"
     
     for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns smartdns-domain-rules; do
         local src="${dest}/dns-${type}"
+        mkdir -p "${src}" && echo "Created directory: ${src}"
         
-        # 确保源目录存在
-        mkdir -p "${src}"
+        # 添加调试信息
+        echo "Processing ${type} files..."
         
         case ${type} in
             adguardhome|adguardhome_new)
                 for file in "${src}"/blacklist_*.txt "${src}"/whitelist_*.txt; do
                     if [ -f "${file}" ]; then
-                        cp "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
+                        cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
+                    else
+                        echo "Warning: No matching files found for pattern: ${file}"
                     fi
                 done
                 ;;
             bind9|unbound|dnsmasq|smartdns*)
                 for file in "${src}"/blacklist_*.conf "${src}"/whitelist_*.conf; do
                     if [ -f "${file}" ]; then
-                        cp "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
+                        cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
+                    else
+                        echo "Warning: No matching files found for pattern: ${file}"
                     fi
                 done
                 ;;
             domain)
                 for file in "${src}"/blacklist_*.txt "${src}"/whitelist_*.txt; do
                     if [ -f "${file}" ]; then
-                        cp "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
+                        cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
+                    else
+                        echo "Warning: No matching files found for pattern: ${file}"
                     fi
                 done
                 ;;
         esac
     done
     
-    # 显示生成的文件列表以便调试
-    echo "Generated files:"
-    ls -la "${dest}/dnshosts-all-*"
+    # 列出生成的所有文件
+    echo "Generated files in ${dest}:"
+    find "${dest}" -type f -ls
 }
 
 ## Process
