@@ -1,5 +1,5 @@
 function GetData() {
-    echo -e "Fetching data..."
+    echo -e "GetData running..."
     cnacc_domain=(
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/video-domains"
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/china-root"
@@ -84,75 +84,79 @@ function GetData() {
     gfwlist2agh_modify=(
         "https://raw.githubusercontent.com/Potterli20/file/refs/heads/main/file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt"
     )
-    mkdir ./hosts-dns && cd ./hosts-dns
+    mkdir -p ./output
     for cnacc_domain_task in "${!cnacc_domain[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${cnacc_domain[$cnacc_domain_task]}" | sed "s/^\.//g" >>./cnacc_domain.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${cnacc_domain[$cnacc_domain_task]}" | sed "s/^\.//g" >>./output/cnacc_domain.tmp
     done
     for cnacc_trusted_task in "${!cnacc_trusted[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${cnacc_trusted[$cnacc_trusted_task]}" >>./cnacc_trusted.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${cnacc_trusted[$cnacc_trusted_task]}" >>./output/cnacc_trusted.tmp
     done
     for gfwlist_base64_task in "${!gfwlist_base64[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${gfwlist_base64[$gfwlist_base64_task]}" | base64 -d >>./gfwlist_base64.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${gfwlist_base64[$gfwlist_base64_task]}" | base64 -d >>./output/gfwlist_base64.tmp
     done
     for gfwlist_domain_task in "${!gfwlist_domain[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${gfwlist_domain[$gfwlist_domain_task]}" | sed "s/^\.//g" >>./gfwlist_domain.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${gfwlist_domain[$gfwlist_domain_task]}" | sed "s/^\.//g" >>./output/gfwlist_domain.tmp
     done
     for gfwlist2agh_modify_task in "${!gfwlist2agh_modify[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${gfwlist2agh_modify[$gfwlist2agh_modify_task]}" >>./gfwlist2agh_modify.tmp
+        curl -m 10 -s -L --connect-timeout 15 "${gfwlist2agh_modify[$gfwlist2agh_modify_task]}" >>./output/gfwlist2agh_modify.tmp
     done
 }
 # Analyse Data
 function AnalyseData() {
-    echo -e "Analyzing data..."
+    echo -e "AnalyseData running..."
     
     # 设置域名正则表达式
     domain_regex="^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$|^[a-zA-Z0-9]+\.(cn|org\.cn|ac\.cn|mil\.cn|net\.cn|gov\.cn|com\.cn|edu\.cn)$"
     lite_domain_regex="^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$"
 
     # 处理国内域名
-    cat "./cnacc_domain.tmp" | grep -v "^#" | sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' \
-        | sed -E 's/^(domain:|full:|\.)//g' | grep -E "${domain_regex}" | sort -u > "./cnacc_data.tmp"
+    cat "./output/cnacc_domain.tmp" | grep -v "^#" | sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' \
+        | sed -E 's/^(domain:|full:|\.)//g' | grep -E "${domain_regex}" | sort -u > "./output/cnacc_data.tmp"
     
     # 处理受信任的国内域名
-    cat "./cnacc_trusted.tmp" | grep -v "^#" | sed -E 's/^server=\///;s/\/114\.114\.114\.114$//' \
-        | grep -E "${domain_regex}" | sort -u > "./cnacc_trust.tmp"
+    cat "./output/cnacc_trusted.tmp" | grep -v "^#" | sed -E 's/^server=\///;s/\/114\.114\.114\.114$//' \
+        | grep -E "${domain_regex}" | sort -u > "./output/cnacc_trust.tmp"
     
     # 处理 base64 编码的域名列表
-    cat "./gfwlist_base64.tmp" | while IFS= read -r line; do
+    cat "./output/gfwlist_base64.tmp" | while IFS= read -r line; do
         echo "$line" | grep -q "^#" && continue
         echo "$line" | base64 -d 2>/dev/null | sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' \
             | sed -E 's/^(|\|\||@@|\.|http:\/\/|https:\/\/)//g' \
-            | grep -E "${domain_regex}" >> "./gfwlist_decoded.tmp"
+            | grep -E "${domain_regex}" >> "./output/gfwlist_decoded.tmp"
     done
 
     # 处理普通域名列表
-    cat "./gfwlist_domain.tmp" | grep -v "^#" \
+    cat "./output/gfwlist_domain.tmp" | grep -v "^#" \
         | sed -E 's/^(domain:|full:|https?:\/\/|\.)//g' | grep -E "${domain_regex}" \
-        | sort -u > "./gfwlist_normal.tmp"
+        | sort -u > "./output/gfwlist_normal.tmp"
     
     # 合并所有 GFW 域名并去重
-    cat "./gfwlist_decoded.tmp" "./gfwlist_normal.tmp" | sort -u > "./gfwlist_data.tmp"
+    cat "./output/gfwlist_decoded.tmp" "./output/gfwlist_normal.tmp" | sort -u > "./output/gfwlist_data.tmp"
     
     # 生成精简版数据
-    cat "./cnacc_data.tmp" "./cnacc_trust.tmp" | sort -u > "./cnacc_full.tmp"
-    cat "./cnacc_full.tmp" | rev | cut -d. -f1,2 | rev | sort -u > "./lite_cnacc_data.tmp"
-    cat "./gfwlist_data.tmp" | rev | cut -d. -f1,2 | rev | sort -u > "./lite_gfwlist_data.tmp"
+    cat "./output/cnacc_data.tmp" "./output/cnacc_trust.tmp" | sort -u > "./output/cnacc_full.tmp"
+    cat "./output/cnacc_full.tmp" | rev | cut -d. -f1,2 | rev | sort -u > "./output/lite_cnacc_data.tmp"
+    cat "./output/gfwlist_data.tmp" | rev | cut -d. -f1,2 | rev | sort -u > "./output/lite_gfwlist_data.tmp"
 
     # 读取数据到数组
-    cnacc_data=($(cat "./cnacc_full.tmp"))
-    gfwlist_data=($(cat "./gfwlist_data.tmp"))
-    lite_cnacc_data=($(cat "./lite_cnacc_data.tmp"))
-    lite_gfwlist_data=($(cat "./lite_gfwlist_data.tmp"))
+    cnacc_data=($(cat "./output/cnacc_full.tmp"))
+    gfwlist_data=($(cat "./output/gfwlist_data.tmp"))
+    lite_cnacc_data=($(cat "./output/lite_cnacc_data.tmp"))
+    lite_gfwlist_data=($(cat "./output/lite_gfwlist_data.tmp"))
 
     # 删除临时文件
-    rm -f ./gfwlist_decoded.tmp ./gfwlist_normal.tmp
+    rm -f ./output/gfwlist_decoded.tmp ./output/gfwlist_normal.tmp
 
     # 删除临时文件中的空行
-    sed -i '/^$/d' ./cnacc_data.tmp ./gfwlist_data.tmp ./lite_cnacc_data.tmp ./lite_gfwlist_data.tmp
+    sed -i '/^$/d' ./output/cnacc_data.tmp ./output/gfwlist_data.tmp ./output/lite_cnacc_data.tmp ./output/lite_gfwlist_data.tmp
 }
 # Generate Rules
 function GenerateRules() {
+    echo -e "GenerateRules running..."
     function FileName() {
+        echo -e "\n=== FileName: Generating ${software_name}/${generate_temp}list_${generate_mode}.${file_extension} ==="
+        echo -e "FileName running..."
+        echo -e "FileName..."
         if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "whiteblack" ]; then
             generate_temp="black"
         elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "blackwhite" ]; then
@@ -163,7 +167,7 @@ function GenerateRules() {
         
         # 获取脚本所在目录
         local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-        local base_dir="${script_dir}/hosts-dns"
+        local base_dir="${script_dir}"   # 修正为当前目录
         
         if [ "${software_name}" == "adguardhome" ] || [ "${software_name}" == "adguardhome_new" ] || [ "${software_name}" == "domain" ]; then
             file_extension="txt"
@@ -183,6 +187,8 @@ function GenerateRules() {
         echo "Creating file: ${file_path}"
     }
     function GenerateDefaultUpstream() {
+        echo -e "-> GenerateDefaultUpstream for ${software_name}"
+        echo -e "GenerateDefaultUpstream running..."
         case ${software_name} in
         adguardhome|adguardhome_new)
             if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "lite" ]; then
@@ -211,6 +217,63 @@ function GenerateRules() {
             exit 1
             ;;
         esac
+    }
+    function GenerateRulesHeader() {
+        echo -e "  + Adding header"
+        echo -e "GenerateRulesHeader running..."
+        echo -n "[/" >>"${file_path}"
+    }
+    function GenerateRulesBody() {
+        echo -e "  + Adding body"
+        echo -e "GenerateRulesBody running..."
+        if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
+            if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+                for gfwlist_data_task in "${!gfwlist_data[@]}"; do
+                    echo -n "${gfwlist_data[$gfwlist_data_task]}/" >>"${file_path}"
+                done
+            elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
+                for cnacc_data_task in "${!cnacc_data[@]}"; do
+                    echo -n "${cnacc_data[$cnacc_data_task]}/" >>"${file_path}"
+                done
+            fi
+        elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
+            # 精简版数据处理
+            if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+                for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
+                    echo -n "${lite_gfwlist_data[$lite_gfwlist_data_task]}/" >>"${file_path}"
+                done
+            elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
+                for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
+                    echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >>"${file_path}"
+                done
+            fi
+        fi
+    }
+    function GenerateRulesFooter() {
+        echo -e "  + Adding footer"
+        echo -e "GenerateRulesFooter running..."
+        if [ "${dns_mode}" == "default" ]; then
+            echo -e "]#" >>"${file_path}"
+        elif [ "${dns_mode}" == "domestic" ]; then
+            if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+                echo -e "]${foreign_dns[foreign_dns_task]}" >>"${file_path}"
+            elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
+                echo -e "]${domestic_dns[domestic_dns_task]}" >>"${file_path}"
+            fi
+        elif [ "${dns_mode}" == "foreign" ]; then
+            if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+                echo -e "]${foreign_dns[foreign_dns_task]}" >>"${file_path}"
+            elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
+                echo -e "]${domestic_dns[domestic_dns_task]}" >>"${file_path}"
+            fi
+        fi
+    }
+    function GenerateRulesProcess() {
+        echo -e "-> Generating rules"
+        echo -e "GenerateRulesProcess running..."
+        GenerateRulesHeader
+        GenerateRulesBody
+        GenerateRulesFooter
     }
     case ${software_name} in
     adguardhome)
@@ -293,9 +356,13 @@ function GenerateRules() {
         )
 
         function GenerateRulesHeader() {
+            echo -e "  + Adding header"
+            echo -e "GenerateRulesHeader running..."
             echo -n "[/" >>"${file_path}"
         }
         function GenerateRulesBody() {
+            echo -e "  + Adding body"
+            echo -e "GenerateRulesBody running..."
             if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
                 if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
                     for gfwlist_data_task in "${!gfwlist_data[@]}"; do
@@ -320,6 +387,8 @@ function GenerateRules() {
             fi
         }
         function GenerateRulesFooter() {
+            echo -e "  + Adding footer"
+            echo -e "GenerateRulesFooter running..."
             if [ "${dns_mode}" == "default" ]; then
                 echo -e "]#" >>"${file_path}"
             elif [ "${dns_mode}" == "domestic" ]; then
@@ -337,6 +406,8 @@ function GenerateRules() {
             fi
         }
         function GenerateRulesProcess() {
+            echo -e "-> Generating rules"
+            echo -e "GenerateRulesProcess running..."
             GenerateRulesHeader
             GenerateRulesBody
             GenerateRulesFooter
@@ -477,9 +548,13 @@ function GenerateRules() {
         )
 
         function GenerateRulesHeader() {
+            echo -e "  + Adding header"
+            echo -e "GenerateRulesHeader running..."
             echo -n "[/" >> "${file_path}"
         }
         function GenerateRulesBody() {
+            echo -e "  + Adding body"
+            echo -e "GenerateRulesBody running..."
             if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
                 if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
                     # 只生成一次gfwlist数据
@@ -507,6 +582,8 @@ function GenerateRules() {
             fi
         }
         function GenerateRulesFooter() {
+            echo -e "  + Adding footer"
+            echo -e "GenerateRulesFooter running..."
             if [ "${dns_mode}" == "default" ]; then
                 echo -e "]#" >> "${file_path}"
             elif [ "${dns_mode}" == "domestic" ]; then
@@ -520,6 +597,8 @@ function GenerateRules() {
             fi
         }
         function GenerateRulesProcess() {
+            echo -e "-> Generating rules"
+            echo -e "GenerateRulesProcess running..."
             GenerateRulesHeader
             GenerateRulesBody
             GenerateRulesFooter
@@ -796,9 +875,13 @@ function GenerateRules() {
         )
         forward_ssl_tls_upstream="yes"
         function GenerateRulesHeader() {
+            echo -e "  + Adding header"
+            echo -e "GenerateRulesHeader running..."
             echo "forward-zone:" >>"${file_path}"
         }
         function GenerateRulesFooter() {
+            echo -e "  + Adding footer"
+            echo -e "GenerateRulesFooter running..."
             if [ "${dns_mode}" == "domestic" ]; then
                 for domestic_dns_task in "${!domestic_dns[@]}"; do
                     echo "    forward-addr: \"${domestic_dns[$domestic_dns_task]}\"" >>"${file_path}"
@@ -832,6 +915,7 @@ function GenerateRules() {
 }
 # Output Data
 function OutputData() {
+    echo -e "OutputData running..."
     echo -e "Generating output..."
 
     # AdGuard Home
@@ -879,6 +963,8 @@ function OutputData() {
 
 # Function to generate rules for a specific software
 function GenerateRulesForSoftware() {
+    echo -e "\n=== Processing ${1} ==="
+    echo -e "GenerateRulesForSoftware running with: software=$1, modes=$2, files=$3"
     local software=$1
     local modes=$2
     local files=$3
@@ -897,9 +983,10 @@ function GenerateRulesForSoftware() {
 
 # Function to move generated files
 function MoveGeneratedFiles() {
+    echo -e "MoveGeneratedFiles running..."
     # 使用绝对路径
     local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    local base_dir="${script_dir}/hosts-dns"
+    local base_dir="${script_dir}"   # 修正为当前目录
     local dest="${base_dir}/output"
     
     # Debug输出
@@ -959,3 +1046,4 @@ GetData
 # Call AnalyseData
 AnalyseData
 # Call OutputData
+OutputData
