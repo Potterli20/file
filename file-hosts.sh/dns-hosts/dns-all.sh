@@ -251,26 +251,27 @@ function GenerateRules() {
         echo -e "  + Adding body"
         echo -e "GenerateRulesBody running..."
         
-        # 使用临时变量预先构建内容,避免频繁IO
-        local content=""
+        # 使用临时变量预先构建内容
+        local content1="" content2=""
         
         if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
-            if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                # 使用数组拼接而不是逐行追加
-                content=$(printf "%s/" "${gfwlist_data[@]}")
-            elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                content=$(printf "%s/" "${cnacc_data[@]}")
-            fi
+            # 同时构建两种内容
+            content1=$(printf "%s/" "${gfwlist_data[@]}")
+            content2=$(printf "%s/" "${cnacc_data[@]}")
         elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-            if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                content=$(printf "%s/" "${lite_gfwlist_data[@]}")
-            elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                content=$(printf "%s/" "${lite_cnacc_data[@]}")
-            fi
+            # 同时构建两种精简版内容
+            content1=$(printf "%s/" "${lite_gfwlist_data[@]}")
+            content2=$(printf "%s/" "${lite_cnacc_data[@]}")
         fi
         
-        # 一次性写入文件
-        echo -n "$content" >> "${file_path}"
+        # 根据生成类型决定写入顺序
+        if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+            echo -n "$content1" >> "${file_path}"
+            [ "${generate_file}" == "blackwhite" ] && echo -n "$content2" >> "${file_path}"
+        elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
+            echo -n "$content2" >> "${file_path}" 
+            [ "${generate_file}" == "whiteblack" ] && echo -n "$content1" >> "${file_path}"
+        fi
     }
     function GenerateRulesFooter() {
         echo -e "  + Adding footer"
