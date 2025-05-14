@@ -1,8 +1,3 @@
-# 安装依赖
-function InstallDeps() {
-  apt-get update && apt-get install -y parallel mawk fd-find
-}
-
 function GetData() {
     echo -e "GetData running..."
     cnacc_domain=(
@@ -101,67 +96,82 @@ function GetData() {
 function AnalyseData() {
     echo -e "AnalyseData running..."
     
-    # 设置域名正则表达式
-    domain_regex="^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$|^[a-zA-Z0-9]+\.(cn|org\.cn|ac\.cn|mil\.cn|net\.cn|gov\.cn|com\.cn|edu\.cn)$"
-    lite_domain_regex="^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$"
-
-    # 并行处理所有数据文件
-    parallel --pipe -j8 mawk -v regex="$domain_regex" '
-        /^[^#]/ {
-            gsub(/^[[:space:]]*|[[:space:]]*$/,"")
-            gsub(/^(domain:|full:|\.)/, "")
-            if ($0 ~ regex) print
-        }
-    ' < ./output/cnacc_domain.tmp | sort -u > ./output/cnacc_data.tmp &
-
-    parallel --pipe -j8 mawk -v regex="$domain_regex" '
-        /^[^#]/ {
-            gsub(/^server=\//,"")
-            gsub(/\/114\.114\.114\.114$/,"")
-            if ($0 ~ regex) print
-        }
-    ' < ./output/cnacc_trusted.tmp | sort -u > ./output/cnacc_trust.tmp &
+    # 只保留一个正则表达式定义,移除未使用的lite_domain_regex
+    domain_regex='^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$|^[a-zA-Z0-9]+\.(cn|org\.cn|ac\.cn|mil\.cn|net\.cn|gov\.cn|com\.cn|edu\.cn)$'
     
-    # 并行gfwlist处理
+    # 使用临时文件存储中间结果
+    tmp_dir="./output/tmp"
+    mkdir -p "$tmp_dir"
+    
+    # 并行处理数据
     {
-        parallel --pipe -j8 'base64 -d 2>/dev/null' < ./output/gfwlist_base64.tmp | \
-        parallel --pipe -j8 mawk -v regex="$domain_regex" '
-            /^[^#]/ {
-                gsub(/^[[:space:]]*|[[:space:]]*$/,"")
-                gsub(/^(\|\||@@|\.|https?:\/\/)/, "")
-                if ($0 ~ regex) print
-            }
-        ' > ./output/gfwlist_decoded.tmp &
+        # 使用grep替代mawk进行初步过滤
+        grep -vE '^#' "./output/cnacc_domain.tmp" | \
+        sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+        sed -E 's/^(domain:|full:|\.)//g' | \
+        grep -E "$domain_regex" | sort -u > "$tmp_dir/cnacc_data.tmp"
 
-        parallel --pipe -j8 mawk -v regex="$domain_regex" '
-            /^[^#]/ {
-                gsub(/^(domain:|full:|https?:\/\/|\.)/, "")
-                if ($0 ~ regex) print
-            }
-        ' < ./output/gfwlist_domain.tmp | sort -u > ./output/gfwlist_normal.tmp &
-    }
-    wait
-
-    # 使用parallel并行处理合并和精简
-    {
-        parallel --pipe sort -u ::: ./output/gfwlist_*.tmp > ./output/gfwlist_data.tmp
-        parallel --pipe sort -u ::: ./output/cnacc_*.tmp > ./output/cnacc_full.tmp
+        grep -vE '^#' "./output/cnacc_trusted.tmp" | \
+        sed -E 's/^server=\///;s/\/114\.114\.114\.114$//' | \
+        grep -E "$domain_regex" | sort -u > "$tmp_dir/cnacc_trust.tmp"
         
-        parallel "rev | cut -d. -f1,2 | rev | sort -u" ::: \
-            ./output/cnacc_full.tmp > ./output/lite_cnacc_data.tmp \
-            ./output/gfwlist_data.tmp > ./output/lite_gfwlist_data.tmp
+        # Base64解码后再处理
+        base64 -d < "./output/gfwlist_base64.tmp" 2>/dev/null | \
+        grep -vE '^#' | \
+        sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+        sed -E 's/^(\|\||@@|\.|https?:\/\/)//g' | \
+        grep -E "$domain_regex" > "$tmp_dir/gfwlist_decoded.tmp"
+        
+        grep -vE '^#' "./output/gfwlist_domain.tmp" | \
+        sed -E 's/^(domain:|full:|https?:\/\/|\.)//g' | \
+        grep -E "$domain_regex" | sort -u > "$tmp_dir/gfwlist_normal.tmp"
+    } &
+    wait
+    
+    # 合并数据
+    cat "$tmp_dir/gfwlist_decoded.tmp" "$tmp_dir/gfwlist_normal.tmp" | sort -u > "./output/gfwlist_data.tmp"
+    cat "$tmp_dir/cnacc_data.tmp" "$tmp_dir/cnacc_trust.tmp" | sort -u > "./output/cnacc_full.tmp"
+    
+    # 生成精简版 - 使用parallel结合awk进行精确处理
+    {
+        # 定义域名验证和提取函数
+        echo '
+        function is_valid_domain(domain) {
+            # 过滤IP地址格式
+            if(domain ~ /^[0-9.]+$/) return 0
+            # 过滤非法字符
+            if(domain ~ /[^a-zA-Z0-9.-]/) return 0
+            # 确保有效的域名结构
+            if(domain !~ /^[a-zA-Z0-9][a-zA-Z0-9.-]*\.[a-zA-Z]{2,}$/) return 1
+            return 1
+        }
+        {
+            # 分割并提取最后两级域名
+            n = split($0, parts, ".")
+            if(n >= 2) {
+                domain = parts[n-1] "." parts[n]
+                if(is_valid_domain(domain)) print domain
+            }
+        }' > "${tmp_dir}/domain_filter.awk"
+
+        # 使用parallel和awk并行处理数据
+        parallel --pipe -j4 "awk -f ${tmp_dir}/domain_filter.awk | sort -u" \
+            < "./output/cnacc_full.tmp" > "./output/lite_cnacc_data.tmp" &
+
+        parallel --pipe -j4 "awk -f ${tmp_dir}/domain_filter.awk | sort -u" \
+            < "./output/gfwlist_data.tmp" > "./output/lite_gfwlist_data.tmp" &
     }
     wait
 
-    # 使用mapfile快速读取到数组
-    mapfile -t cnacc_data < <(sort -u ./output/cnacc_full.tmp)
-    mapfile -t gfwlist_data < <(sort -u ./output/gfwlist_data.tmp)  
-    mapfile -t lite_cnacc_data < <(sort -u ./output/lite_cnacc_data.tmp)
-    mapfile -t lite_gfwlist_data < <(sort -u ./output/lite_gfwlist_data.tmp)
+    # 读取到数组
+    mapfile -t cnacc_data < "./output/cnacc_full.tmp"
+    mapfile -t gfwlist_data < "./output/gfwlist_data.tmp"
+    mapfile -t lite_cnacc_data < "./output/lite_cnacc_data.tmp"
+    mapfile -t lite_gfwlist_data < "./output/lite_gfwlist_data.tmp"
 
     # 清理临时文件
-    rm -f ./output/{gfwlist_decoded,gfwlist_normal}.tmp
-    parallel 'sed -i "/^$/d" {}' ::: ./output/*.tmp
+    rm -rf "$tmp_dir"
+    sed -i '/^$/d' ./output/*.tmp
 }
 
 # Generate Rules
