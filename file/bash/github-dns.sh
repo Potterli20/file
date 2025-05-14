@@ -6,3 +6,4 @@ sudo prlimit --pid $$ --nofile=500000:500000
 ulimit -a
 sudo apt-get -qq update
 sudo apt reinstall curl git libnss3* ca-certificates grep findutils -y
+sudo apt-get install -y parallel mawk fd-find

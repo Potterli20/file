@@ -1,3 +1,8 @@
+# 安装依赖
+function InstallDeps() {
+  apt-get update && apt-get install -y parallel mawk fd-find
+}
+
 function GetData() {
     echo -e "GetData running..."
     cnacc_domain=(
@@ -85,33 +90,13 @@ function GetData() {
         "https://raw.githubusercontent.com/Potterli20/file/refs/heads/main/file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt"
     )
     mkdir -p ./output
-    {
-        for url in "${cnacc_domain[@]}"; do
-            curl -m 10 -s -L --connect-timeout 15 "$url" &
-        done 
-    } | sed "s/^\.//g" > ./output/cnacc_domain.tmp
-
-    {
-        for url in "${cnacc_trusted[@]}"; do
-            curl -m 10 -s -L --connect-timeout 15 "$url" &
-        done
-    } > ./output/cnacc_trusted.tmp
-    
-    {
-        for url in "${gfwlist_base64[@]}"; do
-            curl -m 10 -s -L --connect-timeout 15 "$url" & 
-        done
-    } | base64 -d > ./output/gfwlist_base64.tmp
-
-    {
-        for url in "${gfwlist_domain[@]}"; do
-            curl -m 10 -s -L --connect-timeout 15 "$url" &
-        done
-    } | sed "s/^\.//g" > ./output/gfwlist_domain.tmp
-
-    # 等待所有后台任务完成
-    wait
+    # 使用parallel并行下载
+    parallel -j 8 "curl -m 10 -s -L --connect-timeout 15 {} | sed 's/^\.//g' >> ./output/cnacc_domain.tmp" ::: "${cnacc_domain[@]}"
+    parallel -j 8 "curl -m 10 -s -L --connect-timeout 15 {} >> ./output/cnacc_trusted.tmp" ::: "${cnacc_trusted[@]}"  
+    parallel -j 8 "curl -m 10 -s -L --connect-timeout 15 {} | base64 -d >> ./output/gfwlist_base64.tmp" ::: "${gfwlist_base64[@]}"
+    parallel -j 8 "curl -m 10 -s -L --connect-timeout 15 {} | sed 's/^\.//g' >> ./output/gfwlist_domain.tmp" ::: "${gfwlist_domain[@]}"
 }
+
 # Analyse Data
 function AnalyseData() {
     echo -e "AnalyseData running..."
@@ -120,47 +105,65 @@ function AnalyseData() {
     domain_regex="^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$|^[a-zA-Z0-9]+\.(cn|org\.cn|ac\.cn|mil\.cn|net\.cn|gov\.cn|com\.cn|edu\.cn)$"
     lite_domain_regex="^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$"
 
-    # 处理国内域名
-    cat "./output/cnacc_domain.tmp" | grep -v "^#" | sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' \
-        | sed -E 's/^(domain:|full:|\.)//g' | grep -E "${domain_regex}" | sort -u > "./output/cnacc_data.tmp"
-    
-    # 处理受信任的国内域名
-    cat "./output/cnacc_trusted.tmp" | grep -v "^#" | sed -E 's/^server=\///;s/\/114\.114\.114\.114$//' \
-        | grep -E "${domain_regex}" | sort -u > "./output/cnacc_trust.tmp"
-    
-    # 处理 base64 编码的域名列表
-    cat "./output/gfwlist_base64.tmp" | while IFS= read -r line; do
-        echo "$line" | grep -q "^#" && continue
-        echo "$line" | base64 -d 2>/dev/null | sed -E 's/^[[:space:]]*//;s/[[:space:]]*$//' \
-            | sed -E 's/^(|\|\||@@|\.|http:\/\/|https:\/\/)//g' \
-            | grep -E "${domain_regex}" >> "./output/gfwlist_decoded.tmp"
-    done
+    # 并行处理所有数据文件
+    parallel --pipe -j8 mawk -v regex="$domain_regex" '
+        /^[^#]/ {
+            gsub(/^[[:space:]]*|[[:space:]]*$/,"")
+            gsub(/^(domain:|full:|\.)/, "")
+            if ($0 ~ regex) print
+        }
+    ' < ./output/cnacc_domain.tmp | sort -u > ./output/cnacc_data.tmp &
 
-    # 处理普通域名列表
-    cat "./output/gfwlist_domain.tmp" | grep -v "^#" \
-        | sed -E 's/^(domain:|full:|https?:\/\/|\.)//g' | grep -E "${domain_regex}" \
-        | sort -u > "./output/gfwlist_normal.tmp"
+    parallel --pipe -j8 mawk -v regex="$domain_regex" '
+        /^[^#]/ {
+            gsub(/^server=\//,"")
+            gsub(/\/114\.114\.114\.114$/,"")
+            if ($0 ~ regex) print
+        }
+    ' < ./output/cnacc_trusted.tmp | sort -u > ./output/cnacc_trust.tmp &
     
-    # 合并所有 GFW 域名并去重
-    cat "./output/gfwlist_decoded.tmp" "./output/gfwlist_normal.tmp" | sort -u > "./output/gfwlist_data.tmp"
-    
-    # 生成精简版数据
-    cat "./output/cnacc_data.tmp" "./output/cnacc_trust.tmp" | sort -u > "./output/cnacc_full.tmp"
-    cat "./output/cnacc_full.tmp" | rev | cut -d. -f1,2 | rev | sort -u > "./output/lite_cnacc_data.tmp"
-    cat "./output/gfwlist_data.tmp" | rev | cut -d. -f1,2 | rev | sort -u > "./output/lite_gfwlist_data.tmp"
+    # 并行gfwlist处理
+    {
+        parallel --pipe -j8 'base64 -d 2>/dev/null' < ./output/gfwlist_base64.tmp | \
+        parallel --pipe -j8 mawk -v regex="$domain_regex" '
+            /^[^#]/ {
+                gsub(/^[[:space:]]*|[[:space:]]*$/,"")
+                gsub(/^(\|\||@@|\.|https?:\/\/)/, "")
+                if ($0 ~ regex) print
+            }
+        ' > ./output/gfwlist_decoded.tmp &
 
-    # 读取数据到数组
-    cnacc_data=($(cat "./output/cnacc_full.tmp"))
-    gfwlist_data=($(cat "./output/gfwlist_data.tmp"))
-    lite_cnacc_data=($(cat "./output/lite_cnacc_data.tmp"))
-    lite_gfwlist_data=($(cat "./output/lite_gfwlist_data.tmp"))
+        parallel --pipe -j8 mawk -v regex="$domain_regex" '
+            /^[^#]/ {
+                gsub(/^(domain:|full:|https?:\/\/|\.)/, "")
+                if ($0 ~ regex) print
+            }
+        ' < ./output/gfwlist_domain.tmp | sort -u > ./output/gfwlist_normal.tmp &
+    }
+    wait
 
-    # 删除临时文件
-    rm -f ./output/gfwlist_decoded.tmp ./output/gfwlist_normal.tmp
+    # 使用parallel并行处理合并和精简
+    {
+        parallel --pipe sort -u ::: ./output/gfwlist_*.tmp > ./output/gfwlist_data.tmp
+        parallel --pipe sort -u ::: ./output/cnacc_*.tmp > ./output/cnacc_full.tmp
+        
+        parallel "rev | cut -d. -f1,2 | rev | sort -u" ::: \
+            ./output/cnacc_full.tmp > ./output/lite_cnacc_data.tmp \
+            ./output/gfwlist_data.tmp > ./output/lite_gfwlist_data.tmp
+    }
+    wait
 
-    # 删除临时文件中的空行
-    sed -i '/^$/d' ./output/cnacc_data.tmp ./output/gfwlist_data.tmp ./output/lite_cnacc_data.tmp ./output/lite_gfwlist_data.tmp
+    # 使用mapfile快速读取到数组
+    mapfile -t cnacc_data < <(sort -u ./output/cnacc_full.tmp)
+    mapfile -t gfwlist_data < <(sort -u ./output/gfwlist_data.tmp)  
+    mapfile -t lite_cnacc_data < <(sort -u ./output/lite_cnacc_data.tmp)
+    mapfile -t lite_gfwlist_data < <(sort -u ./output/lite_gfwlist_data.tmp)
+
+    # 清理临时文件
+    rm -f ./output/{gfwlist_decoded,gfwlist_normal}.tmp
+    parallel 'sed -i "/^$/d" {}' ::: ./output/*.tmp
 }
+
 # Generate Rules
 function GenerateRules() {
     echo -e "GenerateRules running..."
