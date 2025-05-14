@@ -250,28 +250,27 @@ function GenerateRules() {
     function GenerateRulesBody() {
         echo -e "  + Adding body"
         echo -e "GenerateRulesBody running..."
+        
+        # 使用临时变量预先构建内容,避免频繁IO
+        local content=""
+        
         if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
             if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                    echo -n "${gfwlist_data[$gfwlist_data_task]}/" >>"${file_path}"
-                done
+                # 使用数组拼接而不是逐行追加
+                content=$(printf "%s/" "${gfwlist_data[@]}")
             elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                for cnacc_data_task in "${!cnacc_data[@]}"; do
-                    echo -n "${cnacc_data[$cnacc_data_task]}/" >>"${file_path}"
-                done
+                content=$(printf "%s/" "${cnacc_data[@]}")
             fi
         elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-            # 精简版数据处理
             if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                    echo -n "${lite_gfwlist_data[$lite_gfwlist_data_task]}/" >>"${file_path}"
-                done
+                content=$(printf "%s/" "${lite_gfwlist_data[@]}")
             elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                    echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >>"${file_path}"
-                done
+                content=$(printf "%s/" "${lite_cnacc_data[@]}")
             fi
         fi
+        
+        # 一次性写入文件
+        echo -n "$content" >> "${file_path}"
     }
     function GenerateRulesFooter() {
         echo -e "  + Adding footer"
@@ -387,28 +386,27 @@ function GenerateRules() {
         function GenerateRulesBody() {
             echo -e "  + Adding body"
             echo -e "GenerateRulesBody running..."
+            
+            # 使用临时变量预先构建内容,避免频繁IO
+            local content=""
+            
             if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
                 if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                    for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                        echo -n "${gfwlist_data[$gfwlist_data_task]}/" >>"${file_path}"
-                    done
+                    # 使用数组拼接而不是逐行追加
+                    content=$(printf "%s/" "${gfwlist_data[@]}")
                 elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                    for cnacc_data_task in "${!cnacc_data[@]}"; do
-                        echo -n "${cnacc_data[$cnacc_data_task]}/" >>"${file_path}"
-                    done
+                    content=$(printf "%s/" "${cnacc_data[@]}")
                 fi
             elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-                # 精简版数据处理
                 if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                    for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                        echo -n "${lite_gfwlist_data[$lite_gfwlist_data_task]}/" >>"${file_path}"
-                    done
+                    content=$(printf "%s/" "${lite_gfwlist_data[@]}")
                 elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                    for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                        echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >>"${file_path}"
-                    done
+                    content=$(printf "%s/" "${lite_cnacc_data[@]}")
                 fi
             fi
+            
+            # 一次性写入文件
+            echo -n "$content" >> "${file_path}"
         }
         function GenerateRulesFooter() {
             echo -e "  + Adding footer"
