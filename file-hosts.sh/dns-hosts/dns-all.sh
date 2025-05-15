@@ -250,27 +250,56 @@ function GenerateRules() {
     function GenerateRulesBody() {
         echo -e "  + Adding body"
         echo -e "GenerateRulesBody running..."
-        
-        # 使用临时变量预先构建内容
-        local content1="" content2=""
-        
+
+        # 分块写入，避免内存暴涨
         if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
-            # 同时构建两种内容
-            content1=$(printf "%s/" "${gfwlist_data[@]}")
-            content2=$(printf "%s/" "${cnacc_data[@]}")
+            if [ "${generate_file}" == "black" ]; then
+                for domain in "${gfwlist_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+            elif [ "${generate_file}" == "white" ]; then
+                for domain in "${cnacc_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+            elif [ "${generate_file}" == "blackwhite" ]; then
+                for domain in "${gfwlist_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+                for domain in "${cnacc_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+            elif [ "${generate_file}" == "whiteblack" ]; then
+                for domain in "${cnacc_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+                for domain in "${gfwlist_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+            fi
         elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-            # 同时构建两种精简版内容
-            content1=$(printf "%s/" "${lite_gfwlist_data[@]}")
-            content2=$(printf "%s/" "${lite_cnacc_data[@]}")
-        fi
-        
-        # 根据生成类型决定写入顺序
-        if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-            echo -n "$content1" >> "${file_path}"
-            [ "${generate_file}" == "blackwhite" ] && echo -n "$content2" >> "${file_path}"
-        elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-            echo -n "$content2" >> "${file_path}" 
-            [ "${generate_file}" == "whiteblack" ] && echo -n "$content1" >> "${file_path}"
+            if [ "${generate_file}" == "black" ]; then
+                for domain in "${lite_gfwlist_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+            elif [ "${generate_file}" == "white" ]; then
+                for domain in "${lite_cnacc_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+            elif [ "${generate_file}" == "blackwhite" ]; then
+                for domain in "${lite_gfwlist_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+                for domain in "${lite_cnacc_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+            elif [ "${generate_file}" == "whiteblack" ]; then
+                for domain in "${lite_cnacc_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+                for domain in "${lite_gfwlist_data[@]}"; do
+                    echo -n "${domain}/" >> "${file_path}"
+                done
+            fi
         fi
     }
     function GenerateRulesFooter() {
