@@ -37,7 +37,7 @@ jobs:
 
       - name:  Build GFWList2AGH
         run: |
-          bash ./file-hosts.sh/dns-hosts/test/dns-all.py
+          python ./file-hosts.sh/dns-hosts/test/dns-all.py
 
       - name: Release
         uses: svenstaro/upload-release-action@master
