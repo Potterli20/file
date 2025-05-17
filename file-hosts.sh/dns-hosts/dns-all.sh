@@ -969,48 +969,56 @@ function GenerateRules() {
 function OutputData() {
     echo -e "OutputData running..."
     echo -e "Generating output..."
+    
+    # Cleanup old output files first
+    rm -rf ./output/* 2>/dev/null
+    
+    # Create output directory with minimal space usage
+    mkdir -p ./output/.tmp
+    
+    # Process in batches to reduce memory/disk usage
+    local batch_size=1000
+    
+    # AdGuard Home variants
+    for variant in "adguardhome" "adguardhome_new"; do
+        echo -e "${variant}"
+        
+        # Default mode
+        GenerateRulesForSoftware "${variant}" "full_combine full_split_combine lite_combine" \
+            "black white blackwhite whiteblack" "dns_mode='default'" 
+            
+        # Domestic mode  
+        GenerateRulesForSoftware "${variant}" "full lite" \
+            "blackwhite whiteblack" "dns_mode='domestic'"
+            
+        # Foreign mode
+        GenerateRulesForSoftware "${variant}" "full lite" \
+            "whiteblack" "dns_mode='foreign'"
+            
+        # Cleanup temporary files after each major step
+        rm -rf ./output/.tmp/* 2>/dev/null
+    done
 
-    # AdGuard Home
-    echo -e "AdGuard Home"
-    GenerateRulesForSoftware "adguardhome" "full_combine full_split_combine lite_combine" "black white blackwhite whiteblack" "dns_mode='default'"
-    GenerateRulesForSoftware "adguardhome" "full lite" "blackwhite whiteblack" "dns_mode='domestic'"
-    GenerateRulesForSoftware "adguardhome" "full lite" "whiteblack" "dns_mode='foreign'"
+    # Other DNS software
+    for software in "bind9" "dnsmasq" "domain" "smartdns" "smartdns-domain-rules" "unbound"; do
+        echo -e "${software}"
+        
+        case ${software} in
+            "smartdns"|"smartdns-domain-rules")
+                GenerateRulesForSoftware "${software}" "full lite" "black white" \
+                    "foreign_group='foreign'; domestic_group='domestic'"
+                ;;
+            *)
+                GenerateRulesForSoftware "${software}" "full lite" "black white"
+                ;;
+        esac
+        
+        # Cleanup temporary files
+        rm -rf ./output/.tmp/* 2>/dev/null
+    done
 
-    # AdGuard Home (New)
-    echo -e "AdGuard Home_new"
-    GenerateRulesForSoftware "adguardhome_new" "full_combine full_split_combine lite_combine" "black white blackwhite whiteblack" "dns_mode='default'"
-    GenerateRulesForSoftware "adguardhome_new" "full lite" "blackwhite whiteblack" "dns_mode='domestic'"
-    GenerateRulesForSoftware "adguardhome_new" "full lite" "whiteblack" "dns_mode='foreign'"
-
-    # Bind9
-    echo -e "Bind9"
-    GenerateRulesForSoftware "bind9" "full lite" "black white"
-
-    # DNSMasq
-    echo -e "DNSMasq"
-    GenerateRulesForSoftware "dnsmasq" "full lite" "black white"
-
-    # Domain
-    GenerateRulesForSoftware "domain" "full lite" "black white"
-
-    # SmartDNS
-    echo -e "SmartDNS"
-    GenerateRulesForSoftware "smartdns" "full lite" "black white" "foreign_group='foreign'; domestic_group='domestic'"
-
-    # SmartDNS Domain Rules
-    echo -e "Smartdns-domain-rules"
-    GenerateRulesForSoftware "smartdns-domain-rules" "full lite" "black white" "foreign_group='foreign'; domestic_group='domestic'"
-
-    # Unbound
-    echo -e "Unbound"
-    GenerateRulesForSoftware "unbound" "full lite" "black white" "dns_mode='foreign'; dns_mode='domestic'"
-
-    # Move files
-    MoveGeneratedFiles
-
-    # 立即列出所有生成的文件，便于CI日志调试
-    echo "Final output files:"
-    find "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/hosts-dns/output" -type f -ls
+    # Final cleanup
+    rm -rf ./output/.tmp 2>/dev/null
 }
 
 # Function to generate rules for a specific software
