@@ -3,14 +3,20 @@ import re
 import base64
 import os
 import glob
-import shutil # Import shutil for directory removal
+import shutil
+import time # 导入 time 模块用于延迟
+from requests.adapters import HTTPAdapter # 导入 HTTPAdapter
+from urllib3.util.retry import Retry # 导入 Retry 策略
+
+# ... (analyse_data, generate_rules, output_data, move_generated_files 等其他函数保持不变) ...
 
 def get_data():
     """
-    Fetches data from specified URLs.
+    Fetches data from specified URLs with retry logic for rate limits.
     """
     print("GetData running...")
     cnacc_domain = [
+        # ... (你的 cnacc_domain 列表) ...
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/video-domains",
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/china-root",
         "https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-cdn.txt",
@@ -34,17 +40,20 @@ def get_data():
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-tld-list.txt"
     ]
     cnacc_trusted = [
+        # ... (你的 cnacc_trusted 列表) ...
         "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf",
         "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf",
         "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf"
     ]
     gfwlist_base64 = [
+        # ... (你的 gfwlist_base64 列表) ...
         "https://raw.githubusercontent.com/Loukky/gfwlist-by-loukky/master/gfwlist.txt",
         "https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt",
         "https://raw.githubusercontent.com/poctopus/gfwlist-plus/master/gfwlist-plus.txt",
         "https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/gfwlist.txt"
     ]
     gfwlist_domain = [
+        # ... (你的 gfwlist_domain 列表) ...
         "https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-cdn.txt",
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-tld-list.txt",
         "https://raw.githubusercontent.com/filteryab/ir-blocked-domain/main/data/ir-blocked-domain",
@@ -78,7 +87,7 @@ def get_data():
         "https://raw.githubusercontent.com/nickspaargaren/no-google/master/categories/analyticsparsed",
         "https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt",
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt",
-        "https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt",
+        "https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt", # 导致错误的 URL
         "https://raw.githubusercontent.com/hq450/fancyss/master/rules/gfwlist.conf",
         "https://raw.githubusercontent.com/Ewpratten/youtube_ad_blocklist/master/blocklist.txt",
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/greatfire.txt",
@@ -92,11 +101,28 @@ def get_data():
         "https://raw.githubusercontent.com/RootFiber/youtube-ads/main/ad-block-YouTube-Project.txt"
     ]
     gfwlist2agh_modify = [
-        "https://raw.githubusercontent.com/Potterli20/file/refs/heads/main/file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt"
+        # ... (你的 gfwlist2agh_modify 列表) ...
+         "https://raw.githubusercontent.com/Potterli20/file/refs/heads/main/file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt"
     ]
+
 
     output_dir = "./output"
     os.makedirs(output_dir, exist_ok=True)
+
+    # 配置 requests 会话以进行重试和指数退避
+    session = requests.Session()
+    retry_strategy = Retry(
+        total=5, # 总共重试次数 (包括第一次失败)
+        status_forcelist=[429, 500, 502, 503, 504], # 在这些 HTTP 状态码上重试
+        allowed_methods=["HEAD", "GET", "OPTIONS"], # 对这些 HTTP 方法进行重试
+        backoff_factor=1 # 退避因子，下一次重试的等待时间为 {backoff_factor} * (2 ** (retry_count - 1)) 秒
+                         # 例如，第一次重试等待 1*(2**0)=1 秒，第二次 1*(2**1)=2 秒，第三次 1*(2**2)=4 秒
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    # 将适配器挂载到会话中，使其对 http:// 和 https:// 请求生效
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
+
 
     def download_urls(urls, output_file, decode_base64=False, strip_leading_dot=False):
         # Ensure the directory for the output file exists
@@ -107,30 +133,39 @@ def get_data():
         with open(output_file, 'w', encoding='utf-8') as f:
             for url in urls:
                 try:
-                    print(f"Downloading: {url}") # Added for debugging
-                    response = requests.get(url, timeout=15)
-                    response.raise_for_status()  # Raise an exception for bad status codes
+                    print(f"Downloading: {url}")
+                    # 使用配置了重试的 session 对象来发送请求
+                    response = session.get(url, timeout=15)
+                    # raise_for_status() 会对非 2xx 状态码抛出异常，但 Retry 已经处理了重试的状态码
+                    response.raise_for_status()
                     content = response.text
                     if decode_base64:
                         try:
                             content = base64.b64decode(content).decode('utf-8')
-                        except Exception as e: # Catch potential base64 decoding errors
+                        except Exception as e:
                             print(f"Warning: Could not base64 decode {url}: {e}")
                             continue
                     if strip_leading_dot:
-                         # Remove leading dots from each line
                          content = '\n'.join(line.lstrip('.') for line in content.splitlines())
 
                     f.write(content + '\n')
-                except requests.exceptions.RequestException as e:
-                    print(f"Error downloading {url}: {e}")
-                except Exception as e: # Catch other potential errors during processing
-                    print(f"An unexpected error occurred while processing {url}: {e}")
+                    # 可选：在每次成功下载后加入一个小延迟，更友好地访问服务器
+                    # time.sleep(0.1) # 例如，延迟 100 毫秒
 
+                except requests.exceptions.RequestException as e:
+                    # 如果重试次数耗尽或遇到不可重试的错误，会在这里捕获异常
+                    print(f"Error downloading {url}: {e}")
+                    # 脚本会继续处理下一个 URL
+                except Exception as e:
+                     print(f"An unexpected error occurred while processing {url}: {e}")
+
+
+    # 调用 download_urls 函数下载不同类别的 URL
     download_urls(cnacc_domain, os.path.join(output_dir, "cnacc_domain.tmp"), strip_leading_dot=True)
     download_urls(cnacc_trusted, os.path.join(output_dir, "cnacc_trusted.tmp"))
     download_urls(gfwlist_base64, os.path.join(output_dir, "gfwlist_base64.tmp"), decode_base64=True)
     download_urls(gfwlist_domain, os.path.join(output_dir, "gfwlist_domain.tmp"), strip_leading_dot=True)
+
 
 def analyse_data():
     """
