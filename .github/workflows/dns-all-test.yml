@@ -21,15 +21,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
        # Runs a single command using the runners shell
-      - name: 设置 Python 环境
-        uses: actions/setup-python@main
-        with:
-          python-version: '3.13.2'  # 设置你希望使用的 Python 版本，建议使用稳定版本
-      - name: 安装依赖
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests
-          pip install --upgrade requests
 
       - name:  Build dns
         run: |
@@ -37,14 +28,14 @@ jobs:
 
       - name:  Build GFWList2AGH
         run: |
-          python ./file-hosts.sh/dns-hosts/test/dns-all.py
+          python ./file-hosts.sh/dns-hosts/dns-test.sh
 
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
           tag: dns-hosts-all-test
-          file: ./output/dnshosts-all-*
+          file: ./hosts-dns/output/dnshosts-all-*
           file_glob: true
           overwrite: true
           body: "update dns-hosts-all"
