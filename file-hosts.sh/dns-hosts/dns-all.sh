@@ -251,55 +251,43 @@ function GenerateRules() {
         echo -e "  + Adding body"
         echo -e "GenerateRulesBody running..."
 
-        # 分块写入，避免内存暴涨
-        if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
-            if [ "${generate_file}" == "black" ]; then
+        declare -A unique_domains
+        local domains=()
+        local domain
+
+        # 统一处理所有模式
+        if [[ "${generate_mode}" == full* ]]; then
+            if [[ "${generate_file}" == "black" || "${generate_file}" == "blackwhite" ]]; then
                 for domain in "${gfwlist_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
+                    # 域名规范化：小写、去前后点、去空格
+                    domain=$(echo "$domain" | tr '[:upper:]' '[:lower:]' | sed 's/^[ \.]*//;s/[ \.]*$//')
+                    # 只保留有效域名
+                    [[ "$domain" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$ ]] && unique_domains["$domain"]=1
                 done
-            elif [ "${generate_file}" == "white" ]; then
+            elif [[ "${generate_file}" == "white" || "${generate_file}" == "whiteblack" ]]; then
                 for domain in "${cnacc_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
-                done
-            elif [ "${generate_file}" == "blackwhite" ]; then
-                for domain in "${gfwlist_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
-                done
-                for domain in "${cnacc_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
-                done
-            elif [ "${generate_file}" == "whiteblack" ]; then
-                for domain in "${cnacc_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
-                done
-                for domain in "${gfwlist_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
+                    domain=$(echo "$domain" | tr '[:upper:]' '[:lower:]' | sed 's/^[ \.]*//;s/[ \.]*$//')
+                    [[ "$domain" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$ ]] && unique_domains["$domain"]=1
                 done
             fi
-        elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-            if [ "${generate_file}" == "black" ]; then
+        elif [[ "${generate_mode}" == lite* ]]; then
+            if [[ "${generate_file}" == "black" || "${generate_file}" == "blackwhite" ]]; then
                 for domain in "${lite_gfwlist_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
+                    domain=$(echo "$domain" | tr '[:upper:]' '[:lower:]' | sed 's/^[ \.]*//;s/[ \.]*$//')
+                    [[ "$domain" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$ ]] && unique_domains["$domain"]=1
                 done
-            elif [ "${generate_file}" == "white" ]; then
+            elif [[ "${generate_file}" == "white" || "${generate_file}" == "whiteblack" ]]; then
                 for domain in "${lite_cnacc_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
-                done
-            elif [ "${generate_file}" == "blackwhite" ]; then
-                for domain in "${lite_gfwlist_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
-                done
-                for domain in "${lite_cnacc_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
-                done
-            elif [ "${generate_file}" == "whiteblack" ]; then
-                for domain in "${lite_cnacc_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
-                done
-                for domain in "${lite_gfwlist_data[@]}"; do
-                    echo -n "${domain}/" >> "${file_path}"
+                    domain=$(echo "$domain" | tr '[:upper:]' '[:lower:]' | sed 's/^[ \.]*//;s/[ \.]*$//')
+                    [[ "$domain" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$ ]] && unique_domains["$domain"]=1
                 done
             fi
+        fi
+
+        # 排序去重后批量写入
+        if [ ${#unique_domains[@]} -gt 0 ]; then
+            domains=($(printf "%s\n" "${!unique_domains[@]}" | sort -u))
+            printf "%s/" "${domains[@]}" >> "${file_path}"
         fi
     }
     function GenerateRulesFooter() {
