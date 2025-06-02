@@ -892,60 +892,59 @@ function OutputData() {
 
 function MoveGeneratedFiles() {
     echo -e "MoveGeneratedFiles running..."
-    # 使用绝对路径
+    
+    # 使用正确的输出路径
     local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    local base_dir="${script_dir}"   # 修正为当前目录
-    local dest="${base_dir}/output"
+    local base_dir="$(dirname "${script_dir}")"  # 上一级目录
+    local dest="${base_dir}/hosts-dns/output"    # 修改为 hosts-dns/output
     
     # Debug输出
     echo "Script directory: ${script_dir}"
     echo "Base directory: ${base_dir}"
     echo "Destination directory: ${dest}"
     
-    # 确保目录存在并显示创建过程
+    # 确保目录存在
     mkdir -p "${dest}" && echo "Created directory: ${dest}"
     
+    # 创建临时目录用于处理文件
     for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns smartdns-domain-rules; do
-        local src="${dest}/dns-${type}"
+        local src="${dest}/${type}"
         mkdir -p "${src}" && echo "Created directory: ${src}"
         
-        # 添加调试信息
         echo "Processing ${type} files..."
         
         case ${type} in
             adguardhome|adguardhome_new)
-                for file in "${src}"/blacklist_*.txt "${src}"/whitelist_*.txt; do
+                for file in ../gfwlist2${type}/blacklist_*.txt ../gfwlist2${type}/whitelist_*.txt; do
                     if [ -f "${file}" ]; then
                         cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
-                    else
-                        echo "Warning: No matching files found for pattern: ${file}"
                     fi
                 done
                 ;;
             bind9|unbound|dnsmasq|smartdns*)
-                for file in "${src}"/blacklist_*.conf "${src}"/whitelist_*.conf; do
+                for file in ../gfwlist2${type}/blacklist_*.conf ../gfwlist2${type}/whitelist_*.conf; do
                     if [ -f "${file}" ]; then
                         cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
-                    else
-                        echo "Warning: No matching files found for pattern: ${file}"
                     fi
                 done
                 ;;
             domain)
-                for file in "${src}"/blacklist_*.txt "${src}"/whitelist_*.txt; do
+                for file in ../gfwlist2${type}/blacklist_*.txt ../gfwlist2${type}/whitelist_*.txt; do
                     if [ -f "${file}" ]; then
                         cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
-                    else
-                        echo "Warning: No matching files found for pattern: ${file}"
                     fi
                 done
                 ;;
         esac
     done
     
-    # 列出生成的所有文件
+    # 输出所有生成的文件列表
     echo "Generated files in ${dest}:"
     find "${dest}" -type f -ls
+    
+    # 为了确保 GitHub Action 能找到文件，创建符号链接
+    mkdir -p "${base_dir}/hosts-dns"
+    ln -sf "${dest}" "${base_dir}/hosts-dns/output"
 }
 
 ## Process
