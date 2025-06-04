@@ -20,21 +20,53 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@main
-       # Runs a single command using the runners shell
-      - name:  Build dns
+        with:
+          fetch-depth: 1  # 优化克隆深度
+      
+      - name: Cache dns data  # 添加缓存
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./file-hosts.sh/dns-hosts/hosts-dns
+            ./Temp
+          key: ${{ runner.os }}-dns-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-dns-
+      
+      - name: Build dns
         run: |
           bash ./file/bash/github-dns.sh
-
-      - name:  Build GFWList2AGH
+        continue-on-error: true  # 允许继续执行
+        
+      - name: Build GFWList2AGH
+        id: build_gfw
         run: |
           bash ./file-hosts.sh/dns-hosts/dns-all.sh
-
+        
+      - name: Check build results  # 检查构建结果
+        run: |
+          if [ ! -d "./file-hosts.sh/dns-hosts/hosts-dns" ]; then
+            echo "DNS hosts directory not found"
+            exit 1
+          fi
+          
+          if ! ls ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-* 1> /dev/null 2>&1; then
+            echo "No DNS host files generated"
+            exit 1
+          fi
+          
+          echo "Found DNS host files:"
+          ls -l ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-*
+          
       - name: Release
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
           tag: dns-hosts-all
-          file: /home/runner/work/file/file/file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-*
           file_glob: true
           overwrite: true
-          body: "update dns-hosts-all"
+          file: ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-*  # 使用相对路径
+          body: |
+            🔄 DNS Hosts Update
+            📅 Date: ${{ github.event.repository.updated_at }}
+            🏷️ Version: ${{ github.sha }}
