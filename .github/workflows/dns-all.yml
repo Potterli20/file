@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 1  # 优化克隆深度
       
       - name: Cache dns data  # 添加缓存
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ./file-hosts.sh/dns-hosts/hosts-dns
