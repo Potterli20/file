@@ -912,7 +912,7 @@ function MoveGeneratedFiles() {
     # 检查源文件目录是否存在
     local missing_dirs=0
     for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns; do
-        local src_dir="${script_dir}/gfwlist2${type}"
+        local src_dir="./gfwlist2${type}"
         if [ ! -d "${src_dir}" ]; then
             echo "Error: Source directory not found: ${src_dir}"
             missing_dirs=$((missing_dirs + 1))
