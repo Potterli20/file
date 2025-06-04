@@ -607,8 +607,8 @@ function GenerateRules() {
             "9.9.9.10 port 53"
             "94.140.14.140 port 53"
             "94.140.14.141 port 53"
-            "74.82.42.42 prot 53"
-            "185.222.222.222 prot 53"
+            "74.82.42.42 port 53"
+            "185.222.222.222 port 53"
         )
             if [ "${generate_mode}" == "full" ]; then
                 if [ "${generate_file}" == "black" ]; then
@@ -893,56 +893,70 @@ function OutputData() {
 }
 
 function MoveGeneratedFiles() {
-    echo -e "MoveGeneratedFiles running..."
+    echo "Starting MoveGeneratedFiles..."
     
     # 设置基础路径
     local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    local dest="${script_dir}/hosts-dns"    # 直接使用 hosts-dns 目录
+    local dest="${script_dir}/hosts-dns"
     
-    # Debug输出
     echo "Script directory: ${script_dir}"
     echo "Destination directory: ${dest}"
     
-    # 创建主输出目录
-    mkdir -p "${dest}" && echo "Created directory: ${dest}"
+    # 检查并创建目标目录
+    if ! mkdir -p "${dest}"; then
+        echo "Error: Failed to create directory: ${dest}"
+        return 1
+    fi
+    echo "Created/Verified directory: ${dest}"
     
-    # 移动每种类型的文件
+    # 检查源文件目录是否存在
+    local missing_dirs=0
     for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns; do
-        echo "Processing ${type} files..."
-        
-        # 源目录是相对于脚本目录的gfwlist2${type}
         local src_dir="${script_dir}/gfwlist2${type}"
+        if [ ! -d "${src_dir}" ]; then
+            echo "Error: Source directory not found: ${src_dir}"
+            missing_dirs=$((missing_dirs + 1))
+            continue
+        fi
         
-        if [ -d "${src_dir}" ]; then
-            case ${type} in
-                adguardhome|adguardhome_new|domain)
-                    for file in "${src_dir}"/blacklist_*.txt "${src_dir}"/whitelist_*.txt; do
-                        if [ -f "${file}" ]; then
-                            cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
-                        fi
-                    done
-                    ;;
-                bind9|unbound|dnsmasq|smartdns)
-                    for file in "${src_dir}"/blacklist_*.conf "${src_dir}"/whitelist_*.conf; do
-                        if [ -f "${file}" ]; then
-                            cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
-                        fi
-                    done
-                    ;;
-            esac
-        else
-            echo "Warning: Source directory ${src_dir} not found"
+        echo "Processing ${type} files from ${src_dir}..."
+        local files_copied=0
+        
+        case ${type} in
+            adguardhome|adguardhome_new|domain)
+                while IFS= read -r -d '' file; do
+                    cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
+                    files_copied=$((files_copied + 1))
+                done < <(find "${src_dir}" -type f \( -name "blacklist_*.txt" -o -name "whitelist_*.txt" \) -print0)
+                ;;
+            bind9|unbound|dnsmasq|smartdns)
+                while IFS= read -r -d '' file; do
+                    cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
+                    files_copied=$((files_copied + 1))
+                done < <(find "${src_dir}" -type f \( -name "blacklist_*.conf" -o -name "whitelist_*.conf" \) -print0)
+                ;;
+        esac
+        
+        echo "Copied ${files_copied} files for ${type}"
+        
+        # 清理源目录
+        if [ ${files_copied} -gt 0 ]; then
+            rm -rf "${src_dir}" && echo "Cleaned up ${src_dir}"
         fi
     done
     
-    # 输出所有生成的文件列表
-    echo "Generated files in ${dest}:"
-    find "${dest}" -type f -ls
-
-    # 删除不再需要的临时目录
-    for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns; do
-        rm -rf "${script_dir}/gfwlist2${type}"
-    done
+    # 验证结果
+    echo "Verifying generated files in ${dest}:"
+    if ! find "${dest}" -type f -ls; then
+        echo "Warning: No files found in destination directory"
+    fi
+    
+    # 报告总体状态
+    if [ ${missing_dirs} -gt 0 ]; then
+        echo "Warning: ${missing_dirs} source directories were missing"
+    else
+        echo "All source directories were processed successfully"
+    fi
 }
 
 ## Process
