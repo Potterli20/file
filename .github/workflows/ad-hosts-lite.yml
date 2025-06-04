@@ -36,4 +36,7 @@ jobs:
           file: ./ad-*
           file_glob: true
           overwrite: true
-          body: "update ad-hosts-lite"
+          body: |
+            🔄 ad-hosts-lite Hosts Update
+            📅 Date: ${{ github.event.repository.updated_at }}
+            🏷️ Version: ${{ github.sha }}

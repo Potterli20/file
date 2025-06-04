@@ -45,4 +45,7 @@ jobs:
           file: ./file-hosts.sh/cn-blocked-domain/publish/*
           file_glob: true
           overwrite: true
-          body: "update cn-blocked-domain"
+          body: |
+            🔄 cn-blocked-domain Hosts Update
+            📅 Date: ${{ github.event.repository.updated_at }}
+            🏷️ Version: ${{ github.sha }}

@@ -47,4 +47,7 @@ jobs:
           file: ./ad-youtube-*
           file_glob: true
           overwrite: true
-          body: "update ad-youtube"
+          body: |
+            🔄 ad-youtube-hosts Hosts Update
+            📅 Date: ${{ github.event.repository.updated_at }}
+            🏷️ Version: ${{ github.sha }}
