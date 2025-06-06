@@ -93,26 +93,29 @@ function GetData() {
         "https://raw.githubusercontent.com/Potterli20/file/refs/heads/main/file-hosts/gfwlist2agh_modify/gfwlist2agh_modify_final.txt"
     )
     # 创建临时目录并进入
+    echo "=== Starting Download Process ==="
+    echo "Creating temporary directory..."
     rm -rf ./gfwlist2* ./Temp && mkdir -p ./Temp && cd ./Temp || exit 1
+    echo "Temporary directory created"
     
-    # 添加下载状态检查和调试信息
+    echo "Initializing download counters..."
     download_failed=0
     download_count=0
     success_count=0
     
-    echo "Starting downloads..."
-    
-    # 下载并检查cnacc_domain文件
+    echo "=== Downloading CNACC Domain Files ==="
     for cnacc_domain_task in "${!cnacc_domain[@]}"; do
+        echo "Processing download ${download_count + 1}/${#cnacc_domain[@]}"
+        echo "URL: ${cnacc_domain[$cnacc_domain_task]}"
         ((download_count++))
-        echo "Downloading (${download_count}): ${cnacc_domain[$cnacc_domain_task]}"
         if curl -s -f --connect-timeout 15 "${cnacc_domain[$cnacc_domain_task]}" | sed "s/^\.//g" >> ./cnacc_domain.tmp; then
             ((success_count++))
-            echo "Success: ${cnacc_domain[$cnacc_domain_task]}"
+            echo "✓ Download successful"
         else
-            echo "Error: Failed to download ${cnacc_domain[$cnacc_domain_task]}"
+            echo "✗ Download failed"
             download_failed=1
         fi
+        echo "----------------------------------------"
     done
     
     # 下载并检查其他文件
