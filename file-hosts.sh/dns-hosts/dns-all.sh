@@ -127,12 +127,65 @@ function GetData() {
         fi
     done
     
+    # 下载并处理 gfwlist_base64 文件，添加错误检查
     for gfwlist_base64_task in "${!gfwlist_base64[@]}"; do
-        if ! curl -s --connect-timeout 15 "${gfwlist_base64[$gfwlist_base64_task]}" | base64 -d >> ./gfwlist_base64.tmp; then
+        echo "Processing gfwlist_base64 source: ${gfwlist_base64[$gfwlist_base64_task]}"
+        temp_file="./gfwlist_base64_${gfwlist_base64_task}.tmp"
+        
+        # 下载文件并进行初步检查
+        if ! curl -s --connect-timeout 15 "${gfwlist_base64[$gfwlist_base64_task]}" > "${temp_file}"; then
             echo "Error: Failed to download ${gfwlist_base64[$gfwlist_base64_task]}"
             download_failed=1
+            continue
         fi
+        
+        # 检查文件是否为有效的 base64
+        if ! base64 -d "${temp_file}" > "${temp_file}.decoded" 2>/dev/null; then
+            echo "Error: Invalid base64 content in ${gfwlist_base64[$gfwlist_base64_task]}"
+            download_failed=1
+            continue
+        fi
+        
+        # 处理解码后的内容
+        cat "${temp_file}.decoded" | \
+            grep -v '^!' | \
+            grep -v '^\[AutoProxy' | \
+            grep -v '^@@' | \
+            sed -e 's#^//*#/#' \
+                -e 's/^||//' \
+                -e 's/^|//' \
+                -e 's/^https\?:\/\///' \
+                -e 's/\/.*$//' \
+                -e 's/\*.//g' \
+                -e 's/^\.//g' \
+                -e 's/^*\.//' \
+                -e 's/[[:space:]]*$//g' | \
+            grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
+            sort -u >> ./gfwlist_base64.tmp
+        
+        # 清理临时文件
+        rm -f "${temp_file}" "${temp_file}.decoded"
     done
+
+    # 最后检查处理后的文件
+    if [ -f "./gfwlist_base64.tmp" ]; then
+        # 移除重复和无效条目
+        sort -u ./gfwlist_base64.tmp > ./gfwlist_base64.tmp.sorted
+        grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' ./gfwlist_base64.tmp.sorted > ./gfwlist_base64.tmp.clean
+        mv ./gfwlist_base64.tmp.clean ./gfwlist_base64.tmp
+        rm -f ./gfwlist_base64.tmp.sorted
+        
+        # 检查最终文件大小
+        file_size=$(wc -l < ./gfwlist_base64.tmp)
+        if [ "$file_size" -lt 100 ]; then
+            echo "Warning: gfwlist_base64.tmp contains suspiciously few entries: $file_size"
+            echo "First 10 lines of processed file:"
+            head -n 10 ./gfwlist_base64.tmp
+        fi
+    else
+        echo "Error: Failed to create gfwlist_base64.tmp"
+        download_failed=1
+    fi
     
     for gfwlist_domain_task in "${!gfwlist_domain[@]}"; do
         if ! curl -s --connect-timeout 15 "${gfwlist_domain[$gfwlist_domain_task]}" | sed "s/^\.//g" >> ./gfwlist_domain.tmp; then
