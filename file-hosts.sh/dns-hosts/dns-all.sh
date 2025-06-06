@@ -517,25 +517,35 @@ function GenerateRules() {
                     echo -e "]${foreign_dns[foreign_dns_task]}" >> "${file_path}"
                 fi
             }
+            # 添加全局进度计数器
+            current_rules_count=0
+            total_rules_count=32  # 总规则生成数量
+
             function GenerateRulesProcess() {
+                # 局部步骤进度
                 local total_steps=3
                 local current_step=0
                 
                 echo "Processing rules..."
                 
+                # 更新全局进度
+                current_rules_count=$((current_rules_count + 1))
+                
                 current_step=$((current_step + 1))
                 GenerateRulesHeader
-                ShowProgress $current_step $total_steps
+                # 只在最后一行显示进度
+                [ ${current_rules_count} -eq ${total_rules_count} ] && ShowProgress $current_rules_count $total_rules_count
                 
                 current_step=$((current_step + 1))
                 GenerateRulesBody
-                ShowProgress $current_step $total_steps
+                [ ${current_rules_count} -eq ${total_rules_count} ] && ShowProgress $current_rules_count $total_rules_count
                 
                 current_step=$((current_step + 1))
                 GenerateRulesFooter
-                ShowProgress $current_step $total_steps
+                [ ${current_rules_count} -eq ${total_rules_count} ] && ShowProgress $current_rules_count $total_rules_count
                 
-                echo -e "\nRules generation completed"
+                # 只在最后一条规则处显示完成消息
+                [ ${current_rules_count} -eq ${total_rules_count} ] && echo -e "\nRules generation completed"
             }
             if [ "${dns_mode}" == "default" ]; then
                 FileName && GenerateDefaultUpstream && GenerateRulesProcess
@@ -666,6 +676,7 @@ function GenerateRules() {
                 fi
             }
             function GenerateRulesProcess() {
+                # 局部步骤进度
                 local total_steps=3
                 local current_step=0
                 
