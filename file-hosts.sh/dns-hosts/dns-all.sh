@@ -186,11 +186,16 @@ function AnalyseData() {
         if [ ! -f "$input" ]; then
             echo "Error: Input file $input not found"
             return 1
-        }
+        fi
         
         echo "Processing $input -> $output"
-        if ! cat "$input" | grep -v "\#" | grep "$pattern" | \
-           tr -d "\!\%\&\(\)\*\@" | grep -E "$regex" | sort | uniq > "$output"; then
+        if ! cat "$input" | \
+           grep -v "\#" | \
+           grep -v "\[AutoProxy.*\]" | \
+           grep "$pattern" | \
+           tr -d "\!\%\&\(\)\*\@" | \
+           grep -E "$regex" | \
+           sort | uniq > "$output"; then
             echo "Error processing $input"
             return 1
         fi
