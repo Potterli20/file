@@ -180,8 +180,7 @@ function AnalyseData() {
     function process_file() {
         local input=$1
         local output=$2
-        local pattern=$3
-        local regex=${4:-$domain_regex}
+        local regex=${3:-$domain_regex}
         
         if [ ! -f "$input" ]; then
             echo "Error: Input file $input not found"
@@ -192,8 +191,8 @@ function AnalyseData() {
         if ! cat "$input" | \
            grep -v "\#" | \
            grep -v "\[AutoProxy.*\]" | \
-           grep "$pattern" | \
-           tr -d "\!\%\&\(\)\*\@" | \
+           sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+           grep -vE "^$|^\[|^!|^@|^%|^\*|^&" | \
            grep -E "$regex" | \
            sort | uniq > "$output"; then
             echo "Error processing $input"
@@ -205,13 +204,11 @@ function AnalyseData() {
     # 分步处理数据，每步都进行错误检查
     local error_count=0
     
-    echo "Processing CNACC data..."
-    process_file "./gfwlist2agh_modify.tmp" "./cnacc_addition.tmp" "\(\@\%\@\)\|\(\@\%\!\)\|\(\!\&\@\)\|\(\@\@\@\)" || ((error_count++))
-    process_file "./gfwlist2agh_modify.tmp" "./cnacc_subtraction.tmp" "\(\!\%\!\)\|\(\@\&\!\)\|\(\!\%\@\)\|\(\!\!\!\)" || ((error_count++))
-    
-    echo "Processing GFWList data..."
-    process_file "./gfwlist2agh_modify.tmp" "./gfwlist_addition.tmp" "\(\@\&\@\)\|\(\@\&\!\)\|\(\!\%\@\)\|\(\@\@\@\)" || ((error_count++))
-    process_file "./gfwlist2agh_modify.tmp" "./gfwlist_subtraction.tmp" "\(\!\&\!\)\|\(\@\%\!\)\|\(\!\&\@\)\|\(\!\!\!\)" || ((error_count++))
+    echo "Processing domain data..."
+    process_file "./gfwlist2agh_modify.tmp" "./cnacc_data.tmp" || ((error_count++))
+    process_file "./gfwlist2agh_modify.tmp" "./lite_cnacc_data.tmp" "$lite_domain_regex" || ((error_count++))
+    process_file "./gfwlist2agh_modify.tmp" "./gfwlist_data.tmp" || ((error_count++))
+    process_file "./gfwlist2agh_modify.tmp" "./lite_gfwlist_data.tmp" "$lite_domain_regex" || ((error_count++))
     
     # 合并处理结果
     if [ $error_count -eq 0 ]; then
