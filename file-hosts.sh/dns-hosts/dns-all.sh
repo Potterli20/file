@@ -162,39 +162,16 @@ function GetData() {
         fi
     done
     
-    # 下载并处理 AutoProxy 规则
-    for gfwlist_base64_task in "${!gfwlist_base64[@]}"; do
-        echo "Processing ${gfwlist_base64[$gfwlist_base64_task]}"
-        if curl -s --connect-timeout 15 "${gfwlist_base64[$gfwlist_base64_task]}" | base64 -d | \
-           grep -v '^!' | grep -v '^\[AutoProxy' | grep -v '^@@' | \
-           sed -e 's/^||//' -e 's/^|//' -e 's/^https\?:\/\///' -e 's/\/.*$//' -e 's/\*.//g' -e 's/^\.//g' | \
-           grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
-           sort -u >> ./gfwlist_base64.tmp; then
-            echo "Successfully processed ${gfwlist_base64[$gfwlist_base64_task]}"
-            ((success_count++))
-        else
-            echo "Error: Failed to process ${gfwlist_base64[$gfwlist_base64_task]}"
-            download_failed=1
-        fi
-    done
-    
-    echo "Download statistics:"
-    echo "Total attempted: ${download_count}"
-    echo "Successful: ${success_count}"
-    echo "Failed: $((download_count - success_count))"
-    
-    # 检查所有必需的文件是否存在且非空
-    for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp gfwlist2agh_modify.tmp autoproxy_domain.tmp; do
-        if [ ! -s "./${file}" ]; then
-            echo "Error: ${file} is empty or does not exist"
-            ls -l "./${file}" 2>/dev/null || echo "File does not exist: ${file}"
-            download_failed=1
-        else
-            echo "File ${file} exists and has size: $(wc -c < "./${file}") bytes"
-            echo "First few lines of ${file}:"
-            head -n 3 "./${file}"
-        fi
-    done
+    # 处理 gfwlist_base64 文件,移除 AutoProxy 头部等信息
+    if [ -f "./gfwlist_base64.tmp" ]; then
+        mv "./gfwlist_base64.tmp" "./gfwlist_base64.tmp.old"
+        cat "./gfwlist_base64.tmp.old" | \
+            grep -v '^!' | grep -v '^\[AutoProxy' | grep -v '^@@' | \
+            sed -e 's/^||//' -e 's/^|//' -e 's/^https\?:\/\///' -e 's/\/.*$//' -e 's/\*.//g' -e 's/^\.//g' | \
+            grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
+            sort -u > "./gfwlist_base64.tmp"
+        rm -f "./gfwlist_base64.tmp.old"
+    fi
     
     # 如果有任何下载失败，退出脚本
     if [ ${download_failed} -eq 1 ]; then
