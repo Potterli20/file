@@ -268,7 +268,10 @@ function AnalyseData() {
 }
 # Generate Rules
 function GenerateRules() {
+    echo "=== Starting Rules Generation ==="
+    
     function FileName() {
+        echo "Setting up file naming..."
         if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "whiteblack" ]; then
             generate_temp="black"
         elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "blackwhite" ]; then
@@ -288,8 +291,10 @@ function GenerateRules() {
         fi
         file_name="${generate_temp}list_${generate_mode}.${file_extension}"
         file_path="../gfwlist2${software_name}/${file_name}"
+        echo "File path set to: ${file_path}"
     }
     function GenerateDefaultUpstream() {
+        echo "Generating default upstream configuration..."
         case ${software_name} in
             adguardhome)
                 if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "lite" ]; then
@@ -341,9 +346,11 @@ function GenerateRules() {
                 exit 1
             ;;
         esac
+        echo "Upstream configuration completed"
     }
     case ${software_name} in
         adguardhome)
+            echo "Generating rules for AdGuard Home..."
             domestic_dns=(
             $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com:53"; done)
             $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5:53"; done)
@@ -458,9 +465,13 @@ function GenerateRules() {
                 fi
             }
             function GenerateRulesProcess() {
+                echo "Processing rules..."
                 GenerateRulesHeader
+                echo "Rules header generated"
                 GenerateRulesBody
+                echo "Rules body generated" 
                 GenerateRulesFooter
+                echo "Rules footer generated"
             }
             if [ "${dns_mode}" == "default" ]; then
                 FileName && GenerateDefaultUpstream && GenerateRulesProcess
@@ -473,8 +484,10 @@ function GenerateRules() {
                    GenerateRulesProcess
                 done
             fi
+            echo "AdGuard Home rules generation completed"
         ;;
         adguardhome_new)
+            echo "Generating rules for AdGuard Home (New)..."
             domestic_dns=(
             $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com:53"; done)
             $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5:53"; done)
@@ -589,9 +602,13 @@ function GenerateRules() {
                 fi
             }
             function GenerateRulesProcess() {
+                echo "Processing rules..."
                 GenerateRulesHeader
+                echo "Rules header generated"
                 GenerateRulesBody
+                echo "Rules body generated" 
                 GenerateRulesFooter
+                echo "Rules footer generated"
             }
             if [ "${dns_mode}" == "default" ]; then
                 FileName && GenerateDefaultUpstream && GenerateRulesProcess
@@ -600,8 +617,10 @@ function GenerateRules() {
             elif [ "${dns_mode}" == "foreign" ]; then
                 FileName && GenerateDefaultUpstream && GenerateRulesProcess
             fi
+            echo "AdGuard Home (New) rules generation completed"
         ;;
         bind9)
+            echo "Generating rules for Bind9..."
         domestic_dns=(
             "119.29.29.29 port 53"
             "223.5.5.5 port 53"
@@ -662,8 +681,10 @@ function GenerateRules() {
                     done
                 fi
             fi
+            echo "Bind9 rules generation completed"
         ;;
         dnsmasq)
+            echo "Generating rules for DNSMasq..."
         domestic_dns=(
             "119.29.29.29#53"
             "223.5.5.5#53"
@@ -716,8 +737,10 @@ function GenerateRules() {
                     done
                 fi
             fi
+            echo "DNSMasq rules generation completed"
         ;;
         domain)
+            echo "Generating rules for Domain..."
             if [ "${generate_mode}" == "full" ]; then
                 if [ "${generate_file}" == "black" ]; then
                     FileName && for gfwlist_data_task in "${!gfwlist_data[@]}"; do
@@ -739,8 +762,10 @@ function GenerateRules() {
                     done
                 fi
             fi
+            echo "Domain rules generation completed"
         ;;
         smartdns)
+            echo "Generating rules for SmartDNS..."
             if [ "${generate_mode}" == "full" ]; then
                 if [ "${generate_file}" == "black" ]; then
                     FileName && for gfwlist_data_task in "${!gfwlist_data[@]}"; do
@@ -762,8 +787,10 @@ function GenerateRules() {
                     done
                 fi
             fi
+            echo "SmartDNS rules generation completed"
         ;;
         unbound)
+            echo "Generating rules for Unbound..."
         domestic_dns=(
             "223.5.5.5@853"
             "223.6.6.6@853"
@@ -846,14 +873,21 @@ function GenerateRules() {
                     done
                 fi
             fi
+            echo "Unbound rules generation completed"
         ;;
         *)
+            echo "Error: Unknown software type: ${software_name}"
             exit 1
     esac
+    echo "=== Rules Generation Completed ==="
 }
 # Output Data
 function OutputData() {
-    ## AdGuard Home
+    echo "=== Starting Rules Output ==="
+    echo "Generating rules for all DNS software types..."
+    
+    # AdGuard Home
+    echo "Processing AdGuard Home configurations..."
     software_name="adguardhome" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
     software_name="adguardhome" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
     software_name="adguardhome" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
@@ -866,7 +900,10 @@ function OutputData() {
     software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
     software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
     software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
-    ## AdGuard Home (New)
+    echo "AdGuard Home configurations completed"
+    
+    # AdGuard Home (New)
+    echo "Processing AdGuard Home (New) configurations..."
     software_name="adguardhome_new" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
     software_name="adguardhome_new" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
     software_name="adguardhome_new" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
@@ -879,34 +916,52 @@ function OutputData() {
     software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
     software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
     software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
-    ## Bind9
+    echo "AdGuard Home (New) configurations completed"
+    
+    # Bind9
+    echo "Processing Bind9 configurations..."
     software_name="bind9" && generate_file="black" && generate_mode="full" && GenerateRules
     software_name="bind9" && generate_file="black" && generate_mode="lite" && GenerateRules
     software_name="bind9" && generate_file="white" && generate_mode="full" && GenerateRules
     software_name="bind9" && generate_file="white" && generate_mode="lite" && GenerateRules
-    ## DNSMasq
+    echo "Bind9 configurations completed"
+    
+    # DNSMasq
+    echo "Processing DNSMasq configurations..."
     software_name="dnsmasq" && generate_file="black" && generate_mode="full" && GenerateRules
     software_name="dnsmasq" && generate_file="black" && generate_mode="lite" && GenerateRules
     software_name="dnsmasq" && generate_file="white" && generate_mode="full" && GenerateRules
     software_name="dnsmasq" && generate_file="white" && generate_mode="lite" && GenerateRules
-    ## Domain
+    echo "DNSMasq configurations completed"
+    
+    # Domain
+    echo "Processing Domain configurations..."
     software_name="domain" && generate_file="black" && generate_mode="full" && GenerateRules
     software_name="domain" && generate_file="black" && generate_mode="lite" && GenerateRules
     software_name="domain" && generate_file="white" && generate_mode="full" && GenerateRules
     software_name="domain" && generate_file="white" && generate_mode="lite" && GenerateRules
-    ## SmartDNS
+    echo "Domain configurations completed"
+    
+    # SmartDNS
+    echo "Processing SmartDNS configurations..."
     software_name="smartdns" && generate_file="black" && generate_mode="full" && foreign_group="foreign" && GenerateRules
     software_name="smartdns" && generate_file="black" && generate_mode="lite" && foreign_group="foreign" && GenerateRules
     software_name="smartdns" && generate_file="white" && generate_mode="full" && domestic_group="domestic" && GenerateRules
     software_name="smartdns" && generate_file="white" && generate_mode="lite" && domestic_group="domestic" && GenerateRules
-    ## Unbound
+    echo "SmartDNS configurations completed"
+    
+    # Unbound
+    echo "Processing Unbound configurations..."
     software_name="unbound" && generate_file="black" && generate_mode="full" && dns_mode="foreign" && GenerateRules
     software_name="unbound" && generate_file="black" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
     software_name="unbound" && generate_file="white" && generate_mode="full" && dns_mode="domestic" && GenerateRules
     software_name="unbound" && generate_file="white" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
+    echo "Unbound configurations completed"
+    
+    echo "Cleaning up temporary directory..."
     cd .. && rm -rf ./Temp
+    echo "=== Rules Output Completed ==="
 }
-
 function MoveGeneratedFiles() {
     echo "Starting MoveGeneratedFiles..."
     
@@ -975,11 +1030,22 @@ function MoveGeneratedFiles() {
 }
 
 ## Process
-# Call GetData
+echo "=== Starting DNS List Generation Process ==="
+
+echo "Step 1: Getting Data..."
 GetData
-# Call AnalyseData
+echo "Data retrieval completed."
+
+echo "Step 2: Analyzing Data..."
 AnalyseData
-# Call OutputData
+echo "Data analysis completed."
+
+echo "Step 3: Generating Rules..."
 OutputData
-# Call MoveGeneratedFiles
+echo "Rules generation completed."
+
+echo "Step 4: Moving Generated Files..."
 MoveGeneratedFiles
+echo "File movement completed."
+
+echo "=== Process Completed Successfully ==="
