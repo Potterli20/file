@@ -162,6 +162,40 @@ function GetData() {
         fi
     done
     
+    # 下载并处理 AutoProxy 规则
+    for gfwlist_base64_task in "${!gfwlist_base64[@]}"; do
+        echo "Processing ${gfwlist_base64[$gfwlist_base64_task]}"
+        if curl -s --connect-timeout 15 "${gfwlist_base64[$gfwlist_base64_task]}" | base64 -d | \
+           grep -v '^!' | grep -v '^\[AutoProxy' | grep -v '^@@' | \
+           sed -e 's/^||//' -e 's/^|//' -e 's/^https\?:\/\///' -e 's/\/.*$//' -e 's/\*.//g' -e 's/^\.//g' | \
+           grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
+           sort -u >> ./gfwlist_base64.tmp; then
+            echo "Successfully processed ${gfwlist_base64[$gfwlist_base64_task]}"
+            ((success_count++))
+        else
+            echo "Error: Failed to process ${gfwlist_base64[$gfwlist_base64_task]}"
+            download_failed=1
+        fi
+    done
+    
+    echo "Download statistics:"
+    echo "Total attempted: ${download_count}"
+    echo "Successful: ${success_count}"
+    echo "Failed: $((download_count - success_count))"
+    
+    # 检查所有必需的文件是否存在且非空
+    for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp gfwlist2agh_modify.tmp autoproxy_domain.tmp; do
+        if [ ! -s "./${file}" ]; then
+            echo "Error: ${file} is empty or does not exist"
+            ls -l "./${file}" 2>/dev/null || echo "File does not exist: ${file}"
+            download_failed=1
+        else
+            echo "File ${file} exists and has size: $(wc -c < "./${file}") bytes"
+            echo "First few lines of ${file}:"
+            head -n 3 "./${file}"
+        fi
+    done
+    
     # 如果有任何下载失败，退出脚本
     if [ ${download_failed} -eq 1 ]; then
         echo "Error: Some downloads failed. Please check your network connection and try again."
@@ -172,62 +206,84 @@ function GetData() {
 function AnalyseData() {
     echo "Starting data analysis..."
     
-    # 定义通用的域名正则表达式
-    domain_regex="^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$"
-    lite_domain_regex="^([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$"
-    
-    # 处理函数，包含错误检查
-    function process_file() {
-        local input=$1
-        local output=$2
-        local regex=${3:-$domain_regex}
-        
-        if [ ! -f "$input" ]; then
-            echo "Error: Input file $input not found"
-            return 1
+    # 首先确保所有必需的文件存在
+    for file in gfwlist2agh_modify.tmp cnacc_domain.tmp gfwlist_base64.tmp gfwlist_domain.tmp; do
+        if [ ! -f "./${file}" ]; then
+            echo "Error: Required file ${file} not found"
+            exit 1
         fi
-        
-        echo "Processing $input -> $output"
-        if ! cat "$input" | \
-           grep -v "\#" | \
-           grep -v "\[AutoProxy.*\]" | \
-           sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-           grep -vE "^$|^\[|^!|^@|^%|^\*|^&" | \
-           grep -E "$regex" | \
-           sort | uniq > "$output"; then
-            echo "Error processing $input"
-            return 1
-        fi
-        echo "Successfully processed $(wc -l < "$output") lines"
-    }
-    
-    # 分步处理数据，每步都进行错误检查
-    local error_count=0
+        echo "Found required file: ${file} ($(wc -l < "./${file}") lines)"
+    done
+
+    # 初始化所有输出文件
+    touch ./cnacc_data.tmp ./gfwlist_data.tmp ./lite_cnacc_data.tmp ./lite_gfwlist_data.tmp
     
     echo "Processing domain data..."
-    process_file "./gfwlist2agh_modify.tmp" "./cnacc_data.tmp" || ((error_count++))
-    process_file "./gfwlist2agh_modify.tmp" "./lite_cnacc_data.tmp" "$lite_domain_regex" || ((error_count++))
-    process_file "./gfwlist2agh_modify.tmp" "./gfwlist_data.tmp" || ((error_count++))
-    process_file "./gfwlist2agh_modify.tmp" "./lite_gfwlist_data.tmp" "$lite_domain_regex" || ((error_count++))
     
-    # 合并处理结果
-    if [ $error_count -eq 0 ]; then
-        echo "Merging results..."
-        cnacc_data=($(cat "./cnacc_data.tmp" "./lite_cnacc_data.tmp" | sort | uniq | awk "{ print \$2 }"))
-        gfwlist_data=($(cat "./gfwlist_data.tmp" "./lite_gfwlist_data.tmp" | sort | uniq | awk "{ print \$2 }"))
-        lite_cnacc_data=($(cat "./lite_cnacc_data.tmp" | sort | uniq | awk "{ print \$2 }"))
-        lite_gfwlist_data=($(cat "./lite_gfwlist_data.tmp" | sort | uniq | awk "{ print \$2 }"))
+    # 分步处理数据以便调试
+    echo "Step 1: Processing cnacc data..."
+    cnacc_data=($(
+        domain_regex="^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$"
+        lite_domain_regex="^([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$"
         
-        # 验证结果
-        echo "Validation:"
-        echo "CNACC entries: ${#cnacc_data[@]}"
-        echo "GFWList entries: ${#gfwlist_data[@]}"
-        echo "Lite CNACC entries: ${#lite_cnacc_data[@]}"
-        echo "Lite GFWList entries: ${#lite_gfwlist_data[@]}"
-    else
-        echo "Error: $error_count errors occurred during processing"
-        return 1
+        # 处理 cnacc 数据
+        cat "./cnacc_domain.tmp" | sed 's/domain://g;s/full://g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | sort | uniq > "./cnacc_processed.tmp"
+        cat "./cnacc_trusted.tmp" | sed 's/\/114\.114\.114\.114//g;s/server=\///g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | sort | uniq > "./cnacc_trust_processed.tmp"
+        
+        # 合并并去重
+        cat "./cnacc_processed.tmp" "./cnacc_trust_processed.tmp" | sort | uniq > "./cnacc_combined.tmp"
+        
+        # 应用排除规则
+        if [ -s "./cnacc_exclusion.tmp" ]; then
+            grep -Ev "(\.($(cat './cnacc_exclusion.tmp'))$)|(^$(cat './cnacc_exclusion.tmp')$)" "./cnacc_combined.tmp"
+        else
+            cat "./cnacc_combined.tmp"
+        fi
+    ))
+    
+    echo "CNACC data count: ${#cnacc_data[@]}"
+    
+    echo "Step 2: Processing gfwlist data..."
+    gfwlist_data=($(
+        # 处理 gfwlist 数据
+        cat "./gfwlist_base64.tmp" "./gfwlist_domain.tmp" | \
+        sed 's/domain://g;s/full://g;s/http:\/\///g;s/https:\/\///g' | \
+        tr -d "|" | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | \
+        sort | uniq > "./gfwlist_processed.tmp"
+        
+        # 应用排除规则
+        if [ -s "./gfwlist_exclusion.tmp" ]; then
+            grep -Ev "(\.($(cat './gfwlist_exclusion.tmp'))$)|(^$(cat './gfwlist_exclusion.tmp')$)" "./gfwlist_processed.tmp"
+        else
+            cat "./gfwlist_processed.tmp"
+        fi
+    ))
+    
+    echo "GFWList data count: ${#gfwlist_data[@]}"
+    
+    # 检查数据是否为空
+    if [ ${#cnacc_data[@]} -eq 0 ] || [ ${#gfwlist_data[@]} -eq 0 ]; then
+        echo "Error: No data processed."
+        echo "cnacc_data size: ${#cnacc_data[@]}"
+        echo "gfwlist_data size: ${#gfwlist_data[@]}"
+        echo "Debug information:"
+        echo "Contents of temporary files:"
+        for tmp in *processed.tmp; do
+            echo "=== First 10 lines of ${tmp} ==="
+            head -n 10 "${tmp}"
+        done
+        exit 1
     fi
+    
+    # 初始化 lite 版本的数据
+    lite_cnacc_data=($(echo "${cnacc_data[@]}" | tr ' ' '\n' | rev | cut -d "." -f 1,2 | rev | sort -u))
+    lite_gfwlist_data=($(echo "${gfwlist_data[@]}" | tr ' ' '\n' | rev | cut -d "." -f 1,2 | rev | sort -u))
+    
+    echo "Data analysis completed successfully"
+    echo "cnacc_data entries: ${#cnacc_data[@]}"
+    echo "gfwlist_data entries: ${#gfwlist_data[@]}"
+    echo "lite_cnacc_data entries: ${#lite_cnacc_data[@]}"
+    echo "lite_gfwlist_data entries: ${#lite_gfwlist_data[@]}"
 }
 # Generate Rules
 function GenerateRules() {
