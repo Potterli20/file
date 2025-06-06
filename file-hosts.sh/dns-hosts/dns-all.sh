@@ -102,14 +102,15 @@ function GetData() {
     download_failed=0
     download_count=0
     success_count=0
+    total_downloads=${#cnacc_domain[@]}
     
     echo "=== Downloading CNACC Domain Files ==="
     for cnacc_domain_task in "${!cnacc_domain[@]}"; do
-        echo "Processing download ${download_count + 1}/${#cnacc_domain[@]}"
+        download_count=$((download_count + 1))
+        echo "Processing download $download_count/$total_downloads"
         echo "URL: ${cnacc_domain[$cnacc_domain_task]}"
-        ((download_count++))
         if curl -s -f --connect-timeout 15 "${cnacc_domain[$cnacc_domain_task]}" | sed "s/^\.//g" >> ./cnacc_domain.tmp; then
-            ((success_count++))
+            success_count=$((success_count + 1))
             echo "✓ Download successful"
         else
             echo "✗ Download failed"
