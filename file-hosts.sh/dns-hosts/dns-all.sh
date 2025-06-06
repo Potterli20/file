@@ -518,13 +518,24 @@ function GenerateRules() {
                 fi
             }
             function GenerateRulesProcess() {
+                local total_steps=3
+                local current_step=0
+                
                 echo "Processing rules..."
+                
+                current_step=$((current_step + 1))
                 GenerateRulesHeader
-                echo "Rules header generated"
+                show_progress $current_step $total_steps
+                
+                current_step=$((current_step + 1))
                 GenerateRulesBody
-                echo "Rules body generated" 
+                show_progress $current_step $total_steps
+                
+                current_step=$((current_step + 1))
                 GenerateRulesFooter
-                echo "Rules footer generated"
+                show_progress $current_step $total_steps
+                
+                echo -e "\nRules generation completed"
             }
             if [ "${dns_mode}" == "default" ]; then
                 FileName && GenerateDefaultUpstream && GenerateRulesProcess
@@ -655,13 +666,24 @@ function GenerateRules() {
                 fi
             }
             function GenerateRulesProcess() {
+                local total_steps=3
+                local current_step=0
+                
                 echo "Processing rules..."
+                
+                current_step=$((current_step + 1))
                 GenerateRulesHeader
-                echo "Rules header generated"
+                show_progress $current_step $total_steps
+                
+                current_step=$((current_step + 1))
                 GenerateRulesBody
-                echo "Rules body generated" 
+                show_progress $current_step $total_steps
+                
+                current_step=$((current_step + 1))
                 GenerateRulesFooter
-                echo "Rules footer generated"
+                show_progress $current_step $total_steps
+                
+                echo -e "\nRules generation completed"
             }
             if [ "${dns_mode}" == "default" ]; then
                 FileName && GenerateDefaultUpstream && GenerateRulesProcess
@@ -1082,6 +1104,24 @@ function MoveGeneratedFiles() {
     fi
 }
 
+function ShowProgress() {
+    local current=$1
+    local total=$2
+    local width=50
+    local progress=$((current * width / total))
+    local percentage=$((current * 100 / total))
+    
+    printf "\rProgress: ["
+    for ((i=0; i<width; i++)); do
+        if [ $i -lt $progress ]; then
+            printf "="
+        else
+            printf " "
+        fi
+    done
+    printf "] %d%% (%d/%d)" "$percentage" "$current" "$total"
+}
+
 ## Process
 echo "=== Starting DNS List Generation Process ==="
 
@@ -1099,6 +1139,10 @@ echo "Rules generation completed."
 
 echo "Step 4: Moving Generated Files..."
 MoveGeneratedFiles
-echo "File movement completed."
+echo "File movement completed..."
+
+echo "Step 5: ShowProgress..."
+ShowProgress
+echo "Date ShowProgress..."
 
 echo "=== Process Completed Successfully ==="
