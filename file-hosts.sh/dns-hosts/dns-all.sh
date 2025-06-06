@@ -525,15 +525,15 @@ function GenerateRules() {
                 
                 current_step=$((current_step + 1))
                 GenerateRulesHeader
-                show_progress $current_step $total_steps
+                ShowProgress $current_step $total_steps
                 
                 current_step=$((current_step + 1))
                 GenerateRulesBody
-                show_progress $current_step $total_steps
+                ShowProgress $current_step $total_steps
                 
                 current_step=$((current_step + 1))
                 GenerateRulesFooter
-                show_progress $current_step $total_steps
+                ShowProgress $current_step $total_steps
                 
                 echo -e "\nRules generation completed"
             }
@@ -673,15 +673,15 @@ function GenerateRules() {
                 
                 current_step=$((current_step + 1))
                 GenerateRulesHeader
-                show_progress $current_step $total_steps
+                ShowProgress $current_step $total_steps
                 
                 current_step=$((current_step + 1))
                 GenerateRulesBody
-                show_progress $current_step $total_steps
+                ShowProgress $current_step $total_steps
                 
                 current_step=$((current_step + 1))
                 GenerateRulesFooter
-                show_progress $current_step $total_steps
+                ShowProgress $current_step $total_steps
                 
                 echo -e "\nRules generation completed"
             }
@@ -1124,25 +1124,31 @@ function ShowProgress() {
 
 ## Process
 echo "=== Starting DNS List Generation Process ==="
+total_main_steps=4
+current_main_step=0
 
 echo "Step 1: Getting Data..."
+current_main_step=$((current_main_step + 1))
 GetData
+ShowProgress $current_main_step $total_main_steps
 echo "Data retrieval completed."
 
 echo "Step 2: Analyzing Data..."
+current_main_step=$((current_main_step + 1))
 AnalyseData
+ShowProgress $current_main_step $total_main_steps
 echo "Data analysis completed."
 
 echo "Step 3: Generating Rules..."
+current_main_step=$((current_main_step + 1))
 OutputData
+ShowProgress $current_main_step $total_main_steps
 echo "Rules generation completed."
 
 echo "Step 4: Moving Generated Files..."
+current_main_step=$((current_main_step + 1))
 MoveGeneratedFiles
-echo "File movement completed..."
-
-echo "Step 5: ShowProgress..."
-ShowProgress
-echo "Date ShowProgress..."
+ShowProgress $current_main_step $total_main_steps
+echo -e "\nFile movement completed."
 
 echo "=== Process Completed Successfully ==="
