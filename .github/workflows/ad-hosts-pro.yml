@@ -39,4 +39,3 @@ jobs:
           body: |
             🔄 ad-hosts-pro Hosts Update
             📅 Date: ${{ github.event.repository.updated_at }}
-            🏷️ Version: ${{ github.sha }}

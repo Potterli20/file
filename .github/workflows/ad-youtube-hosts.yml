@@ -50,4 +50,3 @@ jobs:
           body: |
             🔄 ad-youtube-hosts Hosts Update
             📅 Date: ${{ github.event.repository.updated_at }}
-            🏷️ Version: ${{ github.sha }}

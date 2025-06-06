@@ -48,4 +48,3 @@ jobs:
           body: |
             🔄 cn-blocked-domain Hosts Update
             📅 Date: ${{ github.event.repository.updated_at }}
-            🏷️ Version: ${{ github.sha }}
