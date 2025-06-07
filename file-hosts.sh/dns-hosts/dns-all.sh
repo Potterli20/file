@@ -1,5 +1,4 @@
 #!/bin/bash
-## Function
 # Get Data
 function GetData() {
     cnacc_domain=(
@@ -24,6 +23,9 @@ function GetData() {
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/China/China_Domain.list"
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/apple/Domains"
         "https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-tld-list.txt"
+        "https://raw.githubusercontent.com/v2fly/domain-list-community/release/tld-cn.txt" 
+        "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax_Domain.list"
+        "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list" 
     )
     cnacc_trusted=(
         "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
@@ -1074,8 +1076,8 @@ function OutputData() {
     # Domain
     echo "Processing Domain configurations..."
     software_name="domain" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="domain" && generate_file="black" && generate_mode="lite" && GenerateRules
-    software_name="domain" && generate_file="white" && generate_mode="full" && GenerateRules
+    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
     software_name="domain" && generate_file="white" && generate_mode="lite" && GenerateRules
     echo "Domain configurations completed"
     
