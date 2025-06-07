@@ -23,27 +23,6 @@ jobs:
         with:
           fetch-depth: 1  # 优化克隆深度
       
-      - name: Cache dns data  # 添加ID以便后续步骤引用
-        id: dns-cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ./file-hosts.sh/dns-hosts/hosts-dns
-            ./Temp
-          key: ${{ runner.os }}-dns-${{ hashFiles('**/dns-all.sh') }}-${{ github.run_number }}
-          restore-keys: |
-            ${{ runner.os }}-dns-${{ hashFiles('**/dns-all.sh') }}-
-            ${{ runner.os }}-dns-
-      
-      - name: Check cache status  # 添加缓存状态检查
-        run: |
-          if [ "${{ steps.dns-cache.outputs.cache-hit }}" == 'true' ]; then
-            echo "Cache hit - using cached DNS data"
-            ls -la ./file-hosts.sh/dns-hosts/hosts-dns || true
-          else
-            echo "Cache miss - will generate fresh DNS data"
-          fi
-
       - name: Build dns
         run: |
           bash ./file/bash/github-dns.sh
@@ -56,27 +35,12 @@ jobs:
         
       - name: Check build results  # 检查构建结果
         run: |
-          if [ ! -d "./file-hosts.sh/dns-hosts/hosts-dns" ]; then
-            echo "DNS hosts directory not found"
+          if [ ! -d "./file-hosts.sh/dns-hosts/hosts-dns" ] || ! ls ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-* 1> /dev/null 2>&1; then
+            echo "DNS hosts files not found"
             exit 1
           fi
-          
-          if ! ls ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-* 1> /dev/null 2>&1; then
-            echo "No DNS host files generated"
-            exit 1
-          fi
-          
           echo "Found DNS host files:"
           ls -l ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-*
-          
-      - name: Update cache  # 添加缓存更新步骤
-        if: always()  # 即使前面步骤失败也尝试更新缓存
-        run: |
-          if [ -d "./file-hosts.sh/dns-hosts/hosts-dns" ]; then
-            echo "Updating DNS cache..."
-            # 可以在这里添加清理临时文件的命令
-            find ./Temp -type f -name "*.tmp" -delete || true
-          fi
 
       - name: Release
         uses: svenstaro/upload-release-action@master
@@ -88,7 +52,6 @@ jobs:
           file: ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-*
           body: |
             🔄 DNS Hosts Update
-            📅 Build Time: $(date '+%Y-%m-%d %H:%M:%S')
+            📅 Build Time: ${{ format('YYYY-MM-DD HH:mm:ss', github.event.repository.updated_at) }}
             🔨 Workflow: ${{ github.workflow }}
             📦 Run: ${{ github.run_number }}
-            🔍 Cache: ${{ steps.dns-cache.outputs.cache-hit == 'true' && '✅ Used' || '❌ Fresh Build' }}
