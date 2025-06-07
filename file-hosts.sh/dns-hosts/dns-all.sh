@@ -4,13 +4,25 @@ function GetData() {
     # 添加URL转换函数
     function convert_github_url() {
         local url="$1"
-        # 直接使用可靠的镜像，不做检测
-        if [[ "$url" == *"raw.githubusercontent.com"* ]]; then
-            echo "https://gh-proxy.com/https://raw.githubusercontent.com${url#*raw.githubusercontent.com}"
-        elif [[ "$url" == *"github.com"* ]]; then
-            echo "https://gh-proxy.com/https://github.com${url#*github.com}"
-        else
+        # 如果不是GitHub URL,直接返回原始URL
+        if [[ "$url" != *"githubusercontent.com"* ]] && [[ "$url" != *"github.com"* ]]; then
             echo "$url"
+            return
+        fi
+
+        # 测试直连GitHub的连通性
+        if curl --connect-timeout 5 -s "https://github.com" > /dev/null; then
+            # 直连GitHub正常,返回原始URL
+            echo "$url"
+        else
+            # 直连失败,使用gh-proxy代理
+            if [[ "$url" == *"raw.githubusercontent.com"* ]]; then
+                echo "https://gh-proxy.com/https://raw.githubusercontent.com${url#*raw.githubusercontent.com}"
+            elif [[ "$url" == *"github.com"* ]]; then
+                echo "https://gh-proxy.com/https://github.com${url#*github.com}"
+            else
+                echo "$url"
+            fi
         fi
     }
 
@@ -252,7 +264,7 @@ function GetData() {
     echo -e "\nVerifying downloaded files..."
     local failed=0
     for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp; do
-        if ! [ -f "./Temp/$file" ] || ! [ -s "./Temp/$file" ]; then
+        if ! [ -f "$file" ] || ! [ -s "$file" ]; then
             echo "Error: $file is missing or empty"
             failed=1
         else
@@ -263,12 +275,22 @@ function GetData() {
     if [ $failed -eq 1 ]; then
         echo "Debug information:"
         echo "Current directory: $(pwd)"
-        echo "Contents of temporary directory:"
-        ls -la ./Temp/
-        for tmp in ./Temp/*.tmp; do
-            if [ -f "$tmp" ]; then
-                echo "=== First 10 lines of $(basename ${tmp}) ==="
-                head -n 10 "$tmp"
+        echo "Contents of current directory:"
+        ls -la
+        
+        echo -e "\nAttempting to create missing files..."
+        for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp; do
+            if ! [ -f "$file" ]; then
+                touch "$file"
+                echo "Created empty file: $file"
+            fi
+        done
+        
+        echo -e "\nChecking file contents:"
+        for file in *.tmp; do
+            if [ -f "$file" ]; then
+                echo "=== First 10 lines of $file ==="
+                head -n 10 "$file" 2>/dev/null || echo "No content in $file"
             fi
         done
         exit 1
