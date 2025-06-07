@@ -455,53 +455,33 @@ function GenerateRules() {
             $(for protocol in https h3; do echo "${protocol}://dns.nextdns.io/dns-query"; done)
             $(for protocol in https h3; do echo "${protocol}://dns-unfiltered.adguard.com/dns-query"; done)
             $(for protocol in https h3; do echo "${protocol}://unfiltered.adguard-dns.com/dns-query"; done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                   echo "${protocol}://1dot1dot1dot1.cloudflare-dns.com:${port}/dns-query"
-                  done
-            done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    echo "${protocol}://mozilla.cloudflare-dns.com:${port}/dns-query"
-                done
-            done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    echo "${protocol}://chrome.cloudflare-dns.com:${port}/dns-query"
-                done
-            done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    echo "${protocol}://dns.cloudflare-dns.com:${port}/dns-query"
-                done
-            done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    echo "${protocol}://e5aehtlc5e.cloudflare-dns.com:${port}/dns-query"
-                done
-            done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    echo "${protocol}://sepfvn6g5a.cloudflare-dns.com:${port}/dns-query"
-                done
-            done)
+            $(for protocol in https h3; do echo "${protocol}://dns.google/dns-query"; done)
+            $(for protocol in https h3; do echo "${protocol}://dns.google.com/dns-query"; done)
+            # Cloudflare Instances
+            $(for id in "e5aehtlc5e" "sepfvn6g5a" "1dot1dot1dot1" "mozilla" "chrome" "dns"; do
+                    for port in 443 2083 2053 2087 2096 8443; do
+                        for protocol in https h3; do
+                 echo "${protocol}://${id}.cloudflare-dns.com:${port}/dns-query" 
+            done )
+            # DoT/DoQ Servers
+            $(for protocol in tls quic; do
+                echo "${protocol}://dns.google:853"
+                echo "${protocol}://dns.google.com:853"
+                echo "${protocol}://dns.adguard.com:853"
+                echo "${protocol}://dns-unfiltered.adguard.com:853"
+                echo "${protocol}://unfiltered.adguard-dns.com:853"
+                echo "${protocol}://anycast.dns.nextdns.io:853"
+                echo "${protocol}://dns.nextdns.io:853"
+                echo "${protocol}://doh3.dns.nextdns.io:853"
+            done )
             "https://77.88.8.8:443/dns-query"
             "https://doh.opendns.com/dns-query"
-            "https://dns.google/dns-query"
-            "https://dns.google.com/dns-query"
             "https://dns12.quad9.net/dns-query"
             "https://dns.twnic.tw/dns-query"
-            $(for protocol in tls quic; do echo "${protocol}://anycast.dns.nextdns.io:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns-unfiltered.adguard.com:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns.nextdns.io:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://doh3.dns.nextdns.io:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://unfiltered.adguard-dns.com:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns.google:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns.google.com:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://1dot1dot1dot1.cloudflare-dns.com:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns12.quad9.net:853"; done)
             "tls://dns.twnic.tw:853"
             "tls://common.dot.dns.yandex.net:853"
+            "tls://1dot1dot1dot1.cloudflare-dns.com:853"
+            "tls://dns12.quad9.net:853"
             )
             function GenerateRulesHeader() {
                 echo -n "[/" >> "${file_path}"
@@ -652,53 +632,33 @@ function GenerateRules() {
             $(for protocol in https h3; do echo "${protocol}://dns.nextdns.io/dns-query"; done)
             $(for protocol in https h3; do echo "${protocol}://dns-unfiltered.adguard.com/dns-query"; done)
             $(for protocol in https h3; do echo "${protocol}://unfiltered.adguard-dns.com/dns-query"; done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                   echo "${protocol}://1dot1dot1dot1.cloudflare-dns.com:${port}/dns-query"
-                  done
-            done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    echo "${protocol}://mozilla.cloudflare-dns.com:${port}/dns-query"
-                done
-            done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    echo "${protocol}://chrome.cloudflare-dns.com:${port}/dns-query"
-                done
-            done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    echo "${protocol}://dns.cloudflare-dns.com:${port}/dns-query"
-                done
-            done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    echo "${protocol}://e5aehtlc5e.cloudflare-dns.com:${port}/dns-query"
-                done
-            done)
-            $(for protocol in https h3; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    echo "${protocol}://sepfvn6g5a.cloudflare-dns.com:${port}/dns-query"
-                done
-            done)
+            $(for protocol in https h3; do echo "${protocol}://dns.google/dns-query"; done)
+            $(for protocol in https h3; do echo "${protocol}://dns.google.com/dns-query"; done)
+            # Cloudflare Instances
+            $(for id in "e5aehtlc5e" "sepfvn6g5a" "1dot1dot1dot1" "mozilla" "chrome" "dns"; do
+                    for port in 443 2083 2053 2087 2096 8443; do
+                        for protocol in https h3; do
+                 echo "${protocol}://${id}.cloudflare-dns.com:${port}/dns-query" 
+            done )
+            # DoT/DoQ Servers
+            $(for protocol in tls quic; do
+                echo "${protocol}://dns.google:853"
+                echo "${protocol}://dns.google.com:853"
+                echo "${protocol}://dns.adguard.com:853"
+                echo "${protocol}://dns-unfiltered.adguard.com:853"
+                echo "${protocol}://unfiltered.adguard-dns.com:853"
+                echo "${protocol}://anycast.dns.nextdns.io:853"
+                echo "${protocol}://dns.nextdns.io:853"
+                echo "${protocol}://doh3.dns.nextdns.io:853"
+            done )
             "https://77.88.8.8:443/dns-query"
             "https://doh.opendns.com/dns-query"
-            "https://dns.google/dns-query"
-            "https://dns.google.com/dns-query"
             "https://dns12.quad9.net/dns-query"
             "https://dns.twnic.tw/dns-query"
-            $(for protocol in tls quic; do echo "${protocol}://anycast.dns.nextdns.io:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns-unfiltered.adguard.com:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns.nextdns.io:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://doh3.dns.nextdns.io:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://unfiltered.adguard-dns.com:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns.google:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns.google.com:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://1dot1dot1dot1.cloudflare-dns.com:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns12.quad9.net:853"; done)
             "tls://dns.twnic.tw:853"
             "tls://common.dot.dns.yandex.net:853"
+            "tls://1dot1dot1dot1.cloudflare-dns.com:853"
+            "tls://dns12.quad9.net:853"
             )
             function GenerateRulesHeader() {
                 echo -n "[/" >> "${file_path}"
