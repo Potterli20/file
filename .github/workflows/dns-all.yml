@@ -43,6 +43,8 @@ jobs:
           ls -l ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-*
 
       - name: Release
+        env:
+          TZ: 'Asia/Shanghai'  # 设置时区为中国时间
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
@@ -51,7 +53,9 @@ jobs:
           overwrite: true
           file: ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-*
           body: |
+            dns-hosts-all
+
             🔄 DNS Hosts Update
-            📅 Build Time: ${{ format('YYYY-MM-DD HH:mm:ss', github.event.repository.updated_at) }}
+            📅 Build Time: $(date '+%Y-%m-%d %H:%M:%S %Z')
             🔨 Workflow: ${{ github.workflow }}
             📦 Run: ${{ github.run_number }}
