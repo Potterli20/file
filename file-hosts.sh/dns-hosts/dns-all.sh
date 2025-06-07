@@ -180,15 +180,14 @@ function GetData() {
     # GFWList Base64 下载
     echo -e "\n=== Downloading GFWList Base64 Files ==="
     echo "Processing ${#gfwlist_base64[@]} files..."
+    
     for url in "${gfwlist_base64[@]}"; do
+        # 使用临时文件存储base64数据
         temp_file="./gfwlist_base64_$(date +%s%N).tmp"
-        current_download=$((current_download + 1))
-        printf "Downloading [%3d/%3d] %s\n" $current_download $total_all_downloads "$url"
         
-        if curl -s -f --connect-timeout 15 "$url" > "$temp_file" && \
+        # 下载并解码base64数据
+        if download_with_progress "$url" "$temp_file" "cat" && \
            base64 -d "$temp_file" > "${temp_file}.decoded" 2>/dev/null; then
-            success_count=$((success_count + 1))
-            printf "✓ Base64 decode successful\n"
             
             # 处理解码后的内容
             cat "${temp_file}.decoded" | \
@@ -201,9 +200,10 @@ function GetData() {
                 grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
                 sort -u >> ./gfwlist_base64.tmp
         else
-            printf "✗ Download or decode failed\n"
             download_failed=1
         fi
+        
+        # 清理临时文件
         rm -f "$temp_file" "${temp_file}.decoded"
     done
 
@@ -211,27 +211,23 @@ function GetData() {
     echo -e "\n=== Downloading GFWList Domain Files ==="
     echo "Processing ${#gfwlist_domain[@]} files..."
     
-    for gfwlist_domain_task in "${!gfwlist_domain[@]}"; do
-        current_all_download=$((current_all_download + 1))
-        printf "Downloading [%3d/%3d]\n" $current_all_download $total_all_downloads
-        printf "%s\n" "${gfwlist_domain[$gfwlist_domain_task]}"
+    # 使用与其他下载相同的函数处理方式
+    for url in "${gfwlist_domain[@]}"; do
+        # 使用统一的下载函数
+        download_with_progress "$url" "./gfwlist_domain.tmp" "sed 's/^\.//g'"
         
-        if curl -s -f --connect-timeout 15 "${gfwlist_domain[$gfwlist_domain_task]}" | sed "s/^\.//g" >> ./gfwlist_domain.tmp; then
-            printf "✓ Download successful\n"
-            success_count=$((success_count + 1))
-        else
-            printf "✗ Download failed\n"
-            download_failed=1
+        # 每10个URL显示一次进度统计
+        if ((current_download % 10 == 0)); then
+            echo -e "\nProgress: $current_download/${#gfwlist_domain[@]} files"
         fi
     done
     
-    for gfwlist2agh_modify_task in "${!gfwlist2agh_modify[@]}"; do
-        if ! curl -s --connect-timeout 15 "${gfwlist2agh_modify[$gfwlist2agh_modify_task]}" >> ./gfwlist2agh_modify.tmp; then
-            echo "Error: Failed to download ${gfwlist2agh_modify[$gfwlist2agh_modify_task]}"
-            download_failed=1
-        fi
+    # gfwlist2agh_modify 下载
+    echo -e "\n=== Downloading Modify Files ==="
+    for url in "${gfwlist2agh_modify[@]}"; do
+        download_with_progress "$url" "./gfwlist2agh_modify.tmp" "cat"
     done
-    
+
     # 文件验证改进
     verify_file() {
         local file="$1"
@@ -1294,7 +1290,7 @@ ShowProgress $current_main_step $total_main_steps
 echo "Data analysis completed."
 
 echo "Step 3: Generating Rules..."
-current_main_step=$((current_main_step + 1))
+current_main_step=$((current_main_step +  1))
 OutputData
 ShowProgress $current_main_step $total_main_steps
 echo "Rules generation completed."
