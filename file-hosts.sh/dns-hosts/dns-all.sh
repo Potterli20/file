@@ -462,7 +462,10 @@ function GenerateRules() {
                     for port in 443 2083 2053 2087 2096 8443; do
                         for protocol in https h3; do
                  echo "${protocol}://${id}.cloudflare-dns.com:${port}/dns-query" 
-            done )
+                    done
+                done
+            done
+            )
             # DoT/DoQ Servers
             $(for protocol in tls quic; do
                 echo "${protocol}://dns.google:853"
@@ -639,7 +642,10 @@ function GenerateRules() {
                     for port in 443 2083 2053 2087 2096 8443; do
                         for protocol in https h3; do
                  echo "${protocol}://${id}.cloudflare-dns.com:${port}/dns-query" 
-            done )
+                    done
+                done
+            done
+            )            
             # DoT/DoQ Servers
             $(for protocol in tls quic; do
                 echo "${protocol}://dns.google:853"
