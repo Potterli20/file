@@ -42,9 +42,11 @@ jobs:
           echo "Found DNS host files:"
           ls -l ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-*
 
+      - name: Get current time
+        id: current-time
+        run: echo "time=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+
       - name: Release
-        env:
-          TZ: 'Asia/Shanghai'  # 设置时区为中国时间
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUBTOKEN }}
@@ -53,7 +55,9 @@ jobs:
           overwrite: true
           file: ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-*
           body: |
+            dns-hosts-all
+
             🔄 DNS Hosts Update
-            📅 Build Time: $(date '+%Y-%m-%d %H:%M:%S %Z')
+            📅 Build Time: ${{ steps.current-time.outputs.time }}
             🔨 Workflow: ${{ github.workflow }}
             📦 Run: ${{ github.run_number }}

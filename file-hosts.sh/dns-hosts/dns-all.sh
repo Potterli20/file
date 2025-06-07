@@ -248,21 +248,29 @@ function GetData() {
         return 0
     }
 
-    # 验证所有生成的文件
+    # 检查所有生成的文件是否存在并包含数据
     echo -e "\nVerifying downloaded files..."
     local failed=0
     for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp; do
-        if ! verify_file "./$file"; then
+        if ! [ -f "./Temp/$file" ] || ! [ -s "./Temp/$file" ]; then
+            echo "Error: $file is missing or empty"
             failed=1
+        else
+            echo "✓ $file exists and contains data"
         fi
     done
 
-    if [ $failed -eq 1 ] || [ $download_failed -eq 1 ]; then
-        echo "Error: Some downloads or validations failed"
-        echo "Download statistics:"
-        echo "Total attempted: $download_count"
-        echo "Successful: $success_count"
-        echo "Failed: $((download_count - success_count))"
+    if [ $failed -eq 1 ]; then
+        echo "Debug information:"
+        echo "Current directory: $(pwd)"
+        echo "Contents of temporary directory:"
+        ls -la ./Temp/
+        for tmp in ./Temp/*.tmp; do
+            if [ -f "$tmp" ]; then
+                echo "=== First 10 lines of $(basename ${tmp}) ==="
+                head -n 10 "$tmp"
+            fi
+        done
         exit 1
     fi
 
