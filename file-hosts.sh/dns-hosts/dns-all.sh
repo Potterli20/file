@@ -509,33 +509,39 @@ function GenerateRules() {
             function GenerateRulesBody() {
                 if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
                     if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+                        # 改用换行而不是斜杠分隔域名
                         for cnacc_data_task in "${!cnacc_data[@]}"; do
-                            echo -n "${cnacc_data[$cnacc_data_task]}/" >> "${file_path}"
+                            echo "${cnacc_data[$cnacc_data_task]}" >> "${file_path}.tmp"
                         done
                     elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
                         for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                            echo -n "${gfwlist_data[$gfwlist_data_task]}/" >> "${file_path}"
+                            echo "${gfwlist_data[$gfwlist_data_task]}" >> "${file_path}.tmp"
                         done
                     fi
                 elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
                     if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
                         for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                            echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >> "${file_path}"
+                            echo "${lite_cnacc_data[$lite_cnacc_data_task]}" >> "${file_path}.tmp"
                         done
                     elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
                         for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                            echo -n "${lite_gfwlist_data[$lite_gfwlist_data_task]}/" >> "${file_path}"
+                            echo "${lite_gfwlist_data[$lite_gfwlist_data_task]}" >> "${file_path}.tmp"
                         done
                     fi
+                fi
+                # 处理临时文件，将所有域名用斜杠连接
+                if [ -f "${file_path}.tmp" ]; then
+                    tr '\n' '/' < "${file_path}.tmp" >> "${file_path}"
+                    rm -f "${file_path}.tmp"
                 fi
             }
             function GenerateRulesFooter() {
                 if [ "${dns_mode}" == "default" ]; then
-                    echo -e "]#" >> "${file_path}"
+                    echo "]#" >> "${file_path}"
                 elif [ "${dns_mode}" == "domestic" ]; then
-                    echo -e "]${domestic_dns[domestic_dns_task]}" >> "${file_path}"
+                    echo "]${domestic_dns[domestic_dns_task]}" >> "${file_path}"
                 elif [ "${dns_mode}" == "foreign" ]; then
-                    echo -e "]${foreign_dns[foreign_dns_task]}" >> "${file_path}"
+                    echo "]${foreign_dns[foreign_dns_task]}" >> "${file_path}"
                 fi
             }
             # 添加全局进度计数器
@@ -557,10 +563,9 @@ function GenerateRules() {
                 GenerateRulesBody
                 GenerateRulesFooter
                 
-                # 只在最后显示总体进度
-                if [ ${current_rules_count} -eq ${total_rules_count} ]; then
-                    ShowProgress $current_rules_count $total_rules_count
-                    echo -e "\nRules generation completed"
+                # 只在特定间隔显示进度
+                if ((current_rules_count % 5 == 0)) || [ ${current_rules_count} -eq ${total_rules_count} ]; then
+                    ShowProgress $current_rules_count $total_rules_count "Processing rules $current_rules_count of $total_rules_count"
                 fi
             }
             if [ "${dns_mode}" == "default" ]; then
@@ -662,33 +667,39 @@ function GenerateRules() {
             function GenerateRulesBody() {
                 if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
                     if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
+                        # 改用换行而不是斜杠分隔域名
                         for cnacc_data_task in "${!cnacc_data[@]}"; do
-                            echo -n "${cnacc_data[$cnacc_data_task]}/" >> "${file_path}"
+                            echo "${cnacc_data[$cnacc_data_task]}" >> "${file_path}.tmp"
                         done
                     elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
                         for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                            echo -n "${gfwlist_data[$gfwlist_data_task]}/" >> "${file_path}"
+                            echo "${gfwlist_data[$gfwlist_data_task]}" >> "${file_path}.tmp"
                         done
                     fi
                 elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
                     if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
                         for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                            echo -n "${lite_cnacc_data[$lite_cnacc_data_task]}/" >> "${file_path}"
+                            echo "${lite_cnacc_data[$lite_cnacc_data_task]}" >> "${file_path}.tmp"
                         done
                     elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
                         for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                            echo -n "${lite_gfwlist_data[$lite_gfwlist_data_task]}/" >> "${file_path}"
+                            echo "${lite_gfwlist_data[$lite_gfwlist_data_task]}" >> "${file_path}.tmp"
                         done
                     fi
+                fi
+                # 处理临时文件，将所有域名用斜杠连接
+                if [ -f "${file_path}.tmp" ]; then
+                    tr '\n' '/' < "${file_path}.tmp" >> "${file_path}"
+                    rm -f "${file_path}.tmp"
                 fi
             }
             function GenerateRulesFooter() {
                 if [ "${dns_mode}" == "default" ]; then
-                    echo -e "]#" >> "${file_path}"
+                    echo "]#" >> "${file_path}"
                 elif [ "${dns_mode}" == "domestic" ]; then
-                    echo -e "]${domestic_dns[*]}" >> "${file_path}"
+                    echo "]${domestic_dns[domestic_dns_task]}" >> "${file_path}"
                 elif [ "${dns_mode}" == "foreign" ]; then
-                    echo -e "]${foreign_dns[*]}" >> "${file_path}"
+                    echo "]${foreign_dns[foreign_dns_task]}" >> "${file_path}"
                 fi
             }
             function GenerateRulesProcess() {
@@ -1134,11 +1145,16 @@ function MoveGeneratedFiles() {
 function ShowProgress() {
     local current=$1
     local total=$2
+    local message="${3:-}"
     local width=50
     local progress=$((current * width / total))
     local percentage=$((current * 100 / total))
     
-    printf "\rProgress: ["
+    # 清除当前行
+    printf "\033[2K"
+    
+    # 显示进度条在新行
+    printf "\nProgress: ["
     for ((i=0; i<width; i++)); do
         if [ $i -lt $progress ]; then
             printf "="
@@ -1146,7 +1162,12 @@ function ShowProgress() {
             printf " "
         fi
     done
-    printf "] %d%% (%d/%d)" "$percentage" "$current" "$total"
+    printf "] %3d%% (%d/%d)" "$percentage" "$current" "$total"
+    
+    # 如果有额外消息则显示
+    if [ -n "$message" ]; then
+        printf "\n%s" "$message"
+    fi
 }
 
 ## Process
