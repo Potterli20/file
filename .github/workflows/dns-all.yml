@@ -53,8 +53,6 @@ jobs:
           overwrite: true
           file: ./file-hosts.sh/dns-hosts/hosts-dns/dnshosts-all-*
           body: |
-            dns-hosts-all
-
             🔄 DNS Hosts Update
             📅 Build Time: $(date '+%Y-%m-%d %H:%M:%S %Z')
             🔨 Workflow: ${{ github.workflow }}
