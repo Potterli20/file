@@ -251,6 +251,7 @@ function GetData() {
     echo "Successfully downloaded: $success_count"
     echo "Failed: $((total_all_downloads - success_count))"
 }
+
 # Analyse Data
 function AnalyseData() {
     echo "Starting data analysis..."
