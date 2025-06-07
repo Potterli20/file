@@ -336,7 +336,64 @@ function AnalyseData() {
     echo "gfwlist_data entries: ${#gfwlist_data[@]}"
     echo "lite_cnacc_data entries: ${#lite_cnacc_data[@]}"
     echo "lite_gfwlist_data entries: ${#lite_gfwlist_data[@]}"
+    
+    echo "Step 1: Processing cnacc data..."
+    # 添加中国TLD验证
+    cn_tlds=(
+        "cn"
+        "中国"
+        "公司"
+        "网络"
+        "com.cn"
+        "net.cn"
+        "org.cn"
+        "gov.cn"
+        "edu.cn"
+        "ac.cn"
+        "mil.cn"
+    )
+    
+    # 创建临时验证文件
+    echo "Verifying China TLD coverage..."
+    for tld in "${cn_tlds[@]}"; do
+        # 确保TLD在处理后的数据中
+        if ! grep -q "\.${tld}$" "./cnacc_processed.tmp"; then
+            echo "Adding missing TLD: ${tld}"
+            echo "${tld}" >> "./cnacc_processed.tmp"
+        fi
+    done
+    
+    # 关键域名验证列表
+    important_domains=(
+        "baidu.com"
+        "qq.com"
+        "163.com"
+        "taobao.com"
+        "tmall.com"
+        "jd.com"
+        "weixin.com"
+        "alipay.com"
+        "alibaba.com"
+        "alicdn.com"
+        "aliyun.com"
+        "tencent.com"
+        "weibo.com"
+        "sina.com.cn"
+        "sohu.com"
+        "youku.com"
+        "iqiyi.com"
+    )
+    
+    # 验证重要域名
+    echo "Verifying important Chinese domains..."
+    for domain in "${important_domains[@]}"; do
+        if ! grep -q "^${domain}$" "./cnacc_processed.tmp"; then
+            echo "Adding missing domain: ${domain}"
+            echo "${domain}" >> "./cnacc_processed.tmp"
+        fi
+    done
 }
+
 # Generate Rules
 function GenerateRules() {
     echo "=== Starting Rules Generation ==="
