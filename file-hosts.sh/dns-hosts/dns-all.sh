@@ -98,98 +98,110 @@ function GetData() {
     rm -rf ./gfwlist2* ./Temp && mkdir -p ./Temp && cd ./Temp || exit 1
     echo "Temporary directory created"
     
-    echo "Initializing download counters..."
-    download_failed=0
-    download_count=0
-    success_count=0
-    total_downloads=${#cnacc_domain[@]}
-    
-    echo "=== Downloading CNACC Domain Files ==="
-    for cnacc_domain_task in "${!cnacc_domain[@]}"; do
-        download_count=$((download_count + 1))
-        echo "Processing download $download_count/$total_downloads"
-        echo "URL: ${cnacc_domain[$cnacc_domain_task]}"
-        if curl -s -f --connect-timeout 15 "${cnacc_domain[$cnacc_domain_task]}" | sed "s/^\.//g" >> ./cnacc_domain.tmp; then
-            success_count=$((success_count + 1))
+    # 下载函数
+    download_file() {
+        local url="$1"
+        local output="$2"
+        local processor="$3"
+        
+        echo "Downloading: $url"
+        if curl -s -f --connect-timeout 15 "$url" | eval "$processor" >> "$output"; then
             echo "✓ Download successful"
+            return 0
         else
             echo "✗ Download failed"
-            download_failed=1
+            return 1
         fi
-        echo "----------------------------------------"
-    done
+    }
+
+    # 初始化所有计数器
+    total_downloads=$((${#cnacc_domain[@]} + ${#cnacc_trusted[@]} + ${#gfwlist_base64[@]} + ${#gfwlist_domain[@]} + ${#gfwlist2agh_modify[@]}))
+    current_download=0
+    success_count=0
     
-    # 下载并检查其他文件
-    for cnacc_trusted_task in "${!cnacc_trusted[@]}"; do
-        if ! curl -s --connect-timeout 15 "${cnacc_trusted[$cnacc_trusted_task]}" >> ./cnacc_trusted.tmp; then
-            echo "Error: Failed to download ${cnacc_trusted[$cnacc_trusted_task]}"
-            download_failed=1
+    # 通用下载函数
+    download_with_progress() {
+        local url="$1"
+        local output="$2"
+        local processor="$3"
+        
+        current_download=$((current_download + 1))
+        printf "\rDownloading [%3d/%3d] %s" $current_download $total_downloads "$url"
+        
+        if curl -s -f --connect-timeout 15 "$url" | eval "$processor" >> "$output"; then
+            printf "\r✓ Download successful: [%3d/%3d]\n" $current_download $total_downloads
+            success_count=$((success_count + 1))
+            return 0
+        else
+            printf "\r✗ Download failed: [%3d/%3d]\n" $current_download $total_downloads
+            return 1
         fi
-    done
-    
-    # 下载并处理 gfwlist_base64 文件，添加错误检查
-    for gfwlist_base64_task in "${!gfwlist_base64[@]}"; do
-        echo "Processing gfwlist_base64 source: ${gfwlist_base64[$gfwlist_base64_task]}"
-        temp_file="./gfwlist_base64_${gfwlist_base64_task}.tmp"
-        
-        # 下载文件并进行初步检查
-        if ! curl -s --connect-timeout 15 "${gfwlist_base64[$gfwlist_base64_task]}" > "${temp_file}"; then
-            echo "Error: Failed to download ${gfwlist_base64[$gfwlist_base64_task]}"
-            download_failed=1
-            continue
-        fi
-        
-        # 检查文件是否为有效的 base64
-        if ! base64 -d "${temp_file}" > "${temp_file}.decoded" 2>/dev/null; then
-            echo "Error: Invalid base64 content in ${gfwlist_base64[$gfwlist_base64_task]}"
-            download_failed=1
-            continue
-        fi
-        
-        # 处理解码后的内容
-        cat "${temp_file}.decoded" | \
-            grep -v '^!' | \
-            grep -v '^\[AutoProxy' | \
-            grep -v '^@@' | \
-            sed -e 's#^//*#/#' \
-                -e 's/^||//' \
-                -e 's/^|//' \
-                -e 's/^https\?:\/\///' \
-                -e 's/\/.*$//' \
-                -e 's/\*.//g' \
-                -e 's/^\.//g' \
-                -e 's/^*\.//' \
-                -e 's/[[:space:]]*$//g' | \
-            grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
-            sort -u >> ./gfwlist_base64.tmp
-        
-        # 清理临时文件
-        rm -f "${temp_file}" "${temp_file}.decoded"
+    }
+
+    # 下载前初始化计数器
+    total_all_downloads=$((${#cnacc_domain[@]} + ${#cnacc_trusted[@]} + ${#gfwlist_base64[@]} + ${#gfwlist_domain[@]} + ${#gfwlist2agh_modify[@]}))
+    current_download=0
+    success_count=0
+    download_failed=0
+
+    # CNACC Domain 下载
+    echo "=== Downloading CNACC Files ==="
+    echo "Processing ${#cnacc_domain[@]} domain files..."
+    for url in "${cnacc_domain[@]}"; do
+        download_with_progress "$url" "./cnacc_domain.tmp" "sed 's/^\.//g'"
     done
 
-    # 最后检查处理后的文件
-    if [ -f "./gfwlist_base64.tmp" ]; then
-        # 移除重复和无效条目
-        sort -u ./gfwlist_base64.tmp > ./gfwlist_base64.tmp.sorted
-        grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' ./gfwlist_base64.tmp.sorted > ./gfwlist_base64.tmp.clean
-        mv ./gfwlist_base64.tmp.clean ./gfwlist_base64.tmp
-        rm -f ./gfwlist_base64.tmp.sorted
+    # CNACC Trusted 下载 
+    echo -e "\n=== Downloading CNACC Trusted Files ==="
+    echo "Processing ${#cnacc_trusted[@]} trusted files..."
+    for url in "${cnacc_trusted[@]}"; do
+        download_with_progress "$url" "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'"
+    done
+
+    # GFWList Base64 下载
+    echo -e "\n=== Downloading GFWList Base64 Files ==="
+    echo "Processing ${#gfwlist_base64[@]} files..."
+    for url in "${gfwlist_base64[@]}"; do
+        temp_file="./gfwlist_base64_$(date +%s%N).tmp"
+        current_download=$((current_download + 1))
+        printf "Downloading [%3d/%3d] %s\n" $current_download $total_all_downloads "$url"
         
-        # 检查最终文件大小
-        file_size=$(wc -l < ./gfwlist_base64.tmp)
-        if [ "$file_size" -lt 100 ]; then
-            echo "Warning: gfwlist_base64.tmp contains suspiciously few entries: $file_size"
-            echo "First 10 lines of processed file:"
-            head -n 10 ./gfwlist_base64.tmp
+        if curl -s -f --connect-timeout 15 "$url" > "$temp_file" && \
+           base64 -d "$temp_file" > "${temp_file}.decoded" 2>/dev/null; then
+            success_count=$((success_count + 1))
+            printf "✓ Base64 decode successful\n"
+            
+            # 处理解码后的内容
+            cat "${temp_file}.decoded" | \
+                grep -v '^!' | grep -v '^\[AutoProxy' | grep -v '^@@' | \
+                sed -e 's#^//*#/#' \
+                    -e 's/^||//' -e 's/^|//' \
+                    -e 's/^https\?:\/\///' -e 's/\/.*$//' \
+                    -e 's/\*.//g' -e 's/^\.//g' \
+                    -e 's/^*\.//' -e 's/[[:space:]]*$//g' | \
+                grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
+                sort -u >> ./gfwlist_base64.tmp
+        else
+            printf "✗ Download or decode failed\n"
+            download_failed=1
         fi
-    else
-        echo "Error: Failed to create gfwlist_base64.tmp"
-        download_failed=1
-    fi
+        rm -f "$temp_file" "${temp_file}.decoded"
+    done
+
+    # GFWList Domain 下载
+    echo -e "\n=== Downloading GFWList Domain Files ==="
+    echo "Processing ${#gfwlist_domain[@]} files..."
     
     for gfwlist_domain_task in "${!gfwlist_domain[@]}"; do
-        if ! curl -s --connect-timeout 15 "${gfwlist_domain[$gfwlist_domain_task]}" | sed "s/^\.//g" >> ./gfwlist_domain.tmp; then
-            echo "Error: Failed to download ${gfwlist_domain[$gfwlist_domain_task]}"
+        current_all_download=$((current_all_download + 1))
+        printf "Downloading [%3d/%3d]\n" $current_all_download $total_all_downloads
+        printf "%s\n" "${gfwlist_domain[$gfwlist_domain_task]}"
+        
+        if curl -s -f --connect-timeout 15 "${gfwlist_domain[$gfwlist_domain_task]}" | sed "s/^\.//g" >> ./gfwlist_domain.tmp; then
+            printf "✓ Download successful\n"
+            success_count=$((success_count + 1))
+        else
+            printf "✗ Download failed\n"
             download_failed=1
         fi
     done
@@ -201,40 +213,49 @@ function GetData() {
         fi
     done
     
-    echo "Download statistics:"
-    echo "Total attempted: ${download_count}"
-    echo "Successful: ${success_count}"
-    echo "Failed: $((download_count - success_count))"
-    
-    # 检查所有必需的文件是否存在且非空
-    for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp gfwlist2agh_modify.tmp; do
-        if [ ! -s "./${file}" ]; then
-            echo "Error: ${file} is empty or does not exist"
-            ls -l "./${file}" 2>/dev/null || echo "File does not exist: ${file}"
-            download_failed=1
-        else
-            echo "File ${file} exists and has size: $(wc -c < "./${file}") bytes"
-            echo "First few lines of ${file}:"
-            head -n 3 "./${file}"
+    # 文件验证改进
+    verify_file() {
+        local file="$1"
+        local min_size="${2:-100}"
+        
+        if [ ! -f "$file" ] || [ ! -s "$file" ]; then
+            echo "Error: $file is empty or missing"
+            touch "$file" # 创建空文件以防止后续错误
+            return 1
+        fi
+        
+        local size=$(wc -c < "$file")
+        echo "File $file exists with size: $size bytes"
+        if [ "$size" -lt "$min_size" ]; then
+            echo "Warning: File is smaller than expected ($size < $min_size bytes)"
+            return 1
+        fi
+        return 0
+    }
+
+    # 验证所有生成的文件
+    echo -e "\nVerifying downloaded files..."
+    local failed=0
+    for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp; do
+        if ! verify_file "./$file"; then
+            failed=1
         fi
     done
-    
-    # 处理 gfwlist_base64 文件,移除 AutoProxy 头部等信息
-    if [ -f "./gfwlist_base64.tmp" ]; then
-        mv "./gfwlist_base64.tmp" "./gfwlist_base64.tmp.old"
-        cat "./gfwlist_base64.tmp.old" | \
-            grep -v '^!' | grep -v '^\[AutoProxy' | grep -v '^@@' | \
-            sed -e 's/^||//' -e 's/^|//' -e 's/^https\?:\/\///' -e 's/\/.*$//' -e 's/\*.//g' -e 's/^\.//g' | \
-            grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
-            sort -u > "./gfwlist_base64.tmp"
-        rm -f "./gfwlist_base64.tmp.old"
-    fi
-    
-    # 如果有任何下载失败，退出脚本
-    if [ ${download_failed} -eq 1 ]; then
-        echo "Error: Some downloads failed. Please check your network connection and try again."
+
+    if [ $failed -eq 1 ] || [ $download_failed -eq 1 ]; then
+        echo "Error: Some downloads or validations failed"
+        echo "Download statistics:"
+        echo "Total attempted: $download_count"
+        echo "Successful: $success_count"
+        echo "Failed: $((download_count - success_count))"
         exit 1
     fi
+
+    # 显示最终统计
+    echo -e "\nDownload Summary:"
+    echo "Total attempted: $total_all_downloads"
+    echo "Successfully downloaded: $success_count"
+    echo "Failed: $((total_all_downloads - success_count))"
 }
 # Analyse Data
 function AnalyseData() {
@@ -531,21 +552,16 @@ function GenerateRules() {
                 # 更新全局进度
                 current_rules_count=$((current_rules_count + 1))
                 
-                current_step=$((current_step + 1))
+                # 执行规则生成步骤
                 GenerateRulesHeader
-                # 只在最后一行显示进度
-                [ ${current_rules_count} -eq ${total_rules_count} ] && ShowProgress $current_rules_count $total_rules_count
-                
-                current_step=$((current_step + 1))
                 GenerateRulesBody
-                [ ${current_rules_count} -eq ${total_rules_count} ] && ShowProgress $current_rules_count $total_rules_count
-                
-                current_step=$((current_step + 1))
                 GenerateRulesFooter
-                [ ${current_rules_count} -eq ${total_rules_count} ] && ShowProgress $current_rules_count $total_rules_count
                 
-                # 只在最后一条规则处显示完成消息
-                [ ${current_rules_count} -eq ${total_rules_count} ] && echo -e "\nRules generation completed"
+                # 只在最后显示总体进度
+                if [ ${current_rules_count} -eq ${total_rules_count} ]; then
+                    ShowProgress $current_rules_count $total_rules_count
+                    echo -e "\nRules generation completed"
+                fi
             }
             if [ "${dns_mode}" == "default" ]; then
                 FileName && GenerateDefaultUpstream && GenerateRulesProcess
