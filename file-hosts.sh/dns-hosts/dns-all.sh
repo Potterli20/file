@@ -507,32 +507,57 @@ function GenerateRules() {
                 echo -n "[/" >> "${file_path}"
             }
             function GenerateRulesBody() {
+                # 创建临时文件
+                local tmp_file="${file_path}.tmp"
+                local filtered_file="${file_path}.filtered"
+                
+                # 域名验证正则表达式
+                local domain_regex="^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$"
+                
                 if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
                     if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                        # 改用换行而不是斜杠分隔域名
-                        for cnacc_data_task in "${!cnacc_data[@]}"; do
-                            echo "${cnacc_data[$cnacc_data_task]}" >> "${file_path}.tmp"
-                        done
+                        # 使用换行符分隔域名写入临时文件，同时进行过滤
+                        printf '%s\n' "${cnacc_data[@]}" | \
+                        grep -v '^0\.0\.0\.0$' | \
+                        grep -v '^[/#]' | \
+                        grep -v '\$' | \
+                        grep -E "${domain_regex}" > "${tmp_file}"
                     elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                        for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                            echo "${gfwlist_data[$gfwlist_data_task]}" >> "${file_path}.tmp"
-                        done
+                        printf '%s\n' "${gfwlist_data[@]}" | \
+                        grep -v '^0\.0\.0\.0$' | \
+                        grep -v '^[/#]' | \
+                        grep -v '\$' | \
+                        grep -E "${domain_regex}" > "${tmp_file}"
                     fi
                 elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
                     if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                        for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                            echo "${lite_cnacc_data[$lite_cnacc_data_task]}" >> "${file_path}.tmp"
-                        done
+                        printf '%s\n' "${lite_cnacc_data[@]}" | \
+                        grep -v '^0\.0\.0\.0$' | \
+                        grep -v '^[/#]' | \
+                        grep -v '\$' | \
+                        grep -E "${domain_regex}" > "${tmp_file}"
                     elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                        for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                            echo "${lite_gfwlist_data[$lite_gfwlist_data_task]}" >> "${file_path}.tmp"
-                        done
+                        printf '%s\n' "${lite_gfwlist_data[@]}" | \
+                        grep -v '^0\.0\.0\.0$' | \
+                        grep -v '^[/#]' | \
+                        grep -v '\$' | \
+                        grep -E "${domain_regex}" > "${tmp_file}"
                     fi
                 fi
-                # 处理临时文件，将所有域名用斜杠连接
-                if [ -f "${file_path}.tmp" ]; then
-                    tr '\n' '/' < "${file_path}.tmp" >> "${file_path}"
-                    rm -f "${file_path}.tmp"
+
+                # 如果文件存在且非空，则处理
+                if [ -f "${tmp_file}" ] && [ -s "${tmp_file}" ]; then
+                    # 过滤掉无效行和格式化
+                    grep -v '^\s*$' "${tmp_file}" | \
+                    sed 's/[[:space:]]*$//' | \
+                    sed 's/^[[:space:]]*//' | \
+                    sort -u > "${filtered_file}"
+                    
+                    # 将处理后的文件内容转换为所需格式并追加到目标文件
+                    tr '\n' '/' < "${filtered_file}" >> "${file_path}"
+                    
+                    # 清理临时文件
+                    rm -f "${tmp_file}" "${filtered_file}"
                 fi
             }
             function GenerateRulesFooter() {
@@ -679,32 +704,57 @@ function GenerateRules() {
                 echo -n "[/" >> "${file_path}"
             }
             function GenerateRulesBody() {
+                # 创建临时文件
+                local tmp_file="${file_path}.tmp"
+                local filtered_file="${file_path}.filtered"
+                
+                # 域名验证正则表达式
+                local domain_regex="^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$"
+                
                 if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
                     if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                        # 改用换行而不是斜杠分隔域名
-                        for cnacc_data_task in "${!cnacc_data[@]}"; do
-                            echo "${cnacc_data[$cnacc_data_task]}" >> "${file_path}.tmp"
-                        done
+                        # 使用换行符分隔域名写入临时文件，同时进行过滤
+                        printf '%s\n' "${cnacc_data[@]}" | \
+                        grep -v '^0\.0\.0\.0$' | \
+                        grep -v '^[/#]' | \
+                        grep -v '\$' | \
+                        grep -E "${domain_regex}" > "${tmp_file}"
                     elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                        for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                            echo "${gfwlist_data[$gfwlist_data_task]}" >> "${file_path}.tmp"
-                        done
+                        printf '%s\n' "${gfwlist_data[@]}" | \
+                        grep -v '^0\.0\.0\.0$' | \
+                        grep -v '^[/#]' | \
+                        grep -v '\$' | \
+                        grep -E "${domain_regex}" > "${tmp_file}"
                     fi
                 elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
                     if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                        for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                            echo "${lite_cnacc_data[$lite_cnacc_data_task]}" >> "${file_path}.tmp"
-                        done
+                        printf '%s\n' "${lite_cnacc_data[@]}" | \
+                        grep -v '^0\.0\.0\.0$' | \
+                        grep -v '^[/#]' | \
+                        grep -v '\$' | \
+                        grep -E "${domain_regex}" > "${tmp_file}"
                     elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                        for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                            echo "${lite_gfwlist_data[$lite_gfwlist_data_task]}" >> "${file_path}.tmp"
-                        done
+                        printf '%s\n' "${lite_gfwlist_data[@]}" | \
+                        grep -v '^0\.0\.0\.0$' | \
+                        grep -v '^[/#]' | \
+                        grep -v '\$' | \
+                        grep -E "${domain_regex}" > "${tmp_file}"
                     fi
                 fi
-                # 处理临时文件，将所有域名用斜杠连接
-                if [ -f "${file_path}.tmp" ]; then
-                    tr '\n' '/' < "${file_path}.tmp" >> "${file_path}"
-                    rm -f "${file_path}.tmp"
+
+                # 如果文件存在且非空，则处理
+                if [ -f "${tmp_file}" ] && [ -s "${tmp_file}" ]; then
+                    # 过滤掉无效行和格式化
+                    grep -v '^\s*$' "${tmp_file}" | \
+                    sed 's/[[:space:]]*$//' | \
+                    sed 's/^[[:space:]]*//' | \
+                    sort -u > "${filtered_file}"
+                    
+                    # 将处理后的文件内容转换为所需格式并追加到目标文件
+                    tr '\n' '/' < "${filtered_file}" >> "${file_path}"
+                    
+                    # 清理临时文件
+                    rm -f "${tmp_file}" "${filtered_file}"
                 fi
             }
             function GenerateRulesFooter() {
