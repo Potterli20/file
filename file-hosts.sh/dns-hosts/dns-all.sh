@@ -549,34 +549,48 @@ function GenerateRules() {
             total_rules_count=32  # 总规则生成数量
 
             function GenerateRulesProcess() {
-                # 局部步骤进度
+                # 重置局部进度计数
                 local total_steps=3
                 local current_step=0
                 
-                echo "Processing rules..."
+                # 执行规则生成步骤
+                current_step=$((current_step + 1))
+                GenerateRulesHeader
+                
+                current_step=$((current_step + 1))
+                GenerateRulesBody
+                
+                current_step=$((current_step + 1))
+                GenerateRulesFooter
                 
                 # 更新全局进度
                 current_rules_count=$((current_rules_count + 1))
                 
-                # 执行规则生成步骤
-                GenerateRulesHeader
-                GenerateRulesBody
-                GenerateRulesFooter
-                
-                # 只在特定间隔显示进度
+                # 每处理5个规则或最后一个规则时显示进度
                 if ((current_rules_count % 5 == 0)) || [ ${current_rules_count} -eq ${total_rules_count} ]; then
-                    ShowProgress $current_rules_count $total_rules_count "Processing rules $current_rules_count of $total_rules_count"
+                    # 确保进度不超过100%
+                    local display_count=$((current_rules_count > total_rules_count ? total_rules_count : current_rules_count))
+                    ShowProgress $display_count $total_rules_count "Processing rules $display_count of $total_rules_count"
                 fi
             }
+            
             if [ "${dns_mode}" == "default" ]; then
-                FileName && GenerateDefaultUpstream && GenerateRulesProcess
+                FileName && GenerateDefaultUpstream
+                current_rules_count=0  # 重置计数器
+                GenerateRulesProcess
             elif [ "${dns_mode}" == "domestic" ]; then
-                FileName && GenerateDefaultUpstream && for domestic_dns_task in "${!domestic_dns[@]}"; do
+                FileName && GenerateDefaultUpstream
+                current_rules_count=0  # 重置计数器
+                total_rules_count=${#domestic_dns[@]}  # 更新总数为实际DNS服务器数量
+                for domestic_dns_task in "${!domestic_dns[@]}"; do
                     GenerateRulesProcess
                 done
             elif [ "${dns_mode}" == "foreign" ]; then
-                FileName && GenerateDefaultUpstream && for foreign_dns_task in "${!foreign_dns[@]}"; do
-                   GenerateRulesProcess
+                FileName && GenerateDefaultUpstream
+                current_rules_count=0  # 重置计数器
+                total_rules_count=${#foreign_dns[@]}  # 更新总数为实际DNS服务器数量
+                for foreign_dns_task in "${!foreign_dns[@]}"; do
+                    GenerateRulesProcess
                 done
             fi
             echo "AdGuard Home rules generation completed"
@@ -709,19 +723,18 @@ function GenerateRules() {
                 
                 echo "Processing rules..."
                 
-                current_step=$((current_step + 1))
+                # 更新全局进度
+                current_rules_count=$((current_rules_count + 1))
+                
+                # 执行规则生成步骤
                 GenerateRulesHeader
-                ShowProgress $current_step $total_steps
-                
-                current_step=$((current_step + 1))
                 GenerateRulesBody
-                ShowProgress $current_step $total_steps
-                
-                current_step=$((current_step + 1))
                 GenerateRulesFooter
-                ShowProgress $current_step $total_steps
                 
-                echo -e "\nRules generation completed"
+                # 只在特定间隔显示进度
+                if ((current_rules_count % 5 == 0)) || [ ${current_rules_count} -eq ${total_rules_count} ]; then
+                    ShowProgress $current_rules_count $total_rules_count "Processing rules $current_rules_count of $total_rules_count"
+                fi
             }
             if [ "${dns_mode}" == "default" ]; then
                 FileName && GenerateDefaultUpstream && GenerateRulesProcess
