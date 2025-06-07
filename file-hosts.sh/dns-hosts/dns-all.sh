@@ -1,10 +1,4 @@
 #!/bin/bash
-
-# Current Version: 1.2.9
-
-## How to get and use?
-# git clone "https://github.com/hezhijie0327/GFWList2AGH.git" && bash ./GFWList2AGH/release.sh
-
 ## Function
 # Get Data
 function GetData() {
