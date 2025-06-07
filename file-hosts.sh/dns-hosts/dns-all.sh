@@ -1,6 +1,19 @@
 #!/bin/bash
 # Get Data
 function GetData() {
+    # 添加URL转换函数
+    function convert_github_url() {
+        local url="$1"
+        # 直接使用可靠的镜像，不做检测
+        if [[ "$url" == *"raw.githubusercontent.com"* ]]; then
+            echo "https://gh-proxy.com/https://raw.githubusercontent.com${url#*raw.githubusercontent.com}"
+        elif [[ "$url" == *"github.com"* ]]; then
+            echo "https://gh-proxy.com/https://github.com${url#*github.com}"
+        else
+            echo "$url"
+        fi
+    }
+
     cnacc_domain=(
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/video-domains"
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/china-root"
@@ -120,18 +133,28 @@ function GetData() {
         local url="$1"
         local output="$2"
         local processor="$3"
+        local max_retries=3
+        local retry_count=0
         
-        current_download=$((current_download + 1))
-        printf "\rDownloading [%3d/%3d] %s" $current_download $total_downloads "$url"
+        while [ $retry_count -lt $max_retries ]; do
+            # 转换URL并获取最快的镜像
+            local converted_url=$(convert_github_url "$url")
+            current_download=$((current_download + 1))
+            printf "\rDownloading [%3d/%3d] %s (Attempt %d/%d)" $current_download $total_downloads "$converted_url" $((retry_count + 1)) $max_retries
+            
+            if curl -s -f --connect-timeout 10 --max-time 30 "$converted_url" | eval "$processor" >> "$output"; then
+                printf "\r✓ Download successful: [%3d/%3d]\n" $current_download $total_downloads
+                success_count=$((success_count + 1))
+                return 0
+            else
+                printf "\r✗ Download failed: [%3d/%3d] - Retrying...\n" $current_download $total_downloads
+                retry_count=$((retry_count + 1))
+                sleep 2
+            fi
+        done
         
-        if curl -s -f --connect-timeout 15 "$url" | eval "$processor" >> "$output"; then
-            printf "\r✓ Download successful: [%3d/%3d]\n" $current_download $total_downloads
-            success_count=$((success_count + 1))
-            return 0
-        else
-            printf "\r✗ Download failed: [%3d/%3d]\n" $current_download $total_downloads
-            return 1
-        fi
+        printf "\r✗ All download attempts failed for: %s\n" "$url"
+        return 1
     }
 
     # 下载前初始化计数器
