@@ -562,13 +562,12 @@ function GenerateRules() {
             $(for protocol in https h3; do echo "${protocol}://dns.google.com/dns-query"; done)
             # Cloudflare Instances
             $(for id in "e5aehtlc5e" "sepfvn6g5a" "1dot1dot1dot1" "mozilla" "chrome" "dns"; do
-                    for port in 443 2083 2053 2087 2096 8443; do
-                        for protocol in https h3; do
-                 echo "${protocol}://${id}.cloudflare-dns.com:${port}/dns-query" 
+                for port in 443 2083 2053 2087 2096 8443; do
+                    for protocol in https h3; do
+                        echo "${protocol}://${id}.cloudflare-dns.com:${port}/dns-query"
                     done
                 done
-            done
-            )
+            done)
             # DoT/DoQ Servers
             $(for protocol in tls quic; do
                 echo "${protocol}://dns.google:853"
@@ -579,7 +578,7 @@ function GenerateRules() {
                 echo "${protocol}://anycast.dns.nextdns.io:853"
                 echo "${protocol}://dns.nextdns.io:853"
                 echo "${protocol}://doh3.dns.nextdns.io:853"
-            done )
+            done)
             "https://77.88.8.8:443/dns-query"
             "https://doh.opendns.com/dns-query"
             "https://dns12.quad9.net/dns-query"
@@ -742,13 +741,12 @@ function GenerateRules() {
             $(for protocol in https h3; do echo "${protocol}://dns.google.com/dns-query"; done)
             # Cloudflare Instances
             $(for id in "e5aehtlc5e" "sepfvn6g5a" "1dot1dot1dot1" "mozilla" "chrome" "dns"; do
-                    for port in 443 2083 2053 2087 2096 8443; do
-                        for protocol in https h3; do
-                 echo "${protocol}://${id}.cloudflare-dns.com:${port}/dns-query" 
+                for port in 443 2083 2053 2087 2096 8443; do
+                    for protocol in https h3; do
+                        echo "${protocol}://${id}.cloudflare-dns.com:${port}/dns-query"
                     done
                 done
-            done
-            )            
+            done)
             # DoT/DoQ Servers
             $(for protocol in tls quic; do
                 echo "${protocol}://dns.google:853"
@@ -759,7 +757,7 @@ function GenerateRules() {
                 echo "${protocol}://anycast.dns.nextdns.io:853"
                 echo "${protocol}://dns.nextdns.io:853"
                 echo "${protocol}://doh3.dns.nextdns.io:853"
-            done )
+            done)
             "https://77.88.8.8:443/dns-query"
             "https://doh.opendns.com/dns-query"
             "https://dns12.quad9.net/dns-query"
