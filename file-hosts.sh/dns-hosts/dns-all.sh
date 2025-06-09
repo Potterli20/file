@@ -532,6 +532,8 @@ function GenerateRules() {
             $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com:53"; done)
             $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5:53"; done)
             $(for protocol in tcp udp; do echo "${protocol}://223.6.6.6:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:3200::1:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:3200:baba::1:53"; done)
             $(for protocol in tcp udp; do echo "${protocol}://114.114.114.114:53"; done)
             $(for protocol in tcp udp; do echo "${protocol}://114.114.115.115:53"; done)
             $(for protocol in tls quic; do echo "${protocol}://dns.alidns.com:853"; done)
@@ -540,6 +542,13 @@ function GenerateRules() {
             $(for protocol in https h3; do echo "${protocol}://223.6.6.6/dns-query"; done)
             $(for protocol in tls quic; do echo "${protocol}://223.5.5.5:853"; done)
             $(for protocol in tls quic; do echo "${protocol}://223.6.6.6:853"; done)
+            $(for protocol in https h3; do echo "${protocol}://2400:3200::1/dns-query"; done)
+            $(for protocol in https h3; do echo "${protocol}://2400:3200:baba::1/dns-query"; done)
+            $(for protocol in tls quic; do echo "${protocol}://2400:3200::1:853"; done)
+            $(for protocol in tls quic; do echo "${protocol}://2400:3200:baba::1:853"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://119.29.29.29:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:::53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:1:::53"; done)
             "https://doh-pure.onedns.net/dns-query"
             "https://doh.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
@@ -550,6 +559,16 @@ function GenerateRules() {
             "tls://1.12.12.12:853"
             "tls://120.53.53.53:853"
             "180.76.76.76"
+            #onedns
+            $(for protocol in tcp udp; do echo "${protocol}://71.131.215.228:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://117.50.0.88:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.80.53.83:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.80.59.89:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://113.31.119.88:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2:53"; done)
             )
             foreign_dns=(
             $(for protocol in https h3; do echo "${protocol}://firefox.dns.nextdns.io/dns-query"; done)
@@ -711,6 +730,8 @@ function GenerateRules() {
             $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com:53"; done)
             $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5:53"; done)
             $(for protocol in tcp udp; do echo "${protocol}://223.6.6.6:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:3200::1:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:3200:baba::1:53"; done)
             $(for protocol in tcp udp; do echo "${protocol}://114.114.114.114:53"; done)
             $(for protocol in tcp udp; do echo "${protocol}://114.114.115.115:53"; done)
             $(for protocol in tls quic; do echo "${protocol}://dns.alidns.com:853"; done)
@@ -719,6 +740,13 @@ function GenerateRules() {
             $(for protocol in https h3; do echo "${protocol}://223.6.6.6/dns-query"; done)
             $(for protocol in tls quic; do echo "${protocol}://223.5.5.5:853"; done)
             $(for protocol in tls quic; do echo "${protocol}://223.6.6.6:853"; done)
+            $(for protocol in https h3; do echo "${protocol}://2400:3200::1/dns-query"; done)
+            $(for protocol in https h3; do echo "${protocol}://2400:3200:baba::1/dns-query"; done)
+            $(for protocol in tls quic; do echo "${protocol}://2400:3200::1:853"; done)
+            $(for protocol in tls quic; do echo "${protocol}://2400:3200:baba::1:853"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://119.29.29.29:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:::53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:1:::53"; done)
             "https://doh-pure.onedns.net/dns-query"
             "https://doh.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
@@ -729,6 +757,16 @@ function GenerateRules() {
             "tls://1.12.12.12:853"
             "tls://120.53.53.53:853"
             "180.76.76.76"
+            #onedns
+            $(for protocol in tcp udp; do echo "${protocol}://71.131.215.228:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://117.50.0.88:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.80.53.83:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.80.59.89:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://113.31.119.88:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2:53"; done)
             )
             foreign_dns=(
             $(for protocol in https h3; do echo "${protocol}://firefox.dns.nextdns.io/dns-query"; done)
