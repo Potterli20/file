@@ -1157,42 +1157,54 @@ function GenerateRules() {
             "4.2.2.6@53"
         )
             forward_ssl_tls_upstream="yes"
+            
             function GenerateRulesHeader() {
+                # 移除了多余的引号，修复了name格式
                 echo "forward-zone:" >> "${file_path}"
+                echo "    name: ${1}" >> "${file_path}"
             }
+            
             function GenerateRulesFooter() {
                 if [ "${dns_mode}" == "domestic" ]; then
                     for domestic_dns_task in "${!domestic_dns[@]}"; do
-                        echo "    forward-addr: \"${domestic_dns[$domestic_dns_task]}\"" >> "${file_path}"
+                        # 移除了多余的引号
+                        echo "    forward-addr: ${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
                     done
                 elif [ "${dns_mode}" == "foreign" ]; then
                     for foreign_dns_task in "${!foreign_dns[@]}"; do
-                        echo "    forward-addr: \"${foreign_dns[$foreign_dns_task]}\"" >> "${file_path}"
+                        # 移除了多余的引号
+                        echo "    forward-addr: ${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
                     done
                 fi
-                echo "    forward-first: \"yes\"" >> "${file_path}"
-                echo "    forward-no-cache: \"yes\"" >> "${file_path}"
-                echo "    forward-ssl-upstream: \"${forward_ssl_tls_upstream}\"" >> "${file_path}"
-                echo "    forward-tls-upstream: \"${forward_ssl_tls_upstream}\"" >> "${file_path}"
+                # 移除了多余的引号
+                echo "    forward-first: yes" >> "${file_path}"
+                echo "    forward-no-cache: yes" >> "${file_path}"
+                echo "    forward-ssl-upstream: ${forward_ssl_tls_upstream}" >> "${file_path}"
+                echo "    forward-tls-upstream: ${forward_ssl_tls_upstream}" >> "${file_path}"
             }
+            
             if [ "${generate_mode}" == "full" ]; then
                 if [ "${generate_file}" == "black" ]; then
-                    FileName && for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                        GenerateRulesHeader && echo "    name: \"${gfwlist_data[$gfwlist_data_task]}.\"" >> "${file_path}" && GenerateRulesFooter
+                    FileName
+                    for gfwlist_data_task in "${!gfwlist_data[@]}"; do
+                        GenerateRulesHeader "${gfwlist_data[$gfwlist_data_task]}." && GenerateRulesFooter
                     done
                 elif [ "${generate_file}" == "white" ]; then
-                    FileName && for cnacc_data_task in "${!cnacc_data[@]}"; do
-                        GenerateRulesHeader && echo "    name: \"${cnacc_data[$cnacc_data_task]}.\"" >> "${file_path}" && GenerateRulesFooter
+                    FileName
+                    for cnacc_data_task in "${!cnacc_data[@]}"; do
+                        GenerateRulesHeader "${cnacc_data[$cnacc_data_task]}." && GenerateRulesFooter
                     done
                 fi
             elif [ "${generate_mode}" == "lite" ]; then
                 if [ "${generate_file}" == "black" ]; then
-                    FileName && for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                        GenerateRulesHeader && echo "    name: \"${lite_gfwlist_data[$lite_gfwlist_data_task]}.\"" >> "${file_path}" && GenerateRulesFooter
+                    FileName
+                    for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
+                        GenerateRulesHeader "${lite_gfwlist_data[$lite_gfwlist_data_task]}." && GenerateRulesFooter
                     done
                 elif [ "${generate_file}" == "white" ]; then
-                    FileName && for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                        GenerateRulesHeader && echo "    name: \"${lite_cnacc_data[$lite_cnacc_data_task]}.\"" >> "${file_path}" && GenerateRulesFooter
+                    FileName
+                    for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
+                        GenerateRulesHeader "${lite_cnacc_data[$lite_cnacc_data_task]}." && GenerateRulesFooter
                     done
                 fi
             fi
