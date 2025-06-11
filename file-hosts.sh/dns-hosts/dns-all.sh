@@ -902,6 +902,17 @@ function GenerateRules() {
         ;;
         bind9)
             echo "Generating rules for Bind9..."
+            # 添加域名验证函数
+            validate_bind9_domain() {
+                local domain="$1"
+                # 验证域名不为空且符合格式要求
+                if [[ -n "$domain" ]] && \
+                   [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && \
+                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                    return 0
+                fi
+                return 1
+            }
         domestic_dns=(
             "119.29.29.29 port 53"
             "223.5.5.5 port 53"
@@ -966,16 +977,14 @@ function GenerateRules() {
         ;;
         dnsmasq)
             echo "Generating rules for DNSMasq..."
-            
-            # 添加域名验证函数
+            # 域名验证函数
             validate_dnsmasq_domain() {
                 local domain="$1"
-                # 验证域名格式，排除无效域名
-                if [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]] && \
-                   [[ "$domain" != "." ]] && \
-                   [[ "$domain" != "#" ]] && \
-                   [[ "$domain" != "/" ]] && \
-                   [[ ! "$domain" =~ ^[0-9]+$ ]]; then
+                # 验证域名格式，排除IP地址和无效字符
+                if [[ -n "$domain" ]] && \
+                   [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]] && \
+                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && \
+                   [[ ! "$domain" =~ [/\|\$#@\!\%\^\&\*\(\)\+\=\{\}\[\]\:\"\'<>\?\~\`] ]]; then
                     return 0
                 fi
                 return 1
@@ -1051,6 +1060,18 @@ function GenerateRules() {
         ;;
         domain)
             echo "Generating rules for Domain..."
+            # 域名验证函数
+            validate_domain_entry() {
+                local domain="$1"
+                # 基本域名格式验证
+                if [[ -n "$domain" ]] && \
+                   [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && \
+                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && \
+                   [[ "${#domain}" -le 253 ]]; then
+                    return 0
+                fi
+                return 1
+            }
             if [ "${generate_mode}" == "full" ]; then
                 if [ "${generate_file}" == "black" ]; then
                     FileName && for gfwlist_data_task in "${!gfwlist_data[@]}"; do
@@ -1076,6 +1097,19 @@ function GenerateRules() {
         ;;
         smartdns)
             echo "Generating rules for SmartDNS..."
+            # 域名验证函数
+            validate_smartdns_domain() {
+                local domain="$1"
+                # 验证域名格式并排除特殊情况
+                if [[ -n "$domain" ]] && \
+                   [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && \
+                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && \
+                   [[ "${#domain}" -le 253 ]] && \
+                   [[ ! "$domain" =~ ^[0-9]+$ ]]; then
+                    return 0
+                fi
+                return 1
+            }
             # 添加域名验证和过滤函数
             function validate_domain() {
                 local domain="$1"
@@ -1143,6 +1177,19 @@ function GenerateRules() {
         ;;
         unbound)
             echo "Generating rules for Unbound..."
+            # 域名验证函数
+            validate_unbound_domain() {
+                local domain="$1"
+                # 验证域名格式，包括长度和字符限制
+                if [[ -n "$domain" ]] && \
+                   [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && \
+                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && \
+                   [[ "${#domain}" -le 253 ]] && \
+                   [[ ! "$domain" =~ [/\|\$#@\!\%\^\&\*\(\)\+\=\{\}\[\]\:\"\'<>\?\~\`] ]]; then
+                    return 0
+                fi
+                return 1
+            }
         domestic_dns=(
             "223.5.5.5@853"
             "223.6.6.6@853"
