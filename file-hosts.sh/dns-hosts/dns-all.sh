@@ -1047,24 +1047,66 @@ function GenerateRules() {
         ;;
         smartdns)
             echo "Generating rules for SmartDNS..."
+            # 添加域名验证和过滤函数
+            function validate_domain() {
+                local domain="$1"
+                # 验证域名格式
+                echo "$domain" | grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' > /dev/null
+            }
+
+            function process_domains() {
+                local domains=("$@")
+                local group="$1"
+                shift
+                
+                # 创建临时文件用于排序和去重
+                local temp_file=$(mktemp)
+                
+                for domain in "${domains[@]}"; do
+                    if validate_domain "$domain"; then
+                        echo "nameserver /$domain/$group" >> "$temp_file"
+                    fi
+                done
+                
+                # 排序并去重，然后写入目标文件
+                sort -u "$temp_file" >> "${file_path}"
+                rm -f "$temp_file"
+            }
+
             if [ "${generate_mode}" == "full" ]; then
                 if [ "${generate_file}" == "black" ]; then
-                    FileName && for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                        echo "nameserver /${gfwlist_data[$gfwlist_data_task]}/${foreign_group:-foreign}" >> "${file_path}"
+                    FileName
+                    # 处理完整的gfwlist数据
+                    for domain in "${gfwlist_data[@]}"; do
+                        if validate_domain "$domain"; then
+                            echo "nameserver /$domain/$foreign_group" >> "${file_path}"
+                        fi
                     done
                 elif [ "${generate_file}" == "white" ]; then
-                    FileName && for cnacc_data_task in "${!cnacc_data[@]}"; do
-                        echo "nameserver /${cnacc_data[$cnacc_data_task]}/${domestic_group:-domestic}" >> "${file_path}"
+                    FileName
+                    # 处理完整的cnacc数据
+                    for domain in "${cnacc_data[@]}"; do
+                        if validate_domain "$domain"; then
+                            echo "nameserver /$domain/$domestic_group" >> "${file_path}"
+                        fi
                     done
                 fi
             elif [ "${generate_mode}" == "lite" ]; then
                 if [ "${generate_file}" == "black" ]; then
-                    FileName && for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                        echo "nameserver /${lite_gfwlist_data[$lite_gfwlist_data_task]}/${foreign_group:-foreign}" >> "${file_path}"
+                    FileName
+                    # 处理精简的gfwlist数据
+                    for domain in "${lite_gfwlist_data[@]}"; do
+                        if validate_domain "$domain"; then
+                            echo "nameserver /$domain/$foreign_group" >> "${file_path}"
+                        fi
                     done
                 elif [ "${generate_file}" == "white" ]; then
-                    FileName && for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                        echo "nameserver /${lite_cnacc_data[$lite_cnacc_data_task]}/${domestic_group:-domestic}" >> "${file_path}"
+                    FileName
+                    # 处理精简的cnacc数据
+                    for domain in "${lite_cnacc_data[@]}"; do
+                        if validate_domain "$domain"; then
+                            echo "nameserver /$domain/$domestic_group" >> "${file_path}"
+                        fi
                     done
                 fi
             fi
