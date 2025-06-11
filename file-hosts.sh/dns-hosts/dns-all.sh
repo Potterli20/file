@@ -966,55 +966,84 @@ function GenerateRules() {
         ;;
         dnsmasq)
             echo "Generating rules for DNSMasq..."
-        domestic_dns=(
-            "119.29.29.29#53"
-            "223.5.5.5#53"
-            "223.6.6.6#53"
-            "101.226.4.6#53"
-            "123.125.81.6#53"
-            "114.114.114.114#53"
-            "114.114.115.115#53"
-            "117.50.10.10#53"
-            "52.80.52.52#53"
-        )
-        foreign_dns=(
-            "208.67.222.222#53"
-            "8.8.4.4#53"
-            "8.8.8.8#53"
-            "1.1.1.1#53"
-            "1.0.0.1#53"
-            "9.9.9.10#53"
-            "94.140.14.140#53"
-            "94.140.14.141#53"
-            "74.82.42.42#53"
-            "185.222.222.222#53"
-        )
+            
+            # 添加域名验证函数
+            validate_dnsmasq_domain() {
+                local domain="$1"
+                # 验证域名格式，排除无效域名
+                if [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]] && \
+                   [[ "$domain" != "." ]] && \
+                   [[ "$domain" != "#" ]] && \
+                   [[ "$domain" != "/" ]] && \
+                   [[ ! "$domain" =~ ^[0-9]+$ ]]; then
+                    return 0
+                fi
+                return 1
+            }
+
+            # DNS服务器列表
+            domestic_dns=(
+                "119.29.29.29#53"
+                "223.5.5.5#53"
+                "223.6.6.6#53"
+                "101.226.4.6#53"
+                "123.125.81.6#53"
+                "114.114.114.114#53"
+                "114.114.115.115#53"
+                "117.50.10.10#53"
+                "52.80.52.52#53"
+            )
+            foreign_dns=(
+                "208.67.222.222#53"
+                "8.8.4.4#53"
+                "8.8.8.8#53"
+                "1.1.1.1#53"
+                "1.0.0.1#53"
+                "9.9.9.10#53"
+                "94.140.14.140#53"
+                "94.140.14.141#53"
+                "74.82.42.42#53"
+                "185.222.222.222#53"
+            )
+
             if [ "${generate_mode}" == "full" ]; then
                 if [ "${generate_file}" == "black" ]; then
-                    FileName && for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo "server=/${gfwlist_data[$gfwlist_data_task]}/${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                        done
+                    FileName
+                    for domain in "${gfwlist_data[@]}"; do
+                        if validate_dnsmasq_domain "$domain"; then
+                            for dns in "${foreign_dns[@]}"; do
+                                echo "server=/${domain}/${dns}" >> "${file_path}"
+                            done
+                        fi
                     done
                 elif [ "${generate_file}" == "white" ]; then
-                    FileName && for cnacc_data_task in "${!cnacc_data[@]}"; do
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo "server=/${cnacc_data[$cnacc_data_task]}/${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                        done
+                    FileName
+                    for domain in "${cnacc_data[@]}"; do
+                        if validate_dnsmasq_domain "$domain"; then
+                            for dns in "${domestic_dns[@]}"; do
+                                echo "server=/${domain}/${dns}" >> "${file_path}"
+                            done
+                        fi
                     done
                 fi
             elif [ "${generate_mode}" == "lite" ]; then
                 if [ "${generate_file}" == "black" ]; then
-                    FileName && for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo "server=/${lite_gfwlist_data[$lite_gfwlist_data_task]}/${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                        done
+                    FileName
+                    for domain in "${lite_gfwlist_data[@]}"; do
+                        if validate_dnsmasq_domain "$domain"; then
+                            for dns in "${foreign_dns[@]}"; do
+                                echo "server=/${domain}/${dns}" >> "${file_path}"
+                            done
+                        fi
                     done
                 elif [ "${generate_file}" == "white" ]; then
-                    FileName && for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo "server=/${lite_cnacc_data[$lite_cnacc_data_task]}/${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                        done
+                    FileName
+                    for domain in "${lite_cnacc_data[@]}"; do
+                        if validate_dnsmasq_domain "$domain"; then
+                            for dns in "${domestic_dns[@]}"; do
+                                echo "server=/${domain}/${dns}" >> "${file_path}"
+                            done
+                        fi
                     done
                 fi
             fi
