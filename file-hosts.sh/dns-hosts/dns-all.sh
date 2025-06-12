@@ -580,13 +580,7 @@ function GenerateRules() {
             $(for protocol in https h3; do echo "${protocol}://dns.google/dns-query"; done)
             $(for protocol in https h3; do echo "${protocol}://dns.google.com/dns-query"; done)
             # Cloudflare Instances
-            $(for id in "e5aehtlc5e" "sepfvn6g5a" "1dot1dot1dot1" "mozilla" "chrome" "dns"; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    for protocol in https h3; do
-                        echo "${protocol}://${id}.cloudflare-dns.com:${port}/dns-query"
-                    done
-                done
-            done)
+            $(printf "%s\n" {https,h3}://{e5aehtlc5e,sepfvn6g5a,1dot1dot1dot1,mozilla,chrome,dns}.cloudflare-dns.com:{443,2083,2053,2087,2096,8443}/dns-query)
             # DoT/DoQ Servers
             $(for protocol in tls quic; do
                 echo "${protocol}://dns.google:853"
@@ -778,13 +772,7 @@ function GenerateRules() {
             $(for protocol in https h3; do echo "${protocol}://dns.google/dns-query"; done)
             $(for protocol in https h3; do echo "${protocol}://dns.google.com/dns-query"; done)
             # Cloudflare Instances
-            $(for id in "e5aehtlc5e" "sepfvn6g5a" "1dot1dot1dot1" "mozilla" "chrome" "dns"; do
-                for port in 443 2083 2053 2087 2096 8443; do
-                    for protocol in https h3; do
-                        echo "${protocol}://${id}.cloudflare-dns.com:${port}/dns-query"
-                    done
-                done
-            done)
+            $(printf "%s\n" {https,h3}://{e5aehtlc5e,sepfvn6g5a,1dot1dot1dot1,mozilla,chrome,dns}.cloudflare-dns.com:{443,2083,2053,2087,2096,8443}/dns-query)
             # DoT/DoQ Servers
             $(for protocol in tls quic; do
                 echo "${protocol}://dns.google:853"
