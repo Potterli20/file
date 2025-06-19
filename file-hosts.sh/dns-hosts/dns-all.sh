@@ -458,7 +458,7 @@ function GenerateRules() {
         fi
         if [ "${software_name}" == "adguardhome" ] || [ "${software_name}" == "adguardhome_new" ] || [ "${software_name}" == "domain" ]; then
             file_extension="txt"
-        elif [ "${software_name}" == "bind9" ] || [ "${software_name}" == "dnsmasq" ] || [ "${software_name}" == "smartdns" ] || [ "${software_name}" == "unbound" ]; then
+        elif [ "${software_name}" == "bind9" ] || [ "${software_name}" == "ikuai" ] || [ "${software_name}" == "dnsmasq" ] || [ "${software_name}" == "smartdns" ]  || [ "${software_name}" == "unbound" ]; then
             file_extension="conf"
         else
             file_extension="dev"
@@ -859,32 +859,54 @@ function GenerateRules() {
                     echo "]${foreign_dns[foreign_dns_task]}" >> "${file_path}"
                 fi
             }
+            # 添加全局进度计数器
+            current_rules_count=0
+            total_rules_count=32  # 总规则生成数量
+
             function GenerateRulesProcess() {
-                # 局部步骤进度
+                # 重置局部进度计数
                 local total_steps=3
                 local current_step=0
                 
-                echo "Processing rules..."
+                # 执行规则生成步骤
+                current_step=$((current_step + 1))
+                GenerateRulesHeader
+                
+                current_step=$((current_step + 1))
+                GenerateRulesBody
+                
+                current_step=$((current_step + 1))
+                GenerateRulesFooter
                 
                 # 更新全局进度
                 current_rules_count=$((current_rules_count + 1))
                 
-                # 执行规则生成步骤
-                GenerateRulesHeader
-                GenerateRulesBody
-                GenerateRulesFooter
-                
-                # 只在特定间隔显示进度
+                # 每处理5个规则或最后一个规则时显示进度
                 if ((current_rules_count % 5 == 0)) || [ ${current_rules_count} -eq ${total_rules_count} ]; then
-                    ShowProgress $current_rules_count $total_rules_count "Processing rules $current_rules_count of $total_rules_count"
+                    # 确保进度不超过100%
+                    local display_count=$((current_rules_count > total_rules_count ? total_rules_count : current_rules_count))
+                    ShowProgress $display_count $total_rules_count "Processing rules $display_count of $total_rules_count"
                 fi
             }
+            
             if [ "${dns_mode}" == "default" ]; then
-                FileName && GenerateDefaultUpstream && GenerateRulesProcess
+                FileName && GenerateDefaultUpstream
+                current_rules_count=0  # 重置计数器
+                GenerateRulesProcess
             elif [ "${dns_mode}" == "domestic" ]; then
-                FileName && GenerateDefaultUpstream && GenerateRulesProcess
+                FileName && GenerateDefaultUpstream
+                current_rules_count=0  # 重置计数器
+                total_rules_count=${#domestic_dns[@]}  # 更新总数为实际DNS服务器数量
+                for domestic_dns_task in "${!domestic_dns[@]}"; do
+                    GenerateRulesProcess
+                done
             elif [ "${dns_mode}" == "foreign" ]; then
-                FileName && GenerateDefaultUpstream && GenerateRulesProcess
+                FileName && GenerateDefaultUpstream
+                current_rules_count=0  # 重置计数器
+                total_rules_count=${#foreign_dns[@]}  # 更新总数为实际DNS服务器数量
+                for foreign_dns_task in "${!foreign_dns[@]}"; do
+                    GenerateRulesProcess
+                done
             fi
             echo "AdGuard Home (New) rules generation completed"
         ;;
@@ -1274,6 +1296,54 @@ function GenerateRules() {
             fi
             echo "Unbound rules generation completed"
         ;;
+        ikuai)
+            echo "Generating rules for iKuai..."
+            if [ "${generate_mode}" == "full" ]; then
+                if [ "${generate_file}" == "black" ]; then
+                    FileName
+                    # 写入ikuai格式的头部
+                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
+                    echo "# Generated for iKuai full blacklist" >> "${file_path}"
+                    # 写入域名条目
+                    for domain in "${gfwlist_data[@]}"; do
+                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                            echo "bypass_route_domain=${domain}" >> "${file_path}"
+                        fi
+                    done
+                elif [ "${generate_file}" == "white" ]; then
+                    FileName
+                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
+                    echo "# Generated for iKuai full whitelist" >> "${file_path}"
+                    for domain in "${cnacc_data[@]}"; do
+                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                            echo "bypass_route_domain=${domain}" >> "${file_path}"
+                        fi
+                    done
+                fi
+            elif [ "${generate_mode}" == "lite" ]; then
+                if [ "${generate_file}" == "black" ]; then
+                    FileName
+                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
+                    echo "# Generated for iKuai lite blacklist" >> "${file_path}"
+                    for domain in "${lite_gfwlist_data[@]}"; do
+                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                            echo "bypass_route_domain=${domain}" >> "${file_path}"
+                        fi
+                    done
+                elif [ "${generate_file}" == "white" ]; then
+                    FileName
+                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
+                    echo "# Generated for iKuai lite whitelist" >> "${file_path}"
+                    for domain in "${lite_cnacc_data[@]}"; do
+                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                            echo "bypass_route_domain=${domain}" >> "${file_path}"
+                        fi
+                    done
+                fi
+            fi
+            echo "iKuai rules generation completed"
+        ;;
+        
         *)
             echo "Error: Unknown software type: ${software_name}"
             exit 1
@@ -1357,6 +1427,14 @@ function OutputData() {
     software_name="unbound" && generate_file="white" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
     echo "Unbound configurations completed"
     
+    # iKuai
+    echo "Processing iKuai configurations..."
+    software_name="ikuai" && generate_file="black" && generate_mode="full" && GenerateRules
+    software_name="ikuai" && generate_file="black" && generate_mode="lite" && GenerateRules
+    software_name="ikuai" && generate_file="white" && generate_mode="full" && GenerateRules
+    software_name="ikuai" && generate_file="white" && generate_mode="lite" && GenerateRules
+    echo "iKuai configurations completed"
+    
     echo "Cleaning up temporary directory..."
     cd .. && rm -rf ./Temp
     echo "=== Rules Output Completed ==="
@@ -1380,7 +1458,7 @@ function MoveGeneratedFiles() {
     
     # 检查源文件目录是否存在
     local missing_dirs=0
-    for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns; do
+    for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns ikuai; do
         local src_dir="./gfwlist2${type}"
         if [ ! -d "${src_dir}" ]; then
             echo "Error: Source directory not found: ${src_dir}"
@@ -1393,6 +1471,12 @@ function MoveGeneratedFiles() {
         
         case ${type} in
             adguardhome|adguardhome_new|domain)
+                while IFS= read -r -d '' file; do
+                    cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
+                    files_copied=$((files_copied + 1))
+                done < <(find "${src_dir}" -type f \( -name "blacklist_*.txt" -o -name "whitelist_*.txt" \) -print0)
+                ;;
+            ikuai)
                 while IFS= read -r -d '' file; do
                     cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
                     files_copied=$((files_copied + 1))
