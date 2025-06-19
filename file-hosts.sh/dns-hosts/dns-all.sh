@@ -456,9 +456,9 @@ function GenerateRules() {
         else
             generate_temp="debug"
         fi
-        if [ "${software_name}" == "adguardhome" ] || [ "${software_name}" == "adguardhome_new" ] || [ "${software_name}" == "domain" ]; then
+        if [ "${software_name}" == "adguardhome" ] || [ "${software_name}" == "adguardhome_new" ] || [ "${software_name}" == "domain" ]  || [ "${software_name}" == "ikuai" ]; then
             file_extension="txt"
-        elif [ "${software_name}" == "bind9" ] || [ "${software_name}" == "ikuai" ] || [ "${software_name}" == "dnsmasq" ] || [ "${software_name}" == "smartdns" ]  || [ "${software_name}" == "unbound" ]; then
+        elif [ "${software_name}" == "bind9" ] || [ "${software_name}" == "dnsmasq" ] || [ "${software_name}" == "smartdns" ]  || [ "${software_name}" == "unbound" ]; then
             file_extension="conf"
         else
             file_extension="dev"
@@ -1470,13 +1470,7 @@ function MoveGeneratedFiles() {
         local files_copied=0
         
         case ${type} in
-            adguardhome|adguardhome_new|domain)
-                while IFS= read -r -d '' file; do
-                    cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
-                    files_copied=$((files_copied + 1))
-                done < <(find "${src_dir}" -type f \( -name "blacklist_*.txt" -o -name "whitelist_*.txt" \) -print0)
-                ;;
-            ikuai)
+            adguardhome|adguardhome_new|domain|ikuai)
                 while IFS= read -r -d '' file; do
                     cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
                     files_copied=$((files_copied + 1))
