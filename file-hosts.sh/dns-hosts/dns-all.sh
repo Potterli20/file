@@ -1566,6 +1566,44 @@ function MoveGeneratedFiles() {
     else
         echo "All source directories were processed successfully"
     fi
+
+    # === 新增：对每个文件单独并行压缩（不归档） ===
+    echo "Compressing each generated file in ${dest} (parallel, no archive)..."
+    local compress_cmd=""
+    local ext=""
+    if command -v pigz >/dev/null 2>&1; then
+        compress_cmd="pigz -k -f"
+        ext="gz"
+    elif command -v lzop >/dev/null 2>&1; then
+        compress_cmd="lzop -f -k"
+        ext="lzo"
+    elif command -v zstd >/dev/null 2>&1; then
+        compress_cmd="zstd -T0 -f -k"
+        ext="zst"
+    elif command -v gzip >/dev/null 2>&1; then
+        compress_cmd="gzip -k -f"
+        ext="gz"
+    else
+        echo "No fast compression tool found, skipping compression."
+        return
+    fi
+
+    local compressed_count=0
+    local pids=()
+    for f in "${dest}"/dnshosts-all-*; do
+        [ -f "$f" ] || continue
+        if [ ! -f "$f.$ext" ]; then
+            echo "Compressing $f ..."
+            ($compress_cmd "$f" && echo "Compressed: $f -> $f.$ext" && du -h "$f.$ext") &
+            pids+=($!)
+            compressed_count=$((compressed_count+1))
+        fi
+    done
+    # 等待所有压缩任务完成
+    for pid in "${pids[@]}"; do
+        wait "$pid"
+    done
+    echo "Compression completed, total compressed files: $compressed_count"
 }
 function PrettyProgressBar() {
     local current=$1
