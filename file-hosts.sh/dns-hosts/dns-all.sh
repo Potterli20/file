@@ -412,8 +412,7 @@ function AnalyseData() {
     echo "lite_cnacc_data entries: ${#lite_cnacc_data[@]}"
     echo "lite_gfwlist_data entries: ${#lite_gfwlist_data[@]}"
     
-    echo "Step 1: Processing cnacc data..."
-    # 添加中国TLD验证
+    # 添加中国TLD验证（只保留一次即可）
     cn_tlds=(
         "cn"
         "中国"
@@ -427,10 +426,7 @@ function AnalyseData() {
         "ac.cn"
         "mil.cn"
     )
-    
-    # 创建临时验证文件
     echo "Verifying China TLD coverage..."
-    # 优化：并发检查和补全TLD（自动并发数）
     printf '%s\n' "${cn_tlds[@]}" | xargs -I{} -P $(nproc) bash -c '
         tld="{}"
         if ! grep -q "\.${tld}$" "./cnacc_processed.tmp"; then
@@ -470,8 +466,7 @@ function AnalyseData() {
             echo "${domain}" >> "./cnacc_processed.tmp"
         fi
     '
-}
-
+} # <--- 这里补上 AnalyseData 函数的结尾
 # Generate Rules
 function GenerateRules() {
     echo "=== Starting Rules Generation ==="
@@ -492,11 +487,19 @@ function GenerateRules() {
         else
             file_extension="dev"
         fi
-        if [ ! -d "../gfwlist2${software_name}" ]; then
-            mkdir "../gfwlist2${software_name}"
+        # 优化：只在目录不存在时创建，避免并发mkdir报错
+        local dir="../gfwlist2${software_name}"
+        if [ ! -d "$dir" ]; then
+            mkdir "$dir"
         fi
         file_name="${generate_temp}list_${generate_mode}.${file_extension}"
-        file_path="../gfwlist2${software_name}/${file_name}"
+        file_path="${dir}/${file_name}"
+        # 如果文件已存在则跳过生成
+        if [ -f "$file_path" ]; then
+            skip_generate=1
+        else
+            skip_generate=0
+        fi
         echo "File path set to: ${file_path}"
     }
     function GenerateDefaultUpstream() {
@@ -675,6 +678,8 @@ function GenerateRules() {
                 # 如果文件存在且非空，则处理
                 if [ -f "${tmp_file}" ] && [ -s "${tmp_file}" ]; then
                     # 过滤掉无效行和格式化
+                    # 确保filtered_file的父目录存在
+                    mkdir -p "$(dirname "$filtered_file")"
                     grep -v '^\s*$' "${tmp_file}" | \
                     sed 's/[[:space:]]*$//' | \
                     sed 's/^[[:space:]]*//' | \
@@ -706,24 +711,15 @@ function GenerateRules() {
                 local current_step=0
                 
                 # 执行规则生成步骤
-                current_step=$((current_step + 1))
                 GenerateRulesHeader
-                
-                current_step=$((current_step + 1))
                 GenerateRulesBody
-                
-                current_step=$((current_step + 1))
                 GenerateRulesFooter
                 
                 # 更新全局进度
                 current_rules_count=$((current_rules_count + 1))
                 
-                # 每处理5个规则或最后一个规则时显示进度
-                if ((current_rules_count % 5 == 0)) || [ ${current_rules_count} -eq ${total_rules_count} ]; then
-                    # 确保进度不超过100%
-                    local display_count=$((current_rules_count > total_rules_count ? total_rules_count : current_rules_count))
-                    ShowProgress $display_count $total_rules_count "Processing rules $display_count of $total_rules_count"
-                fi
+                # 只在每个规则文件生成后刷新进度条
+                ShowProgress $current_rules_count $total_rules_count "AdGuardHome: $current_rules_count/$total_rules_count"
             }
             
             if [ "${dns_mode}" == "default" ]; then
@@ -867,6 +863,8 @@ function GenerateRules() {
                 # 如果文件存在且非空，则处理
                 if [ -f "${tmp_file}" ] && [ -s "${tmp_file}" ]; then
                     # 过滤掉无效行和格式化
+                    # 确保filtered_file的父目录存在
+                    mkdir -p "$(dirname "$filtered_file")"
                     grep -v '^\s*$' "${tmp_file}" | \
                     sed 's/[[:space:]]*$//' | \
                     sed 's/^[[:space:]]*//' | \
@@ -898,24 +896,15 @@ function GenerateRules() {
                 local current_step=0
                 
                 # 执行规则生成步骤
-                current_step=$((current_step + 1))
                 GenerateRulesHeader
-                
-                current_step=$((current_step + 1))
                 GenerateRulesBody
-                
-                current_step=$((current_step + 1))
                 GenerateRulesFooter
                 
                 # 更新全局进度
                 current_rules_count=$((current_rules_count + 1))
                 
-                # 每处理5个规则或最后一个规则时显示进度
-                if ((current_rules_count % 5 == 0)) || [ ${current_rules_count} -eq ${total_rules_count} ]; then
-                    # 确保进度不超过100%
-                    local display_count=$((current_rules_count > total_rules_count ? total_rules_count : current_rules_count))
-                    ShowProgress $display_count $total_rules_count "Processing rules $display_count of $total_rules_count"
-                fi
+                # 只在每个规则文件生成后刷新进度条
+                ShowProgress $current_rules_count $total_rules_count "AdGuardHome: $current_rules_count/$total_rules_count"
             }
             
             if [ "${dns_mode}" == "default" ]; then
@@ -1028,7 +1017,6 @@ function GenerateRules() {
                 fi
                 return 1
             }
-
             # DNS服务器列表
             domestic_dns=(
                 "119.29.29.29#53"
@@ -1551,24 +1539,28 @@ function ShowProgress() {
     local width=50
     local progress=$((current * width / total))
     local percentage=$((current * 100 / total))
-    
-    # 清除当前行
-    printf "\033[2K"
-    
-    # 显示进度条在新行
-    printf "\nProgress: ["
+
+    # 构建进度条字符串
+    local bar=""
     for ((i=0; i<width; i++)); do
         if [ $i -lt $progress ]; then
-            printf "="
+            bar="${bar}="
         else
-            printf " "
+            bar="${bar} "
         fi
     done
-    printf "] %3d%% (%d/%d)" "$percentage" "$current" "$total"
-    
-    # 如果有额外消息则显示
+
+    # 使用\r回到行首，动态刷新同一行
+    printf "\rProgress: [%s] %3d%% (%d/%d)" "$bar" "$percentage" "$current" "$total"
+
+    # 如果有额外消息则显示在同一行
     if [ -n "$message" ]; then
-        printf "\n%s" "$message"
+        printf " | %s" "$message"
+    fi
+
+    # 如果已完成，换行
+    if [ "$current" -eq "$total" ]; then
+        printf "\n"
     fi
 }
 
@@ -1598,6 +1590,24 @@ echo "Data analysis completed."
 echo "Step 3: Generating Rules..."
 current_main_step=$((current_main_step +  1))
 step3_start=$(date +%s)
+OutputData
+record_step_time "生成规则" $step3_start
+ShowProgress $current_main_step $total_main_steps
+print_step_time "生成规则"
+echo "Rules generation completed."
+
+echo "Step 4: Moving Generated Files..."
+current_main_step=$((current_main_step + 1))
+step4_start=$(date +%s)
+MoveGeneratedFiles
+record_step_time "移动文件" $step4_start
+ShowProgress $current_main_step $total_main_steps
+print_step_time "移动文件"
+echo -e "\nFile movement completed."
+
+# 显示总耗时
+echo "=== Process Completed Successfully ==="
+echo "总耗时: $(time_taken $START_TIME)"
 OutputData
 record_step_time "生成规则" $step3_start
 ShowProgress $current_main_step $total_main_steps
