@@ -175,26 +175,14 @@ function GetData() {
         local url="$3"
         local attempt=$4
         local max_retries=$5
-        local width=40
-        local progress=$((current * width / total))
-        local percent=$((current * 100 / total))
-        local bar=""
-        local green="\033[0;32m"
-        local yellow="\033[1;33m"
-        local blue="\033[1;34m"
-        local reset="\033[0m"
-
-        for ((i=0; i<width; i++)); do
-            if [ $i -lt $progress ]; then
-                bar="${bar}#"
-            else
-                bar="${bar}-"
-            fi
-        done
-
-        # 只显示URL最后一段
         local short_url="${url##*/}"
-        printf "\r${blue}[%s]${reset} %3d%% (%d/%d) %sAttempt %d/%d: %s${reset}" "$bar" "$percent" "$current" "$total" "$yellow" "$attempt" "$max_retries" "$short_url"
+        local status="下载中"
+        local attempt_info=""
+        if [ "$attempt" -gt 1 ]; then
+            attempt_info="(重试${attempt}/${max_retries})"
+            status="重试中"
+        fi
+        PrettyProgressBar "$current" "$total" "$short_url $attempt_info" "$status"
     }
 
     # 通用下载函数
@@ -212,17 +200,23 @@ function GetData() {
             ShowDownloadProgress $current_download $total_downloads "$converted_url" $((retry_count + 1)) $max_retries
             
             if curl -s -f --connect-timeout 10 --max-time 30 "$converted_url" | eval "$processor" >> "$output"; then
-                printf "\r\033[0;32m✓ Download successful: [%3d/%3d] %s\033[0m\n" $current_download $total_downloads "${converted_url##*/}"
+                # 清理进度条行
+                printf "\r\033[K"
+                printf "\033[0;32m✓ Download successful: [%3d/%3d] %s\033[0m\n" $current_download $total_downloads "${converted_url##*/}"
                 success_count=$((success_count + 1))
                 return 0
             else
-                printf "\r\033[0;31m✗ Download failed: [%3d/%3d] %s - Retrying... (%d/%d)\033[0m\n" $current_download $total_downloads "${converted_url##*/}" $((retry_count + 1)) $max_retries
+                # 清理进度条行
+                printf "\r\033[K"
+                printf "\033[0;31m✗ Download failed: [%3d/%3d] %s - Retrying... (%d/%d)\033[0m\n" $current_download $total_downloads "${converted_url##*/}" $((retry_count + 1)) $max_retries
                 retry_count=$((retry_count + 1))
                 sleep 2
             fi
         done
         
-        printf "\r\033[0;31m✗ All download attempts failed for: %s\033[0m\n" "$url"
+        # 清理进度条行
+        printf "\r\033[K"
+        printf "\033[0;31m✗ All download attempts failed for: %s\033[0m\n" "$url"
         return 1
     }
 
@@ -234,22 +228,24 @@ function GetData() {
 
     # CNACC Domain 下载
     echo "=== Downloading CNACC Files ==="
+    # 在此处初始化进度条
+    ShowDownloadProgress 0 $total_downloads "" 1 1
     echo "Processing ${#cnacc_domain[@]} domain files..."
     for url in "${cnacc_domain[@]}"; do
-        download_with_progress "$url" "./cnacc_domain.tmp" "sed 's/^\.//g'" &
+        download_with_progress "$url" "./cnacc_domain.tmp" "sed 's/^\.//g'"
     done
-    wait
 
     # CNACC Trusted 下载 
     echo -e "\n=== Downloading CNACC Trusted Files ==="
+    ShowDownloadProgress $current_download $total_downloads "" 1 1
     echo "Processing ${#cnacc_trusted[@]} trusted files..."
     for url in "${cnacc_trusted[@]}"; do
-        download_with_progress "$url" "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'" &
+        download_with_progress "$url" "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'"
     done
-    wait
 
     # GFWList Base64 下载
     echo -e "\n=== Downloading GFWList Base64 Files ==="
+    ShowDownloadProgress $current_download $total_downloads "" 1 1
     echo "Processing ${#gfwlist_base64[@]} files..."
     
     for url in "${gfwlist_base64[@]}"; do
@@ -281,14 +277,10 @@ function GetData() {
     # GFWList Domain 下载
     echo -e "\n=== Downloading GFWList Domain Files ==="
     echo "Processing ${#gfwlist_domain[@]} files..."
-    
-    # 使用与其他下载相同的函数处理方式
     for url in "${gfwlist_domain[@]}"; do
-        # 使用统一的下载函数
-        download_with_progress "$url" "./gfwlist_domain.tmp" "sed 's/^\.//g'" &
+        download_with_progress "$url" "./gfwlist_domain.tmp" "sed 's/^\.//g'"
     done
-    wait
-    
+
     # gfwlist2agh_modify 下载
     echo -e "\n=== Downloading Modify Files ==="
     for url in "${gfwlist2agh_modify[@]}"; do
@@ -1197,7 +1189,7 @@ function GenerateRules() {
                     FileName
                     # 处理完整的gfwlist数据
                     for domain in "${gfwlist_data[@]}"; do
-                        if validate_domain "$domain"; then
+                        if validate_domain "$domain" ]; then
                             echo "nameserver /$domain/$foreign_group" >> "${file_path}"
                         fi
                     done
@@ -1205,7 +1197,7 @@ function GenerateRules() {
                     FileName
                     # 处理完整的cnacc数据
                     for domain in "${cnacc_data[@]}"; do
-                        if validate_domain "$domain"; then
+                        if validate_domain "$domain" ]; then
                             echo "nameserver /$domain/$domestic_group" >> "${file_path}"
                         fi
                     done
@@ -1215,7 +1207,7 @@ function GenerateRules() {
                     FileName
                     # 处理精简的gfwlist数据
                     for domain in "${lite_gfwlist_data[@]}"; do
-                        if validate_domain "$domain"; then
+                        if validate_domain "$domain" ]; then
                             echo "nameserver /$domain/$foreign_group" >> "${file_path}"
                         fi
                     done
@@ -1223,7 +1215,7 @@ function GenerateRules() {
                     FileName
                     # 处理精简的cnacc数据
                     for domain in "${lite_cnacc_data[@]}"; do
-                        if validate_domain "$domain"; then
+                        if validate_domain "$domain" ]; then
                             echo "nameserver /$domain/$domestic_group" >> "${file_path}"
                         fi
                     done
@@ -1558,34 +1550,47 @@ function MoveGeneratedFiles() {
         echo "All source directories were processed successfully"
     fi
 }
-
-function ShowProgress() {
+function PrettyProgressBar() {
     local current=$1
     local total=$2
     local message="${3:-}"
-    local width=50
+    local status="${4:-}"
+    local width=48
+    local percent=$((current * 100 / total))
     local progress=$((current * width / total))
-    local percentage=$((current * 100 / total))
-
-    # 构建进度条字符串
     local bar=""
+    local green="\033[0;32m"
+    local yellow="\033[1;33m"
+    local blue="\033[1;34m"
+    local magenta="\033[1;35m"
+    local cyan="\033[1;36m"
+    local reset="\033[0m"
+
     for ((i=0; i<width; i++)); do
         if [ $i -lt $progress ]; then
-            bar="${bar}="
+            bar="${bar}${green}█${reset}"
         else
             bar="${bar} "
         fi
     done
 
-    # 使用\r回到行首，动态刷新同一行
-    printf "\rProgress: [%s] %3d%% (%d/%d)" "$bar" "$percentage" "$current" "$total"
-
-    # 如果有额外消息则显示在同一行
-    if [ -n "$message" ]; then
-        printf " | %s" "$message"
+    # 状态颜色
+    local status_color="$cyan"
+    if [[ "$status" == "完成" || "$status" == "Done" ]]; then
+        status_color="$green"
+    elif [[ "$status" == "失败" || "$status" == "Fail" ]]; then
+        status_color="$yellow"
+    elif [[ "$status" == "下载中" || "$status" == "Downloading" ]]; then
+        status_color="$blue"
+    elif [[ "$status" == "分析中" || "$status" == "Analyzing" ]]; then
+        status_color="$magenta"
+    elif [[ "$status" == "生成中" || "$status" == "Generating" ]]; then
+        status_color="$yellow"
     fi
 
-    # 如果已完成，换行
+    printf "\r${blue}[%s]${reset} %3d%% (%d/%d) ${status_color}%s${reset} %s\033[K" "$bar" "$percent" "$current" "$total" "$status" "$message"
+
+    # 完成时换行
     if [ "$current" -eq "$total" ]; then
         printf "\n"
     fi
@@ -1601,7 +1606,7 @@ current_main_step=$((current_main_step + 1))
 step1_start=$(date +%s)
 GetData
 record_step_time "获取数据" $step1_start
-ShowProgress $current_main_step $total_main_steps
+ShowProgress $current_main_step $total_main_steps "获取数据" "下载中"
 print_step_time "获取数据"
 echo "Data retrieval completed."
 
@@ -1610,7 +1615,7 @@ current_main_step=$((current_main_step + 1))
 step2_start=$(date +%s)
 AnalyseData
 record_step_time "分析数据" $step2_start
-ShowProgress $current_main_step $total_main_steps
+ShowProgress $current_main_step $total_main_steps "分析数据" "分析中"
 print_step_time "分析数据"
 echo "Data analysis completed."
 
@@ -1619,7 +1624,7 @@ current_main_step=$((current_main_step +  1))
 step3_start=$(date +%s)
 OutputData
 record_step_time "生成规则" $step3_start
-ShowProgress $current_main_step $total_main_steps
+ShowProgress $current_main_step $total_main_steps "生成规则" "生成中"
 print_step_time "生成规则"
 echo "Rules generation completed."
 
@@ -1628,7 +1633,7 @@ current_main_step=$((current_main_step + 1))
 step4_start=$(date +%s)
 MoveGeneratedFiles
 record_step_time "移动文件" $step4_start
-ShowProgress $current_main_step $total_main_steps
+ShowProgress $current_main_step $total_main_steps "移动文件" "完成"
 print_step_time "移动文件"
 echo -e "\nFile movement completed."
 
@@ -1637,7 +1642,7 @@ echo "=== Process Completed Successfully ==="
 echo "总耗时: $(time_taken $START_TIME)"
 OutputData
 record_step_time "生成规则" $step3_start
-ShowProgress $current_main_step $total_main_steps
+ShowProgress $current_main_step $total_main_steps "生成规则" "生成中"
 print_step_time "生成规则"
 echo "Rules generation completed."
 
@@ -1646,7 +1651,7 @@ current_main_step=$((current_main_step + 1))
 step4_start=$(date +%s)
 MoveGeneratedFiles
 record_step_time "移动文件" $step4_start
-ShowProgress $current_main_step $total_main_steps
+ShowProgress $current_main_step $total_main_steps "移动文件" "完成"
 print_step_time "移动文件"
 echo -e "\nFile movement completed."
 
