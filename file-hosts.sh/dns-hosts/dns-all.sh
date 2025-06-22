@@ -1,4 +1,29 @@
 #!/bin/bash
+
+# 时间统计相关变量和函数
+START_TIME=$(date +%s)
+declare -A STEP_TIMES
+
+function time_taken() {
+    local end_time=$(date +%s)
+    local start_time=$1
+    local duration=$((end_time - start_time))
+    echo "$((duration / 60))分 $((duration % 60))秒"
+}
+
+function record_step_time() {
+    local step_name=$1
+    local start_time=$2
+    local end_time=$(date +%s)
+    STEP_TIMES["$step_name"]=$((end_time - start_time))
+}
+
+function print_step_time() {
+    local step_name=$1
+    local duration=${STEP_TIMES["$step_name"]}
+    echo "步骤 '$step_name' 耗时: $((duration / 60))分 $((duration % 60))秒"
+}
+
 # Get Data
 function GetData() {
     # 添加URL转换函数
@@ -116,7 +141,10 @@ function GetData() {
     # 创建临时目录并进入
     echo "=== Starting Download Process ==="
     echo "Creating temporary directory..."
-    rm -rf ./gfwlist2* ./Temp && mkdir -p ./Temp && cd ./Temp || exit 1
+    # 优化目录清理，递归强制删除所有匹配目录
+    find ./gfwlist2* -type d -exec rm -rf {} + 2>/dev/null
+    rm -rf ./Temp
+    mkdir -p ./Temp && cd ./Temp || exit 1
     echo "Temporary directory created"
     
     # 下载函数
@@ -179,15 +207,17 @@ function GetData() {
     echo "=== Downloading CNACC Files ==="
     echo "Processing ${#cnacc_domain[@]} domain files..."
     for url in "${cnacc_domain[@]}"; do
-        download_with_progress "$url" "./cnacc_domain.tmp" "sed 's/^\.//g'"
+        download_with_progress "$url" "./cnacc_domain.tmp" "sed 's/^\.//g'" &
     done
+    wait
 
     # CNACC Trusted 下载 
     echo -e "\n=== Downloading CNACC Trusted Files ==="
     echo "Processing ${#cnacc_trusted[@]} trusted files..."
     for url in "${cnacc_trusted[@]}"; do
-        download_with_progress "$url" "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'"
+        download_with_progress "$url" "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'" &
     done
+    wait
 
     # GFWList Base64 下载
     echo -e "\n=== Downloading GFWList Base64 Files ==="
@@ -226,13 +256,9 @@ function GetData() {
     # 使用与其他下载相同的函数处理方式
     for url in "${gfwlist_domain[@]}"; do
         # 使用统一的下载函数
-        download_with_progress "$url" "./gfwlist_domain.tmp" "sed 's/^\.//g'"
-        
-        # 每10个URL显示一次进度统计
-        if ((current_download % 10 == 0)); then
-            echo -e "\nProgress: $current_download/${#gfwlist_domain[@]} files"
-        fi
+        download_with_progress "$url" "./gfwlist_domain.tmp" "sed 's/^\.//g'" &
     done
+    wait
     
     # gfwlist2agh_modify 下载
     echo -e "\n=== Downloading Modify Files ==="
@@ -404,14 +430,15 @@ function AnalyseData() {
     
     # 创建临时验证文件
     echo "Verifying China TLD coverage..."
-    for tld in "${cn_tlds[@]}"; do
-        # 确保TLD在处理后的数据中
+    # 优化：并发检查和补全TLD（自动并发数）
+    printf '%s\n' "${cn_tlds[@]}" | xargs -I{} -P $(nproc) bash -c '
+        tld="{}"
         if ! grep -q "\.${tld}$" "./cnacc_processed.tmp"; then
             echo "Adding missing TLD: ${tld}"
             echo "${tld}" >> "./cnacc_processed.tmp"
         fi
-    done
-    
+    '
+
     # 关键域名验证列表
     important_domains=(
         "baidu.com"
@@ -435,12 +462,14 @@ function AnalyseData() {
     
     # 验证重要域名
     echo "Verifying important Chinese domains..."
-    for domain in "${important_domains[@]}"; do
+    # 优化：并发检查和补全重要域名（自动并发数）
+    printf '%s\n' "${important_domains[@]}" | xargs -I{} -P $(nproc) bash -c '
+        domain="{}"
         if ! grep -q "^${domain}$" "./cnacc_processed.tmp"; then
             echo "Adding missing domain: ${domain}"
             echo "${domain}" >> "./cnacc_processed.tmp"
         fi
-    done
+    '
 }
 
 # Generate Rules
@@ -529,13 +558,13 @@ function GenerateRules() {
         adguardhome)
             echo "Generating rules for AdGuard Home..."
             domestic_dns=(
-            $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://223.6.6.6:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:3200::1:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:3200:baba::1:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://114.114.114.114:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://114.114.115.115:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://223.6.6.6"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:3200::1"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:3200:baba::1"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://114.114.114.114"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://114.114.115.115"; done)
             $(for protocol in tls quic; do echo "${protocol}://dns.alidns.com:853"; done)
             $(for protocol in https h3; do echo "${protocol}://dns.alidns.com/dns-query"; done)
             $(for protocol in https h3; do echo "${protocol}://223.5.5.5/dns-query"; done)
@@ -546,9 +575,9 @@ function GenerateRules() {
             $(for protocol in https h3; do echo "${protocol}://2400:3200:baba::1/dns-query"; done)
             $(for protocol in tls quic; do echo "${protocol}://2400:3200::1:853"; done)
             $(for protocol in tls quic; do echo "${protocol}://2400:3200:baba::1:853"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://119.29.29.29:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:::53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:1:::53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://119.29.29.29"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00::"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:1::"; done)
             "https://doh-pure.onedns.net/dns-query"
             "https://doh.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
@@ -560,15 +589,15 @@ function GenerateRules() {
             "tls://120.53.53.53:853"
             "180.76.76.76"
             #onedns
-            $(for protocol in tcp udp; do echo "${protocol}://71.131.215.228:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://117.50.0.88:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.80.53.83:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.80.59.89:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://113.31.119.88:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://71.131.215.228"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://117.50.0.88"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.80.53.83"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.80.59.89"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://113.31.119.88"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
             )
             foreign_dns=(
             $(for protocol in https h3; do echo "${protocol}://firefox.dns.nextdns.io/dns-query"; done)
@@ -721,13 +750,13 @@ function GenerateRules() {
         adguardhome_new)
             echo "Generating rules for AdGuard Home (New)..."
             domestic_dns=(
-            $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://223.6.6.6:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:3200::1:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:3200:baba::1:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://114.114.114.114:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://114.114.115.115:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://223.6.6.6"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:3200::1"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:3200:baba::1"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://114.114.114.114"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://114.114.115.115"; done)
             $(for protocol in tls quic; do echo "${protocol}://dns.alidns.com:853"; done)
             $(for protocol in https h3; do echo "${protocol}://dns.alidns.com/dns-query"; done)
             $(for protocol in https h3; do echo "${protocol}://223.5.5.5/dns-query"; done)
@@ -738,9 +767,9 @@ function GenerateRules() {
             $(for protocol in https h3; do echo "${protocol}://2400:3200:baba::1/dns-query"; done)
             $(for protocol in tls quic; do echo "${protocol}://2400:3200::1:853"; done)
             $(for protocol in tls quic; do echo "${protocol}://2400:3200:baba::1:853"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://119.29.29.29:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:::53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:1:::53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://119.29.29.29"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00::"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:1::"; done)
             "https://doh-pure.onedns.net/dns-query"
             "https://doh.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
@@ -752,15 +781,15 @@ function GenerateRules() {
             "tls://120.53.53.53:853"
             "180.76.76.76"
             #onedns
-            $(for protocol in tcp udp; do echo "${protocol}://71.131.215.228:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://117.50.0.88:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.80.53.83:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.80.59.89:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://113.31.119.88:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1:53"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2:53"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://71.131.215.228"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://117.50.0.88"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.80.53.83"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.80.59.89"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://113.31.119.88"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
             )
             foreign_dns=(
             $(for protocol in https h3; do echo "${protocol}://firefox.dns.nextdns.io/dns-query"; done)
@@ -1274,8 +1303,9 @@ function GenerateRules() {
                     FileName
                     for gfwlist_data_task in "${!gfwlist_data[@]}"; do
                         GenerateRulesHeader "${gfwlist_data[$gfwlist_data_task]}." && GenerateRulesFooter
-                    done
-                elif [ "${generate_file}" == "white" ]; then
+                    done               
+               
+                elif [ [ "${generate_file}" == "white" ]; then
                     FileName
                     for cnacc_data_task in "${!cnacc_data[@]}"; do
                         GenerateRulesHeader "${cnacc_data[$cnacc_data_task]}." && GenerateRulesFooter
@@ -1352,92 +1382,100 @@ function GenerateRules() {
 }
 # Output Data
 function OutputData() {
-    echo "=== Starting Rules Output ==="
-    echo "Generating rules for all DNS software types..."
-    
+    echo "=== 开始输出规则 ==="
+    echo "正在为所有DNS软件类型生成规则..."
+
     # AdGuard Home
-    echo "Processing AdGuard Home configurations..."
-    software_name="adguardhome" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
-    echo "AdGuard Home configurations completed"
-    
+    echo "正在处理 AdGuard Home 配置..."
+    software_name="adguardhome" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules &
+    software_name="adguardhome" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules &
+    software_name="adguardhome" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules &
+    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules &
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules &
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite_combine" && dns_mode="domestic" && GenerateRules &
+    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules &
+    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite_combine" && dns_mode="foreign" && GenerateRules &
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules &
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules &
+    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules &
+    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules &
+    wait
+    echo "AdGuard Home 配置完成"
+
     # AdGuard Home (New)
-    echo "Processing AdGuard Home (New) configurations..."
-    software_name="adguardhome_new" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
-    echo "AdGuard Home (New) configurations completed"
-    
+    echo "正在处理 AdGuard Home (新版) 配置..."
+    software_name="adguardhome_new" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite_combine" && dns_mode="domestic" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite_combine" && dns_mode="foreign" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules &
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules &
+    wait
+    echo "AdGuard Home (新版) 配置完成"
+
     # Bind9
-    echo "Processing Bind9 configurations..."
-    software_name="bind9" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="bind9" && generate_file="black" && generate_mode="lite" && GenerateRules
-    software_name="bind9" && generate_file="white" && generate_mode="full" && GenerateRules
-    software_name="bind9" && generate_file="white" && generate_mode="lite" && GenerateRules
-    echo "Bind9 configurations completed"
-    
+    echo "正在处理 Bind9 配置..."
+    software_name="bind9" && generate_file="black" && generate_mode="full" && GenerateRules &
+    software_name="bind9" && generate_file="black" && generate_mode="lite" && GenerateRules &
+    software_name="bind9" && generate_file="white" && generate_mode="full" && GenerateRules &
+    software_name="bind9" && generate_file="white" && generate_mode="lite" && GenerateRules &
+    wait
+    echo "Bind9 配置完成"
+
     # DNSMasq
-    echo "Processing DNSMasq configurations..."
-    software_name="dnsmasq" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="dnsmasq" && generate_file="black" && generate_mode="lite" && GenerateRules
-    software_name="dnsmasq" && generate_file="white" && generate_mode="full" && GenerateRules
-    software_name="dnsmasq" && generate_file="white" && generate_mode="lite" && GenerateRules
-    echo "DNSMasq configurations completed"
-    
+    echo "正在处理 DNSMasq 配置..."
+    software_name="dnsmasq" && generate_file="black" && generate_mode="full" && GenerateRules &
+    software_name="dnsmasq" && generate_file="black" && generate_mode="lite" && GenerateRules &
+    software_name="dnsmasq" && generate_file="white" && generate_mode="full" && GenerateRules &
+    software_name="dnsmasq" && generate_file="white" && generate_mode="lite" && GenerateRules &
+    wait
+    echo "DNSMasq 配置完成"
+
     # Domain
-    echo "Processing Domain configurations..."
-    software_name="domain" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
-    software_name="domain" && generate_file="white" && generate_mode="lite" && GenerateRules
-    echo "Domain configurations completed"
-    
+    echo "正在处理 Domain 配置..."
+    software_name="domain" && generate_file="black" && generate_mode="full" && GenerateRules &
+    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules &
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules &
+    software_name="domain" && generate_file="white" && generate_mode="lite" && GenerateRules &
+    wait
+    echo "Domain 配置完成"
+
     # SmartDNS
-    echo "Processing SmartDNS configurations..."
-    software_name="smartdns" && generate_file="black" && generate_mode="full" && foreign_group="foreign" && GenerateRules
-    software_name="smartdns" && generate_file="black" && generate_mode="lite" && foreign_group="foreign" && GenerateRules
-    software_name="smartdns" && generate_file="white" && generate_mode="full" && domestic_group="domestic" && GenerateRules
-    software_name="smartdns" && generate_file="white" && generate_mode="lite" && domestic_group="domestic" && GenerateRules
-    echo "SmartDNS configurations completed"
-    
+    echo "正在处理 SmartDNS 配置..."
+    software_name="smartdns" && generate_file="black" && generate_mode="full" && foreign_group="foreign" && GenerateRules &
+    software_name="smartdns" && generate_file="black" && generate_mode="lite" && foreign_group="foreign" && GenerateRules &
+    software_name="smartdns" && generate_file="white" && generate_mode="full" && domestic_group="domestic" && GenerateRules &
+    software_name="smartdns" && generate_file="white" && generate_mode="lite" && domestic_group="domestic" && GenerateRules &
+    wait
+    echo "SmartDNS 配置完成"
+
     # Unbound
-    echo "Processing Unbound configurations..."
-    software_name="unbound" && generate_file="black" && generate_mode="full" && dns_mode="foreign" && GenerateRules
-    software_name="unbound" && generate_file="black" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
-    software_name="unbound" && generate_file="white" && generate_mode="full" && dns_mode="domestic" && GenerateRules
-    software_name="unbound" && generate_file="white" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
-    echo "Unbound configurations completed"
-    
+    echo "正在处理 Unbound 配置..."
+    software_name="unbound" && generate_file="black" && generate_mode="full" && dns_mode="foreign" && GenerateRules &
+    software_name="unbound" && generate_file="black" && generate_mode="lite" && dns_mode="foreign" && GenerateRules &
+    software_name="unbound" && generate_file="white" && generate_mode="full" && dns_mode="domestic" && GenerateRules &
+    software_name="unbound" && generate_file="white" && generate_mode="lite" && dns_mode="domestic" && GenerateRules &
+    wait
+    echo "Unbound 配置完成"
+
     # iKuai
-    echo "Processing iKuai configurations..."
-    software_name="ikuai" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="ikuai" && generate_file="black" && generate_mode="lite" && GenerateRules
-    software_name="ikuai" && generate_file="white" && generate_mode="full" && GenerateRules
-    software_name="ikuai" && generate_file="white" && generate_mode="lite" && GenerateRules
-    echo "iKuai configurations completed"
-    
-    echo "Cleaning up temporary directory..."
+    echo "正在处理 iKuai 配置..."
+    software_name="ikuai" && generate_file="black" && generate_mode="full" && GenerateRules &
+    software_name="ikuai" && generate_file="black" && generate_mode="lite" && GenerateRules &
+    software_name="ikuai" && generate_file="white" && generate_mode="full" && GenerateRules &
+    software_name="ikuai" && generate_file="white" && generate_mode="lite" && GenerateRules &
+    wait
+    echo "iKuai 配置完成"
+
+    echo "正在清理临时目录..."
     cd .. && rm -rf ./Temp
-    echo "=== Rules Output Completed ==="
+    echo "=== 规则输出完成 ==="
 }
 function MoveGeneratedFiles() {
     echo "Starting MoveGeneratedFiles..."
@@ -1541,26 +1579,40 @@ current_main_step=0
 
 echo "Step 1: Getting Data..."
 current_main_step=$((current_main_step + 1))
+step1_start=$(date +%s)
 GetData
+record_step_time "获取数据" $step1_start
 ShowProgress $current_main_step $total_main_steps
+print_step_time "获取数据"
 echo "Data retrieval completed."
 
 echo "Step 2: Analyzing Data..."
 current_main_step=$((current_main_step + 1))
+step2_start=$(date +%s)
 AnalyseData
+record_step_time "分析数据" $step2_start
 ShowProgress $current_main_step $total_main_steps
+print_step_time "分析数据"
 echo "Data analysis completed."
 
 echo "Step 3: Generating Rules..."
 current_main_step=$((current_main_step +  1))
+step3_start=$(date +%s)
 OutputData
+record_step_time "生成规则" $step3_start
 ShowProgress $current_main_step $total_main_steps
+print_step_time "生成规则"
 echo "Rules generation completed."
 
 echo "Step 4: Moving Generated Files..."
 current_main_step=$((current_main_step + 1))
+step4_start=$(date +%s)
 MoveGeneratedFiles
+record_step_time "移动文件" $step4_start
 ShowProgress $current_main_step $total_main_steps
+print_step_time "移动文件"
 echo -e "\nFile movement completed."
 
+# 显示总耗时
 echo "=== Process Completed Successfully ==="
+echo "总耗时: $(time_taken $START_TIME)"
