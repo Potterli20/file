@@ -435,17 +435,17 @@ function AnalyseData() {
     
     # 添加中国TLD验证（只保留一次即可）
     cn_tlds=(
-        "cn"
-        "中国"
-        "公司"
-        "网络"
-        "com.cn"
-        "net.cn"
-        "org.cn"
-        "gov.cn"
-        "edu.cn"
-        "ac.cn"
-        "mil.cn"
+        ".cn"
+        ".中国"
+        ".公司"
+        ".网络"
+        ".com.cn"
+        ".net.cn"
+        ".org.cn"
+        ".gov.cn"
+        ".edu.cn"
+        ".ac.cn"
+        ".mil.cn"
     )
     echo "Verifying China TLD coverage..."
     printf '%s\n' "${cn_tlds[@]}" | xargs -I{} -P $(nproc) bash -c '
@@ -740,7 +740,7 @@ function GenerateRules() {
                 current_rules_count=$((current_rules_count + 1))
                 
                 # 只在每个规则文件生成后刷新进度条
-                ShowProgress $current_rules_count $total_rules_count "AdGuardHome: $current_rules_count/$total_rules_count"
+                PrettyProgressBar $current_rules_count $total_rules_count "AdGuardHome: $current_rules_count/$total_rules_count"
             }
             
             if [ "${dns_mode}" == "default" ]; then
@@ -925,7 +925,7 @@ function GenerateRules() {
                 current_rules_count=$((current_rules_count + 1))
                 
                 # 只在每个规则文件生成后刷新进度条
-                ShowProgress $current_rules_count $total_rules_count "AdGuardHome: $current_rules_count/$total_rules_count"
+                PrettyProgressBar $current_rules_count $total_rules_count "AdGuardHome: $current_rules_count/$total_rules_count"
             }
             
             if [ "${dns_mode}" == "default" ]; then
@@ -1606,7 +1606,7 @@ current_main_step=$((current_main_step + 1))
 step1_start=$(date +%s)
 GetData
 record_step_time "获取数据" $step1_start
-ShowProgress $current_main_step $total_main_steps "获取数据" "下载中"
+PrettyProgressBar $current_main_step $total_main_steps "获取数据" "下载中"
 print_step_time "获取数据"
 echo "Data retrieval completed."
 
@@ -1615,7 +1615,7 @@ current_main_step=$((current_main_step + 1))
 step2_start=$(date +%s)
 AnalyseData
 record_step_time "分析数据" $step2_start
-ShowProgress $current_main_step $total_main_steps "分析数据" "分析中"
+PrettyProgressBar $current_main_step $total_main_steps "分析数据" "分析中"
 print_step_time "分析数据"
 echo "Data analysis completed."
 
@@ -1624,7 +1624,7 @@ current_main_step=$((current_main_step +  1))
 step3_start=$(date +%s)
 OutputData
 record_step_time "生成规则" $step3_start
-ShowProgress $current_main_step $total_main_steps "生成规则" "生成中"
+PrettyProgressBar $current_main_step $total_main_steps "生成规则" "生成中"
 print_step_time "生成规则"
 echo "Rules generation completed."
 
@@ -1633,7 +1633,7 @@ current_main_step=$((current_main_step + 1))
 step4_start=$(date +%s)
 MoveGeneratedFiles
 record_step_time "移动文件" $step4_start
-ShowProgress $current_main_step $total_main_steps "移动文件" "完成"
+PrettyProgressBar $current_main_step $total_main_steps "移动文件" "完成"
 print_step_time "移动文件"
 echo -e "\nFile movement completed."
 
@@ -1642,7 +1642,7 @@ echo "=== Process Completed Successfully ==="
 echo "总耗时: $(time_taken $START_TIME)"
 OutputData
 record_step_time "生成规则" $step3_start
-ShowProgress $current_main_step $total_main_steps "生成规则" "生成中"
+PrettyProgressBar $current_main_step $total_main_steps "生成规则" "生成中"
 print_step_time "生成规则"
 echo "Rules generation completed."
 
@@ -1651,7 +1651,7 @@ current_main_step=$((current_main_step + 1))
 step4_start=$(date +%s)
 MoveGeneratedFiles
 record_step_time "移动文件" $step4_start
-ShowProgress $current_main_step $total_main_steps "移动文件" "完成"
+PrettyProgressBar $current_main_step $total_main_steps "移动文件" "完成"
 print_step_time "移动文件"
 echo -e "\nFile movement completed."
 
