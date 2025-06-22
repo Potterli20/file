@@ -168,6 +168,35 @@ function GetData() {
     current_download=0
     success_count=0
     
+    # 美化下载进度条显示
+    function ShowDownloadProgress() {
+        local current=$1
+        local total=$2
+        local url="$3"
+        local attempt=$4
+        local max_retries=$5
+        local width=40
+        local progress=$((current * width / total))
+        local percent=$((current * 100 / total))
+        local bar=""
+        local green="\033[0;32m"
+        local yellow="\033[1;33m"
+        local blue="\033[1;34m"
+        local reset="\033[0m"
+
+        for ((i=0; i<width; i++)); do
+            if [ $i -lt $progress ]; then
+                bar="${bar}#"
+            else
+                bar="${bar}-"
+            fi
+        done
+
+        # 只显示URL最后一段
+        local short_url="${url##*/}"
+        printf "\r${blue}[%s]${reset} %3d%% (%d/%d) %sAttempt %d/%d: %s${reset}" "$bar" "$percent" "$current" "$total" "$yellow" "$attempt" "$max_retries" "$short_url"
+    }
+
     # 通用下载函数
     download_with_progress() {
         local url="$1"
@@ -180,20 +209,20 @@ function GetData() {
             # 转换URL并获取最快的镜像
             local converted_url=$(convert_github_url "$url")
             current_download=$((current_download + 1))
-            printf "\rDownloading [%3d/%3d] %s (Attempt %d/%d)" $current_download $total_downloads "$converted_url" $((retry_count + 1)) $max_retries
+            ShowDownloadProgress $current_download $total_downloads "$converted_url" $((retry_count + 1)) $max_retries
             
             if curl -s -f --connect-timeout 10 --max-time 30 "$converted_url" | eval "$processor" >> "$output"; then
-                printf "\r✓ Download successful: [%3d/%3d]\n" $current_download $total_downloads
+                printf "\r\033[0;32m✓ Download successful: [%3d/%3d] %s\033[0m\n" $current_download $total_downloads "${converted_url##*/}"
                 success_count=$((success_count + 1))
                 return 0
             else
-                printf "\r✗ Download failed: [%3d/%3d] - Retrying...\n" $current_download $total_downloads
+                printf "\r\033[0;31m✗ Download failed: [%3d/%3d] %s - Retrying... (%d/%d)\033[0m\n" $current_download $total_downloads "${converted_url##*/}" $((retry_count + 1)) $max_retries
                 retry_count=$((retry_count + 1))
                 sleep 2
             fi
         done
         
-        printf "\r✗ All download attempts failed for: %s\n" "$url"
+        printf "\r\033[0;31m✗ All download attempts failed for: %s\033[0m\n" "$url"
         return 1
     }
 
