@@ -226,7 +226,6 @@ function GetData() {
     # CNACC Domain 下载
     echo "=== Downloading CNACC Files ==="
     # 在此处初始化进度条
-    ShowDownloadProgress 0 $total_downloads "" 1 1
     echo "Processing ${#cnacc_domain[@]} domain files..."
     for url in "${cnacc_domain[@]}"; do
         download_with_progress "$url" "./cnacc_domain.tmp" "sed 's/^\.//g'"
@@ -234,7 +233,6 @@ function GetData() {
 
     # CNACC Trusted 下载 
     echo -e "\n=== Downloading CNACC Trusted Files ==="
-    ShowDownloadProgress $current_download $total_downloads "" 1 1
     echo "Processing ${#cnacc_trusted[@]} trusted files..."
     for url in "${cnacc_trusted[@]}"; do
         download_with_progress "$url" "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'"
@@ -242,33 +240,54 @@ function GetData() {
 
     # GFWList Base64 下载
     echo -e "\n=== Downloading GFWList Base64 Files ==="
-    ShowDownloadProgress $current_download $total_downloads "" 1 1
     echo "Processing ${#gfwlist_base64[@]} files..."
-    
+
+    # 判断 base64 解码参数
+    BASE64_DECODE_OPT="-d"
+    if ! echo "dGVzdA==" | base64 -d >/dev/null 2>&1; then
+        BASE64_DECODE_OPT="-D"
+    fi
+
     for url in "${gfwlist_base64[@]}"; do
-        # 使用临时文件存储base64数据
-        temp_file="./gfwlist_base64_$(date +%s%N).tmp"
-        
+        # 使用 mktemp 生成唯一临时文件
+        temp_file=$(mktemp ./gfwlist_base64_XXXXXX.tmp)
+        decoded_file="${temp_file}.decoded"
+
         # 下载并解码base64数据
-        if download_with_progress "$url" "$temp_file" "cat" && \
-           base64 -d "$temp_file" > "${temp_file}.decoded" 2>/dev/null; then
-            
-            # 处理解码后的内容
-            cat "${temp_file}.decoded" | \
-                grep -v '^!' | grep -v '^\[AutoProxy' | grep -v '^@@' | \
-                sed -e 's#^//*#/#' \
-                    -e 's/^||//' -e 's/^|//' \
-                    -e 's/^https\?:\/\///' -e 's/\/.*$//' \
-                    -e 's/\*.//g' -e 's/^\.//g' \
-                    -e 's/^*\.//' -e 's/[[:space:]]*$//g' | \
-                grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
-                sort -u >> ./gfwlist_base64.tmp
+        if download_with_progress "$url" "$temp_file" "cat"; then
+            if base64 $BASE64_DECODE_OPT "$temp_file" > "$decoded_file" 2>/dev/null; then
+                # 处理解码后的内容
+                grep -v '^!' "$decoded_file" | grep -v '^\[AutoProxy' | grep -v '^@@' | \
+                    sed -e 's#^//*#/#' \
+                        -e 's/^||//' -e 's/^|//' \
+                        -e 's/^https\?:\/\///' -e 's/\/.*$//' \
+                        -e 's/\*.//g' -e 's/^\.//g' \
+                        -e 's/^*\.//' -e 's/[[:space:]]*$//g' | \
+                    grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
+                    sort -u >> ./gfwlist_base64.tmp
+            else
+                echo "base64 decode failed for $temp_file, try fallback param"
+                # 兜底尝试另一参数
+                if base64 -d "$temp_file" > "$decoded_file" 2>/dev/null || base64 -D "$temp_file" > "$decoded_file" 2>/dev/null; then
+                    grep -v '^!' "$decoded_file" | grep -v '^\[AutoProxy' | grep -v '^@@' | \
+                        sed -e 's#^//*#/#' \
+                            -e 's/^||//' -e 's/^|//' \
+                            -e 's/^https\?:\/\///' -e 's/\/.*$//' \
+                            -e 's/\*.//g' -e 's/^\.//g' \
+                            -e 's/^*\.//' -e 's/[[:space:]]*$//g' | \
+                        grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
+                        sort -u >> ./gfwlist_base64.tmp
+                else
+                    echo "All base64 decode attempts failed for $url"
+                    download_failed=1
+                fi
+            fi
         else
             download_failed=1
         fi
-        
+
         # 清理临时文件
-        rm -f "$temp_file" "${temp_file}.decoded"
+        rm -f "$temp_file" "$decoded_file"
     done
 
     # GFWList Domain 下载
@@ -1226,7 +1245,7 @@ function GenerateRules() {
             validate_unbound_domain() {
                 local domain="$1"
                 # 验证域名格式，包括长度和字符限制
-                if [[ -n "$domain" ]] && \
+                if [[ -n "$domain" ]] &&
                    [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && \
                    [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && \
                    [[ "${#domain}" -le 253 ]] && \
@@ -1302,6 +1321,7 @@ function GenerateRules() {
                 echo "    forward-no-cache: yes" >> "${file_path}"
                 echo "    forward-ssl-upstream: ${forward_ssl_tls_upstream}" >> "${file_path}"
                 echo "    forward-tls-upstream: ${forward_ssl_tls_upstream}" >> "${file_path}"
+
             }
             
             if [ "${generate_mode}" == "full" ]; then
@@ -1556,16 +1576,38 @@ function PrettyProgressBar() {
     local percent=$((current * 100 / total))
     local progress=$((current * width / total))
     local bar=""
+    # 判断是否禁用颜色
+    local use_color=1
+    # --- 新增: 检测WSL环境自动禁用颜色 ---
+    if grep -qi microsoft /proc/version 2>/dev/null || [ -n "$WSLENV" ]; then
+        NO_COLOR=1
+    fi
+    if [ -n "$NO_COLOR" ]; then
+        use_color=0
+    fi
+
+    # 颜色定义
     local green="\033[0;32m"
     local yellow="\033[1;33m"
     local blue="\033[1;34m"
     local magenta="\033[1;35m"
     local cyan="\033[1;36m"
     local reset="\033[0m"
+    if [ $use_color -eq 0 ]; then
+        green=""
+        yellow=""
+        blue=""
+        magenta=""
+        cyan=""
+        reset=""
+    fi
+
+    # 兼容WSL/终端，使用#代替█
+    local bar_char="#"
 
     for ((i=0; i<width; i++)); do
         if [ $i -lt $progress ]; then
-            bar="${bar}${green}█${reset}"
+            bar="${bar}${green}${bar_char}${reset}"
         else
             bar="${bar} "
         fi
@@ -1585,7 +1627,9 @@ function PrettyProgressBar() {
         status_color="$yellow"
     fi
 
-    printf "\r${blue}[%s]${reset} %3d%% (%d/%d) ${status_color}%s${reset} %s\033[K" "$bar" "$percent" "$current" "$total" "$status" "$message"
+    # 清空当前行再输出进度条，避免残留
+    printf "\r\033[K"
+    printf "${blue}[%s]${reset} %3d%% (%d/%d) ${status_color}%s${reset} %s" "$bar" "$percent" "$current" "$total" "$status" "$message"
 
     # 完成时换行
     if [ "$current" -eq "$total" ]; then
