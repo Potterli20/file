@@ -192,32 +192,35 @@ function GetData() {
         local processor="$3"
         local max_retries=3
         local retry_count=0
-        
+
+        current_download=$((current_download + 1)) # 只在每个新文件前自增
+        local converted_url=$(convert_github_url "$url")
+        ShowDownloadProgress $current_download $total_downloads "$converted_url" 1 $max_retries
+
         while [ $retry_count -lt $max_retries ]; do
-            # 转换URL并获取最快的镜像
-            local converted_url=$(convert_github_url "$url")
-            current_download=$((current_download + 1))
-            ShowDownloadProgress $current_download $total_downloads "$converted_url" $((retry_count + 1)) $max_retries
-            
             if curl -s -f --connect-timeout 10 --max-time 30 "$converted_url" | eval "$processor" >> "$output"; then
                 # 清理进度条行
                 printf "\r\033[K"
                 printf "\033[0;32m✓ Download successful: [%3d/%3d] %s\033[0m\n" $current_download $total_downloads "${converted_url##*/}"
                 success_count=$((success_count + 1))
-                return 0
+                break
             else
                 # 清理进度条行
                 printf "\r\033[K"
                 printf "\033[0;31m✗ Download failed: [%3d/%3d] %s - Retrying... (%d/%d)\033[0m\n" $current_download $total_downloads "${converted_url##*/}" $((retry_count + 1)) $max_retries
                 retry_count=$((retry_count + 1))
                 sleep 2
+                # 重试时刷新进度条，但不自增current_download
+                ShowDownloadProgress $current_download $total_downloads "$converted_url" $((retry_count + 1)) $max_retries
             fi
         done
-        
-        # 清理进度条行
-        printf "\r\033[K"
-        printf "\033[0;31m✗ All download attempts failed for: %s\033[0m\n" "$url"
-        return 1
+
+        if [ $retry_count -eq $max_retries ]; then
+            printf "\r\033[K"
+            printf "\033[0;31m✗ All download attempts failed for: %s\033[0m\n" "$url"
+            return 1
+        fi
+        return 0
     }
 
     # 下载前初始化计数器
