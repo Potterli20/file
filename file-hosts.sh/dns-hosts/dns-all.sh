@@ -193,34 +193,28 @@ function GetData() {
         local max_retries=3
         local retry_count=0
 
-        current_download=$((current_download + 1)) # 只在每个新文件前自增
+        current_download=$((current_download + 1))
         local converted_url=$(convert_github_url "$url")
-        ShowDownloadProgress $current_download $total_downloads "$converted_url" 1 $max_retries
 
         while [ $retry_count -lt $max_retries ]; do
+            # 只刷新进度条，不输出任何其它内容
+            PrettyProgressBar $current_download $total_downloads "${converted_url##*/}" "下载中"
             if curl -s -f --connect-timeout 10 --max-time 30 "$converted_url" | eval "$processor" >> "$output"; then
-                # 清理进度条行
-                printf "\r\033[K"
-                printf "\033[0;32m✓ Download successful: [%3d/%3d] %s\033[0m\n" $current_download $total_downloads "${converted_url##*/}"
                 success_count=$((success_count + 1))
                 break
             else
-                # 清理进度条行
-                printf "\r\033[K"
-                printf "\033[0;31m✗ Download failed: [%3d/%3d] %s - Retrying... (%d/%d)\033[0m\n" $current_download $total_downloads "${converted_url##*/}" $((retry_count + 1)) $max_retries
                 retry_count=$((retry_count + 1))
                 sleep 2
-                # 重试时刷新进度条，但不自增current_download
-                ShowDownloadProgress $current_download $total_downloads "$converted_url" $((retry_count + 1)) $max_retries
             fi
         done
 
-        if [ $retry_count -eq $max_retries ]; then
-            printf "\r\033[K"
-            printf "\033[0;31m✗ All download attempts failed for: %s\033[0m\n" "$url"
-            return 1
+        # 下载完成后，清理进度条行并输出结果（只输出一次，不重复输出转义符）
+        printf "\r\033[K"
+        if [ $retry_count -lt $max_retries ]; then
+            printf "\033[0;32m✓ 下载成功: [%3d/%3d] %s\033[0m\n" $current_download $total_downloads "${converted_url##*/}"
+        else
+            printf "\033[0;31m✗ 所有下载尝试失败: [%3d/%3d] %s\033[0m\n" $current_download $total_downloads "${converted_url##*/}"
         fi
-        return 0
     }
 
     # 下载前初始化计数器
