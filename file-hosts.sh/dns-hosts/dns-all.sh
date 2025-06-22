@@ -1373,98 +1373,96 @@ function OutputData() {
     echo "=== 开始输出规则 ==="
     echo "正在为所有DNS软件类型生成规则..."
 
+    # 预先创建所有输出目录，避免并发时目录不存在
+    for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns ikuai; do
+        mkdir -p "./gfwlist2${type}"
+    done
+
     # AdGuard Home
     echo "正在处理 AdGuard Home 配置..."
-    software_name="adguardhome" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules &
-    software_name="adguardhome" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules &
-    software_name="adguardhome" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules &
-    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules &
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules &
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite_combine" && dns_mode="domestic" && GenerateRules &
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules &
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite_combine" && dns_mode="foreign" && GenerateRules &
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules &
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules &
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules &
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules &
-    wait
+    software_name="adguardhome" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite_combine" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules
+    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite_combine" && dns_mode="foreign" && GenerateRules
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
+    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
     echo "AdGuard Home 配置完成"
 
     # AdGuard Home (New)
     echo "正在处理 AdGuard Home (新版) 配置..."
-    software_name="adguardhome_new" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite_combine" && dns_mode="domestic" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite_combine" && dns_mode="foreign" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules &
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules &
-    wait
+    software_name="adguardhome_new" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome_new" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome_new" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome_new" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite_combine" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite_combine" && dns_mode="foreign" && GenerateRules
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
+    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
     echo "AdGuard Home (新版) 配置完成"
 
     # Bind9
     echo "正在处理 Bind9 配置..."
-    software_name="bind9" && generate_file="black" && generate_mode="full" && GenerateRules &
-    software_name="bind9" && generate_file="black" && generate_mode="lite" && GenerateRules &
-    software_name="bind9" && generate_file="white" && generate_mode="full" && GenerateRules &
-    software_name="bind9" && generate_file="white" && generate_mode="lite" && GenerateRules &
-    wait
+    software_name="bind9" && generate_file="black" && generate_mode="full" && GenerateRules
+    software_name="bind9" && generate_file="black" && generate_mode="lite" && GenerateRules
+    software_name="bind9" && generate_file="white" && generate_mode="full" && GenerateRules
+    software_name="bind9" && generate_file="white" && generate_mode="lite" && GenerateRules
     echo "Bind9 配置完成"
 
     # DNSMasq
     echo "正在处理 DNSMasq 配置..."
-    software_name="dnsmasq" && generate_file="black" && generate_mode="full" && GenerateRules &
-    software_name="dnsmasq" && generate_file="black" && generate_mode="lite" && GenerateRules &
-    software_name="dnsmasq" && generate_file="white" && generate_mode="full" && GenerateRules &
-    software_name="dnsmasq" && generate_file="white" && generate_mode="lite" && GenerateRules &
-    wait
+    software_name="dnsmasq" && generate_file="black" && generate_mode="full" && GenerateRules
+    software_name="dnsmasq" && generate_file="black" && generate_mode="lite" && GenerateRules
+    software_name="dnsmasq" && generate_file="white" && generate_mode="full" && GenerateRules
+    software_name="dnsmasq" && generate_file="white" && generate_mode="lite" && GenerateRules
     echo "DNSMasq 配置完成"
 
     # Domain
     echo "正在处理 Domain 配置..."
-    software_name="domain" && generate_file="black" && generate_mode="full" && GenerateRules &
-    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules &
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules &
-    software_name="domain" && generate_file="white" && generate_mode="lite" && GenerateRules &
-    wait
+    software_name="domain" && generate_file="black" && generate_mode="full" && GenerateRules
+    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
+    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
+    software_name="domain" && generate_file="white" && generate_mode="lite" && GenerateRules
     echo "Domain 配置完成"
 
     # SmartDNS
     echo "正在处理 SmartDNS 配置..."
-    software_name="smartdns" && generate_file="black" && generate_mode="full" && foreign_group="foreign" && GenerateRules &
-    software_name="smartdns" && generate_file="black" && generate_mode="lite" && foreign_group="foreign" && GenerateRules &
-    software_name="smartdns" && generate_file="white" && generate_mode="full" && domestic_group="domestic" && GenerateRules &
-    software_name="smartdns" && generate_file="white" && generate_mode="lite" && domestic_group="domestic" && GenerateRules &
-    wait
+    software_name="smartdns" && generate_file="black" && generate_mode="full" && foreign_group="foreign" && GenerateRules
+    software_name="smartdns" && generate_file="black" && generate_mode="lite" && foreign_group="foreign" && GenerateRules
+    software_name="smartdns" && generate_file="white" && generate_mode="full" && domestic_group="domestic" && GenerateRules
+    software_name="smartdns" && generate_file="white" && generate_mode="lite" && domestic_group="domestic" && GenerateRules
     echo "SmartDNS 配置完成"
 
     # Unbound
     echo "正在处理 Unbound 配置..."
-    software_name="unbound" && generate_file="black" && generate_mode="full" && dns_mode="foreign" && GenerateRules &
-    software_name="unbound" && generate_file="black" && generate_mode="lite" && dns_mode="foreign" && GenerateRules &
-    software_name="unbound" && generate_file="white" && generate_mode="full" && dns_mode="domestic" && GenerateRules &
-    software_name="unbound" && generate_file="white" && generate_mode="lite" && dns_mode="domestic" && GenerateRules &
-    wait
+    software_name="unbound" && generate_file="black" && generate_mode="full" && dns_mode="foreign" && GenerateRules
+    software_name="unbound" && generate_file="black" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
+    software_name="unbound" && generate_file="white" && generate_mode="full" && dns_mode="domestic" && GenerateRules
+    software_name="unbound" && generate_file="white" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
     echo "Unbound 配置完成"
 
     # iKuai
     echo "正在处理 iKuai 配置..."
-    software_name="ikuai" && generate_file="black" && generate_mode="full" && GenerateRules &
-    software_name="ikuai" && generate_file="black" && generate_mode="lite" && GenerateRules &
-    software_name="ikuai" && generate_file="white" && generate_mode="full" && GenerateRules &
-    software_name="ikuai" && generate_file="white" && generate_mode="lite" && GenerateRules &
-    wait
+    software_name="ikuai" && generate_file="black" && generate_mode="full" && GenerateRules
+    software_name="ikuai" && generate_file="black" && generate_mode="lite" && GenerateRules
+    software_name="ikuai" && generate_file="white" && generate_mode="full" && GenerateRules
+    software_name="ikuai" && generate_file="white" && generate_mode="lite" && GenerateRules
     echo "iKuai 配置完成"
 
     echo "正在清理临时目录..."
     cd .. && rm -rf ./Temp
     echo "=== 规则输出完成 ==="
 }
+
 function MoveGeneratedFiles() {
     echo "Starting MoveGeneratedFiles..."
     
