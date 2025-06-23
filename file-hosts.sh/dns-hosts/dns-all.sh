@@ -24,6 +24,27 @@ function print_step_time() {
     echo "步骤 '$step_name' 耗时: $((duration / 60))分 $((duration % 60))秒"
 }
 
+# 高效并发下载函数，限制最大并发数
+function parallel_download() {
+    local urls=("${!1}")
+    local outfile="$2"
+    local filter_cmd="$3"
+    local max_jobs=$(nproc)  # 可根据机器性能调整
+
+    # 修正xargs参数，只用-P和-I，不用-n1
+    printf "%s\n" "${urls[@]}" | xargs -P $max_jobs -I{} bash -c '
+        url="{}"
+        tmpf=$(mktemp)
+        if curl -s -f --connect-timeout 10 --max-time 30 "$url" -o "$tmpf"; then
+            cat "$tmpf" | '"$filter_cmd"' >> "'"$outfile"'"
+            echo "OK $url" >> ../download_status.log
+        else
+            echo "FAIL $url" >> ../download_status.log
+        fi
+        rm -f "$tmpf"
+    '
+}
+
 # Get Data
 function GetData() {
     # 添加URL转换函数
@@ -142,8 +163,7 @@ function GetData() {
     echo "=== Starting Download Process ==="
     echo "Creating temporary directory..."
     # 清理旧临时目录
-    find ./gfwlist2* -type d -exec rm -rf {} + 2>/dev/null
-    rm -rf ./Temp
+    rm -rf ./gfwlist2* ./Temp
     mkdir -p ./Temp && cd ./Temp || exit 1
     echo "Temporary directory created"
     
@@ -151,44 +171,41 @@ function GetData() {
     : > ../download_status.log
 
     # 并行下载所有文件
-    for url in "${cnacc_domain[@]}"; do
-        download_with_progress_parallel "$url" "./cnacc_domain.tmp" "sed 's/^\.//g'"
-    done
-    for url in "${cnacc_trusted[@]}"; do
-        download_with_progress_parallel "$url" "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'"
-    done
-    for url in "${gfwlist_domain[@]}"; do
-        download_with_progress_parallel "$url" "./gfwlist_domain.tmp" "sed 's/^\.//g'"
-    done
-    for url in "${gfwlist2agh_modify[@]}"; do
-        download_with_progress_parallel "$url" "./gfwlist2agh_modify.tmp" "cat"
-    done
+    parallel_download cnacc_domain[@] "./cnacc_domain.tmp" "sed 's/^\.//g'"
+    parallel_download cnacc_trusted[@] "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'"
+    parallel_download gfwlist_domain[@] "./gfwlist_domain.tmp" "sed 's/^\.//g'"
+    parallel_download gfwlist2agh_modify[@] "./gfwlist2agh_modify.tmp" "cat"
 
-    # gfwlist_base64并行下载和解码
-    for url in "${gfwlist_base64[@]}"; do
-        (
-            temp_file=$(mktemp ./gfwlist_base64_XXXXXX.tmp)
-            decoded_file="${temp_file}.decoded"
-            if curl -s -f --connect-timeout 10 --max-time 30 "$url" -o "$temp_file"; then
-                if base64 $BASE64_DECODE_OPT "$temp_file" > "$decoded_file" 2>/dev/null; then
-                    grep -v '^!' "$decoded_file" | grep -v '^\[AutoProxy' | grep -v '^@@' | \
-                        sed -e 's#^//*#/#' \
-                            -e 's/^||//' -e 's/^|//' \
-                            -e 's/^https\?:\/\///' -e 's/\/.*$//' \
-                            -e 's/\*.//g' -e 's/^\.//g' \
-                            -e 's/^*\.//' -e 's/[[:space:]]*$//g' | \
-                        grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
-                        sort -u >> ./gfwlist_base64.tmp
-                    echo "OK $url" >> ../download_status.log
-                else
-                    echo "FAIL $url" >> ../download_status.log
-                fi
+    # gfwlist_base64并行下载和解码（限制并发数）
+    printf "%s\n" "${gfwlist_base64[@]}" | xargs -P $(nproc) -I{} bash -c '
+        url="{}"
+        temp_file=$(mktemp ./gfwlist_base64_XXXXXX.tmp)
+        decoded_file="${temp_file}.decoded"
+        if curl -s -f --connect-timeout 10 --max-time 30 "$url" -o "$temp_file"; then
+            # 自动检测base64参数
+            if base64 --help 2>&1 | grep -q -- "-d"; then
+                BASE64_DECODE_OPT="-d"
+            else
+                BASE64_DECODE_OPT="-D"
+            fi
+            if base64 $BASE64_DECODE_OPT "$temp_file" > "$decoded_file" 2>/dev/null; then
+                grep -v "^!" "$decoded_file" | grep -v "^\[AutoProxy" | grep -v "^@@" | \
+                    sed -e "s#^//*#/#" \
+                        -e "s/^||//" -e "s/^|//" \
+                        -e "s/^https\?:\/\///" -e "s/\/.*$//" \
+                        -e "s/\*.//g" -e "s/^\.//g" \
+                        -e "s/^*\.//" -e "s/[[:space:]]*$//g" | \
+                    grep -E "^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" | \
+                    LC_ALL=C sort -u >> ./gfwlist_base64.tmp
+                echo "OK $url" >> ../download_status.log
             else
                 echo "FAIL $url" >> ../download_status.log
             fi
-            rm -f "$temp_file" "$decoded_file"
-        ) &
-    done
+        else
+            echo "FAIL $url" >> ../download_status.log
+        fi
+        rm -f "$temp_file" "$decoded_file"
+    '
 
     wait # 等待所有并行下载完成
 
@@ -280,11 +297,11 @@ function AnalyseData() {
         lite_domain_regex="^([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$"
         
         # 处理 cnacc 数据
-        cat "./cnacc_domain.tmp" | sed 's/domain://g;s/full://g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | sort | uniq > "./cnacc_processed.tmp"
-        cat "./cnacc_trusted.tmp" | sed 's/\/114\.114\.114\.114//g;s/server=\///g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | sort | uniq > "./cnacc_trust_processed.tmp"
+        cat "./cnacc_domain.tmp" | sed 's/domain://g;s/full://g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | LC_ALL=C sort | uniq > "./cnacc_processed.tmp"
+        cat "./cnacc_trusted.tmp" | sed 's/\/114\.114\.114\.114//g;s/server=\///g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | LC_ALL=C sort | uniq > "./cnacc_trust_processed.tmp"
         
         # 合并并去重
-        cat "./cnacc_processed.tmp" "./cnacc_trust_processed.tmp" | sort | uniq > "./cnacc_combined.tmp"
+        cat "./cnacc_processed.tmp" "./cnacc_trust_processed.tmp" | LC_ALL=C sort | uniq > "./cnacc_combined.tmp"
         
         # 应用排除规则
         if [ -s "./cnacc_exclusion.tmp" ]; then
@@ -302,7 +319,7 @@ function AnalyseData() {
         cat "./gfwlist_base64.tmp" "./gfwlist_domain.tmp" | \
         sed 's/domain://g;s/full://g;s/http:\/\///g;s/https:\/\///g' | \
         tr -d "|" | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | \
-        sort | uniq > "./gfwlist_processed.tmp"
+        LC_ALL=C sort | uniq > "./gfwlist_processed.tmp"
         
         # 应用排除规则
         if [ -s "./gfwlist_exclusion.tmp" ]; then
@@ -1268,117 +1285,7 @@ function GenerateRules() {
                     FileName
                     echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
                     echo "# Generated for iKuai lite blacklist" >> "${file_path}"
-                    for domain in "${lite_gfwlist_data[@]}"; do
-                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
-                            echo "bypass_route_domain=${domain}" >> "${file_path}"
-                        fi
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName
-                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
-                    echo "# Generated for iKuai lite whitelist" >> "${file_path}"
-                    for domain in "${lite_cnacc_data[@]}"; do
-                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
-                            echo "bypass_route_domain=${domain}" >> "${file_path}"
-            "2620:fe::fe:12@853"
-            "94.140.14.140@853"
-            "94.140.14.141@853"
-            "2a10:50c0::1:ff@853"
-            "2a10:50c0::2:ff@853"
-            "209.244.0.3@53"
-            "209.244.0.4@53"
-            "4.2.2.1@53"
-            "4.2.2.2@53"
-            "4.2.2.3@53"
-            "4.2.2.4@53"
-            "4.2.2.5@53"
-            "4.2.2.6@53"
-        )
-            forward_ssl_tls_upstream="yes"
-            
-            function GenerateRulesHeader() {
-                # 移除了多余的引号，修复了name格式
-                echo "forward-zone:" >> "${file_path}"
-                echo "    name: ${1}" >> "${file_path}"
-            }
-            
-            function GenerateRulesFooter() {
-                if [ "${dns_mode}" == "domestic" ]; then
-                    for domestic_dns_task in "${!domestic_dns[@]}"; do
-                        # 移除了多余的引号
-                        echo "    forward-addr: ${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                    done
-                elif [ "${dns_mode}" == "foreign" ]; then
-                    for foreign_dns_task in "${!foreign_dns[@]}"; do
-                        # 移除了多余的引号
-                        echo "    forward-addr: ${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                    done
-                fi
-                # 移除了多余的引号
-                echo "    forward-first: yes" >> "${file_path}"
-                echo "    forward-no-cache: yes" >> "${file_path}"
-                echo "    forward-ssl-upstream: ${forward_ssl_tls_upstream}" >> "${file_path}"
-                echo "    forward-tls-upstream: ${forward_ssl_tls_upstream}" >> "${file_path}"
-
-            }
-            
-            if [ "${generate_mode}" == "full" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                        GenerateRulesHeader "${gfwlist_data[$gfwlist_data_task]}." && GenerateRulesFooter
-                    done               
-               
-                elif [ [ "${generate_file}" == "white" ]; then
-                    FileName
-                    for cnacc_data_task in "${!cnacc_data[@]}"; do
-                        GenerateRulesHeader "${cnacc_data[$cnacc_data_task]}." && GenerateRulesFooter
-                    done
-                fi
-            elif [ "${generate_mode}" == "lite" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                        GenerateRulesHeader "${lite_gfwlist_data[$lite_gfwlist_data_task]}." && GenerateRulesFooter
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName
-                    for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                        GenerateRulesHeader "${lite_cnacc_data[$lite_cnacc_data_task]}." && GenerateRulesFooter
-                    done
-                fi
-            fi
-            echo "Unbound rules generation completed"
-        ;;
-        ikuai)
-            echo "Generating rules for iKuai..."
-            if [ "${generate_mode}" == "full" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    # 写入ikuai格式的头部
-                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
-                    echo "# Generated for iKuai full blacklist" >> "${file_path}"
-                    # 写入域名条目
-                    for domain in "${gfwlist_data[@]}"; do
-                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
-                            echo "bypass_route_domain=${domain}" >> "${file_path}"
-                        fi
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName
-                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
-                    echo "# Generated for iKuai full whitelist" >> "${file_path}"
-                    for domain in "${cnacc_data[@]}"; do
-                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
-                            echo "bypass_route_domain=${domain}" >> "${file_path}"
-                        fi
-                    done
-                fi
-            elif [ "${generate_mode}" == "lite" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
-                    echo "# Generated for iKuai lite blacklist" >> "${file_path}"
+                   
                     for domain in "${lite_gfwlist_data[@]}"; do
                         if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
                             echo "bypass_route_domain=${domain}" >> "${file_path}"
