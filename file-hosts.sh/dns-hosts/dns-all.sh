@@ -141,134 +141,36 @@ function GetData() {
     # 创建临时目录并进入
     echo "=== Starting Download Process ==="
     echo "Creating temporary directory..."
-    # 优化目录清理，递归强制删除所有匹配目录
+    # 清理旧临时目录
     find ./gfwlist2* -type d -exec rm -rf {} + 2>/dev/null
     rm -rf ./Temp
     mkdir -p ./Temp && cd ./Temp || exit 1
     echo "Temporary directory created"
     
-    # 下载函数
-    download_file() {
-        local url="$1"
-        local output="$2"
-        local processor="$3"
-        
-        echo "Downloading: $url"
-        if curl -s -f --connect-timeout 15 "$url" | eval "$processor" >> "$output"; then
-            echo "✓ Download successful"
-            return 0
-        else
-            echo "✗ Download failed"
-            return 1
-        fi
-    }
+    # 初始化状态日志
+    : > ../download_status.log
 
-    # 初始化所有计数器
-    total_downloads=$((${#cnacc_domain[@]} + ${#cnacc_trusted[@]} + ${#gfwlist_base64[@]} + ${#gfwlist_domain[@]} + ${#gfwlist2agh_modify[@]}))
-    current_download=0
-    success_count=0
-    
-    # 美化下载进度条显示
-    function ShowDownloadProgress() {
-        local current=$1
-        local total=$2
-        local url="$3"
-        local attempt=$4
-        local max_retries=$5
-        local short_url="${url##*/}"
-        local status="下载中"
-        local attempt_info=""
-        if [ "$attempt" -gt 1 ]; then
-            attempt_info="(重试${attempt}/${max_retries})"
-            status="重试中"
-        fi
-        PrettyProgressBar "$current" "$total" "$short_url $attempt_info" "$status"
-    }
-
-    # 通用下载函数
-    download_with_progress() {
-        local url="$1"
-        local output="$2"
-        local processor="$3"
-        local max_retries=3
-        local retry_count=0
-
-        current_download=$((current_download + 1))
-        local converted_url=$(convert_github_url "$url")
-
-        while [ $retry_count -lt $max_retries ]; do
-            # 只刷新进度条，不输出任何其它内容
-            PrettyProgressBar $current_download $total_downloads "${converted_url##*/}" "下载中"
-            if curl -s -f --connect-timeout 10 --max-time 30 "$converted_url" | eval "$processor" >> "$output"; then
-                success_count=$((success_count + 1))
-                break
-            else
-                retry_count=$((retry_count + 1))
-                sleep 2
-            fi
-        done
-
-        # 下载完成后，清理进度条行并输出结果（只输出一次，不重复输出转义符）
-        printf "\r\033[K"
-        if [ $retry_count -lt $max_retries ]; then
-            printf "\033[0;32m✓ 下载成功: [%3d/%3d] %s\033[0m\n" $current_download $total_downloads "${converted_url##*/}"
-        else
-            printf "\033[0;31m✗ 所有下载尝试失败: [%3d/%3d] %s\033[0m\n" $current_download $total_downloads "${converted_url##*/}"
-        fi
-    }
-
-    # 下载前初始化计数器
-    total_all_downloads=$((${#cnacc_domain[@]} + ${#cnacc_trusted[@]} + ${#gfwlist_base64[@]} + ${#gfwlist_domain[@]} + ${#gfwlist2agh_modify[@]}))
-    current_download=0
-    success_count=0
-    download_failed=0
-
-    # CNACC Domain 下载
-    echo "=== Downloading CNACC Files ==="
-    # 在此处初始化进度条
-    echo "Processing ${#cnacc_domain[@]} domain files..."
+    # 并行下载所有文件
     for url in "${cnacc_domain[@]}"; do
-        download_with_progress "$url" "./cnacc_domain.tmp" "sed 's/^\.//g'"
+        download_with_progress_parallel "$url" "./cnacc_domain.tmp" "sed 's/^\.//g'"
     done
-
-    # CNACC Trusted 下载 
-    echo -e "\n=== Downloading CNACC Trusted Files ==="
-    echo "Processing ${#cnacc_trusted[@]} trusted files..."
     for url in "${cnacc_trusted[@]}"; do
-        download_with_progress "$url" "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'"
+        download_with_progress_parallel "$url" "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'"
+    done
+    for url in "${gfwlist_domain[@]}"; do
+        download_with_progress_parallel "$url" "./gfwlist_domain.tmp" "sed 's/^\.//g'"
+    done
+    for url in "${gfwlist2agh_modify[@]}"; do
+        download_with_progress_parallel "$url" "./gfwlist2agh_modify.tmp" "cat"
     done
 
-    # GFWList Base64 下载
-    echo -e "\n=== Downloading GFWList Base64 Files ==="
-    echo "Processing ${#gfwlist_base64[@]} files..."
-
-    # 判断 base64 解码参数
-    BASE64_DECODE_OPT="-d"
-    if ! echo "dGVzdA==" | base64 -d >/dev/null 2>&1; then
-        BASE64_DECODE_OPT="-D"
-    fi
-
+    # gfwlist_base64并行下载和解码
     for url in "${gfwlist_base64[@]}"; do
-        # 使用 mktemp 生成唯一临时文件
-        temp_file=$(mktemp ./gfwlist_base64_XXXXXX.tmp)
-        decoded_file="${temp_file}.decoded"
-
-        # 下载并解码base64数据
-        if download_with_progress "$url" "$temp_file" "cat"; then
-            if base64 $BASE64_DECODE_OPT "$temp_file" > "$decoded_file" 2>/dev/null; then
-                # 处理解码后的内容
-                grep -v '^!' "$decoded_file" | grep -v '^\[AutoProxy' | grep -v '^@@' | \
-                    sed -e 's#^//*#/#' \
-                        -e 's/^||//' -e 's/^|//' \
-                        -e 's/^https\?:\/\///' -e 's/\/.*$//' \
-                        -e 's/\*.//g' -e 's/^\.//g' \
-                        -e 's/^*\.//' -e 's/[[:space:]]*$//g' | \
-                    grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
-                    sort -u >> ./gfwlist_base64.tmp
-            else
-                echo "base64 decode failed for $temp_file, try fallback param"
-                # 兜底尝试另一参数
-                if base64 -d "$temp_file" > "$decoded_file" 2>/dev/null || base64 -D "$temp_file" > "$decoded_file" 2>/dev/null; then
+        (
+            temp_file=$(mktemp ./gfwlist_base64_XXXXXX.tmp)
+            decoded_file="${temp_file}.decoded"
+            if curl -s -f --connect-timeout 10 --max-time 30 "$url" -o "$temp_file"; then
+                if base64 $BASE64_DECODE_OPT "$temp_file" > "$decoded_file" 2>/dev/null; then
                     grep -v '^!' "$decoded_file" | grep -v '^\[AutoProxy' | grep -v '^@@' | \
                         sed -e 's#^//*#/#' \
                             -e 's/^||//' -e 's/^|//' \
@@ -277,31 +179,18 @@ function GetData() {
                             -e 's/^*\.//' -e 's/[[:space:]]*$//g' | \
                         grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
                         sort -u >> ./gfwlist_base64.tmp
+                    echo "OK $url" >> ../download_status.log
                 else
-                    echo "All base64 decode attempts failed for $url"
-                    download_failed=1
+                    echo "FAIL $url" >> ../download_status.log
                 fi
+            else
+                echo "FAIL $url" >> ../download_status.log
             fi
-        else
-            download_failed=1
-        fi
-
-        # 清理临时文件
-        rm -f "$temp_file" "$decoded_file"
+            rm -f "$temp_file" "$decoded_file"
+        ) &
     done
 
-    # GFWList Domain 下载
-    echo -e "\n=== Downloading GFWList Domain Files ==="
-    echo "Processing ${#gfwlist_domain[@]} files..."
-    for url in "${gfwlist_domain[@]}"; do
-        download_with_progress "$url" "./gfwlist_domain.tmp" "sed 's/^\.//g'"
-    done
-
-    # gfwlist2agh_modify 下载
-    echo -e "\n=== Downloading Modify Files ==="
-    for url in "${gfwlist2agh_modify[@]}"; do
-        download_with_progress "$url" "./gfwlist2agh_modify.tmp" "cat"
-    done
+    wait # 等待所有并行下载完成
 
     # 文件验证改进
     verify_file() {
@@ -526,9 +415,7 @@ function GenerateRules() {
         fi
         # 优化：只在目录不存在时创建，避免并发mkdir报错
         local dir="../gfwlist2${software_name}"
-        if [ ! -d "$dir" ]; then
-            mkdir "$dir"
-        fi
+        mkdir -p "$dir"   # <--- 修改为 mkdir -p，确保目录存在
         file_name="${generate_temp}list_${generate_mode}.${file_extension}"
         file_path="${dir}/${file_name}"
         # 如果文件已存在则跳过生成
@@ -1282,6 +1169,117 @@ function GenerateRules() {
             "9.9.9.12@853"
             "149.112.112.12@853"
             "2620:fe::12@853"
+            "2620:fe::fe:12@853"
+            "94.140.14.140@853"
+            "94.140.14.141@853"
+            "2a10:50c0::1:ff@853"
+            "2a10:50c0::2:ff@853"
+            "209.244.0.3@53"
+            "209.244.0.4@53"
+            "4.2.2.1@53"
+            "4.2.2.2@53"
+            "4.2.2.3@53"
+            "4.2.2.4@53"
+            "4.2.2.5@53"
+            "4.2.2.6@53"
+        )
+            forward_ssl_tls_upstream="yes"
+            
+            function GenerateRulesHeader() {
+                # 移除了多余的引号，修复了name格式
+                echo "forward-zone:" >> "${file_path}"
+                echo "    name: ${1}" >> "${file_path}"
+            }
+            
+            function GenerateRulesFooter() {
+                if [ "${dns_mode}" == "domestic" ]; then
+                    for domestic_dns_task in "${!domestic_dns[@]}"; do
+                        # 移除了多余的引号
+                        echo "    forward-addr: ${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
+                    done
+                elif [ "${dns_mode}" == "foreign" ]; then
+                    for foreign_dns_task in "${!foreign_dns[@]}"; do
+                        # 移除了多余的引号
+                        echo "    forward-addr: ${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
+                    done
+                fi
+                # 移除了多余的引号
+                echo "    forward-first: yes" >> "${file_path}"
+                echo "    forward-no-cache: yes" >> "${file_path}"
+                echo "    forward-ssl-upstream: ${forward_ssl_tls_upstream}" >> "${file_path}"
+                echo "    forward-tls-upstream: ${forward_ssl_tls_upstream}" >> "${file_path}"
+
+            }
+            
+            if [ "${generate_mode}" == "full" ]; then
+                if [ "${generate_file}" == "black" ]; then
+                    FileName
+                    for gfwlist_data_task in "${!gfwlist_data[@]}"; do
+                        GenerateRulesHeader "${gfwlist_data[$gfwlist_data_task]}." && GenerateRulesFooter
+                    done               
+               
+                elif [ [ "${generate_file}" == "white" ]; then
+                    FileName
+                    for cnacc_data_task in "${!cnacc_data[@]}"; do
+                        GenerateRulesHeader "${cnacc_data[$cnacc_data_task]}." && GenerateRulesFooter
+                    done
+                fi
+            elif [ "${generate_mode}" == "lite" ]; then
+                if [ "${generate_file}" == "black" ]; then
+                    FileName
+                    for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
+                        GenerateRulesHeader "${lite_gfwlist_data[$lite_gfwlist_data_task]}." && GenerateRulesFooter
+                    done
+                elif [ "${generate_file}" == "white" ]; then
+                    FileName
+                    for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
+                        GenerateRulesHeader "${lite_cnacc_data[$lite_cnacc_data_task]}." && GenerateRulesFooter
+                    done
+                fi
+            fi
+            echo "Unbound rules generation completed"
+        ;;
+        ikuai)
+            echo "Generating rules for iKuai..."
+            if [ "${generate_mode}" == "full" ]; then
+                if [ "${generate_file}" == "black" ]; then
+                    FileName
+                    # 写入ikuai格式的头部
+                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
+                    echo "# Generated for iKuai full blacklist" >> "${file_path}"
+                    # 写入域名条目
+                    for domain in "${gfwlist_data[@]}"; do
+                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                            echo "bypass_route_domain=${domain}" >> "${file_path}"
+                        fi
+                    done
+                elif [ "${generate_file}" == "white" ]; then
+                    FileName
+                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
+                    echo "# Generated for iKuai full whitelist" >> "${file_path}"
+                    for domain in "${cnacc_data[@]}"; do
+                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                            echo "bypass_route_domain=${domain}" >> "${file_path}"
+                        fi
+                    done
+                fi
+            elif [ "${generate_mode}" == "lite" ]; then
+                if [ "${generate_file}" == "black" ]; then
+                    FileName
+                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
+                    echo "# Generated for iKuai lite blacklist" >> "${file_path}"
+                    for domain in "${lite_gfwlist_data[@]}"; do
+                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                            echo "bypass_route_domain=${domain}" >> "${file_path}"
+                        fi
+                    done
+                elif [ "${generate_file}" == "white" ]; then
+                    FileName
+                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
+                    echo "# Generated for iKuai lite whitelist" >> "${file_path}"
+                    for domain in "${lite_cnacc_data[@]}"; do
+                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                            echo "bypass_route_domain=${domain}" >> "${file_path}"
             "2620:fe::fe:12@853"
             "94.140.14.140@853"
             "94.140.14.141@853"
