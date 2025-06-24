@@ -176,6 +176,11 @@ function GetData() {
     parallel_download gfwlist_domain[@] "./gfwlist_domain.tmp" "sed 's/^\.//g'"
     parallel_download gfwlist2agh_modify[@] "./gfwlist2agh_modify.tmp" "cat"
 
+    # 确保所有输出目录存在，避免后续写入失败
+    for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns ikuai; do
+        mkdir -p "../gfwlist2${type}"
+    done
+
     # gfwlist_base64并行下载和解码（限制并发数）
     printf "%s\n" "${gfwlist_base64[@]}" | xargs -P $(nproc) -I{} bash -c '
         url="{}"
