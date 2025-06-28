@@ -47,31 +47,6 @@ function parallel_download() {
 
 # Get Data
 function GetData() {
-    # 添加URL转换函数
-    function convert_github_url() {
-        local url="$1"
-        # 如果不是GitHub URL,直接返回原始URL
-        if [[ "$url" != *"githubusercontent.com"* ]] && [[ "$url" != *"github.com"* ]]; then
-            echo "$url"
-            return
-        fi
-
-        # 测试直连GitHub的连通性
-        if curl --connect-timeout 5 -s "https://github.com" > /dev/null; then
-            # 直连GitHub正常,返回原始URL
-            echo "$url"
-        else
-            # 直连失败,使用gh-proxy代理
-            if [[ "$url" == *"raw.githubusercontent.com"* ]]; then
-                echo "https://gh-proxy.com/https://raw.githubusercontent.com${url#*raw.githubusercontent.com}"
-            elif [[ "$url" == *"github.com"* ]]; then
-                echo "https://gh-proxy.com/https://github.com${url#*github.com}"
-            else
-                echo "$url"
-            fi
-        fi
-    }
-
     cnacc_domain=(
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/video-domains"
         "https://raw.githubusercontent.com/Potterli20/file/main/file-hosts/Domains/china/china-root"
@@ -166,20 +141,20 @@ function GetData() {
     rm -rf ./gfwlist2* ./Temp
     mkdir -p ./Temp && cd ./Temp || exit 1
     echo "Temporary directory created"
-    
+
     # 初始化状态日志
     : > ../download_status.log
+
+    # 确保所有输出目录存在，避免后续写入失败
+    for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns ikuai; do
+        mkdir -p "../gfwlist2${type}"
+    done
 
     # 并行下载所有文件
     parallel_download cnacc_domain[@] "./cnacc_domain.tmp" "sed 's/^\.//g'"
     parallel_download cnacc_trusted[@] "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'"
     parallel_download gfwlist_domain[@] "./gfwlist_domain.tmp" "sed 's/^\.//g'"
     parallel_download gfwlist2agh_modify[@] "./gfwlist2agh_modify.tmp" "cat"
-
-    # 确保所有输出目录存在，避免后续写入失败
-    for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns ikuai; do
-        mkdir -p "../gfwlist2${type}"
-    done
 
     # gfwlist_base64并行下载和解码（限制并发数）
     printf "%s\n" "${gfwlist_base64[@]}" | xargs -P $(nproc) -I{} bash -c '
@@ -218,13 +193,13 @@ function GetData() {
     verify_file() {
         local file="$1"
         local min_size="${2:-100}"
-        
+
         if [ ! -f "$file" ] || [ ! -s "$file" ]; then
             echo "Error: $file is empty or missing"
             touch "$file" # 创建空文件以防止后续错误
             return 1
         fi
-        
+
         local size=$(wc -c < "$file")
         echo "File $file exists with size: $size bytes"
         if [ "$size" -lt "$min_size" ]; then
@@ -237,7 +212,7 @@ function GetData() {
     # 检查所有生成的文件是否存在并包含数据
     echo -e "\nVerifying downloaded files..."
     local failed=0
-    for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp; do
+    for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp gfwlist2agh_modify.tmp; do # Added gfwlist2agh_modify.tmp here
         if ! [ -f "$file" ] || ! [ -s "$file" ]; then
             echo "Error: $file is missing or empty"
             failed=1
@@ -251,15 +226,15 @@ function GetData() {
         echo "Current directory: $(pwd)"
         echo "Contents of current directory:"
         ls -la
-        
+
         echo -e "\nAttempting to create missing files..."
-        for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp; do
+        for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp gfwlist2agh_modify.tmp; do # Added gfwlist2agh_modify.tmp here
             if ! [ -f "$file" ]; then
                 touch "$file"
                 echo "Created empty file: $file"
             fi
         done
-        
+
         echo -e "\nChecking file contents:"
         for file in *.tmp; do
             if [ -f "$file" ]; then
@@ -271,1050 +246,380 @@ function GetData() {
     fi
 
     # 显示最终统计
-    echo -e "\nDownload Summary:"
-    echo "Total attempted: $total_all_downloads"
-    echo "Successfully downloaded: $success_count"
-    echo "Failed: $((total_all_downloads - success_count))"
+    # Note: total_all_downloads and success_count are not calculated in this script
+    # echo -e "\nDownload Summary:"
+    # echo "Total attempted: $total_all_downloads"
+    # echo "Successfully downloaded: $success_count"
+    # echo "Failed: $((total_all_downloads - success_count))"
 }
 
 # Analyse Data
 function AnalyseData() {
     echo "Starting data analysis..."
-    
-    # 首先确保所有必需的文件存在
-    for file in gfwlist2agh_modify.tmp cnacc_domain.tmp gfwlist_base64.tmp gfwlist_domain.tmp; do
+
+    # Ensure required input files from GetData exist
+    for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp gfwlist2agh_modify.tmp; do # Added gfwlist2agh_modify.tmp here
         if [ ! -f "./${file}" ]; then
-            echo "Error: Required file ${file} not found"
+            echo "Error: Required input file ${file} not found. Please check download step."
             exit 1
         fi
-        echo "Found required file: ${file} ($(wc -l < "./${file}") lines)"
+        echo "Found required input file: ${file} ($(wc -l < "./${file}") lines)"
     done
 
-    # 初始化所有输出文件
-    touch ./cnacc_data.tmp ./gfwlist_data.tmp ./lite_cnacc_data.tmp ./lite_gfwlist_data.tmp
-    
-    echo "Processing domain data..."
-    
-    # 分步处理数据以便调试
+    # Define regexes
+    local domain_regex="^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$"
+    # lite_domain_regex is not used in the file processing, only the cut command is used
+
+    # Process cnacc data and write to cnacc_combined.tmp
     echo "Step 1: Processing cnacc data..."
-    cnacc_data=($(
-        domain_regex="^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$"
-        lite_domain_regex="^([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$"
-        
-        # 处理 cnacc 数据
-        cat "./cnacc_domain.tmp" | sed 's/domain://g;s/full://g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | LC_ALL=C sort | uniq > "./cnacc_processed.tmp"
-        cat "./cnacc_trusted.tmp" | sed 's/\/114\.114\.114\.114//g;s/server=\///g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | LC_ALL=C sort | uniq > "./cnacc_trust_processed.tmp"
-        
-        # 合并并去重
-        cat "./cnacc_processed.tmp" "./cnacc_trust_processed.tmp" | LC_ALL=C sort | uniq > "./cnacc_combined.tmp"
-        
-        # 应用排除规则
-        if [ -s "./cnacc_exclusion.tmp" ]; then
-            grep -Ev "(\.($(cat './cnacc_exclusion.tmp'))$)|(^$(cat './cnacc_exclusion.tmp')$)" "./cnacc_combined.tmp"
-        else
-            cat "./cnacc_combined.tmp"
-        fi
-    ))
-    
-    echo "CNACC data count: ${#cnacc_data[@]}"
-    
+    cat "./cnacc_domain.tmp" | sed 's/domain://g;s/full://g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | LC_ALL=C sort | uniq > "./cnacc_processed.tmp"
+    cat "./cnacc_trusted.tmp" | sed 's/\/114\.114\.114\.114//g;s/server=\///g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | LC_ALL=C sort | uniq > "./cnacc_trust_processed.tmp"
+    cat "./cnacc_processed.tmp" "./cnacc_trust_processed.tmp" | LC_ALL=C sort | uniq > "./cnacc_combined.tmp"
+
+    # Apply cnacc exclusion rules (if file exists)
+    if [ -s "./cnacc_exclusion.tmp" ]; then
+        grep -Ev "(\.($(cat './cnacc_exclusion.tmp'))$)|(^$(cat './cnacc_exclusion.tmp')$)" "./cnacc_combined.tmp" > "./cnacc_combined.tmp.filtered"
+        mv "./cnacc_combined.tmp.filtered" "./cnacc_combined.tmp"
+    fi
+
+    echo "Processed CNACC data written to ./cnacc_combined.tmp ($(wc -l < "./cnacc_combined.tmp") lines)"
+
+    # Process gfwlist data and write to gfwlist_processed.tmp
     echo "Step 2: Processing gfwlist data..."
-    gfwlist_data=($(
-        # 处理 gfwlist 数据
-        cat "./gfwlist_base64.tmp" "./gfwlist_domain.tmp" | \
-        sed 's/domain://g;s/full://g;s/http:\/\///g;s/https:\/\///g' | \
-        tr -d "|" | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | \
-        LC_ALL=C sort | uniq > "./gfwlist_processed.tmp"
-        
-        # 应用排除规则
-        if [ -s "./gfwlist_exclusion.tmp" ]; then
-            grep -Ev "(\.($(cat './gfwlist_exclusion.tmp'))$)|(^$(cat './gfwlist_exclusion.tmp')$)" "./gfwlist_processed.tmp"
-        else
-            cat "./gfwlist_processed.tmp"
-        fi
-    ))
-    
-    echo "GFWList data count: ${#gfwlist_data[@]}"
-    
-    # 检查数据是否为空
-    if [ ${#cnacc_data[@]} -eq 0 ] || [ ${#gfwlist_data[@]} -eq 0 ]; then
-        echo "Error: No data processed."
-        echo "cnacc_data size: ${#cnacc_data[@]}"
-        echo "gfwlist_data size: ${#gfwlist_data[@]}"
+    cat "./gfwlist_base64.tmp" "./gfwlist_domain.tmp" | \
+    sed 's/domain://g;s/full://g;s/http:\/\///g;s/https:\/\///g' | \
+    tr -d "|" | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | \
+    LC_ALL=C sort | uniq > "./gfwlist_processed.tmp"
+
+    # Apply gfwlist exclusion rules (if file exists)
+    if [ -s "./gfwlist_exclusion.tmp" ]; then
+        grep -Ev "(\.($(cat './gfwlist_exclusion.tmp'))$)|(^$(cat './gfwlist_exclusion.tmp')$)" "./gfwlist_processed.tmp" > "./gfwlist_processed.tmp.filtered"
+        mv "./gfwlist_processed.tmp.filtered" "./gfwlist_processed.tmp"
+    fi
+    echo "Processed GFWList data written to ./gfwlist_processed.tmp ($(wc -l < "./gfwlist_processed.tmp") lines)"
+
+    # Check if processed files are empty
+    if [ ! -s "./cnacc_combined.tmp" ] || [ ! -s "./gfwlist_processed.tmp" ]; then
+        echo "Error: Processed data files are empty."
+        echo "./cnacc_combined.tmp size: $(wc -l < "./cnacc_combined.tmp") lines"
+        echo "./gfwlist_processed.tmp size: $(wc -l < "./gfwlist_processed.tmp") lines"
         echo "Debug information:"
         echo "Contents of temporary files:"
-        for tmp in *processed.tmp; do
+        for tmp in *processed.tmp *combined.tmp; do
             echo "=== First 10 lines of ${tmp} ==="
-            head -n 10 "${tmp}"
+            head -n 10 "${tmp}" 2>/dev/null || echo "No content in ${tmp}"
         done
         exit 1
     fi
-    
-    # 初始化 lite 版本的数据
-    lite_cnacc_data=($(echo "${cnacc_data[@]}" | tr ' ' '\n' | rev | cut -d "." -f 1,2 | rev | sort -u))
-    lite_gfwlist_data=($(echo "${gfwlist_data[@]}" | tr ' ' '\n' | rev | cut -d "." -f 1,2 | rev | sort -u))
-    
-    echo "Data analysis completed successfully"
-    echo "cnacc_data entries: ${#cnacc_data[@]}"
-    echo "gfwlist_data entries: ${#gfwlist_data[@]}"
-    echo "lite_cnacc_data entries: ${#lite_cnacc_data[@]}"
-    echo "lite_gfwlist_data entries: ${#lite_gfwlist_data[@]}"
-    
-    # 添加中国TLD验证（只保留一次即可）
-    cn_tlds=(
-        ".cn"
-        ".中国"
-        ".公司"
-        ".网络"
-        ".com.cn"
-        ".net.cn"
-        ".org.cn"
-        ".gov.cn"
-        ".edu.cn"
-        ".ac.cn"
-        ".mil.cn"
-    )
-    echo "Verifying China TLD coverage..."
-    printf '%s\n' "${cn_tlds[@]}" | xargs -I{} -P $(nproc) bash -c '
-        tld="{}"
-        if ! grep -q "\.${tld}$" "./cnacc_processed.tmp"; then
-            echo "Adding missing TLD: ${tld}"
-            echo "${tld}" >> "./cnacc_processed.tmp"
-        fi
-    '
 
-    # 关键域名验证列表
-    important_domains=(
-        "baidu.com"
-        "qq.com"
-        "163.com"
-        "taobao.com"
-        "tmall.com"
-        "jd.com"
-        "weixin.com"
-        "alipay.com"
-        "alibaba.com"
-        "alicdn.com"
-        "aliyun.com"
-        "tencent.com"
-        "weibo.com"
-        "sina.com.cn"
-        "sohu.com"
-        "youku.com"
-        "iqiyi.com"
+    # Generate lite versions from processed files
+    echo "Generating lite versions..."
+    cat "./cnacc_combined.tmp" | rev | cut -d "." -f 1,2 | rev | sort -u > "./lite_cnacc_processed.tmp"
+    cat "./gfwlist_processed.tmp" | rev | cut -d "." -f 1,2 | rev | sort -u > "./lite_gfwlist_processed.tmp"
+
+    echo "Data analysis completed successfully"
+    echo "Full CNACC entries: $(wc -l < "./cnacc_combined.tmp")"
+    echo "Full GFWList entries: $(wc -l < "./gfwlist_processed.tmp")"
+    echo "Lite CNACC entries: $(wc -l < "./lite_cnacc_processed.tmp")"
+    echo "Lite GFWList entries: $(wc -l < "./lite_gfwlist_processed.tmp")"
+
+    # Add China TLDs (append to combined processed file)
+    echo "Verifying China TLD coverage..."
+    local cn_tlds=(
+        ".cn" ".中国" ".公司" ".网络" ".com.cn" ".net.cn" ".org.cn" ".gov.cn" ".edu.cn" ".ac.cn" ".mil.cn"
     )
-    
-    # 验证重要域名
-    echo "Verifying important Chinese domains..."
-    # 优化：并发检查和补全重要域名（自动并发数）
-    printf '%s\n' "${important_domains[@]}" | xargs -I{} -P $(nproc) bash -c '
-        domain="{}"
-        if ! grep -q "^${domain}$" "./cnacc_processed.tmp"; then
-            echo "Adding missing domain: ${domain}"
-            echo "${domain}" >> "./cnacc_processed.tmp"
+    for tld in "${cn_tlds[@]}"; do
+        if ! grep -q "\.${tld}$" "./cnacc_combined.tmp"; then
+            echo "Adding missing TLD: ${tld}"
+            echo "${tld}" >> "./cnacc_combined.tmp"
         fi
-    '
-} # <--- 这里补上 AnalyseData 函数的结尾
+    done
+    # Re-sort and uniq after adding TLDs
+    LC_ALL=C sort -u "./cnacc_combined.tmp" -o "./cnacc_combined.tmp"
+
+
+    # Verify important Chinese domains (append to combined processed file)
+    echo "Verifying important Chinese domains..."
+    local important_domains=(
+        "baidu.com" "qq.com" "163.com" "taobao.com" "tmall.com" "jd.com" "weixin.com" "alipay.com" "alibaba.com" "alicdn.com" "aliyun.com" "tencent.com" "weibo.com" "sina.com.cn" "sohu.com" "youku.com" "iqiyi.com"
+    )
+    for domain in "${important_domains[@]}"; do
+        if ! grep -q "^${domain}$" "./cnacc_combined.tmp"; then
+            echo "Adding missing domain: ${domain}"
+            echo "${domain}" >> "./cnacc_combined.tmp"
+        fi
+    done
+    # Re-sort and uniq after adding domains
+    LC_ALL=C sort -u "./cnacc_combined.tmp" -o "./cnacc_combined.tmp"
+
+    echo "Final CNACC entries after verification: $(wc -l < "./cnacc_combined.tmp")"
+}
 # Generate Rules
 function GenerateRules() {
-    echo "=== Starting Rules Generation ==="
-    
+    local software_name="$1"
+    local generate_file="$2"
+    local generate_mode="$3"
+    local dns_mode="$4" # Used for AdGuardHome/Unbound footer, and SmartDNS group name
+
+    echo "=== Starting Rules Generation for ${software_name} (${generate_file}, ${generate_mode}, ${dns_mode}) ==="
+
     function FileName() {
-        echo "Setting up file naming..."
-        if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "whiteblack" ]; then
-            generate_temp="black"
-        elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "blackwhite" ]; then
-            generate_temp="white"
-        else
-            generate_temp="debug"
+        # echo "Setting up file naming..." # Removed verbose output
+        local temp_generate_file="${generate_file}"
+        if [ "${temp_generate_file}" == "blackwhite" ]; then
+            temp_generate_file="black" # Use 'black' prefix for blackwhite list (GFWList domains)
+        elif [ "${temp_generate_file}" == "whiteblack" ]; then
+            temp_generate_file="white" # Use 'white' prefix for whiteblack list (CNACC domains)
         fi
-        if [ "${software_name}" == "adguardhome" ] || [ "${software_name}" == "adguardhome_new" ] || [ "${software_name}" == "domain" ]  || [ "${software_name}" == "ikuai" ]; then
-            file_extension="txt"
-        elif [ "${software_name}" == "bind9" ] || [ "${software_name}" == "dnsmasq" ] || [ "${software_name}" == "smartdns" ]  || [ "${software_name}" == "unbound" ]; then
-            file_extension="conf"
-        else
-            file_extension="dev"
-        fi
-        # 优化：只在目录不存在时创建，避免并发mkdir报错
-        local dir="../gfwlist2${software_name}"
-        mkdir -p "$dir"   # <--- 修改为 mkdir -p，确保目录存在
-        file_name="${generate_temp}list_${generate_mode}.${file_extension}"
-        file_path="${dir}/${file_name}"
-        # 如果文件已存在则跳过生成
-        if [ -f "$file_path" ]; then
-            skip_generate=1
-        else
-            skip_generate=0
-        fi
-        echo "File path set to: ${file_path}"
-    }
-    function GenerateDefaultUpstream() {
-        echo "Generating default upstream configuration..."
-        case ${software_name} in
-            adguardhome)
-                if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "lite" ]; then
-                    if [ "${generate_file}" == "blackwhite" ]; then
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo "${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                        done
-                    elif [ "${generate_file}" == "whiteblack" ]; then
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo "${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                        done
-                    fi
-                else
-                    if [ "${generate_file}" == "black" ]; then
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo "${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                        done
-                    elif [ "${generate_file}" == "white" ]; then
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo "${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                        done
-                    fi
-                fi
+
+        local file_extension="dev"
+        case "${software_name}" in
+            adguardhome|adguardhome_new|domain|ikuai)
+                file_extension="txt"
             ;;
-            adguardhome_new)
-                if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "lite" ]; then
-                    if [ "${generate_file}" == "blackwhite" ]; then
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo "${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                        done
-                    elif [ "${generate_file}" == "whiteblack" ]; then
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo "${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                        done
-                    fi
-                else
-                    if [ "${generate_file}" == "black" ]; then
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo "${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                        done
-                    elif [ "${generate_file}" == "white" ]; then
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo "${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                        done
-                    fi
-                fi
-            ;;
-            *)
-                exit 1
+            bind9|dnsmasq|smartdns|unbound)
+                file_extension="conf"
             ;;
         esac
-        echo "Upstream configuration completed"
+
+        local dir="../gfwlist2${software_name}"
+        mkdir -p "$dir" # Ensure directory exists
+
+        # Construct file name based on parameters
+        file_name="${temp_generate_file}list_${generate_mode}"
+        # Add dns_mode to filename for AGH/AGH_new/Unbound if not default, as they might differ
+        if { [ "${software_name}" == "adguardhome" ] || [ "${software_name}" == "adguardhome_new" ] || [ "${software_name}" == "unbound" ]; } && [ "${dns_mode}" != "default" ]; then
+             file_name="${file_name}_${dns_mode}"
+        fi
+         # Add dns_mode to filename for SmartDNS
+        if [ "${software_name}" == "smartdns" ]; then
+             file_name="${file_name}_${dns_mode}"
+        fi
+
+
+        file_path="${dir}/${file_name}.${file_extension}"
+
+        echo "File path set to: ${file_path}"
+        # Clear the file before writing
+        : > "${file_path}"
     }
+
+    # Determine source file based on generate_file and generate_mode
+    local source_file=""
+    if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
+        if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "whiteblack" ]; then # whiteblack uses CNACC domains
+            source_file="./cnacc_combined.tmp"
+        elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "blackwhite" ]; then # blackwhite uses GFWList domains
+            source_file="./gfwlist_processed.tmp"
+        fi
+    elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
+        if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "whiteblack" ]; then # whiteblack uses CNACC domains
+            source_file="./lite_cnacc_processed.tmp"
+        elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "blackwhite" ]; then # blackwhite uses GFWList domains
+            source_file="./lite_gfwlist_processed.tmp"
+        fi
+    fi
+
+    if [ ! -f "$source_file" ]; then
+        echo "Error: Source file not found for rule generation: ${source_file}"
+        return 1 # Use return instead of exit to allow other generations to continue
+    fi
+    echo "Reading domains from: ${source_file}"
+
+    # DNS server lists (defined here as they are used per software type)
+    local domestic_dns=(
+        "tcp://dns.alidns.com" "udp://dns.alidns.com" "tcp://223.5.5.5" "udp://223.5.5.5" "tcp://223.6.6.6" "udp://223.6.6.6" "tcp://2400:3200::1" "udp://2400:3200::1" "tcp://2400:3200:baba::1" "udp://2400:3200:baba::1" "tcp://114.114.114.114" "udp://114.114.114.114" "tcp://114.114.115.115" "udp://114.114.115.115" "tls://dns.alidns.com:853" "https://dns.alidns.com/dns-query" "h3://dns.alidns.com/dns-query" "https://223.5.5.5/dns-query" "h3://223.5.5.5/dns-query" "https://223.6.6.6/dns-query" "h3://223.6.6.6/dns-query" "tls://223.5.5.5:853" "quic://223.5.5.5:853" "tls://223.6.6.6:853" "quic://223.6.6.6:853" "https://2400:3200::1/dns-query" "h3://2400:3200::1/dns-query" "https://2400:3200:baba::1/dns-query" "h3://2400:3200:baba::1/dns-query" "tls://2400:3200::1:853" "quic://2400:3200::1:853" "tls://2400:3200:baba::1:853" "quic://2400:3200:baba::1:853" "tcp://119.29.29.29" "udp://119.29.29.29" "tcp://2402:4e00::" "udp://2402:4e00::" "tcp://2402:4e00:1::" "udp://2402:4e00:1::" "https://doh-pure.onedns.net/dns-query" "https://doh.pub/dns-query" "https://sm2.doh.pub/dns-query" "https://1.12.12.12/dns-query" "https://120.53.53.53/dns-query" "tls://dot-pure.onedns.net:853" "tls://dot.pub:853" "tls://1.12.12.12:853" "tls://120.53.53.53:853" "180.76.76.76" "tcp://71.131.215.228" "udp://71.131.215.228" "tcp://117.50.0.88" "udp://117.50.0.88" "tcp://52.80.53.83" "udp://52.80.53.83" "tcp://52.80.59.89" "udp://52.80.59.89" "tcp://113.31.119.88" "udp://113.31.119.88" "tcp://52.81.114.158" "udp://52.81.114.158" "tcp://42.240.136.88" "udp://42.240.136.88" "tcp://2400:7fc0:849e:200:62fd:1de3:1c90:1" "udp://2400:7fc0:849e:200:62fd:1de3:1c90:1" "tcp://22400:7fc0:849e:200:62fd:1de3:1c90:2" "udp://22400:7fc0:849e:200:62fd:1de3:1c90:2"
+    )
+    local foreign_dns=(
+        "https://firefox.dns.nextdns.io/dns-query" "h3://firefox.dns.nextdns.io/dns-query" "https://anycast.dns.nextdns.io/dns-query" "h3://anycast.dns.nextdns.io/dns-query" "https://doh3.dns.nextdns.io/dns-query" "h3://doh3.dns.nextdns.io/dns-query" "https://dns.nextdns.io/dns-query" "h3://dns.nextdns.io/dns-query" "https://dns-unfiltered.adguard.com/dns-query" "h3://dns-unfiltered.adguard.com/dns-query" "https://unfiltered.adguard-dns.com/dns-query" "h3://unfiltered.adguard-dns.com/dns-query" "https://dns.google/dns-query" "h3://dns.google/dns-query" "https://dns.google.com/dns-query" "h3://dns.google.com/dns-query" "https://e5aehtlc5e.cloudflare-dns.com/dns-query" "h3://e5aehtlc5e.cloudflare-dns.com/dns-query" "https://sepfvn6g5a.cloudflare-dns.com/dns-query" "h3://sepfvn6g5a.cloudflare-dns.com/dns-query" "https://1dot1dot1dot1.cloudflare-dns.com/dns-query" "h3://1dot1dot1dot1.cloudflare-dns.com/dns-query" "https://mozilla.cloudflare-dns.com/dns-query" "h3://mozilla.cloudflare-dns.com/dns-query" "https://chrome.cloudflare-dns.com/dns-query" "h3://chrome.cloudflare-dns.com/dns-query" "https://dns.cloudflare-dns.com/dns-query" "h3://dns.cloudflare-dns.com/dns-query" "tls://dns.google:853" "quic://dns.google:853" "tls://dns.google.com:853" "quic://dns.google.com:853" "tls://dns.adguard.com:853" "quic://dns.adguard.com:853" "tls://dns-unfiltered.adguard.com:853" "quic://dns-unfiltered.adguard.com:853" "tls://unfiltered.adguard-dns.com:853" "quic://unfiltered.adguard-dns.com:853" "tls://anycast.dns.nextdns.io:853" "quic://anycast.dns.nextdns.io:853" "tls://dns.nextdns.io:853" "quic://dns.nextdns.io:853" "tls://doh3.dns.nextdns.io:853" "quic://doh3.dns.nextdns.io:853" "https://77.88.8.8:443/dns-query" "https://doh.opendns.com/dns-query" "https://dns12.quad9.net/dns-query" "https://dns.twnic.tw/dns-query" "tls://dns.twnic.tw:853" "tls://common.dot.dns.yandex.net:853" "tls://1dot1dot1dot1.cloudflare-dns.com:853" "tls://dns12.quad9.net:853"
+    )
+     local bind9_domestic_addrs=(
+        "119.29.29.29 port 53" "223.5.5.5 port 53" "223.6.6.6 port 53" "101.226.4.6 port 53" "123.125.81.6 port 53" "114.114.114.114 port 53" "114.114.115.115 port 53" "117.50.11.11 port 53" "52.80.66.66 port 53"
+    )
+    local bind9_foreign_addrs=(
+        "208.67.222.222 port 53" "8.8.4.4 port 53" "8.8.8.8 port 53" "1.1.1.1 port 53" "1.0.0.1 port 53" "9.9.9.10 port 53" "94.140.14.140 port 53" "94.140.14.141 port 53" "74.82.42.42 port 53" "185.222.222.222 port 53"
+    )
+    local dnsmasq_domestic_addrs=(
+        "119.29.29.29#53" "223.5.5.5#53" "223.6.6.6#53" "101.226.4.6#53" "123.125.81.6#53" "114.114.114.114#53" "114.114.115.115#53" "117.50.10.10#53" "52.80.52.52#53"
+    )
+    local dnsmasq_foreign_addrs=(
+        "208.67.222.222#53" "8.8.4.4#53" "8.8.8.8#53" "1.1.1.1#53" "1.0.0.1#53" "9.9.9.10#53" "94.140.14.140#53" "94.140.14.141#53" "74.82.42.42#53" "185.222.222.222#53"
+    )
+     local unbound_domestic_addrs=(
+        "223.5.5.5@853" "223.6.6.6@853" "2400:3200::1@853" "2400:3200:baba::1@853" "1.12.12.12@853" "120.53.53.53@853" "119.29.29.29@53" "2402:4e00::@53" "114.114.114.114@53" "114.114.115.115@53" "117.50.10.10@53" "52.80.52.52@53" "2400:7fc0:849e:200::8@53" "2404:c2c0:85d8:901::8@53"
+    )
+    local unbound_foreign_addrs=(
+        "8.8.4.4@853" "8.8.8.8@853" "2001:4860:4860::8888@853" "2001:4860:4860::8844@853" "1.1.1.1@853" "1.0.0.1@853" "2606:4700:4700::1111@853" "2606:4700:4700::1001@853" "9.9.9.12@853" "149.112.112.12@853" "2620:fe::12@853" "2620:fe::fe:12@853" "94.140.14.140@853" "94.140.14.141@853" "2a10:50c0::1:ff@853" "2a10:50c0::2:ff@853" "209.244.0.3@53" "209.244.0.4@53" "4.2.2.1@53" "4.2.2.2@53" "4.2.2.3@53" "4.2.2.4@53" "4.2.2.5@53" "4.2.2.6@53"
+    )
+
+
     case ${software_name} in
-        adguardhome)
-            echo "Generating rules for AdGuard Home..."
-            domestic_dns=(
-            $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://223.6.6.6"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:3200::1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:3200:baba::1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://114.114.114.114"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://114.114.115.115"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns.alidns.com:853"; done)
-            $(for protocol in https h3; do echo "${protocol}://dns.alidns.com/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://223.5.5.5/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://223.6.6.6/dns-query"; done)
-            $(for protocol in tls quic; do echo "${protocol}://223.5.5.5:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://223.6.6.6:853"; done)
-            $(for protocol in https h3; do echo "${protocol}://2400:3200::1/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://2400:3200:baba::1/dns-query"; done)
-            $(for protocol in tls quic; do echo "${protocol}://2400:3200::1:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://2400:3200:baba::1:853"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://119.29.29.29"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00::"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:1::"; done)
-            "https://doh-pure.onedns.net/dns-query"
-            "https://doh.pub/dns-query"
-            "https://sm2.doh.pub/dns-query"
-            "https://1.12.12.12/dns-query"
-            "https://120.53.53.53/dns-query"
-            "tls://dot-pure.onedns.net:853"
-            "tls://dot.pub:853"
-            "tls://1.12.12.12:853"
-            "tls://120.53.53.53:853"
-            "180.76.76.76"
-            #onedns
-            $(for protocol in tcp udp; do echo "${protocol}://71.131.215.228"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://117.50.0.88"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.80.53.83"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.80.59.89"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://113.31.119.88"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
-            )
-            foreign_dns=(
-            $(for protocol in https h3; do echo "${protocol}://firefox.dns.nextdns.io/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://anycast.dns.nextdns.io/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://doh3.dns.nextdns.io/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://dns.nextdns.io/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://dns-unfiltered.adguard.com/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://unfiltered.adguard-dns.com/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://dns.google/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://dns.google.com/dns-query"; done)
-            # Cloudflare Instances
-            $(printf "%s\n" {https,h3}://{e5aehtlc5e,sepfvn6g5a,1dot1dot1dot1,mozilla,chrome,dns}.cloudflare-dns.com:{443,2083,2053,2087,2096,8443}/dns-query)
-            # DoT/DoQ Servers
-            $(for protocol in tls quic; do
-                echo "${protocol}://dns.google:853"
-                echo "${protocol}://dns.google.com:853"
-                echo "${protocol}://dns.adguard.com:853"
-                echo "${protocol}://dns-unfiltered.adguard.com:853"
-                echo "${protocol}://unfiltered.adguard-dns.com:853"
-                echo "${protocol}://anycast.dns.nextdns.io:853"
-                echo "${protocol}://dns.nextdns.io:853"
-                echo "${protocol}://doh3.dns.nextdns.io:853"
-            done)
-            "https://77.88.8.8:443/dns-query"
-            "https://doh.opendns.com/dns-query"
-            "https://dns12.quad9.net/dns-query"
-            "https://dns.twnic.tw/dns-query"
-            "tls://dns.twnic.tw:853"
-            "tls://common.dot.dns.yandex.net:853"
-            "tls://1dot1dot1dot1.cloudflare-dns.com:853"
-            "tls://dns12.quad9.net:853"
-            )
-            function GenerateRulesHeader() {
-                echo -n "[/" >> "${file_path}"
-            }
-            function GenerateRulesBody() {
-                # 创建临时文件
-                local tmp_file="${file_path}.tmp"
-                local filtered_file="${file_path}.filtered"
-                
-                # 域名验证正则表达式
-                local domain_regex="^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$"
-                
-                if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
-                    if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                        # 使用换行符分隔域名写入临时文件，同时进行过滤
-                        printf '%s\n' "${cnacc_data[@]}" | \
-                        grep -v '^0\.0\.0\.0$' | \
-                        grep -v '^[/#]' | \
-                        grep -v '\$' | \
-                        grep -E "${domain_regex}" > "${tmp_file}"
-                    elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                        printf '%s\n' "${gfwlist_data[@]}" | \
-                        grep -v '^0\.0\.0\.0$' | \
-                        grep -v '^[/#]' | \
-                        grep -v '\$' | \
-                        grep -E "${domain_regex}" > "${tmp_file}"
-                    fi
-                elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-                    if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                        printf '%s\n' "${lite_cnacc_data[@]}" | \
-                        grep -v '^0\.0\.0\.0$' | \
-                        grep -v '^[/#]' | \
-                        grep -v '\$' | \
-                        grep -E "${domain_regex}" > "${tmp_file}"
-                    elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                        printf '%s\n' "${lite_gfwlist_data[@]}" | \
-                        grep -v '^0\.0\.0\.0$' | \
-                        grep -v '^[/#]' | \
-                        grep -v '\$' | \
-                        grep -E "${domain_regex}" > "${tmp_file}"
-                    fi
-                fi
+        adguardhome|adguardhome_new)
+            FileName # Sets file_path and clears the file
 
-                # 如果文件存在且非空，则处理
-                if [ -f "${tmp_file}" ] && [ -s "${tmp_file}" ]; then
-                    # 过滤掉无效行和格式化
-                    # 确保filtered_file的父目录存在
-                    mkdir -p "$(dirname "$filtered_file")"
-                    grep -v '^\s*$' "${tmp_file}" | \
-                    sed 's/[[:space:]]*$//' | \
-                    sed 's/^[[:space:]]*//' | \
-                    sort -u > "${filtered_file}"
-                    
-                    # 将处理后的文件内容转换为所需格式并追加到目标文件
-                    tr '\n' '/' < "${filtered_file}" >> "${file_path}"
-                    
-                    # 清理临时文件
-                    rm -f "${tmp_file}" "${filtered_file}"
-                fi
-            }
-            function GenerateRulesFooter() {
-                if [ "${dns_mode}" == "default" ]; then
-                    echo "]#" >> "${file_path}"
-                elif [ "${dns_mode}" == "domestic" ]; then
-                    echo "]${domestic_dns[domestic_dns_task]}" >> "${file_path}"
-                elif [ "${dns_mode}" == "foreign" ]; then
-                    echo "]${foreign_dns[foreign_dns_task]}" >> "${file_path}"
-                fi
-            }
-            # 添加全局进度计数器
-            current_rules_count=0
-            total_rules_count=32  # 总规则生成数量
+            # AdGuard Home format: [/domain1/domain2/...]upstream
+            echo -n "[/" >> "${file_path}"
 
-            function GenerateRulesProcess() {
-                # 重置局部进度计数
-                local total_steps=3
-                local current_step=0
-                
-                # 执行规则生成步骤
-                GenerateRulesHeader
-                GenerateRulesBody
-                GenerateRulesFooter
-                
-                # 更新全局进度
-                current_rules_count=$((current_rules_count + 1))
-                
-                # 只在每个规则文件生成后刷新进度条
-                PrettyProgressBar $current_rules_count $total_rules_count "AdGuardHome: $current_rules_count/$total_rules_count"
-            }
-            
+            # Read domains line by line and append with /
+            local domain_count=0
+            while IFS= read -r domain; do
+                 # Basic domain validation
+                if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                    echo -n "${domain}/" >> "${file_path}"
+                    domain_count=$((domain_count + 1))
+                fi
+            done < "${source_file}"
+
+            # Add the footer based on dns_mode
             if [ "${dns_mode}" == "default" ]; then
-                FileName && GenerateDefaultUpstream
-                current_rules_count=0  # 重置计数器
-                GenerateRulesProcess
+                echo "]#" >> "${file_path}"
             elif [ "${dns_mode}" == "domestic" ]; then
-                FileName && GenerateDefaultUpstream
-                current_rules_count=0  # 重置计数器
-                total_rules_count=${#domestic_dns[@]}  # 更新总数为实际DNS服务器数量
-                for domestic_dns_task in "${!domestic_dns[@]}"; do
-                    GenerateRulesProcess
-                done
+                # Use the first domestic DNS server for the footer
+                echo "]${domestic_dns[0]}" >> "${file_path}"
             elif [ "${dns_mode}" == "foreign" ]; then
-                FileName && GenerateDefaultUpstream
-                current_rules_count=0  # 重置计数器
-                total_rules_count=${#foreign_dns[@]}  # 更新总数为实际DNS服务器数量
-                for foreign_dns_task in "${!foreign_dns[@]}"; do
-                    GenerateRulesProcess
-                done
+                # Use the first foreign DNS server for the footer
+                echo "]${foreign_dns[0]}" >> "${file_path}"
             fi
-            echo "AdGuard Home rules generation completed"
-        ;;
-        adguardhome_new)
-            echo "Generating rules for AdGuard Home (New)..."
-            domestic_dns=(
-            $(for protocol in tcp udp; do echo "${protocol}://dns.alidns.com"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://223.5.5.5"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://223.6.6.6"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:3200::1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:3200:baba::1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://114.114.114.114"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://114.114.115.115"; done)
-            $(for protocol in tls quic; do echo "${protocol}://dns.alidns.com:853"; done)
-            $(for protocol in https h3; do echo "${protocol}://dns.alidns.com/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://223.5.5.5/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://223.6.6.6/dns-query"; done)
-            $(for protocol in tls quic; do echo "${protocol}://223.5.5.5:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://223.6.6.6:853"; done)
-            $(for protocol in https h3; do echo "${protocol}://2400:3200::1/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://2400:3200:baba::1/dns-query"; done)
-            $(for protocol in tls quic; do echo "${protocol}://2400:3200::1:853"; done)
-            $(for protocol in tls quic; do echo "${protocol}://2400:3200:baba::1:853"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://119.29.29.29"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00::"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:1::"; done)
-            "https://doh-pure.onedns.net/dns-query"
-            "https://doh.pub/dns-query"
-            "https://sm2.doh.pub/dns-query"
-            "https://1.12.12.12/dns-query"
-            "https://120.53.53.53/dns-query"
-            "tls://dot-pure.onedns.net:853"
-            "tls://dot.pub:853"
-            "tls://1.12.12.12:853"
-            "tls://120.53.53.53:853"
-            "180.76.76.76"
-            #onedns
-            $(for protocol in tcp udp; do echo "${protocol}://71.131.215.228"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://117.50.0.88"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.80.53.83"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.80.59.89"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://113.31.119.88"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
-            )
-            foreign_dns=(
-            $(for protocol in https h3; do echo "${protocol}://firefox.dns.nextdns.io/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://anycast.dns.nextdns.io/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://doh3.dns.nextdns.io/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://dns.nextdns.io/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://dns-unfiltered.adguard.com/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://unfiltered.adguard-dns.com/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://dns.google/dns-query"; done)
-            $(for protocol in https h3; do echo "${protocol}://dns.google.com/dns-query"; done)
-            # Cloudflare Instances
-            $(printf "%s\n" {https,h3}://{e5aehtlc5e,sepfvn6g5a,1dot1dot1dot1,mozilla,chrome,dns}.cloudflare-dns.com:{443,2083,2053,2087,2096,8443}/dns-query)
-            # DoT/DoQ Servers
-            $(for protocol in tls quic; do
-                echo "${protocol}://dns.google:853"
-                echo "${protocol}://dns.google.com:853"
-                echo "${protocol}://dns.adguard.com:853"
-                echo "${protocol}://dns-unfiltered.adguard.com:853"
-                echo "${protocol}://unfiltered.adguard-dns.com:853"
-                echo "${protocol}://anycast.dns.nextdns.io:853"
-                echo "${protocol}://dns.nextdns.io:853"
-                echo "${protocol}://doh3.dns.nextdns.io:853"
-            done)
-            "https://77.88.8.8:443/dns-query"
-            "https://doh.opendns.com/dns-query"
-            "https://dns12.quad9.net/dns-query"
-            "https://dns.twnic.tw/dns-query"
-            "tls://dns.twnic.tw:853"
-            "tls://common.dot.dns.yandex.net:853"
-            "tls://1dot1dot1dot1.cloudflare-dns.com:853"
-            "tls://dns12.quad9.net:853"
-            )
-            function GenerateRulesHeader() {
-                echo -n "[/" >> "${file_path}"
-            }
-            function GenerateRulesBody() {
-                # 创建临时文件
-                local tmp_file="${file_path}.tmp"
-                local filtered_file="${file_path}.filtered"
-                
-                # 域名验证正则表达式
-                local domain_regex="^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$"
-                
-                if [ "${generate_mode}" == "full" ] || [ "${generate_mode}" == "full_combine" ]; then
-                    if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                        # 使用换行符分隔域名写入临时文件，同时进行过滤
-                        printf '%s\n' "${cnacc_data[@]}" | \
-                        grep -v '^0\.0\.0\.0$' | \
-                        grep -v '^[/#]' | \
-                        grep -v '\$' | \
-                        grep -E "${domain_regex}" > "${tmp_file}"
-                    elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                        printf '%s\n' "${gfwlist_data[@]}" | \
-                        grep -v '^0\.0\.0\.0$' | \
-                        grep -v '^[/#]' | \
-                        grep -v '\$' | \
-                        grep -E "${domain_regex}" > "${tmp_file}"
-                    fi
-                elif [ "${generate_mode}" == "lite" ] || [ "${generate_mode}" == "lite_combine" ]; then
-                    if [ "${generate_file}" == "black" ] || [ "${generate_file}" == "blackwhite" ]; then
-                        printf '%s\n' "${lite_cnacc_data[@]}" | \
-                        grep -v '^0\.0\.0\.0$' | \
-                        grep -v '^[/#]' | \
-                        grep -v '\$' | \
-                        grep -E "${domain_regex}" > "${tmp_file}"
-                    elif [ "${generate_file}" == "white" ] || [ "${generate_file}" == "whiteblack" ]; then
-                        printf '%s\n' "${lite_gfwlist_data[@]}" | \
-                        grep -v '^0\.0\.0\.0$' | \
-                        grep -v '^[/#]' | \
-                        grep -v '\$' | \
-                        grep -E "${domain_regex}" > "${tmp_file}"
-                    fi
-                fi
-
-                # 如果文件存在且非空，则处理
-                if [ -f "${tmp_file}" ] && [ -s "${tmp_file}" ]; then
-                    # 过滤掉无效行和格式化
-                    # 确保filtered_file的父目录存在
-                    mkdir -p "$(dirname "$filtered_file")"
-                    grep -v '^\s*$' "${tmp_file}" | \
-                    sed 's/[[:space:]]*$//' | \
-                    sed 's/^[[:space:]]*//' | \
-                    sort -u > "${filtered_file}"
-                    
-                    # 将处理后的文件内容转换为所需格式并追加到目标文件
-                    tr '\n' '/' < "${filtered_file}" >> "${file_path}"
-                    
-                    # 清理临时文件
-                    rm -f "${tmp_file}" "${filtered_file}"
-                fi
-            }
-            function GenerateRulesFooter() {
-                if [ "${dns_mode}" == "default" ]; then
-                    echo "]#" >> "${file_path}"
-                elif [ "${dns_mode}" == "domestic" ]; then
-                    echo "]${domestic_dns[domestic_dns_task]}" >> "${file_path}"
-                elif [ "${dns_mode}" == "foreign" ]; then
-                    echo "]${foreign_dns[foreign_dns_task]}" >> "${file_path}"
-                fi
-            }
-            # 添加全局进度计数器
-            current_rules_count=0
-            total_rules_count=32  # 总规则生成数量
-
-            function GenerateRulesProcess() {
-                # 重置局部进度计数
-                local total_steps=3
-                local current_step=0
-                
-                # 执行规则生成步骤
-                GenerateRulesHeader
-                GenerateRulesBody
-                GenerateRulesFooter
-                
-                # 更新全局进度
-                current_rules_count=$((current_rules_count + 1))
-                
-                # 只在每个规则文件生成后刷新进度条
-                PrettyProgressBar $current_rules_count $total_rules_count "AdGuardHome: $current_rules_count/$total_rules_count"
-            }
-            
-            if [ "${dns_mode}" == "default" ]; then
-                FileName && GenerateDefaultUpstream
-                current_rules_count=0  # 重置计数器
-                GenerateRulesProcess
-            elif [ "${dns_mode}" == "domestic" ]; then
-                FileName && GenerateDefaultUpstream
-                current_rules_count=0  # 重置计数器
-                total_rules_count=${#domestic_dns[@]}  # 更新总数为实际DNS服务器数量
-                for domestic_dns_task in "${!domestic_dns[@]}"; do
-                    GenerateRulesProcess
-                done
-            elif [ "${dns_mode}" == "foreign" ]; then
-                FileName && GenerateDefaultUpstream
-                current_rules_count=0  # 重置计数器
-                total_rules_count=${#foreign_dns[@]}  # 更新总数为实际DNS服务器数量
-                for foreign_dns_task in "${!foreign_dns[@]}"; do
-                    GenerateRulesProcess
-                done
-            fi
-            echo "AdGuard Home (New) rules generation completed"
+            echo "Generated ${file_path} with ${domain_count} domains."
         ;;
         bind9)
-            echo "Generating rules for Bind9..."
-            # 添加域名验证函数
-            validate_bind9_domain() {
-                local domain="$1"
-                # 验证域名不为空且符合格式要求
-                if [[ -n "$domain" ]] && \
-                   [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && \
-                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-                    return 0
-                fi
-                return 1
-            }
-        domestic_dns=(
-            "119.29.29.29 port 53"
-            "223.5.5.5 port 53"
-            "223.6.6.6 port 53"
-            "101.226.4.6 port 53"
-            "123.125.81.6 port 53"
-            "114.114.114.114 port 53"
-            "114.114.115.115 port 53"
-            "117.50.11.11 port 53"
-            "52.80.66.66 port 53"
-        )
-        foreign_dns=(
-            "208.67.222.222 port 53"
-            "8.8.4.4 port 53"
-            "8.8.8.8 port 53"
-            "1.1.1.1 port 53"
-            "1.0.0.1 port 53"
-            "9.9.9.10 port 53"
-            "94.140.14.140 port 53"
-            "94.140.14.141 port 53"
-            "74.82.42.42 port 53"
-            "185.222.222.222 port 53"
-        )
-            if [ "${generate_mode}" == "full" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName && for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                        echo -n "zone \"${gfwlist_data[$gfwlist_data_task]}.\" {type forward; forwarders { " >> "${file_path}"
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo -n "${foreign_dns[$foreign_dns_task]}; " >> "${file_path}"
-                        done
-                        echo "}; };" >> "${file_path}"
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName && for cnacc_data_task in "${!cnacc_data[@]}"; do
-                        echo -n "zone \"${cnacc_data[$cnacc_data_task]}.\" {type forward; forwarders { " >> "${file_path}"
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo -n "${domestic_dns[$domestic_dns_task]}; " >> "${file_path}"
-                        done
-                        echo "}; };" >> "${file_path}"
-                    done
-                fi
-            elif [ "${generate_mode}" == "lite" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName && for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                        echo -n "zone \"${lite_gfwlist_data[$lite_gfwlist_data_task]}.\" {type forward; forwarders { " >> "${file_path}"
-                        for foreign_dns_task in "${!foreign_dns[@]}"; do
-                            echo -n "${foreign_dns[$foreign_dns_task]}; " >> "${file_path}"
-                        done
-                        echo "}; };" >> "${file_path}"
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName && for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                        echo -n "zone \"${lite_cnacc_data[$lite_cnacc_data_task]}.\" {type forward; forwarders { " >> "${file_path}"
-                        for domestic_dns_task in "${!domestic_dns[@]}"; do
-                            echo -n "${domestic_dns[$domestic_dns_task]}; " >> "${file_path}"
-                        done
-                        echo "}; };" >> "${file_path}"
-                    done
-                fi
+            FileName # Sets file_path and clears the file
+
+            local bind9_forwarders=""
+            if [ "${generate_file}" == "black" ]; then
+                 bind9_forwarders=("${bind9_foreign_addrs[@]}")
+            elif [ "${generate_file}" == "white" ]; then
+                 bind9_forwarders=("${bind9_domestic_addrs[@]}")
             fi
-            echo "Bind9 rules generation completed"
+
+            local forwarders_string=""
+            for dns in "${bind9_forwarders[@]}"; do
+                forwarders_string+="${dns}; "
+            done
+            forwarders_string="${forwarders_string%; }" # Remove trailing space and semicolon
+
+            # Read domains line by line from source_file
+            local domain_count=0
+            while IFS= read -r domain; do
+                # Validate domain format for Bind9
+                if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                    echo "zone \"${domain}.\" {type forward; forwarders { ${forwarders_string} }; };" >> "${file_path}"
+                    domain_count=$((domain_count + 1))
+                fi
+            done < "${source_file}"
+            echo "Generated ${file_path} with ${domain_count} domains."
         ;;
         dnsmasq)
-            echo "Generating rules for DNSMasq..."
-            # 域名验证函数
-            validate_dnsmasq_domain() {
-                local domain="$1"
-                # 验证域名格式，排除IP地址和无效字符
-                if [[ -n "$domain" ]] && \
-                   [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]] && \
-                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && \
-                   [[ ! "$domain" =~ [\/\|\$#@\!\%\^\&\*\(\)\+\=\{\}\[\]\:\"\'\<\>\?\~\`] ]]; then
-                    return 0
-                fi
-                return 1
-            }
-            # DNS服务器列表
-            domestic_dns=(
-                "119.29.29.29#53"
-                "223.5.5.5#53"
-                "223.6.6.6#53"
-                "101.226.4.6#53"
-                "123.125.81.6#53"
-                "114.114.114.114#53"
-                "114.114.115.115#53"
-                "117.50.10.10#53"
-                "52.80.52.52#53"
-            )
-            foreign_dns=(
-                "208.67.222.222#53"
-                "8.8.4.4#53"
-                "8.8.8.8#53"
-                "1.1.1.1#53"
-                "1.0.0.1#53"
-                "9.9.9.10#53"
-                "94.140.14.140#53"
-                "94.140.14.141#53"
-                "74.82.42.42#53"
-                "185.222.222.222#53"
-            )
+            FileName # Sets file_path and clears the file
 
-            if [ "${generate_mode}" == "full" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    for domain in "${gfwlist_data[@]}"; do
-                        if validate_dnsmasq_domain "$domain"; then
-                            for dns in "${foreign_dns[@]}"; do
-                                echo "server=/${domain}/${dns}" >> "${file_path}"
-                            done
-                        fi
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName
-                    for domain in "${cnacc_data[@]}"; do
-                        if validate_dnsmasq_domain "$domain"; then
-                            for dns in "${domestic_dns[@]}"; do
-                                echo "server=/${domain}/${dns}" >> "${file_path}"
-                            done
-                        fi
-                    done
-                fi
-            elif [ "${generate_mode}" == "lite" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    for domain in "${lite_gfwlist_data[@]}"; do
-                        if validate_dnsmasq_domain "$domain"; then
-                            for dns in "${foreign_dns[@]}"; do
-                                echo "server=/${domain}/${dns}" >> "${file_path}"
-                            done
-                        fi
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName
-                    for domain in "${lite_cnacc_data[@]}"; do
-                        if validate_dnsmasq_domain "$domain"; then
-                            for dns in "${domestic_dns[@]}"; do
-                                echo "server=/${domain}/${dns}" >> "${file_path}"
-                            done
-                        fi
-                    done
-                fi
+            local dnsmasq_servers=()
+            if [ "${generate_file}" == "black" ]; then
+                 dnsmasq_servers=("${dnsmasq_foreign_addrs[@]}")
+            elif [ "${generate_file}" == "white" ]; then
+                 dnsmasq_servers=("${dnsmasq_domestic_addrs[@]}")
             fi
-            echo "DNSMasq rules generation completed"
+
+            # Read domains line by line from source_file
+            local domain_count=0
+            while IFS= read -r domain; do
+                # Validate domain format for DNSMasq
+                 if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]] && [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && [[ ! "$domain" =~ [\/\|\$#@\!\%\^\&\*\(\)\+\=\{\}\[\]\:\"\'\<\>\?\~\`] ]]; then
+                    for dns in "${dnsmasq_servers[@]}"; do
+                        echo "server=/${domain}/${dns}" >> "${file_path}"
+                    done
+                    domain_count=$((domain_count + 1))
+                fi
+            done < "${source_file}"
+            echo "Generated ${file_path} with ${domain_count} domains."
         ;;
         domain)
-            echo "Generating rules for Domain..."
-            # 域名验证函数
-            validate_domain_entry() {
-                local domain="$1"
-                # 基本域名格式验证
-                if [[ -n "$domain" ]] && \
-                   [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && \
-                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && \
-                   [[ "${#domain}" -le 253 ]]; then
-                    return 0
-                fi
-                return 1
-            }
-            if [ "${generate_mode}" == "full" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName && for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                        echo "${gfwlist_data[$gfwlist_data_task]}" >> "${file_path}"
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName && for cnacc_data_task in "${!cnacc_data[@]}"; do
-                        echo "${cnacc_data[$cnacc_data_task]}" >> "${file_path}"
-                    done
-                fi
-            elif [ "${generate_mode}" == "lite" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName && for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                        echo "${lite_gfwlist_data[$lite_gfwlist_data_task]}" >> "${file_path}"
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName && for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                        echo "${lite_cnacc_data[$lite_cnacc_data_task]}" >> "${file_path}"
-                    done
-                fi
-            fi
-            echo "Domain rules generation completed"
+            FileName # Sets file_path and clears the file
+            # Domain format is just a list of domains, copy directly
+            local domain_count=$(wc -l < "${source_file}")
+            cat "${source_file}" >> "${file_path}"
+            echo "Generated ${file_path} with ${domain_count} domains."
         ;;
         smartdns)
-            echo "Generating rules for SmartDNS..."
-            # 域名验证函数
-            validate_smartdns_domain() {
-                local domain="$1"
-                # 验证域名格式并排除特殊情况
-                if [[ -n "$domain" ]] && \
-                   [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && \
-                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && \
-                   [[ "${#domain}" -le 253 ]] && \
-                   [[ ! "$domain" =~ ^[0-9]+$ ]]; then
-                    return 0
-                fi
-                return 1
-            }
-            # 添加域名验证和过滤函数
-            function validate_domain() {
-                local domain="$1"
-                # 验证域名格式
-                echo "$domain" | grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' > /dev/null
-            }
+            FileName # Sets file_path and clears the file
 
-            function process_domains() {
-                local domains=("$@")
-                local group="$1"
-                shift
-                
-                # 创建临时文件用于排序和去重
-                local temp_file=$(mktemp)
-                
-                for domain in "${domains[@]}"; do
-                    if validate_domain "$domain"; then
-                        echo "nameserver /$domain/$group" >> "$temp_file"
-                    fi
-                done
-                
-                # 排序并去重，然后写入目标文件
-                sort -u "$temp_file" >> "${file_path}"
-                rm -f "$temp_file"
-            }
-
-            if [ "${generate_mode}" == "full" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    # 处理完整的gfwlist数据
-                    for domain in "${gfwlist_data[@]}"; do
-                        if validate_domain "$domain" ]; then
-                            echo "nameserver /$domain/$foreign_group" >> "${file_path}"
-                        fi
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName
-                    # 处理完整的cnacc数据
-                    for domain in "${cnacc_data[@]}"; do
-                        if validate_domain "$domain" ]; then
-                            echo "nameserver /$domain/$domestic_group" >> "${file_path}"
-                        fi
-                    done
-                fi
-            elif [ "${generate_mode}" == "lite" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    # 处理精简的gfwlist数据
-                    for domain in "${lite_gfwlist_data[@]}"; do
-                        if validate_domain "$domain" ]; then
-                            echo "nameserver /$domain/$foreign_group" >> "${file_path}"
-                        fi
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName
-                    # 处理精简的cnacc数据
-                    for domain in "${lite_cnacc_data[@]}"; do
-                        if validate_domain "$domain" ]; then
-                            echo "nameserver /$domain/$domestic_group" >> "${file_path}"
-                        fi
-                    done
-                fi
+            local smartdns_group=""
+            if [ "${generate_file}" == "black" ]; then
+                 smartdns_group="foreign"
+            elif [ "${generate_file}" == "white" ]; then
+                 smartdns_group="domestic"
             fi
-            echo "SmartDNS rules generation completed"
+
+            # Read domains line by line from source_file
+            local domain_count=0
+            while IFS= read -r domain; do
+                 # SmartDNS format is nameserver /domain/group
+                 # Validate domain format for SmartDNS
+                if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && [[ "${#domain}" -le 253 ]] && [[ ! "$domain" =~ ^[0-9]+$ ]]; then
+                    echo "nameserver /${domain}/${smartdns_group}" >> "${file_path}"
+                    domain_count=$((domain_count + 1))
+                fi
+            done < "${source_file}"
+            echo "Generated ${file_path} with ${domain_count} domains."
         ;;
         unbound)
-            echo "Generating rules for Unbound..."
-            # 域名验证函数
-            validate_unbound_domain() {
-                local domain="$1"
-                # 验证域名格式，包括长度和字符限制
-                if [[ -n "$domain" ]] &&
-                   [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && \
-                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && \
-                   [[ "${#domain}" -le 253 ]] && \
-                   [[ ! "$domain" =~ [\/\|\$#@\!\%\^\&\*\(\)\+\=\{\}\[\]\:\"\'\<\>\?\~\`] ]]; then
-                    return 0
-                fi
-                return 1
-            }
-        domestic_dns=(
-            "223.5.5.5@853"
-            "223.6.6.6@853"
-            "2400:3200::1@853"
-            "2400:3200:baba::1@853"
-            "1.12.12.12@853"
-            "120.53.53.53@853"
-            "119.29.29.29@53"
-            "2402:4e00::@53"
-            "114.114.114.114@53"
-            "114.114.115.115@53"
-            "117.50.10.10@53"
-            "52.80.52.52@53"
-            "2400:7fc0:849e:200::8@53"
-            "2404:c2c0:85d8:901::8@53"
-        )
-        foreign_dns=(
-            "8.8.4.4@853"
-            "8.8.8.8@853"
-            "2001:4860:4860::8888@853"
-            "2001:4860:4860::8844@853"
-            "1.1.1.1@853"
-            "1.0.0.1@853"
-            "2606:4700:4700::1111@853"
-            "2606:4700:4700::1001@853"
-            "9.9.9.12@853"
-            "149.112.112.12@853"
-            "2620:fe::12@853"
-            "2620:fe::fe:12@853"
-            "94.140.14.140@853"
-            "94.140.14.141@853"
-            "2a10:50c0::1:ff@853"
-            "2a10:50c0::2:ff@853"
-            "209.244.0.3@53"
-            "209.244.0.4@53"
-            "4.2.2.1@53"
-            "4.2.2.2@53"
-            "4.2.2.3@53"
-            "4.2.2.4@53"
-            "4.2.2.5@53"
-            "4.2.2.6@53"
-        )
-            forward_ssl_tls_upstream="yes"
-            
-            function GenerateRulesHeader() {
-                # 移除了多余的引号，修复了name格式
-                echo "forward-zone:" >> "${file_path}"
-                echo "    name: ${1}" >> "${file_path}"
-            }
-            
-            function GenerateRulesFooter() {
-                if [ "${dns_mode}" == "domestic" ]; then
-                    for domestic_dns_task in "${!domestic_dns[@]}"; do
-                        # 移除了多余的引号
-                        echo "    forward-addr: ${domestic_dns[$domestic_dns_task]}" >> "${file_path}"
-                    done
-                elif [ "${dns_mode}" == "foreign" ]; then
-                    for foreign_dns_task in "${!foreign_dns[@]}"; do
-                        # 移除了多余的引号
-                        echo "    forward-addr: ${foreign_dns[$foreign_dns_task]}" >> "${file_path}"
-                    done
-                fi
-                # 移除了多余的引号
-                echo "    forward-first: yes" >> "${file_path}"
-                echo "    forward-no-cache: yes" >> "${file_path}"
-                echo "    forward-ssl-upstream: ${forward_ssl_tls_upstream}" >> "${file_path}"
-                echo "    forward-tls-upstream: ${forward_ssl_tls_upstream}" >> "${file_path}"
+            FileName # Sets file_path and clears the file
 
-            }
-            
-            if [ "${generate_mode}" == "full" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    for gfwlist_data_task in "${!gfwlist_data[@]}"; do
-                        GenerateRulesHeader "${gfwlist_data[$gfwlist_data_task]}." && GenerateRulesFooter
-                    done               
-               
-                elif [ [ "${generate_file}" == "white" ]; then
-                    FileName
-                    for cnacc_data_task in "${!cnacc_data[@]}"; do
-                        GenerateRulesHeader "${cnacc_data[$cnacc_data_task]}." && GenerateRulesFooter
-                    done
-                fi
-            elif [ "${generate_mode}" == "lite" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    for lite_gfwlist_data_task in "${!lite_gfwlist_data[@]}"; do
-                        GenerateRulesHeader "${lite_gfwlist_data[$lite_gfwlist_data_task]}." && GenerateRulesFooter
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName
-                    for lite_cnacc_data_task in "${!lite_cnacc_data[@]}"; do
-                        GenerateRulesHeader "${lite_cnacc_data[$lite_cnacc_data_task]}." && GenerateRulesFooter
-                    done
-                fi
+            local unbound_addrs=()
+            if [ "${generate_file}" == "black" ]; then
+                 unbound_addrs=("${unbound_foreign_addrs[@]}")
+            elif [ "${generate_file}" == "white" ]; then
+                 unbound_addrs=("${unbound_domestic_addrs[@]}")
             fi
-            echo "Unbound rules generation completed"
+
+            local forward_addrs_string=""
+            for dns in "${unbound_addrs[@]}"; do
+                forward_addrs_string+="    forward-addr: ${dns}\n"
+            done
+            # Remove trailing newline
+            forward_addrs_string="${forward_addrs_string%\\n}"
+
+            # Read domains line by line from source_file
+            local domain_count=0
+            while IFS= read -r domain; do
+                # Validate domain format for Unbound
+                if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && [[ "${#domain}" -le 253 ]] && [[ ! "$domain" =~ [\/\|\$#@\!\%\^\&\*\(\)\+\=\{\}\[\]\:\"\'\<\>\?\~\`] ]]; then
+                    echo "forward-zone:" >> "${file_path}"
+                    echo "    name: \"${domain}.\"" >> "${file_path}" # Unbound name needs quotes and trailing dot
+                    echo -e "${forward_addrs_string}" >> "${file_path}"
+                    echo "    forward-first: yes" >> "${file_path}"
+                    echo "    forward-no-cache: yes" >> "${file_path}"
+                    echo "    forward-ssl-upstream: yes" >> "${file_path}" # Using 'yes' directly as per original intent
+                    echo "    forward-tls-upstream: yes" >> "${file_path}" # Using 'yes' directly as per original intent
+                    echo "" >> "${file_path}" # Add a blank line for readability
+                    domain_count=$((domain_count + 1))
+                fi
+            done < "${source_file}"
+            echo "Generated ${file_path} with ${domain_count} domains."
         ;;
         ikuai)
-            echo "Generating rules for iKuai..."
-            if [ "${generate_mode}" == "full" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    # 写入ikuai格式的头部
-                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
-                    echo "# Generated for iKuai full blacklist" >> "${file_path}"
-                    # 写入域名条目
-                    for domain in "${gfwlist_data[@]}"; do
-                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
-                            echo "bypass_route_domain=${domain}" >> "${file_path}"
-                        fi
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName
-                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
-                    echo "# Generated for iKuai full whitelist" >> "${file_path}"
-                    for domain in "${cnacc_data[@]}"; do
-                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
-                            echo "bypass_route_domain=${domain}" >> "${file_path}"
-                        fi
-                    done
+            FileName # Sets file_path and clears the file
+
+            echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
+            echo "# Generated for iKuai ${generate_mode} ${generate_file}list" >> "${file_path}" # More specific comment
+
+            # Read domains line by line from source_file
+            local domain_count=0
+            while IFS= read -r domain; do
+                 # iKuai format is bypass_route_domain=domain
+                 # Validate domain format for iKuai
+                if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                    echo "bypass_route_domain=${domain}" >> "${file_path}"
+                    domain_count=$((domain_count + 1))
                 fi
-            elif [ "${generate_mode}" == "lite" ]; then
-                if [ "${generate_file}" == "black" ]; then
-                    FileName
-                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
-                    echo "# Generated for iKuai lite blacklist" >> "${file_path}"
-                   
-                    for domain in "${lite_gfwlist_data[@]}"; do
-                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
-                            echo "bypass_route_domain=${domain}" >> "${file_path}"
-                        fi
-                    done
-                elif [ "${generate_file}" == "white" ]; then
-                    FileName
-                    echo "[GLOBAL_BYPASS_ROUTE]" > "${file_path}"
-                    echo "# Generated for iKuai lite whitelist" >> "${file_path}"
-                    for domain in "${lite_cnacc_data[@]}"; do
-                        if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
-                            echo "bypass_route_domain=${domain}" >> "${file_path}"
-                        fi
-                    done
-                fi
-            fi
-            echo "iKuai rules generation completed"
+            done < "${source_file}"
+            echo "Generated ${file_path} with ${domain_count} domains."
         ;;
-        
+
         *)
             echo "Error: Unknown software type: ${software_name}"
-            exit 1
+            return 1
     esac
-    echo "=== Rules Generation Completed ==="
+    echo "=== Rules Generation Completed for ${software_name} (${generate_file}, ${generate_mode}, ${dns_mode}) ==="
 }
 # Output Data
 function OutputData() {
@@ -1326,151 +631,139 @@ function OutputData() {
         mkdir -p "./gfwlist2${type}"
     done
 
-    # AdGuard Home
-    echo "正在处理 AdGuard Home 配置..."
-    software_name="adguardhome" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
-    echo "AdGuard Home 配置完成"
+    # List all combinations to generate
+    # Note: AGH/AGH_new/Unbound/SmartDNS now generate one file per (file_type, mode, dns_mode) combination
+    local combinations=(
+        "adguardhome black full_combine default"
+        "adguardhome black lite_combine default"
+        "adguardhome white full_combine default"
+        "adguardhome white lite_combine default"
+        "adguardhome black full domestic" # Simplified AGH domestic/foreign
+        "adguardhome black lite domestic"
+        "adguardhome white full foreign"
+        "adguardhome white lite foreign"
 
-    # AdGuard Home (New)
-    echo "正在处理 AdGuard Home (新版) 配置..."
-    software_name="adguardhome_new" && generate_file="black" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="black" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="white" && generate_mode="full_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite_combine" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite_combine" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="full" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="blackwhite" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="full" && dns_mode="foreign" && GenerateRules
-    software_name="adguardhome_new" && generate_file="whiteblack" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
-    echo "AdGuard Home (新版) 配置完成"
+        "adguardhome_new black full_combine default"
+        "adguardhome_new black lite_combine default"
+        "adguardhome_new white full_combine default"
+        "adguardhome_new white lite_combine default"
+        "adguardhome_new black full domestic" # Simplified AGH_new domestic/foreign
+        "adguardhome_new black lite domestic"
+        "adguardhome_new white full foreign"
+        "adguardhome_new white lite foreign"
 
-    # Bind9
-    echo "正在处理 Bind9 配置..."
-    software_name="bind9" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="bind9" && generate_file="black" && generate_mode="lite" && GenerateRules
-    software_name="bind9" && generate_file="white" && generate_mode="full" && GenerateRules
-    software_name="bind9" && generate_file="white" && generate_mode="lite" && GenerateRules
-    echo "Bind9 配置完成"
+        "bind9 black full default" # Added default dns_mode for consistency, though not used in Bind9 logic
+        "bind9 black lite default"
+        "bind9 white full default"
+        "bind9 white lite default"
 
-    # DNSMasq
-    echo "正在处理 DNSMasq 配置..."
-    software_name="dnsmasq" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="dnsmasq" && generate_file="black" && generate_mode="lite" && GenerateRules
-    software_name="dnsmasq" && generate_file="white" && generate_mode="full" && GenerateRules
-    software_name="dnsmasq" && generate_file="white" && generate_mode="lite" && GenerateRules
-    echo "DNSMasq 配置完成"
+        "dnsmasq black full default" # Added default dns_mode
+        "dnsmasq black lite default"
+        "dnsmasq white full default"
+        "dnsmasq white lite default"
 
-    # Domain
-    echo "正在处理 Domain 配置..."
-    software_name="domain" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
-    software_name="domain" && generate_file="white" && generate_mode="lite" && GenerateRules
-    echo "Domain 配置完成"
+        "domain black full default" # Added default dns_mode
+        "domain black lite default"
+        "domain white full default"
+        "domain white lite default"
 
-    # SmartDNS
-    echo "正在处理 SmartDNS 配置..."
-    software_name="smartdns" && generate_file="black" && generate_mode="full" && foreign_group="foreign" && GenerateRules
-    software_name="smartdns" && generate_file="black" && generate_mode="lite" && foreign_group="foreign" && GenerateRules
-    software_name="smartdns" && generate_file="white" && generate_mode="full" && domestic_group="domestic" && GenerateRules
-    software_name="smartdns" && generate_file="white" && generate_mode="lite" && domestic_group="domestic" && GenerateRules
-    echo "SmartDNS 配置完成"
+        "smartdns black full foreign" # SmartDNS uses dns_mode for group name
+        "smartdns black lite foreign"
+        "smartdns white full domestic"
+        "smartdns white lite domestic"
 
-    # Unbound
-    echo "正在处理 Unbound 配置..."
-    software_name="unbound" && generate_file="black" && generate_mode="full" && dns_mode="foreign" && GenerateRules
-    software_name="unbound" && generate_file="black" && generate_mode="lite" && dns_mode="foreign" && GenerateRules
-    software_name="unbound" && generate_file="white" && generate_mode="full" && dns_mode="domestic" && GenerateRules
-    software_name="unbound" && generate_file="white" && generate_mode="lite" && dns_mode="domestic" && GenerateRules
-    echo "Unbound 配置完成"
+        "unbound black full foreign"
+        "unbound black lite foreign"
+        "unbound white full domestic"
+        "unbound white lite domestic"
 
-    # iKuai
-    echo "正在处理 iKuai 配置..."
-    software_name="ikuai" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="ikuai" && generate_file="black" && generate_mode="lite" && GenerateRules
-    software_name="ikuai" && generate_file="white" && generate_mode="full" && GenerateRules
-    software_name="ikuai" && generate_file="white" && generate_mode="lite" && GenerateRules
-    echo "iKuai 配置完成"
+        "ikuai black full default" # Added default dns_mode
+        "ikuai black lite default"
+        "ikuai white full default"
+        "ikuai white lite default"
+    )
 
-    echo "正在清理临时目录..."
+    local total_generations=${#combinations[@]}
+    local current_generation=0
+
+    for combo in "${combinations[@]}"; do
+        read -r software_name generate_file generate_mode dns_mode <<< "$combo"
+        current_generation=$((current_generation + 1))
+        echo "Generating: ${software_name} ${generate_file} ${generate_mode} ${dns_mode} (${current_generation}/${total_generations})"
+        # Pass parameters to GenerateRules
+        GenerateRules "$software_name" "$generate_file" "$generate_mode" "$dns_mode"
+        # Update progress bar after each generation
+        PrettyProgressBar $current_generation $total_generations "生成规则" "生成中" "${software_name} ${generate_file} ${generate_mode}"
+    done
+
+    echo -e "\n正在清理临时目录..."
     cd .. && rm -rf ./Temp
     echo "=== 规则输出完成 ==="
 }
 
 function MoveGeneratedFiles() {
     echo "Starting MoveGeneratedFiles..."
-    
+
     # 设置基础路径
     local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     local dest="${script_dir}/hosts-dns"
-    
+
     echo "Script directory: ${script_dir}"
     echo "Destination directory: ${dest}"
-    
+
     # 检查并创建目标目录
     if ! mkdir -p "${dest}"; then
         echo "Error: Failed to create directory: ${dest}"
         return 1
     fi
     echo "Created/Verified directory: ${dest}"
-    
-    # 检查源文件目录是否存在
+
+    # 检查源文件目录是否存在并移动文件
     local missing_dirs=0
     for type in adguardhome adguardhome_new bind9 unbound dnsmasq domain smartdns ikuai; do
         local src_dir="./gfwlist2${type}"
         if [ ! -d "${src_dir}" ]; then
-            echo "Error: Source directory not found: ${src_dir}"
+            echo "Warning: Source directory not found: ${src_dir}"
             missing_dirs=$((missing_dirs + 1))
             continue
         fi
-        
+
         echo "Processing ${type} files from ${src_dir}..."
         local files_copied=0
-        
-        case ${type} in
-            adguardhome|adguardhome_new|domain|ikuai)
-                while IFS= read -r -d '' file; do
-                    cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
-                    files_copied=$((files_copied + 1))
-                done < <(find "${src_dir}" -type f \( -name "blacklist_*.txt" -o -name "whitelist_*.txt" \) -print0)
-                ;;
-            bind9|unbound|dnsmasq|smartdns)
-                while IFS= read -r -d '' file; do
-                    cp -v "${file}" "${dest}/dnshosts-all-${type}-$(basename "${file}")"
-                    files_copied=$((files_copied + 1))
-                done < <(find "${src_dir}" -type f \( -name "blacklist_*.conf" -o -name "whitelist_*.conf" \) -print0)
-                ;;
-        esac
-        
-        echo "Copied ${files_copied} files for ${type}"
-        
-        # 清理源目录
+
+        # Use find to get files and mv them
+        find "${src_dir}" -type f \( -name "*.txt" -o -name "*.conf" \) -print0 | while IFS= read -r -d '' file; do
+             # Construct new filename: dnshosts-all-softwaretype-originalfilename
+            local original_filename=$(basename "${file}")
+            local new_filename="dnshosts-all-${type}-${original_filename}"
+            echo "Moving ${file} to ${dest}/${new_filename}"
+            if mv "${file}" "${dest}/${new_filename}"; then
+                files_copied=$((files_copied + 1))
+            else
+                echo "Error moving ${file}"
+            fi
+        done
+
+        echo "Moved ${files_copied} files for ${type}"
+
+        # 清理源目录 (只有在成功移动文件后才清理)
         if [ ${files_copied} -gt 0 ]; then
-            rm -rf "${src_dir}" && echo "Cleaned up ${src_dir}"
+            # Check if directory is empty before removing
+            if [ -z "$(ls -A "${src_dir}")" ]; then
+                rm -rf "${src_dir}" && echo "Cleaned up ${src_dir}"
+            else
+                 echo "Warning: ${src_dir} is not empty after moving files, skipping cleanup."
+            fi
         fi
     done
-    
-    # 验证结果
+
+    # Verify results
     echo "Verifying generated files in ${dest}:"
-    if ! find "${dest}" -type f -ls; then
+    if ! find "${dest}" -maxdepth 1 -type f -ls; then # Limit depth to avoid listing files in subdirs if any
         echo "Warning: No files found in destination directory"
     fi
-    
-    # 报告总体状态
+
+    # Report overall status
     if [ ${missing_dirs} -gt 0 ]; then
         echo "Warning: ${missing_dirs} source directories were missing"
     else
@@ -1494,32 +787,42 @@ function MoveGeneratedFiles() {
         compress_cmd="gzip -k -f"
         ext="gz"
     else
-        echo "No fast compression tool found, skipping compression."
+        echo "No fast compression tool found (pigz, lzop, zstd, gzip), skipping compression."
         return
     fi
 
-    local compressed_count=0
     local pids=()
-    for f in "${dest}"/dnshosts-all-*; do
+    # Find files that are not already compressed with the chosen extension
+    find "${dest}" -maxdepth 1 -type f ! -name "*.${ext}" -print0 | while IFS= read -r -d '' f; do
+        # Check if the file exists (find might return deleted files)
         [ -f "$f" ] || continue
-        if [ ! -f "$f.$ext" ]; then
-            echo "Compressing $f ..."
-            ($compress_cmd "$f" && echo "Compressed: $f -> $f.$ext" && du -h "$f.$ext") &
-            pids+=($!)
-            compressed_count=$((compressed_count+1))
-        fi
+        echo "Compressing $f ..."
+        # Run compression in background
+        ($compress_cmd "$f" && echo "Compressed: $f -> $f.$ext" && du -h "$f.$ext") &
+        pids+=($!) # Collect PID
     done
+
+    local total_attempted=${#pids[@]} # Count based on collected PIDs
+
     # 等待所有压缩任务完成
+    local completed_count=0
     for pid in "${pids[@]}"; do
         wait "$pid"
+        completed_count=$((completed_count+1))
+        # Optional: Update a simple progress for compression
+        # echo -n "Compression progress: ${completed_count}/${total_attempted} files done." $'\r'
     done
-    echo "Compression completed, total compressed files: $compressed_count"
+    # echo "" # Newline after compression progress
+
+    echo "Compression completed, total files attempted: $total_attempted, completed: $completed_count"
 }
+
 function PrettyProgressBar() {
     local current=$1
     local total=$2
     local message="${3:-}"
     local status="${4:-}"
+    local extra_info="${5:-}" # Added extra info parameter
     local width=48
     local percent=$((current * 100 / total))
     local progress=$((current * width / total))
@@ -1573,11 +876,14 @@ function PrettyProgressBar() {
         status_color="$magenta"
     elif [[ "$status" == "生成中" || "$status" == "Generating" ]]; then
         status_color="$yellow"
+    elif [[ "$status" == "移动中" || "$status" == "Moving" ]]; then
+        status_color="$cyan"
     fi
+
 
     # 清空当前行再输出进度条，避免残留
     printf "\r\033[K"
-    printf "${blue}[%s]${reset} %3d%% (%d/%d) ${status_color}%s${reset} %s" "$bar" "$percent" "$current" "$total" "$status" "$message"
+    printf "${blue}[%s]${reset} %3d%% (%d/%d) ${status_color}%s${reset} %s %s" "$bar" "$percent" "$current" "$total" "$status" "$message" "$extra_info"
 
     # 完成时换行
     if [ "$current" -eq "$total" ]; then
@@ -1611,38 +917,22 @@ echo "Data analysis completed."
 echo "Step 3: Generating Rules..."
 current_main_step=$((current_main_step +  1))
 step3_start=$(date +%s)
+# OutputData now manages its own progress bar
 OutputData
 record_step_time "生成规则" $step3_start
-PrettyProgressBar $current_main_step $total_main_steps "生成规则" "生成中"
+# PrettyProgressBar for step 3 is handled inside OutputData
 print_step_time "生成规则"
 echo "Rules generation completed."
 
 echo "Step 4: Moving Generated Files..."
 current_main_step=$((current_main_step + 1))
 step4_start=$(date +%s)
+# MoveGeneratedFiles now includes compression and manages its own progress/output
 MoveGeneratedFiles
 record_step_time "移动文件" $step4_start
-PrettyProgressBar $current_main_step $total_main_steps "移动文件" "完成"
+# PrettyProgressBar for step 4 is handled inside MoveGeneratedFiles (or simplified)
 print_step_time "移动文件"
-echo -e "\nFile movement completed."
-
-# 显示总耗时
-echo "=== Process Completed Successfully ==="
-echo "总耗时: $(time_taken $START_TIME)"
-OutputData
-record_step_time "生成规则" $step3_start
-PrettyProgressBar $current_main_step $total_main_steps "生成规则" "生成中"
-print_step_time "生成规则"
-echo "Rules generation completed."
-
-echo "Step 4: Moving Generated Files..."
-current_main_step=$((current_main_step + 1))
-step4_start=$(date +%s)
-MoveGeneratedFiles
-record_step_time "移动文件" $step4_start
-PrettyProgressBar $current_main_step $total_main_steps "移动文件" "完成"
-print_step_time "移动文件"
-echo -e "\nFile movement completed."
+echo -e "\nFile movement and compression completed."
 
 # 显示总耗时
 echo "=== Process Completed Successfully ==="
