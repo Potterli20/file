@@ -474,11 +474,21 @@ function GenerateRules() {
             if [ "${dns_mode}" == "default" ]; then
                 echo "]#" >> "${file_path}"
             elif [ "${dns_mode}" == "domestic" ]; then
-                # Use the first domestic DNS server for the footer
-                echo "]${domestic_dns[0]}" >> "${file_path}"
+                # Use all domestic DNS servers for the footer, comma-separated
+                local upstreams=""
+                for dns in "${domestic_dns[@]}"; do
+                    upstreams+="${dns},"
+                done
+                upstreams="${upstreams%,}" # Remove trailing comma
+                echo "]${upstreams}" >> "${file_path}"
             elif [ "${dns_mode}" == "foreign" ]; then
-                # Use the first foreign DNS server for the footer
-                echo "]${foreign_dns[0]}" >> "${file_path}"
+                # Use all foreign DNS servers for the footer, comma-separated
+                local upstreams=""
+                for dns in "${foreign_dns[@]}"; do
+                    upstreams+="${dns},"
+                done
+                upstreams="${upstreams%,}" # Remove trailing comma
+                echo "]${upstreams}" >> "${file_path}"
             fi
             echo "Generated ${file_path} with ${domain_count} domains."
         ;;
