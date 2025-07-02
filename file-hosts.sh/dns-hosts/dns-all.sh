@@ -427,13 +427,14 @@ function GenerateRules() {
     echo "Reading domains from: ${source_file}"
 
     # DNS server lists (defined here as they are used per software type)
-    local domestic_dns=(
+    # Note: domestic_dns and foreign_dns are primarily used for AdGuard Home/AdGuard Home New rule footers.
+    local adgh_domestic_dns=(
         "tcp://dns.alidns.com" "udp://dns.alidns.com" "tcp://223.5.5.5" "udp://223.5.5.5" "tcp://223.6.6.6" "udp://223.6.6.6" "tcp://2400:3200::1" "udp://2400:3200::1" "tcp://2400:3200:baba::1" "udp://2400:3200:baba::1" "tcp://114.114.114.114" "udp://114.114.114.114" "tcp://114.114.115.115" "udp://114.114.115.115" "tls://dns.alidns.com:853" "https://dns.alidns.com/dns-query" "h3://dns.alidns.com/dns-query" "https://223.5.5.5/dns-query" "h3://223.5.5.5/dns-query" "https://223.6.6.6/dns-query" "h3://223.6.6.6/dns-query" "tls://223.5.5.5:853" "quic://223.5.5.5:853" "tls://223.6.6.6:853" "quic://223.6.6.6:853" "https://2400:3200::1/dns-query" "h3://2400:3200::1/dns-query" "https://2400:3200:baba::1/dns-query" "h3://2400:3200:baba::1/dns-query" "tls://2400:3200::1:853" "quic://2400:3200::1:853" "tls://2400:3200:baba::1:853" "quic://2400:3200:baba::1:853" "tcp://119.29.29.29" "udp://119.29.29.29" "tcp://2402:4e00::" "udp://2402:4e00::" "tcp://2402:4e00:1::" "udp://2402:4e00:1::" "https://doh-pure.onedns.net/dns-query" "https://doh.pub/dns-query" "https://sm2.doh.pub/dns-query" "https://1.12.12.12/dns-query" "https://120.53.53.53/dns-query" "tls://dot-pure.onedns.net:853" "tls://dot.pub:853" "tls://1.12.12.12:853" "tls://120.53.53.53:853" "180.76.76.76" "tcp://71.131.215.228" "udp://71.131.215.228" "tcp://117.50.0.88" "udp://117.50.0.88" "tcp://52.80.53.83" "udp://52.80.53.83" "tcp://52.80.59.89" "udp://52.80.59.89" "tcp://113.31.119.88" "udp://113.31.119.88" "tcp://52.81.114.158" "udp://52.81.114.158" "tcp://42.240.136.88" "udp://42.240.136.88" "tcp://2400:7fc0:849e:200:62fd:1de3:1c90:1" "udp://2400:7fc0:849e:200:62fd:1de3:1c90:1" "tcp://22400:7fc0:849e:200:62fd:1de3:1c90:2" "udp://22400:7fc0:849e:200:62fd:1de3:1c90:2"
     )
-    local foreign_dns=(
+    local adgh_foreign_dns=(
         "https://firefox.dns.nextdns.io/dns-query" "h3://firefox.dns.nextdns.io/dns-query" "https://anycast.dns.nextdns.io/dns-query" "h3://anycast.dns.nextdns.io/dns-query" "https://doh3.dns.nextdns.io/dns-query" "h3://doh3.dns.nextdns.io/dns-query" "https://dns.nextdns.io/dns-query" "h3://dns.nextdns.io/dns-query" "https://dns-unfiltered.adguard.com/dns-query" "h3://dns-unfiltered.adguard.com/dns-query" "https://unfiltered.adguard-dns.com/dns-query" "h3://unfiltered.adguard-dns.com/dns-query" "https://dns.google/dns-query" "h3://dns.google/dns-query" "https://dns.google.com/dns-query" "h3://dns.google.com/dns-query" "https://e5aehtlc5e.cloudflare-dns.com/dns-query" "h3://e5aehtlc5e.cloudflare-dns.com/dns-query" "https://sepfvn6g5a.cloudflare-dns.com/dns-query" "h3://sepfvn6g5a.cloudflare-dns.com/dns-query" "https://1dot1dot1dot1.cloudflare-dns.com/dns-query" "h3://1dot1dot1dot1.cloudflare-dns.com/dns-query" "https://mozilla.cloudflare-dns.com/dns-query" "h3://mozilla.cloudflare-dns.com/dns-query" "https://chrome.cloudflare-dns.com/dns-query" "h3://chrome.cloudflare-dns.com/dns-query" "https://dns.cloudflare-dns.com/dns-query" "h3://dns.cloudflare-dns.com/dns-query" "tls://dns.google:853" "quic://dns.google:853" "tls://dns.google.com:853" "quic://dns.google.com:853" "tls://dns.adguard.com:853" "quic://dns.adguard.com:853" "tls://dns-unfiltered.adguard.com:853" "quic://dns-unfiltered.adguard.com:853" "tls://unfiltered.adguard-dns.com:853" "quic://unfiltered.adguard-dns.com:853" "tls://anycast.dns.nextdns.io:853" "quic://anycast.dns.nextdns.io:853" "tls://dns.nextdns.io:853" "quic://dns.nextdns.io:853" "tls://doh3.dns.nextdns.io:853" "quic://doh3.dns.nextdns.io:853" "https://77.88.8.8:443/dns-query" "https://doh.opendns.com/dns-query" "https://dns12.quad9.net/dns-query" "https://dns.twnic.tw/dns-query" "tls://dns.twnic.tw:853" "tls://common.dot.dns.yandex.net:853" "tls://1dot1dot1dot1.cloudflare-dns.com:853" "tls://dns12.quad9.net:853"
     )
-     local bind9_domestic_addrs=(
+    local bind9_domestic_addrs=(
         "119.29.29.29 port 53" "223.5.5.5 port 53" "223.6.6.6 port 53" "101.226.4.6 port 53" "123.125.81.6 port 53" "114.114.114.114 port 53" "114.114.115.115 port 53" "117.50.11.11 port 53" "52.80.66.66 port 53"
     )
     local bind9_foreign_addrs=(
@@ -476,7 +477,7 @@ function GenerateRules() {
             elif [ "${dns_mode}" == "domestic" ]; then
                 # Use all domestic DNS servers for the footer, comma-separated
                 local upstreams=""
-                for dns in "${domestic_dns[@]}"; do
+                for dns in "${adgh_domestic_dns[@]}"; do
                     upstreams+="${dns},"
                 done
                 upstreams="${upstreams%,}" # Remove trailing comma
@@ -484,7 +485,7 @@ function GenerateRules() {
             elif [ "${dns_mode}" == "foreign" ]; then
                 # Use all foreign DNS servers for the footer, comma-separated
                 local upstreams=""
-                for dns in "${foreign_dns[@]}"; do
+                for dns in "${adgh_foreign_dns[@]}"; do
                     upstreams+="${dns},"
                 done
                 upstreams="${upstreams%,}" # Remove trailing comma
