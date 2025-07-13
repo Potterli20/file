@@ -6,6 +6,7 @@ gfwlist2agh_modify=(
     "https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt"
     "https://raw.githubusercontent.com/jimmyshjj/GFWList2AGH/source/data/data_modify.txt"
     "https://raw.githubusercontent.com/madswaord/GFWList2AGH/refs/heads/source/data/data_modify.txt"
+    "https://raw.githubusercontent.com/WPF0414/GFWList2AGH/refs/heads/source/data/data_modify.txt"
 )
 
 # 下载、合并、去重
