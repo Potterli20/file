@@ -1642,59 +1642,29 @@ echo "=== Starting DNS List Generation Process ==="
 total_main_steps=4
 current_main_step=0
 
-echo "Step 1: Getting Data..."
-current_main_step=$((current_main_step + 1))
-step1_start=$(date +%s)
-GetData
-record_step_time "获取数据" $step1_start
-PrettyProgressBar $current_main_step $total_main_steps "获取数据" "下载中"
-print_step_time "获取数据"
-echo "Data retrieval completed."
+# 统一的步骤执行函数
+function execute_step() {
+    local step_name="$1"
+    local step_function="$2"
+    local step_status="$3"
+    local step_start=$(date +%s)
+    
+    echo "Step $((current_main_step + 1)): ${step_name}..."
+    current_main_step=$((current_main_step + 1))
+    
+    $step_function
+    
+    record_step_time "$step_name" $step_start
+    PrettyProgressBar $current_main_step $total_main_steps "$step_name" "$step_status"
+    print_step_time "$step_name"
+    echo "${step_name} completed."
+}
 
-echo "Step 2: Analyzing Data..."
-current_main_step=$((current_main_step + 1))
-step2_start=$(date +%s)
-AnalyseData
-record_step_time "分析数据" $step2_start
-PrettyProgressBar $current_main_step $total_main_steps "分析数据" "分析中"
-print_step_time "分析数据"
-echo "Data analysis completed."
-
-echo "Step 3: Generating Rules..."
-current_main_step=$((current_main_step +  1))
-step3_start=$(date +%s)
-OutputData
-record_step_time "生成规则" $step3_start
-PrettyProgressBar $current_main_step $total_main_steps "生成规则" "生成中"
-print_step_time "生成规则"
-echo "Rules generation completed."
-
-echo "Step 4: Moving Generated Files..."
-current_main_step=$((current_main_step + 1))
-step4_start=$(date +%s)
-MoveGeneratedFiles
-record_step_time "移动文件" $step4_start
-PrettyProgressBar $current_main_step $total_main_steps "移动文件" "完成"
-print_step_time "移动文件"
-echo -e "\nFile movement completed."
-
-# 显示总耗时
-echo "=== Process Completed Successfully ==="
-echo "总耗时: $(time_taken $START_TIME)"
-OutputData
-record_step_time "生成规则" $step3_start
-PrettyProgressBar $current_main_step $total_main_steps "生成规则" "生成中"
-print_step_time "生成规则"
-echo "Rules generation completed."
-
-echo "Step 4: Moving Generated Files..."
-current_main_step=$((current_main_step + 1))
-step4_start=$(date +%s)
-MoveGeneratedFiles
-record_step_time "移动文件" $step4_start
-PrettyProgressBar $current_main_step $total_main_steps "移动文件" "完成"
-print_step_time "移动文件"
-echo -e "\nFile movement completed."
+# 执行主要步骤
+execute_step "Getting Data" GetData "下载中"
+execute_step "Analyzing Data" AnalyseData "分析中"
+execute_step "Generating Rules" OutputData "生成中"
+execute_step "Moving Generated Files" MoveGeneratedFiles "完成"
 
 # 显示总耗时
 echo "=== Process Completed Successfully ==="
