@@ -1170,80 +1170,47 @@ function GenerateRules() {
         ;;
         smartdns)
             echo "Generating rules for SmartDNS..."
-            # 域名验证函数
-            validate_smartdns_domain() {
-                local domain="$1"
-                # 验证域名格式并排除特殊情况
-                if [[ -n "$domain" ]] && \
-                   [[ "$domain" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]] && \
-                   [[ ! "$domain" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && \
-                   [[ "${#domain}" -le 253 ]] && \
-                   [[ ! "$domain" =~ ^[0-9]+$ ]]; then
-                    return 0
-                fi
-                return 1
-            }
-            # 添加域名验证和过滤函数
-            function validate_domain() {
-                local domain="$1"
-                # 验证域名格式
-                echo "$domain" | grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' > /dev/null
-            }
-
-            function process_domains() {
-                local domains=("$@")
-                local group="$1"
-                shift
-                
-                # 创建临时文件用于排序和去重
+            # 优化: 使用单次处理替代多次循环
+            function process_smartdns_domains() {
+                local type="$1"
+                local group="$2"
                 local temp_file=$(mktemp)
                 
-                for domain in "${domains[@]}"; do
-                    if validate_domain "$domain"; then
-                        echo "nameserver /$domain/$group" >> "$temp_file"
+                # 使用进程替换一次性处理所有域名
+                {
+                    if [ "$type" = "gfwlist" ]; then
+                        printf '%s\n' "${gfwlist_data[@]}"
+                    elif [ "$type" = "lite_gfwlist" ]; then
+                        printf '%s\n' "${lite_gfwlist_data[@]}"
+                    elif [ "$type" = "cnacc" ]; then
+                        printf '%s\n' "${cnacc_data[@]}"
+                    elif [ "$type" = "lite_cnacc" ]; then
+                        printf '%s\n' "${lite_cnacc_data[@]}"
                     fi
-                done
+                } | grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
+                  sort -u | \
+                  sed "s/^/nameserver \//" | \
+                  sed "s/\$\/${group}/" > "$temp_file"
                 
-                # 排序并去重，然后写入目标文件
-                sort -u "$temp_file" >> "${file_path}"
+                cat "$temp_file" >> "${file_path}"
                 rm -f "$temp_file"
             }
 
             if [ "${generate_mode}" == "full" ]; then
                 if [ "${generate_file}" == "black" ]; then
                     FileName
-                    # 处理完整的gfwlist数据
-                    for domain in "${gfwlist_data[@]}"; do
-                        if validate_domain "$domain" ]; then
-                            echo "nameserver /$domain/$foreign_group" >> "${file_path}"
-                        fi
-                    done
+                    process_smartdns_domains "gfwlist" "${foreign_group}"
                 elif [ "${generate_file}" == "white" ]; then
                     FileName
-                    # 处理完整的cnacc数据
-                    for domain in "${cnacc_data[@]}"; do
-                        if validate_domain "$domain" ]; then
-                            echo "nameserver /$domain/$domestic_group" >> "${file_path}"
-                        fi
-                    done
+                    process_smartdns_domains "cnacc" "${domestic_group}"
                 fi
             elif [ "${generate_mode}" == "lite" ]; then
                 if [ "${generate_file}" == "black" ]; then
                     FileName
-                    # 处理精简的gfwlist数据
-                    for domain in "${lite_gfwlist_data[@]}"; do
-                        if validate_domain "$domain" ]; then
-                            echo "nameserver /$domain/$foreign_group" >> "${file_path}"
-                        fi
-                    done
+                    process_smartdns_domains "lite_gfwlist" "${foreign_group}"
                 elif [ "${generate_file}" == "white" ]; then
                     FileName
-                    # 处理精简的cnacc数据
-                    for domain in "${lite_cnacc_data[@]}"; do
-                        if validate_domain "$domain" ]; then
-                            echo "nameserver /$domain/$domestic_group" >> "${file_path}"
-                        fi
-                    done
+                    process_smartdns_domains "lite_cnacc" "${domestic_group}"
                 fi
             fi
             echo "SmartDNS rules generation completed"
