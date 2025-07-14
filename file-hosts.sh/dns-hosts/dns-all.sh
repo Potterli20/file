@@ -1170,46 +1170,60 @@ function GenerateRules() {
         ;;
         smartdns)
             echo "Generating rules for SmartDNS..."
-            # 优化: 使用单次处理替代多次循环
+            # 优化: 确保组名称正确设置
+            foreign_group=${foreign_group:-"foreign"}
+            domestic_group=${domestic_group:-"domestic"}
+
             function process_smartdns_domains() {
                 local type="$1"
                 local group="$2"
-                local temp_file=$(mktemp)
+                local domains=()
                 
-                # 使用进程替换一次性处理所有域名
-                {
-                    if [ "$type" = "gfwlist" ]; then
-                        printf '%s\n' "${gfwlist_data[@]}"
-                    elif [ "$type" = "lite_gfwlist" ]; then
-                        printf '%s\n' "${lite_gfwlist_data[@]}"
-                    elif [ "$type" = "cnacc" ]; then
-                        printf '%s\n' "${cnacc_data[@]}"
-                    elif [ "$type" = "lite_cnacc" ]; then
-                        printf '%s\n' "${lite_cnacc_data[@]}"
+                # 确保文件存在
+                FileName
+                
+                case "$type" in
+                    "gfwlist")
+                        domains=("${gfwlist_data[@]}")
+                        ;;
+                    "lite_gfwlist")
+                        domains=("${lite_gfwlist_data[@]}")
+                        ;;
+                    "cnacc")
+                        domains=("${cnacc_data[@]}")
+                        ;;
+                    "lite_cnacc")
+                        domains=("${lite_cnacc_data[@]}")
+                        ;;
+                esac
+
+                # 直接处理域名并写入文件
+                local domain_count=0
+                for domain in "${domains[@]}"; do
+                    if [[ -n "$domain" ]] && [[ "$domain" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+                        echo "nameserver /${domain}/${group}" >> "${file_path}"
+                        ((domain_count++))
                     fi
-                } | grep -E '^[a-zA-Z0-9][a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' | \
-                  sort -u | \
-                  sed "s/^/nameserver \//" | \
-                  sed "s/\$\/${group}/" > "$temp_file"
+                done
                 
-                cat "$temp_file" >> "${file_path}"
-                rm -f "$temp_file"
+                # 验证写入是否成功
+                if [ "$domain_count" -eq 0 ]; then
+                    echo "Warning: No domains were written to ${file_path}"
+                else
+                    echo "Successfully wrote ${domain_count} domains to ${file_path}"
+                fi
             }
 
             if [ "${generate_mode}" == "full" ]; then
                 if [ "${generate_file}" == "black" ]; then
-                    FileName
                     process_smartdns_domains "gfwlist" "${foreign_group}"
                 elif [ "${generate_file}" == "white" ]; then
-                    FileName
                     process_smartdns_domains "cnacc" "${domestic_group}"
                 fi
             elif [ "${generate_mode}" == "lite" ]; then
                 if [ "${generate_file}" == "black" ]; then
-                    FileName
                     process_smartdns_domains "lite_gfwlist" "${foreign_group}"
                 elif [ "${generate_file}" == "white" ]; then
-                    FileName
                     process_smartdns_domains "lite_cnacc" "${domestic_group}"
                 fi
             fi
