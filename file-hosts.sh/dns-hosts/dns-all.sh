@@ -1457,8 +1457,8 @@ function OutputData() {
     # Domain
     echo "正在处理 Domain 配置..."
     software_name="domain" && generate_file="black" && generate_mode="full" && GenerateRules
-    software_name="adguardhome" && generate_file="white" && generate_mode="lite_combine" && dns_mode="default" && GenerateRules
-    software_name="adguardhome" && generate_file="blackwhite" && generate_mode="full_combine" && dns_mode="domestic" && GenerateRules
+    software_name="domain" && generate_file="black" && generate_mode="lite" && GenerateRules
+    software_name="domain" && generate_file="white" && generate_mode="full" && GenerateRules
     software_name="domain" && generate_file="white" && generate_mode="lite" && GenerateRules
     echo "Domain 配置完成"
 
