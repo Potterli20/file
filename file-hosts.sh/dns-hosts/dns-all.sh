@@ -512,7 +512,8 @@ function AnalyseData() {
             echo "${domain}" >> "./cnacc_processed.tmp"
         fi
     '
-} # <--- 这里补上 AnalyseData 函数的结尾
+}
+
 # Generate Rules
 function GenerateRules() {
     echo "=== Starting Rules Generation ==="
@@ -1321,7 +1322,7 @@ function GenerateRules() {
                         GenerateRulesHeader "${gfwlist_data[$gfwlist_data_task]}." && GenerateRulesFooter
                     done               
                
-                elif [ [ "${generate_file}" == "white" ]; then
+                elif [ "${generate_file}" == "white" ]; then
                     FileName
                     for cnacc_data_task in "${!cnacc_data[@]}"; do
                         GenerateRulesHeader "${cnacc_data[$cnacc_data_task]}." && GenerateRulesFooter
