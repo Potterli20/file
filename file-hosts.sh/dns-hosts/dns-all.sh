@@ -637,9 +637,7 @@ function GenerateRules() {
             "tls://dot.pub:853"
             "tls://1.12.12.12:853"
             "tls://120.53.53.53:853"
-            $(for protocol in tcp udp; do echo "${protocol}://180.76.76.76"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://180.184.1.1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://180.184.2.2"; done)
+            "180.76.76.76"
             #onedns
             $(for protocol in tcp udp; do echo "${protocol}://71.131.215.228"; done)
             $(for protocol in tcp udp; do echo "${protocol}://117.50.0.88"; done)
@@ -815,9 +813,6 @@ function GenerateRules() {
             $(for protocol in tcp udp; do echo "${protocol}://119.29.29.29"; done)
             $(for protocol in tcp udp; do echo "${protocol}://2402:4e00::"; done)
             $(for protocol in tcp udp; do echo "${protocol}://2402:4e00:1::"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://180.76.76.76"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://180.184.1.1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://180.184.2.2"; done)
             "https://doh-pure.onedns.net/dns-query"
             "https://doh.pub/dns-query"
             "https://sm2.doh.pub/dns-query"
@@ -827,6 +822,7 @@ function GenerateRules() {
             "tls://dot.pub:853"
             "tls://1.12.12.12:853"
             "tls://120.53.53.53:853"
+            "180.76.76.76"
             #onedns
             $(for protocol in tcp udp; do echo "${protocol}://71.131.215.228"; done)
             $(for protocol in tcp udp; do echo "${protocol}://117.50.0.88"; done)
