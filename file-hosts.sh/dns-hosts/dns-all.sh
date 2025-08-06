@@ -679,6 +679,9 @@ function GenerateRules() {
             "tls://common.dot.dns.yandex.net:853"
             "tls://1dot1dot1dot1.cloudflare-dns.com:853"
             "tls://dns12.quad9.net:853"
+            "tls://sandbox.opendns.com:853"
+            "tls://dns.mullvad.net:853"
+            "tls://ordns.he.net:853"
             )
             function GenerateRulesHeader() {
                 echo -n "[/" >> "${file_path}"
@@ -864,6 +867,9 @@ function GenerateRules() {
             "tls://common.dot.dns.yandex.net:853"
             "tls://1dot1dot1dot1.cloudflare-dns.com:853"
             "tls://dns12.quad9.net:853"
+            "tls://sandbox.opendns.com:853"
+            "tls://dns.mullvad.net:853"
+            "tls://ordns.he.net:853"
             )
             function GenerateRulesHeader() {
                 echo -n "[/" >> "${file_path}"
