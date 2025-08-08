@@ -8,6 +8,7 @@
 (@%!)apple.com
 (@%!)apple.com.cn
 (@%!)apps.mzstatic.com.mwcname.com
+(@%!)b-b.win
 (@%!)beian.gov.cn
 (@%!)cl3.apple.com.mwcname.com
 (@%!)cl5.apple.com.mwcname.com
@@ -24,6 +25,7 @@
 (@%!)g.cn
 (@%!)global-ict.cn
 (@%!)global-idc.net
+(@%!)global-idt.net
 (@%!)google.cn
 (@%!)gov.cn
 (@%!)gsa.apple.com.akadns.net
@@ -39,6 +41,7 @@
 (@%!)ipv6ready.me
 (@%!)ipw.cn
 (@%!)it-global.cn
+(@%!)it-global.xyz
 (@%!)jamcz.com
 (@%!)jimmyshjj.top
 (@%!)mcdn.bilivideo.cn
@@ -62,8 +65,10 @@
 (@%!)www.beian.gov.cn
 (@%!)www.bing.com
 (@%!)www.icloud.com
+(@%!)xssx.win
 (@%!)yuanshen.com
 (@&!)1dot1dot1dot1.cloudflare-dns.com
+(@&!)adminforge.de
 (@&!)agsvpt.com
 (@&!)anidb.net
 (@&!)app.smartsheet.com
@@ -84,6 +89,7 @@
 (@&!)cftest6.com
 (@&!)cftest7.com
 (@&!)cftest8.com
+(@&!)cityline.com
 (@&!)cloudflare-cn.com
 (@&!)cloudflare-dns.com
 (@&!)cloudflare.fun
@@ -110,17 +116,23 @@
 (@&!)et8.org
 (@&!)fanart.tv
 (@&!)fastgit.org
+(@&!)froth.zone
+(@&!)funami.tech
 (@&!)github.com
 (@&!)githubusercontent.com
 (@&!)google.com
 (@&!)googleads.g.doubleclick.net
 (@&!)googleapis.cn
+(@&!)hardwarezone.com.sg
 (@&!)hddolby.com
 (@&!)hdfans.org
 (@&!)hdhome.org
 (@&!)hdsky.me
+(@&!)hellotalk.com
 (@&!)hhanclub.top
 (@&!)hub.fastgit.org
+(@&!)jing.rocks
+(@&!)jotform.com
 (@&!)jsdelivr.net
 (@&!)keepfrds.com
 (@&!)leaves.red
@@ -131,6 +143,7 @@
 (@&!)ourbits.club
 (@&!)pandapt.net
 (@&!)piggo.me
+(@&!)privacyredirect.com
 (@&!)pt.0ff.cc
 (@&!)pt.btschool.club
 (@&!)pt.eastgame.org
@@ -138,12 +151,14 @@
 (@&!)ptchdbits.co
 (@&!)pterclub.com
 (@&!)pthome.net
+(@&!)r4fo.com
 (@&!)raw.fastgit.org
 (@&!)redirector.googlevideo.com
 (@&!)rousi.zip
 (@&!)service-now.com
 (@&!)share.acgnx.net
 (@&!)share.acgnx.se
+(@&!)slate.com
 (@&!)smartsheet.com
 (@&!)speedtest.net
 (@&!)springsunday.net
@@ -164,4 +179,3 @@
 (@&!)zhijie.online
 (@&!)zhuque.in
 (@&!)zmpt.cc
-404:NotFound404:NotFound##自定义规则优先级-开始
