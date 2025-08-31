@@ -1,3 +1,4 @@
+function GetData() {
     filter_adblock=(
         "https://malware-filter.gitlab.io/malware-filter/phishing-filter-agh.txt"
         "https://raw.githubusercontent.com/yokoffing/filterlists/main/privacy_essentials.txt"
@@ -36,8 +37,15 @@
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/BlockHttpDNS/BlockHttpDNS.txt"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/Privacy/Privacy.txt"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingTest/AdvertisingTest.txt"
-        "adblock.lostinthe.cloud/lostad_full.txt"
+        "https://adblock.lostinthe.cloud/lostad_full.txt"
         "https://adblock.lostinthe.cloud/lostad_dns.txt"
+        "https://adblock.lostinthe.cloud/lostad_annoyances.txt"
+        "https://adblock.lostinthe.cloud/lostad_cookies.txt"
+        "https://adblock.lostinthe.cloud/lostad_core.txt"
+        "https://adblock.lostinthe.cloud/lostad_german.txt"
+        "https://adblock.lostinthe.cloud/lostad_lean.txt"
+        "https://adblock.lostinthe.cloud/lostad_social.txt"
+        "https://adblock.lostinthe.cloud/lostad_tracking.txt"
         "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=1&mimetype=plaintext"
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingLite/AdvertisingLite.txt"
         "https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Hosts.txt"
@@ -154,7 +162,7 @@
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/CfSpRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/CoolapkRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/DivineMachineRules.txt"
-         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/NetizensRules.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/NetizensRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/NextIDSeeRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/MergeRules/OceanMerge.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OMergeRules/QingYaMerge.txt"
@@ -288,9 +296,6 @@
         "https://raw.githubusercontent.com/stamparm/blackbook/master/blackbook.txt"
     )
     filter_hosts=(
-        "https://mtxadmin.github.io/hosts_pi-hole.txt"
-        "https://raw.githubusercontent.com/mtxadmin/ublock/refs/heads/master/hosts.txt"
-        "https://raw.githubusercontent.com/mtxadmin/ublock/refs/heads/master/hosts_blokada.txt"
         "https://v.firebog.net/hosts/Prigent-Crypto.txt"
         "https://gitlab.com/quidsup/notrack-blocklists/-/raw/master/trackers.hosts"
         "https://urlhaus.abuse.ch/downloads/hostfile/"
