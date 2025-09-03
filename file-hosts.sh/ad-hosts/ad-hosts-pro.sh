@@ -165,7 +165,7 @@ function GetData() {
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/NetizensRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/NextIDSeeRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/MergeRules/OceanMerge.txt"
-        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OMergeRules/QingYaMerge.txt"
+        "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/MergeRules/QingYaMerge.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/QuarkRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/TomatoNovelRules.txt"
         "https://raw.githubusercontent.com/Kuroba-Sayuki/FuLing-AdRules/refs/heads/Master/OtherRules/WzRules.txt"
@@ -294,6 +294,7 @@ function GetData() {
         "https://rescure.fruxlabs.com/rescure_domain_blacklist.txt"
         "https://phishing.army/download/phishing_army_blocklist_extended.txt"
         "https://raw.githubusercontent.com/stamparm/blackbook/master/blackbook.txt"
+        "https://raw.githubusercontent.com/cenk/bad-hosts/refs/heads/main/bad-hosts-domains"
     )
     filter_hosts=(
         "https://v.firebog.net/hosts/Prigent-Crypto.txt"
