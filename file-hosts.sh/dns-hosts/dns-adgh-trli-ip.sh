@@ -151,9 +151,11 @@ function GenerateRules() {
         if [ "${dns_mode}" == "default" ]; then
             echo -e "]#" >> "${file_path}"
         elif [ "${dns_mode}" == "domestic" ]; then
-            echo -e "]${domestic_dns[*]}" >> "${file_path}"
+            printf "]%s" "${domestic_dns[@]}" >> "${file_path}"
+            echo "" >> "${file_path}"
         elif [ "${dns_mode}" == "foreign" ]; then
-            echo -e "]${foreign_dns[*]}" >> "${file_path}"
+            printf "]%s" "${foreign_dns[@]}" >> "${file_path}"
+            echo "" >> "${file_path}"
         fi
     }
     function GenerateRulesProcess() {

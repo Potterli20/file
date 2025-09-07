@@ -742,15 +742,17 @@ function GenerateRules() {
                     rm -f "${tmp_file}" "${filtered_file}"
                 fi
             }
-            function GenerateRulesFooter() {
-                if [ "${dns_mode}" == "default" ]; then
-                    echo "]#" >> "${file_path}"
-                elif [ "${dns_mode}" == "domestic" ]; then
-                    echo "]${domestic_dns[domestic_dns_task]}" >> "${file_path}"
-                elif [ "${dns_mode}" == "foreign" ]; then
-                    echo "]${foreign_dns[foreign_dns_task]}" >> "${file_path}"
-                fi
-            }
+    function GenerateRulesFooter() {
+        if [ "${dns_mode}" == "default" ]; then
+            echo -e "]#" >> "${file_path}"
+        elif [ "${dns_mode}" == "domestic" ]; then
+            printf "]%s" "${domestic_dns[@]}" >> "${file_path}"
+            echo "" >> "${file_path}"
+        elif [ "${dns_mode}" == "foreign" ]; then
+            printf "]%s" "${foreign_dns[@]}" >> "${file_path}"
+            echo "" >> "${file_path}"
+        fi
+    }
             # 添加全局进度计数器
             current_rules_count=0
             total_rules_count=32  # 总规则生成数量
@@ -930,15 +932,17 @@ function GenerateRules() {
                     rm -f "${tmp_file}" "${filtered_file}"
                 fi
             }
-            function GenerateRulesFooter() {
-                if [ "${dns_mode}" == "default" ]; then
-                    echo "]#" >> "${file_path}"
-                elif [ "${dns_mode}" == "domestic" ]; then
-                    echo "]${domestic_dns[domestic_dns_task]}" >> "${file_path}"
-                elif [ "${dns_mode}" == "foreign" ]; then
-                    echo "]${foreign_dns[foreign_dns_task]}" >> "${file_path}"
-                fi
-            }
+    function GenerateRulesFooter() {
+        if [ "${dns_mode}" == "default" ]; then
+            echo -e "]#" >> "${file_path}"
+        elif [ "${dns_mode}" == "domestic" ]; then
+            printf "]%s" "${domestic_dns[@]}" >> "${file_path}"
+            echo "" >> "${file_path}"
+        elif [ "${dns_mode}" == "foreign" ]; then
+            printf "]%s" "${foreign_dns[@]}" >> "${file_path}"
+            echo "" >> "${file_path}"
+        fi
+    }
             # 添加全局进度计数器
             current_rules_count=0
             total_rules_count=32  # 总规则生成数量
