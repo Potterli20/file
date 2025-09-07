@@ -208,6 +208,18 @@ function AnalyseData() {
     gfwlist_data=($(cat "./gfwlist_data.tmp" "./lite_gfwlist_data.tmp" | sort | uniq | awk '{ print $1 }'))
     lite_cnacc_data=($(cat "./lite_cnacc_data.tmp" | sort | uniq | awk '{ print $1 }'))
     lite_gfwlist_data=($(cat "./lite_gfwlist_data.tmp" | sort | uniq | awk '{ print $1 }'))
+
+    # Diagnostic 输出：列出关键临时文件的行数，帮助定位为空的步骤
+    echo "Diagnostic: temporary files counts (hosts-dns):"
+    for f in cnacc_data.tmp gfwlist_data.tmp cnacc_added.tmp gfwlist_added.tmp lite_cnacc_added.tmp lite_gfwlist_added.tmp; do
+        if [ -f "$f" ]; then
+            echo -n "$f: "
+            wc -l < "$f" 2>/dev/null || echo "0"
+        else
+            echo "$f: missing"
+        fi
+    done
+
 }
 # Generate Rules
 function GenerateRules() {
