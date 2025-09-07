@@ -220,6 +220,9 @@ function AnalyseData() {
         fi
     done
 
+    # 返回到脚本运行目录（repo 根），确保后续移动操作使用相对路径时路径正确
+    cd .. || true
+
 }
 # Generate Rules
 function GenerateRules() {
@@ -302,6 +305,8 @@ function FileName() {
     fi
     file_name="${generate_temp}list_${generate_mode}.${file_extension}"
     file_path="./output/dns-${software_name}/${file_name}"
+    # Debug: print the target file path for visibility in CI logs
+    echo "FileName: will write to ${file_path}"
 }
 
 function GenerateDefaultUpstream() {
@@ -357,23 +362,36 @@ function GenerateRulesForSoftware() {
 function MoveGeneratedFiles() {
     local dest="./output"
     mkdir -p "${dest}"
-    # Generated files are created under hosts-dns/output/dns-adguardhome_new
-    local src="./hosts-dns/output/dns-adguardhome_new"
-    if [ ! -d "${src}" ]; then
-        echo "Warning: source directory ${src} not found. Nothing to move."
-        return 0
-    fi
+    # Check multiple possible locations where generated files may be placed by different runs/workflows
+    candidate_srcs=(
+        "./hosts-dns/output/dns-adguardhome_new"
+        "./output/dns-adguardhome_new"
+        "./dns-adguardhome_new"
+    )
 
-    # Move any regular file found in the generated directory to the repo-root output,
-    # prefixing names to indicate origin.
+    moved_any=0
     shopt -s nullglob
-    for file in "${src}"/*; do
-        if [ -f "${file}" ]; then
-            mv "${file}" "${dest}/dnshosts-all-adguardhome_new-$(basename "${file}")" 2>/dev/null || echo "Warning: failed to move ${file}"
+    for src in "${candidate_srcs[@]}"; do
+        if [ -d "${src}" ]; then
+            for file in "${src}"/*; do
+                if [ -f "${file}" ]; then
+                    dest_name="${dest}/dnshosts-all-adguardhome_new-$(basename "${file}")"
+                    mv "${file}" "${dest_name}" 2>/dev/null || echo "Warning: failed to move ${file} to ${dest_name}"
+                    echo "Moved: ${file} -> ${dest_name}"
+                    moved_any=1
+                fi
+            done
+        else
+            echo "MoveGeneratedFiles: candidate not found: ${src}"
         fi
     done
     shopt -u nullglob
-    echo "MoveGeneratedFiles: moved contents of ${src} to ${dest}"
+
+    if [ ${moved_any} -eq 0 ]; then
+        echo "Warning: no generated files moved; check generation logs and paths above."
+    else
+        echo "MoveGeneratedFiles: moved generated files into ${dest}"
+    fi
 }
 
 ## Process
