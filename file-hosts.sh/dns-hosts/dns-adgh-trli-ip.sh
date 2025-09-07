@@ -92,7 +92,19 @@ function GetData() {
         curl -m 10 -s -L --connect-timeout 15 "${cnacc_trusted[$cnacc_trusted_task]}" >>./cnacc_trusted.tmp
     done
     for gfwlist_base64_task in "${!gfwlist_base64[@]}"; do
-        curl -m 10 -s -L --connect-timeout 15 "${gfwlist_base64[$gfwlist_base64_task]}" | base64 -d >>./gfwlist_base64.tmp
+        url="${gfwlist_base64[$gfwlist_base64_task]}"
+        tmpf=$(mktemp)
+        if curl -m 10 -s -L --connect-timeout 15 "$url" -o "$tmpf"; then
+            # 尝试 base64 解码，失败则保留原文
+            if base64 -d "$tmpf" >>./gfwlist_base64.tmp 2>/dev/null; then
+                :
+            else
+                cat "$tmpf" >>./gfwlist_base64.tmp
+            fi
+        else
+            echo "Warning: failed to download $url" >&2
+        fi
+        rm -f "$tmpf"
     done
     for gfwlist_domain_task in "${!gfwlist_domain[@]}"; do
         curl -m 10 -s -L --connect-timeout 15 "${gfwlist_domain[$gfwlist_domain_task]}" | sed "s/^\.//g" >>./gfwlist_domain.tmp
@@ -100,14 +112,102 @@ function GetData() {
     for gfwlist2agh_modify_task in "${!gfwlist2agh_modify[@]}"; do
         curl -m 10 -s -L --connect-timeout 15 "${gfwlist2agh_modify[$gfwlist2agh_modify_task]}" >>./gfwlist2agh_modify.tmp
     done
+    # 返回到脚本运行目录，确保后续函数以根目录为基准
+    cd .. || true
 }
 # Analyse Data
 function AnalyseData() {
     echo -e "Analyzing data..."
-    cnacc_data=($(domain_regex="^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" && lite_domain_regex="^([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\@\%\@\)\|\(\@\%\!\)\|\(\!\&\@\)\|\(\@\@\@\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | sort | uniq >"./cnacc_addition.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\%\!\)\|\(\@\&\!\)\|\(\!\%\@\)\|\(\!\!\!\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | sort | uniq >"./cnacc_subtraction.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\*\%\*\)\|\(\*\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./cnacc_exclusion.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\*\%\*\)\|\(\*\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${lite_domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./lite_cnacc_exclusion.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\%\*\)\|\(\!\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./cnacc_keyword.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\%\*\)\|\(\!\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${lite_domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./lite_cnacc_keyword.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\@\&\@\)\|\(\@\&\!\)\|\(\!\%\@\)\|\(\@\@\@\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | sort | uniq >"./gfwlist_addition.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\&\!\)\|\(\@\%\!\)\|\(\!\&\@\)\|\(\!\!\!\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | sort | uniq >"./gfwlist_subtraction.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\*\&\*\)\|\(\*\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./gfwlist_exclusion.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\*\&\*\)\|\(\*\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${lite_domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./lite_gfwlist_exclusion.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\&\*\)\|\(\!\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./gfwlist_keyword.tmp" && cat "./gfwlist2agh_modify.tmp" | grep -v "\#" | grep "\(\!\&\*\)\|\(\!\*\*\)" | tr -d "\!\%\&\(\)\*\@" | grep -E "${lite_domain_regex}" | xargs | sed "s/\ /\|/g" | sort | uniq >"./lite_gfwlist_keyword.tmp" && cat "./cnacc_addition.tmp" | grep -E "${lite_domain_regex}" | sort | uniq >"./lite_cnacc_addition.tmp" && cat "./gfwlist_addition.tmp" | grep -E "${lite_domain_regex}" | sort | uniq >"./lite_gfwlist_addition.tmp" && cat "./cnacc_trusted.tmp" | sed "s/\/114\.114\.114\.114//g;s/server\=\///g" | tr "A-Z" "a-z" | grep -E "${domain_regex}" | sort | uniq >"./cnacc_trust.tmp" && cat "./cnacc_trust.tmp" | grep -E "${lite_domain_regex}" | sort | uniq >"./lite_cnacc_trust.tmp" && cat "./cnacc_domain.tmp" | sed "s/domain\://g;s/full\://g" | tr "A-Z" "a-z" | grep -E "${domain_regex}" | sort | uniq >"./cnacc_checklist.tmp" && cat "./gfwlist_base64.tmp" "./gfwlist_domain.tmp" | sed "s/domain\://g;s/full\://g;s/http\:\/\///g;s/https\:\/\///g" | tr -d "|" | tr "A-Z" "a-z" | grep -E "${domain_regex}" | sort | uniq >"./gfwlist_checklist.tmp" && cat "./cnacc_checklist.tmp" | rev | cut -d "." -f 1,2 | rev | sort | uniq >"./lite_cnacc_checklist.tmp" && cat "./gfwlist_checklist.tmp" | rev | cut -d "." -f 1,2 | rev | sort | uniq >"./lite_gfwlist_checklist.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_checklist.tmp" "./gfwlist_checklist.tmp" >"./gfwlist_raw.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./gfwlist_checklist.tmp" "./cnacc_checklist.tmp" | grep -Ev "(\.($(cat './cnacc_exclusion.tmp'))$)|(^$(cat './cnacc_exclusion.tmp')$)|($(cat './cnacc_keyword.tmp'))" >"./cnacc_raw.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./lite_cnacc_checklist.tmp" "./lite_gfwlist_checklist.tmp" >"./lite_gfwlist_raw.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./lite_gfwlist_checklist.tmp" "./lite_cnacc_checklist.tmp" | grep -Ev "(\.($(cat './lite_cnacc_exclusion.tmp'))$)|(^$(cat './lite_cnacc_exclusion.tmp')$)|($(cat './lite_cnacc_keyword.tmp'))" >"./lite_cnacc_raw.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_trust.tmp" "./gfwlist_raw.tmp" | grep -Ev "(\.($(cat './gfwlist_exclusion.tmp'))$)|(^$(cat './gfwlist_exclusion.tmp')$)|($(cat './gfwlist_keyword.tmp'))" >"./gfwlist_raw_new.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_trust.tmp" "./lite_gfwlist_raw.tmp" | grep -Ev "(\.($(cat './lite_gfwlist_exclusion.tmp'))$)|(^$(cat './lite_gfwlist_exclusion.tmp')$)|($(cat './lite_gfwlist_keyword.tmp'))" >"./lite_gfwlist_raw_new.tmp" && cat "./cnacc_raw.tmp" "./lite_cnacc_raw.tmp" "./cnacc_addition.tmp" "./lite_cnacc_addition.tmp" "./cnacc_trust.tmp" "./lite_cnacc_trust.tmp" | sort | uniq >"./cnacc_added.tmp" && cat "./gfwlist_raw_new.tmp" "./lite_gfwlist_raw_new.tmp" "./gfwlist_addition.tmp" "./lite_gfwlist_addition.tmp" | sort | uniq >"./gfwlist_added.tmp" && cat "./lite_cnacc_raw.tmp" "./lite_cnacc_addition.tmp" "./lite_cnacc_trust.tmp" | sort | uniq >"./lite_cnacc_added.tmp" && cat "./lite_gfwlist_raw_new.tmp" "./lite_gfwlist_addition.tmp" | sort | uniq >"./lite_gfwlist_added.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_subtraction.tmp" "./cnacc_added.tmp" >"./cnacc_data.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./gfwlist_subtraction.tmp" "./gfwlist_added.tmp" >"./gfwlist_data.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./cnacc_subtraction.tmp" "./lite_cnacc_added.tmp" >"./lite_cnacc_data.tmp" && awk 'NR == FNR { tmp[$0] = 1 } NR > FNR { if ( tmp[$0] != 1 ) print }' "./gfwlist_subtraction.tmp" "./lite_gfwlist_added.tmp" >"./lite_gfwlist_data.tmp" && cat "./cnacc_data.tmp" "./lite_cnacc_data.tmp" | sort | uniq | awk "{ print $2 }"))
-    gfwlist_data=($(cat "./gfwlist_data.tmp" "./lite_gfwlist_data.tmp" | sort | uniq | awk "{ print $2 }"))
-    lite_cnacc_data=($(cat "./lite_cnacc_data.tmp" | sort | uniq | awk "{ print $2 }"))
-    lite_gfwlist_data=($(cat "./lite_gfwlist_data.tmp" | sort | uniq | awk "{ print $2 }"))
+
+    # 确保工作目录正确
+    if [ ! -d "./hosts-dns" ]; then
+        echo "Error: hosts-dns directory not found"
+        exit 1
+    fi
+    cd ./hosts-dns || exit 1
+
+    # 检查必需的输入文件
+    for file in cnacc_domain.tmp cnacc_trusted.tmp gfwlist_base64.tmp gfwlist_domain.tmp gfwlist2agh_modify.tmp; do
+        if [ ! -f "$file" ]; then
+            echo "Warning: Required input file $file not found, creating empty file"
+            touch "$file"  # 创建空文件以避免后续错误
+        fi
+    done
+
+    # 创建输出目录
+    mkdir -p output
+
+    domain_regex="^(([a-z]{1})|([a-z]{1}[a-z]{1})|([a-z]{1}[0-9]{1})|([0-9]{1}[a-z]{1})|([a-z0-9][-\.a-z0-9]{1,61}[a-z0-9]))\.([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$"
+    lite_domain_regex="^([a-z]{2,13}|[a-z0-9-]{2,30}\.[a-z]{2,3})$"
+
+    # 准备临时文件列表并清空
+    tmp_files=( 
+        cnacc_addition.tmp cnacc_subtraction.tmp cnacc_exclusion.tmp lite_cnacc_exclusion.tmp
+        cnacc_keyword.tmp lite_cnacc_keyword.tmp gfwlist_addition.tmp gfwlist_subtraction.tmp
+        gfwlist_exclusion.tmp lite_gfwlist_exclusion.tmp gfwlist_keyword.tmp lite_gfwlist_keyword.tmp
+        lite_cnacc_addition.tmp lite_gfwlist_addition.tmp cnacc_trust.tmp lite_cnacc_trust.tmp
+        cnacc_checklist.tmp gfwlist_checklist.tmp lite_cnacc_checklist.tmp lite_gfwlist_checklist.tmp
+        gfwlist_raw.tmp cnacc_raw.tmp lite_gfwlist_raw.tmp lite_cnacc_raw.tmp
+        gfwlist_raw_new.tmp lite_gfwlist_raw_new.tmp cnacc_added.tmp gfwlist_added.tmp
+        lite_cnacc_added.tmp lite_gfwlist_added.tmp cnacc_data.tmp gfwlist_data.tmp
+        lite_cnacc_data.tmp lite_gfwlist_data.tmp
+    )
+    for f in "${tmp_files[@]}"; do : >"$f"; done
+
+    # 分步处理 gfwlist2agh_modify 的标记和域名（使用 -F 做字面匹配以提高鲁棒性）
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '@%@' -e '@%!' -e '!&@' -e '@@@' | tr -d '!%&()*@' | grep -E "${domain_regex}" | sort -u > ./cnacc_addition.tmp || true
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '!%!' -e '@&!' -e '!%@' -e '!!!' | tr -d '!%&()*@' | grep -E "${domain_regex}" | sort -u > ./cnacc_subtraction.tmp || true
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '*%*' -e '***' | tr -d '!%&()*@' | grep -E "${domain_regex}" | xargs 2>/dev/null | sed 's/ /\\|/g' | sort -u > ./cnacc_exclusion.tmp || true
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '*%*' -e '***' | tr -d '!%&()*@' | grep -E "${lite_domain_regex}" | xargs 2>/dev/null | sed 's/ /\\|/g' | sort -u > ./lite_cnacc_exclusion.tmp || true
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '!%*' -e '!**' | tr -d '!%&()*@' | grep -E "${domain_regex}" | xargs 2>/dev/null | sed 's/ /\\|/g' | sort -u > ./cnacc_keyword.tmp || true
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '!%*' -e '!**' | tr -d '!%&()*@' | grep -E "${lite_domain_regex}" | xargs 2>/dev/null | sed 's/ /\\|/g' | sort -u > ./lite_cnacc_keyword.tmp || true
+
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '@&@' -e '@&!' -e '!%@' -e '@@@' | tr -d '!%&()*@' | grep -E "${domain_regex}" | sort -u > ./gfwlist_addition.tmp || true
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '!&!' -e '@%!' -e '!&@' -e '!!!' | tr -d '!%&()*@' | grep -E "${domain_regex}" | sort -u > ./gfwlist_subtraction.tmp || true
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '*&*' -e '***' | tr -d '!%&()*@' | grep -E "${domain_regex}" | xargs 2>/dev/null | sed 's/ /\\|/g' | sort -u > ./gfwlist_exclusion.tmp || true
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '*&*' -e '***' | tr -d '!%&()*@' | grep -E "${lite_domain_regex}" | xargs 2>/dev/null | sed 's/ /\\|/g' | sort -u > ./lite_gfwlist_exclusion.tmp || true
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '!&*' -e '!**' | tr -d '!%&()*@' | grep -E "${domain_regex}" | xargs 2>/dev/null | sed 's/ /\\|/g' | sort -u > ./gfwlist_keyword.tmp || true
+    grep -v "#" ./gfwlist2agh_modify.tmp | grep -F -e '!&*' -e '!**' | tr -d '!%&()*@' | grep -E "${lite_domain_regex}" | xargs 2>/dev/null | sed 's/ /\\|/g' | sort -u > ./lite_gfwlist_keyword.tmp || true
+
+    # 生成 lite 衍生集合
+    cat ./cnacc_addition.tmp | grep -E "${lite_domain_regex}" | sort -u > ./lite_cnacc_addition.tmp || true
+    cat ./gfwlist_addition.tmp | grep -E "${lite_domain_regex}" | sort -u > ./lite_gfwlist_addition.tmp || true
+
+    # 处理 trusted、checklist
+    # 使用 # 作为分隔符，避免大量斜杠转义问题
+    cat ./cnacc_trusted.tmp | sed -E 's#/114\.114\.114\.114##g; s#server=/##g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | sort -u > ./cnacc_trust.tmp || true
+    cat ./cnacc_trust.tmp | grep -E "${lite_domain_regex}" | sort -u > ./lite_cnacc_trust.tmp || true
+
+    cat ./cnacc_domain.tmp | sed 's/domain://g;s/full://g' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | sort -u > ./cnacc_checklist.tmp || true
+    cat ./gfwlist_base64.tmp ./gfwlist_domain.tmp | sed 's/domain://g;s/full://g;s/http:\/\///g;s/https:\/\///g' | tr -d '|' | tr 'A-Z' 'a-z' | grep -E "${domain_regex}" | sort -u > ./gfwlist_checklist.tmp || true
+
+    cat ./cnacc_checklist.tmp | rev | cut -d '.' -f 1,2 | rev | sort -u > ./lite_cnacc_checklist.tmp || true
+    cat ./gfwlist_checklist.tmp | rev | cut -d '.' -f 1,2 | rev | sort -u > ./lite_gfwlist_checklist.tmp || true
+
+    awk 'NR==FNR{tmp[$0]=1;next} !tmp[$0]' ./cnacc_checklist.tmp ./gfwlist_checklist.tmp > ./gfwlist_raw.tmp || true
+    awk 'NR==FNR{tmp[$0]=1;next} !tmp[$0]' ./gfwlist_checklist.tmp ./cnacc_checklist.tmp | grep -Ev "(\\.($(cat './cnacc_exclusion.tmp'))$)|(^$(cat './cnacc_exclusion.tmp')$)|($(cat './cnacc_keyword.tmp'))" > ./cnacc_raw.tmp || true
+    awk 'NR==FNR{tmp[$0]=1;next} !tmp[$0]' ./lite_cnacc_checklist.tmp ./lite_gfwlist_checklist.tmp > ./lite_gfwlist_raw.tmp || true
+    awk 'NR==FNR{tmp[$0]=1;next} !tmp[$0]' ./lite_gfwlist_checklist.tmp ./lite_cnacc_checklist.tmp | grep -Ev "(\\.($(cat './lite_cnacc_exclusion.tmp'))$)|(^$(cat './lite_cnacc_exclusion.tmp')$)|($(cat './lite_cnacc_keyword.tmp'))" > ./lite_cnacc_raw.tmp || true
+
+    awk 'NR==FNR{tmp[$0]=1;next} !tmp[$0]' ./cnacc_trust.tmp ./gfwlist_raw.tmp | grep -Ev "(\\.($(cat './gfwlist_exclusion.tmp'))$)|(^$(cat './gfwlist_exclusion.tmp')$)|($(cat './gfwlist_keyword.tmp'))" > ./gfwlist_raw_new.tmp || true
+    awk 'NR==FNR{tmp[$0]=1;next} !tmp[$0]' ./cnacc_trust.tmp ./lite_gfwlist_raw.tmp | grep -Ev "(\\.($(cat './lite_gfwlist_exclusion.tmp'))$)|(^$(cat './lite_gfwlist_exclusion.tmp')$)|($(cat './lite_gfwlist_keyword.tmp'))" > ./lite_gfwlist_raw_new.tmp || true
+
+    cat ./cnacc_raw.tmp ./lite_cnacc_raw.tmp ./cnacc_addition.tmp ./lite_cnacc_addition.tmp ./cnacc_trust.tmp ./lite_cnacc_trust.tmp | sort -u > ./cnacc_added.tmp || true
+    cat ./gfwlist_raw_new.tmp ./lite_gfwlist_raw_new.tmp ./gfwlist_addition.tmp ./lite_gfwlist_addition.tmp | sort -u > ./gfwlist_added.tmp || true
+    cat ./lite_cnacc_raw.tmp ./lite_cnacc_addition.tmp ./lite_cnacc_trust.tmp | sort -u > ./lite_cnacc_added.tmp || true
+    cat ./lite_gfwlist_raw_new.tmp ./lite_gfwlist_addition.tmp | sort -u > ./lite_gfwlist_added.tmp || true
+
+    awk 'NR==FNR{tmp[$0]=1;next} !tmp[$0]' ./cnacc_subtraction.tmp ./cnacc_added.tmp > ./cnacc_data.tmp || true
+    awk 'NR==FNR{tmp[$0]=1;next} !tmp[$0]' ./gfwlist_subtraction.tmp ./gfwlist_added.tmp > ./gfwlist_data.tmp || true
+    awk 'NR==FNR{tmp[$0]=1;next} !tmp[$0]' ./cnacc_subtraction.tmp ./lite_cnacc_added.tmp > ./lite_cnacc_data.tmp || true
+    awk 'NR==FNR{tmp[$0]=1;next} !tmp[$0]' ./gfwlist_subtraction.tmp ./lite_gfwlist_added.tmp > ./lite_gfwlist_data.tmp || true
+
+    # 原有数组赋值（保留行为）
+    # 如果临时文件中只有单列域名，取第1列；保留 sort/uniq 行为
+    cnacc_data=($(cat "./cnacc_data.tmp" "./lite_cnacc_data.tmp" | sort | uniq | awk '{ print $1 }'))
+    gfwlist_data=($(cat "./gfwlist_data.tmp" "./lite_gfwlist_data.tmp" | sort | uniq | awk '{ print $1 }'))
+    lite_cnacc_data=($(cat "./lite_cnacc_data.tmp" | sort | uniq | awk '{ print $1 }'))
+    lite_gfwlist_data=($(cat "./lite_gfwlist_data.tmp" | sort | uniq | awk '{ print $1 }'))
 }
 # Generate Rules
 function GenerateRules() {
