@@ -357,14 +357,23 @@ function GenerateRulesForSoftware() {
 function MoveGeneratedFiles() {
     local dest="./output"
     mkdir -p "${dest}"
-    local src="${dest}/dns-adguardhome_new" # 优化路径定义
-    mkdir -p "${src}" # 确保目录存在
-    for file in "${src}/blacklist_full.txt" "${src}/whitelist_full.txt" \
-                "${src}/blacklist_full_combine.txt" "${src}/blacklist_lite.txt" \
-                "${src}/whitelist_full_split_combine.txt" "${src}/whitelist_full_combine.txt" \
-                "${src}/whitelist_lite.txt"; do
-        [ -f "${file}" ] && mv "${file}" "${dest}/dnshosts-all-adguardhome_new-$(basename "${file}")" 2>/dev/null || echo "Warning: ${file} not found."
+    # Generated files are created under hosts-dns/output/dns-adguardhome_new
+    local src="./hosts-dns/output/dns-adguardhome_new"
+    if [ ! -d "${src}" ]; then
+        echo "Warning: source directory ${src} not found. Nothing to move."
+        return 0
+    fi
+
+    # Move any regular file found in the generated directory to the repo-root output,
+    # prefixing names to indicate origin.
+    shopt -s nullglob
+    for file in "${src}"/*; do
+        if [ -f "${file}" ]; then
+            mv "${file}" "${dest}/dnshosts-all-adguardhome_new-$(basename "${file}")" 2>/dev/null || echo "Warning: failed to move ${file}"
+        fi
     done
+    shopt -u nullglob
+    echo "MoveGeneratedFiles: moved contents of ${src} to ${dest}"
 }
 
 ## Process
