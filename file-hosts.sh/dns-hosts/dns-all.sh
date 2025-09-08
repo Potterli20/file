@@ -647,7 +647,7 @@ function GenerateRules() {
             $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158"; done)
             $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88"; done)
             $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
             )
             foreign_dns=(
             $(for protocol in https h3; do echo "${protocol}://firefox.dns.nextdns.io/dns-query"; done)
@@ -837,7 +837,7 @@ function GenerateRules() {
             $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158"; done)
             $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88"; done)
             $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
             )
             foreign_dns=(
             $(for protocol in https h3; do echo "${protocol}://firefox.dns.nextdns.io/dns-query"; done)
