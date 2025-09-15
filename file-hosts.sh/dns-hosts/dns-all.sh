@@ -1,5 +1,73 @@
 #!/bin/bash
 
+# 全局配置
+declare -A CONFIG=(
+    [TEMP_DIR]="./Temp"
+    [MAX_RETRIES]=3
+    [TIMEOUT]=15
+    [PARALLEL_JOBS]=$(nproc)
+)
+
+# 初始化日志
+function init_logging() {
+    exec 3>&2 # 保存原始stderr
+    exec 2>"${CONFIG[TEMP_DIR]}/error.log"
+    trap 'exec 2>&3' EXIT
+}
+
+# 统一的错误处理
+function handle_error() {
+    local err=$?
+    echo "[ERROR] ${1:-"Unknown Error"}" >&2
+    return $err
+}
+
+# 并行下载管理器
+function parallel_download() {
+    local -n urls=$1
+    local output=$2
+    local processor=${3:-"cat"}
+    
+    # 使用信号量控制并发
+    local semaphore="/tmp/download.lock.$$"
+    mkfifo "$semaphore"
+    
+    for ((i=0; i<${CONFIG[PARALLEL_JOBS]}; i++)); do
+        echo >&3 
+    done 3>"$semaphore"
+    
+    for url in "${urls[@]}"; do
+        { 
+            read -u3
+            (
+                if download_with_retry "$url" | eval "$processor" >>"$output"; then
+                    echo "[SUCCESS] Downloaded: $url"
+                else 
+                    echo "[FAILED] Failed to download: $url"
+                fi
+                echo >&3
+            )&
+        } 3<"$semaphore"
+    done
+    wait
+    rm "$semaphore"
+}
+
+# 智能重试下载
+function download_with_retry() {
+    local url=$1
+    local attempt=0
+    
+    while ((attempt < ${CONFIG[MAX_RETRIES]})); do
+        if curl -sL --connect-timeout ${CONFIG[TIMEOUT]} "$url"; then
+            return 0
+        fi
+        ((attempt++))
+        sleep $((attempt * 2))
+    done
+    return 1
+}
+
 # 时间统计相关变量和函数
 START_TIME=$(date +%s)
 declare -A STEP_TIMES
@@ -647,7 +715,7 @@ function GenerateRules() {
             $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158"; done)
             $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88"; done)
             $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
             )
             foreign_dns=(
             $(for protocol in https h3; do echo "${protocol}://firefox.dns.nextdns.io/dns-query"; done)
@@ -837,7 +905,7 @@ function GenerateRules() {
             $(for protocol in tcp udp; do echo "${protocol}://52.81.114.158"; done)
             $(for protocol in tcp udp; do echo "${protocol}://42.240.136.88"; done)
             $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:1"; done)
-            $(for protocol in tcp udp; do echo "${protocol}://22400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
+            $(for protocol in tcp udp; do echo "${protocol}://2400:7fc0:849e:200:62fd:1de3:1c90:2"; done)
             )
             foreign_dns=(
             $(for protocol in https h3; do echo "${protocol}://firefox.dns.nextdns.io/dns-query"; done)
@@ -1643,6 +1711,10 @@ echo "=== Starting DNS List Generation Process ==="
 total_main_steps=4
 current_main_step=0
 
+# 初始化日志和错误处理
+init_logging
+trap 'handle_error "Unexpected error occurred"' ERR
+
 # 统一的步骤执行函数
 function execute_step() {
     local step_name="$1"
@@ -1653,20 +1725,56 @@ function execute_step() {
     echo "Step $((current_main_step + 1)): ${step_name}..."
     current_main_step=$((current_main_step + 1))
     
-    $step_function
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting ${step_name}..." >&2
+    
+    if ! $step_function; then
+        echo "[ERROR] ${step_name} failed" >&2
+        return 1
+    fi
     
     record_step_time "$step_name" $step_start
     PrettyProgressBar $current_main_step $total_main_steps "$step_name" "$step_status"
     print_step_time "$step_name"
-    echo "${step_name} completed."
+    echo "${step_name} completed successfully." >&2
 }
 
 # 执行主要步骤
-execute_step "Getting Data" GetData "下载中"
-execute_step "Analyzing Data" AnalyseData "分析中"
-execute_step "Generating Rules" OutputData "生成中"
-execute_step "Moving Generated Files" MoveGeneratedFiles "完成"
+echo "开始执行主要步骤..."
+echo "总共 ${total_main_steps} 个步骤"
 
-# 显示总耗时
-echo "=== Process Completed Successfully ==="
+# 下载数据
+execute_step "Getting Data" GetData "下载中" || {
+    echo "数据下载失败，终止执行" >&2
+    exit 1
+}
+
+# 分析数据
+execute_step "Analyzing Data" AnalyseData "分析中" || {
+    echo "数据分析失败，终止执行" >&2
+    exit 1
+}
+
+# 生成规则
+execute_step "Generating Rules" OutputData "生成中" || {
+    echo "规则生成失败，终止执行" >&2
+    exit 1
+}
+
+# 移动生成的文件
+execute_step "Moving Generated Files" MoveGeneratedFiles "移动中" || {
+    echo "文件移动失败，但继续执行" >&2
+}
+
+# 最终清理
+echo "正在进行最终清理..."
+if [ -d "./Temp" ]; then
+    rm -rf ./Temp && echo "✓ 临时目录清理完成"
+fi
+if [ -d "./gfwlist2*" ]; then
+    rm -rf ./gfwlist2* && echo "✓ 规则目录清理完成"
+fi
+
+# 显示总耗时和完成状态
+echo "=== 处理完成 ==="
 echo "总耗时: $(time_taken $START_TIME)"
+echo "全部步骤执行完毕!"
