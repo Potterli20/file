@@ -251,6 +251,11 @@ function GetData() {
         "https://raw.githubusercontent.com/ppfeufer/adguard-filter-list/refs/heads/master/blocklist"
     )
     filter_domain=(
+        $(for i in {1..10}; do echo "https://raw.githubusercontent.com/MikhailKasimov/validin-phish-feed/refs/heads/main/validin-phish-feed-${i}.txt"; done)
+        $(for i in {1..20}; do echo "https://raw.githubusercontent.com/MikhailKasimov/validin-phish-feed/refs/heads/main/validin-phish-feed-phishydnstxt-${i}.txt"; done)
+        "https://raw.githubusercontent.com/MikhailKasimov/validin-phish-feed/refs/heads/main/validin-phish-feed-crissmonovmcom.txt"
+        "https://raw.githubusercontent.com/MikhailKasimov/validin-phish-feed/refs/heads/main/validin-phish-feed-youcangetnoinfo.txt"
+        "https://raw.githubusercontent.com/MikhailKasimov/validin-phish-feed/refs/heads/main/validin-phish-feed.txt"
         "https://raw.githubusercontent.com/cenk/bad-hosts/main/bad-hosts-domains"
         "https://osint.digitalside.it/Threat-Intel/lists/latestdomains.txt"
         "https://raw.githubusercontent.com/AssoEchap/stalkerware-indicators/master/generated/hosts_full"
