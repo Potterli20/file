@@ -120,6 +120,7 @@
 (@&!)fastgit.org
 (@&!)froth.zone
 (@&!)funami.tech
+(@&!)gamma.app
 (@&!)github.com
 (@&!)githubusercontent.com
 (@&!)google.com
