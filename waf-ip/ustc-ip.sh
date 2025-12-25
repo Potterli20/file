@@ -31,7 +31,7 @@ split -l $chunk_size -d -a 1 "$TEMP_FILE" "blackip_part_"
 # 重命名文件并添加.txt扩展名
 for file in blackip_part_*; do
     if [ -f "$file" ]; then
-        new_name="blackip_${part_number}.txt"
+        new_name="ustc-blackip_${part_number}.txt"
         mv "$file" "$new_name"
         lines_in_file=$(grep -c '^' "$new_name")
         echo "已创建 $new_name，包含 $lines_in_file 行数据"
