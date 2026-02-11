@@ -2,7 +2,7 @@
 
 # 定义所有链接
 gfwlist2agh_modify=(
-    "https://raw.githubusercontent.com/hezhijie0327/GFWList2AGH/source/data/data_modify.txt"
+    "https://raw.githubusercontent.com/hezhijie0327/GFWList2AGH/refs/heads/main/data/data_modify.txt"
     "https://raw.githubusercontent.com/Atroc-X/GFWList-AGH/source/data/data_modify.txt"
     "https://raw.githubusercontent.com/jimmyshjj/GFWList2AGH/source/data/data_modify.txt"
     "https://raw.githubusercontent.com/madswaord/GFWList2AGH/refs/heads/source/data/data_modify.txt"
