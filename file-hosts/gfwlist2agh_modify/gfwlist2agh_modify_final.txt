@@ -211,6 +211,7 @@
 (@&!)google.com
 (@&!)googleads.g.doubleclick.net
 (@&!)googleapis.cn
+(@&!)gqqsm.com
 (@&!)hardwarezone.com.sg
 (@&!)hddolby.com
 (@&!)hdfans.org
