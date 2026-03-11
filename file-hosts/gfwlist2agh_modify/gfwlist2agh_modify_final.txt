@@ -60,6 +60,7 @@
 (@%!)mcdn.bilivideo.cn
 (@%!)mesu.apple.com.mwcname.com
 (@%!)mobilegw.alipay.com
+(@%!)movie-pilot.org
 (@%!)ntp.aliyun.com
 (@%!)ntp.cloud.aliyuncs.com
 (@%!)ntp.sjtu.edu.cn
