@@ -5,7 +5,7 @@ go 1.25.0
 tool golang.org/x/tools/cmd/stringer
 
 require (
-	github.com/PuerkitoBio/goquery v1.11.0
+	github.com/PuerkitoBio/goquery v1.12.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
