@@ -209,6 +209,7 @@
 (@&!)gamma.app
 (@&!)github.com
 (@&!)githubusercontent.com
+(@&!)google.cn
 (@&!)google.com
 (@&!)googleads.g.doubleclick.net
 (@&!)googleapis.cn
