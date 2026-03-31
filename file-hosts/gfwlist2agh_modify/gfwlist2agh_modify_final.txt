@@ -230,6 +230,7 @@
 (@&!)lemonhd.club
 (@&!)library.ac.cn
 (@&!)m-team.cc
+(@&!)mailchi.mp
 (@&!)miro.com
 (@&!)ourbits.club
 (@&!)pandapt.net
@@ -251,6 +252,7 @@
 (@&!)share.acgnx.se
 (@&!)slate.com
 (@&!)smartsheet.com
+(@&!)sourcingjournal.com
 (@&!)speedtest.net
 (@&!)springsunday.net
 (@&!)teacherspayteachers.com
