@@ -1,2 +1,2 @@
-requests==2.33.0
+requests==2.33.1
 pytz==2026.1.post1
