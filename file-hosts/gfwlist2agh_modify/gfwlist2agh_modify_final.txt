@@ -155,6 +155,7 @@
 (@%!)www.icloud.com
 (@%!)xssx.win
 (@%!)yuanshen.com
+(@&!)18-courier.push.apple.com
 (@&!)1dot1dot1dot1.cloudflare-dns.com
 (@&!)adminforge.de
 (@&!)agsvpt.com
@@ -222,6 +223,7 @@
 (@&!)hellotalk.com
 (@&!)hhanclub.top
 (@&!)hub.fastgit.org
+(@&!)icloud.com
 (@&!)jing.rocks
 (@&!)jotform.com
 (@&!)jsdelivr.net
@@ -243,6 +245,7 @@
 (@&!)ptchdbits.co
 (@&!)pterclub.com
 (@&!)pthome.net
+(@&!)push.apple.com
 (@&!)r4fo.com
 (@&!)raw.fastgit.org
 (@&!)redirector.googlevideo.com
@@ -268,6 +271,7 @@
 (@&!)www.hddolby.com
 (@&!)www.hdkyl.in
 (@&!)www.icc2022.com
+(@&!)www.icloud.com
 (@&!)www.pttime.org
 (@&!)xp.m-team.cc
 (@&!)zhijie.online
