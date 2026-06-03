@@ -10,7 +10,7 @@ require (
 )
 
 require (
-	github.com/andybalholm/cascadia v1.3.3 // indirect
+	github.com/andybalholm/cascadia v1.3.4 // indirect
 	golang.org/x/mod v0.17.0 // indirect
 	golang.org/x/net v0.55.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
