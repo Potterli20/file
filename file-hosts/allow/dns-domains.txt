@@ -23,3 +23,5 @@ unfiltered.adguard-dns.com
 dns.twnic.tw
 doh3.dns.nextdns.io
 anycast.dns.nextdns.io
+doh.18bit.cn
+bl-dns.yiancloud.com.cn
