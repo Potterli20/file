@@ -1,3 +1,4 @@
+*.trli.club
 *.dns.yandex.net
 cloudflare-dns.com
 doh.360.cn
