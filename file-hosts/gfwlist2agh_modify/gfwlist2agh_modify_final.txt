@@ -1,6 +1,7 @@
 (!%!)guzzoni.smoot.apple.com
 (*%*)duolingo.cn
 (*&*)com.cn
+(*&*)xn--wcvs22d1m.hk
 (@%!)0.openwrt.pool.ntp.org
 (@%!)1.openwrt.pool.ntp.org
 (@%!)18-courier.push.apple.com
