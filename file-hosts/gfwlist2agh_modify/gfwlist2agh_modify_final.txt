@@ -170,6 +170,7 @@
 (@&!)bing.com
 (@&!)btschool.club
 (@&!)carpt.net
+(@&!)cdn-krill-ai.com
 (@&!)cdn.jsdelivr.net
 (@&!)cf-ns.com
 (@&!)cf-ns.net
@@ -237,6 +238,7 @@
 (@&!)jotform.com
 (@&!)jsdelivr.net
 (@&!)keepfrds.com
+(@&!)krill-ai.com
 (@&!)leaves.red
 (@&!)lemonhd.club
 (@&!)library.ac.cn
