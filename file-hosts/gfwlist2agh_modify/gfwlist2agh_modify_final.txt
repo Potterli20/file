@@ -149,6 +149,7 @@
 (@%!)uc.cn
 (@%!)us.ntp.org.cn
 (@%!)vercel.com
+(@%!)worldjaguar.com
 (@%!)www-cdn.icloud.com.akadns.net
 (@%!)www.apple.com.cn
 (@%!)www.beian.gov.cn
@@ -156,6 +157,7 @@
 (@%!)www.icloud.com
 (@%!)xssx.win
 (@%!)yuanshen.com
+(@%!)yunyou.top
 (@&!)18-courier.push.apple.com
 (@&!)1dot1dot1dot1.cloudflare-dns.com
 (@&!)adminforge.de
