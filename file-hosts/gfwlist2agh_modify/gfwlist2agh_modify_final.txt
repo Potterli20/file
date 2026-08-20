@@ -1,5 +1,7 @@
 (!%!)guzzoni.smoot.apple.com
 (*%*)duolingo.cn
+(*%*)himalaya.com
+(*%*)ximalaya.com
 (*&*)com.cn
 (*&*)xn--wcvs22d1m.hk
 (@%!)0.openwrt.pool.ntp.org
