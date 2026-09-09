@@ -18,7 +18,7 @@ doh.opendns.com
 dns.google
 dns64.dns.google
 dns.google.com
-dns11.quad9.net
+*.quad9.net
 dns.nextdns.io
 dns-unfiltered.adguard.com
 unfiltered.adguard-dns.com
