@@ -1,5 +1,6 @@
 *.trli.club
 *.dns.yandex.net
+one.one.one.one
 cloudflare-dns.com
 doh.360.cn
 dot.360.cn
