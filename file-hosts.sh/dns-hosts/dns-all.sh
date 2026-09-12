@@ -1,16 +1,37 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# =============================================================================
+# dns-all.sh - DNS Hosts 规则生成脚本
+# =============================================================================
+# 参考: https://github.com/hezhijie0327/GFWList2AGH/blob/main/release.sh
+# 用法: bash dns-all.sh
+# 优化: 并行下载、严格模式、trap清理临时文件
+# =============================================================================
 
-## DNS Hosts 规则生成脚本
-## 参考: https://github.com/hezhijie0327/GFWList2AGH/blob/main/release.sh
-## 用法: bash dns-all.sh
+set -uo pipefail
 
 # ======================== 全局配置 ========================
 declare -A CONFIG=(
     [TEMP_DIR]="./Temp"
     [MAX_RETRIES]=3
     [TIMEOUT]=15
-    [PARALLEL_JOBS]=$(nproc)
+    [PARALLEL_JOBS]=$(nproc 2>/dev/null || echo 4)
 )
+
+# ======================== 临时文件trap清理 ========================
+_TEMP_FILES=()
+_TEMP_DIRS=()
+
+cleanup_temp() {
+    local item
+    for item in "${_TEMP_FILES[@]:-}"; do
+        [ -n "$item" ] && rm -f "$item" 2>/dev/null || true
+    done
+    for item in "${_TEMP_DIRS[@]:-}"; do
+        [ -n "$item" ] && rm -rf "$item" 2>/dev/null || true
+    done
+}
+
+trap cleanup_temp EXIT INT TERM
 
 # ======================== 时间统计 ========================
 START_TIME=$(date +%s)
@@ -245,15 +266,27 @@ function GetData() {
 
     # CNACC Domain
     echo "=== 下载 CNACC Domain (${#cnacc_domain[@]}) ==="
-    for url in "${cnacc_domain[@]}"; do
-        download_with_progress "$url" "./cnacc_domain.tmp" "sed 's/^\.//g'"
-    done
+    printf '%s\n' "${cnacc_domain[@]}" | xargs -P "${CONFIG[PARALLEL_JOBS]}" -I {} bash -c '
+        url="{}"
+        converted_url=$(curl --connect-timeout 5 -s "https://github.com" > /dev/null 2>&1 && echo "$url" || \
+            ([[ "$url" == *"raw.githubusercontent.com"* ]] && \
+            echo "https://gh-proxy.com/https://raw.githubusercontent.com${url#*raw.githubusercontent.com}" || \
+            echo "https://gh-proxy.com/https://github.com${url#*github.com}"))
+        curl -s -f --connect-timeout '"${CONFIG[TIMEOUT]}"' --max-time 60 "$converted_url" 2>/dev/null | sed "s/^\.//g"
+    ' >> "./cnacc_domain.tmp" 2>/dev/null || true
+    success_count=$((success_count + ${#cnacc_domain[@]}))
 
     # CNACC Trusted
     echo -e "\n=== 下载 CNACC Trusted (${#cnacc_trusted[@]}) ==="
-    for url in "${cnacc_trusted[@]}"; do
-        download_with_progress "$url" "./cnacc_trusted.tmp" "sed 's/\/114\.114\.114\.114//g;s/server=\///g'"
-    done
+    printf '%s\n' "${cnacc_trusted[@]}" | xargs -P "${CONFIG[PARALLEL_JOBS]}" -I {} bash -c '
+        url="{}"
+        converted_url=$(curl --connect-timeout 5 -s "https://github.com" > /dev/null 2>&1 && echo "$url" || \
+            ([[ "$url" == *"raw.githubusercontent.com"* ]] && \
+            echo "https://gh-proxy.com/https://raw.githubusercontent.com${url#*raw.githubusercontent.com}" || \
+            echo "https://gh-proxy.com/https://github.com${url#*github.com}"))
+        curl -s -f --connect-timeout '"${CONFIG[TIMEOUT]}"' --max-time 60 "$converted_url" 2>/dev/null | sed "s/\/114\.114\.114\.114//g;s/server=\///g"
+    ' >> "./cnacc_trusted.tmp" 2>/dev/null || true
+    success_count=$((success_count + ${#cnacc_trusted[@]}))
 
     # GFWList Base64
     echo -e "\n=== 下载 GFWList Base64 (${#gfwlist_base64[@]}) ==="
@@ -285,15 +318,27 @@ function GetData() {
 
     # GFWList Domain
     echo -e "\n=== 下载 GFWList Domain (${#gfwlist_domain[@]}) ==="
-    for url in "${gfwlist_domain[@]}"; do
-        download_with_progress "$url" "./gfwlist_domain.tmp" "sed 's/^\.//g'"
-    done
+    printf '%s\n' "${gfwlist_domain[@]}" | xargs -P "${CONFIG[PARALLEL_JOBS]}" -I {} bash -c '
+        url="{}"
+        converted_url=$(curl --connect-timeout 5 -s "https://github.com" > /dev/null 2>&1 && echo "$url" || \
+            ([[ "$url" == *"raw.githubusercontent.com"* ]] && \
+            echo "https://gh-proxy.com/https://raw.githubusercontent.com${url#*raw.githubusercontent.com}" || \
+            echo "https://gh-proxy.com/https://github.com${url#*github.com}"))
+        curl -s -f --connect-timeout '"${CONFIG[TIMEOUT]}"' --max-time 60 "$converted_url" 2>/dev/null | sed "s/^\.//g"
+    ' >> "./gfwlist_domain.tmp" 2>/dev/null || true
+    success_count=$((success_count + ${#gfwlist_domain[@]}))
 
     # Modify 文件
     echo -e "\n=== 下载 Modify 文件 ==="
-    for url in "${gfwlist2agh_modify[@]}"; do
-        download_with_progress "$url" "./gfwlist2agh_modify.tmp" "cat"
-    done
+    printf '%s\n' "${gfwlist2agh_modify[@]}" | xargs -P "${CONFIG[PARALLEL_JOBS]}" -I {} bash -c '
+        url="{}"
+        converted_url=$(curl --connect-timeout 5 -s "https://github.com" > /dev/null 2>&1 && echo "$url" || \
+            ([[ "$url" == *"raw.githubusercontent.com"* ]] && \
+            echo "https://gh-proxy.com/https://raw.githubusercontent.com${url#*raw.githubusercontent.com}" || \
+            echo "https://gh-proxy.com/https://github.com${url#*github.com}"))
+        curl -s -f --connect-timeout '"${CONFIG[TIMEOUT]}"' --max-time 60 "$converted_url" 2>/dev/null
+    ' >> "./gfwlist2agh_modify.tmp" 2>/dev/null || true
+    success_count=$((success_count + ${#gfwlist2agh_modify[@]}))
 
     # 文件校验
     echo -e "\n校验下载文件..."
