@@ -1,5 +1,26 @@
-#adblock
-filter_adblock=(
+#!/usr/bin/env bash
+# =============================================================================
+# allow.sh - 广告过滤白名单生成脚本
+# =============================================================================
+# 功能描述：下载并合并多个广告过滤列表和白名单域名列表，生成允许列表文件
+# 输出文件：
+#   - allow-adblock.txt  从adblock过滤列表提取的白名单规则
+#   - allow-domain.txt   格式化后的域名白名单规则
+#   - allow.txt          合并去重后的最终白名单
+# 依赖：curl、sed、grep、sort、mktemp
+# 用法：bash allow.sh
+# =============================================================================
+
+set -euo pipefail
+
+# 引入公共工具库
+source "$(dirname "$0")/common_utils.sh"
+
+# ==================== 配置区域 ====================
+
+# adblock过滤规则URL列表
+filter_adblock_urls=(
+    # Adtidy Android Filters
     "https://filters.adtidy.org/android/filters/1_optimized.txt"
     "https://filters.adtidy.org/android/filters/2_optimized.txt"
     "https://filters.adtidy.org/android/filters/3_optimized.txt"
@@ -101,6 +122,7 @@ filter_adblock=(
     "https://filters.adtidy.org/android/filters/252_optimized.txt"
     "https://filters.adtidy.org/android/filters/253_optimized.txt"
     "https://filters.adtidy.org/android/filters/254_optimized.txt"
+    # Adtidy Chromium Extension Filters
     "https://filters.adtidy.org/extension/chromium/filters/1.txt"
     "https://filters.adtidy.org/extension/chromium/filters/2.txt"
     "https://filters.adtidy.org/extension/chromium/filters/3.txt"
@@ -202,6 +224,8 @@ filter_adblock=(
     "https://filters.adtidy.org/extension/chromium/filters/252.txt"
     "https://filters.adtidy.org/extension/chromium/filters/253.txt"
     "https://filters.adtidy.org/extension/chromium/filters/254.txt"
+    "https://filters.adtidy.org/extension/chromium/filters/10.txt"
+    # Adtidy Other Filters
     "https://filters.adtidy.org/windows/filters/1.txt"
     "https://filters.adtidy.org/windows/filters/2.txt"
     "https://filters.adtidy.org/windows/filters/3.txt"
@@ -405,15 +429,53 @@ filter_adblock=(
     "https://filters.adtidy.org/extension/ublock/filters/252_optimized.txt"
     "https://filters.adtidy.org/extension/ublock/filters/253_optimized.txt"
     "https://filters.adtidy.org/extension/ublock/filters/254_optimized.txt"
+    # EasyList Filters
+    "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=1&mimetype=plaintext"
+    "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_adservers.txt"
+    "https://raw.githubusercontent.com/easylist/easylistchina/master/easylistchina.txt"
+    "https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/adservers.txt"
+    "https://raw.githubusercontent.com/cbuijs/accomplist/master/easylist/adblock.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_101_EasyList/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_104_EasyListChina/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_105_EasyListCzechAndSlovak/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_106_EasyListDutch/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_107_EasyListGermany/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_108_EasyListHebrew/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_109_EasyListItaly/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_110_EasyListLithuania/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_202_EasyListThailand/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_205_SchacksAdblockPlusListe/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_219_ChinaListAndEasyList/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_231_EasyListSpanish/filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_246_EasyListPolish/filter.txt"
+    "https://easylist-msie.adblockplus.org/abp-filters-anti-cv.txt"
+    "https://easylist.to/easylist/easylist.txt"
+    "https://easylist.to/easylist/easyprivacy.txt"
+    "https://easylist.to/easylistgermany/easylistgermany.txt"
+    "https://sub.adtchrome.com/adt-chinalist-easylist.txt"
+    "https://easylist-downloads.adblockplus.org/easylistchina.txt"
+    "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
+    "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt"
+    "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
+    "https://easylist-downloads.adblockplus.org/easylistchina+easylistchina_compliance+easylist.txt"
+    "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_specific_cname.txt"
+    "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_specific_international.txt"
+    "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_thirdparty.txt"
+    "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_specific.txt"
+    "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_specific_block.txt"
+    "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
+    "https://easylist-downloads.adblockplus.org/exceptionrules.txt"
+    "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_allowlist.txt"
+    "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_allowlist_international.txt"
+    "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_allowlist.txt"
+    # GitHub Community Filters
     "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/BlockHttpDNS/BlockHttpDNS.txt"
     "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/Privacy/Privacy.txt"
     "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingTest/AdvertisingTest.txt"
     "https://raw.githubusercontent.com/lennihein/LostAd/main/lostad.txt"
     "https://raw.githubusercontent.com/lennihein/LostAd/main/lostad_dns.txt"
-    "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=1&mimetype=plaintext"
     "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/AdGuard/AdvertisingLite/AdvertisingLite.txt"
     "https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Hosts.txt"
-    "https://code.gitlink.org.cn/zzp282/ads/raw/branch/master/ADSLJ.txt"
     "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_adservers.txt"
     "https://raw.githubusercontent.com/easylist/easylistchina/master/easylistchina.txt"
     "https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/adservers.txt"
@@ -542,12 +604,9 @@ filter_adblock=(
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_251_LegitimateURLShortener/filter.txt"
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_252_DandelionSproutSerboCroatian/filter.txt"
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/ThirdParty/filter_253_IndianList/filter.txt"
-    "https://hblock.molinero.dev/hosts_adblock.txt"
-    "https://gitlab.com/malware-filter/phishing-filter/-/raw/master/dist/phishing-filter-agh.txt"
     "https://raw.githubusercontent.com/MkingSakura/AD-Hosts/main/Hosts/360Hosts.txt"
     "https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_adguard.txt"
     "https://raw.github.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt"
-    "https://easylist-msie.adblockplus.org/abp-filters-anti-cv.txt"
     "https://raw.githubusercontent.com/abp-filters/abp-filters-anti-cv/master/english.txt"
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt"
     "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt"
@@ -569,14 +628,10 @@ filter_adblock=(
     "https://raw.githubusercontent.com/BlueSkyXN/AdGuardHomeRules/master/all.txt"
     "https://raw.githubusercontent.com/MohamedElashri/filters/main/rules/adguard.txt"
     "https://raw.githubusercontent.com/chillipal/dns-blocklist/master/lists/blocklist-adguard.txt"
-    "https://o0.pages.dev/Xtra/adblock.txt"
     "https://raw.githubusercontent.com/ppfeufer/adguard-filter-list/master/blocklist"
     "https://raw.githubusercontent.com/Noyllopa/NoAppDownload/master/NoAppDownload.txt"
     "https://raw.githubusercontent.com/notracking/hosts-blocklists/master/adblock/adblock.txt"
     "https://raw.githubusercontent.com/gioxx/xfiles/master/siteblock.txt"
-    "https://easylist.to/easylist/easylist.txt"
-    "https://easylist.to/easylist/easyprivacy.txt"
-    "https://easylist.to/easylistgermany/easylistgermany.txt"
     "https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/mv.txt"
     "https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/rule.txt"
     "https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/minority-mv.txt"
@@ -590,17 +645,7 @@ filter_adblock=(
     "https://raw.githubusercontent.com/o0HalfLife0o/list/master/ad.txt"
     "https://raw.githubusercontent.com/o0HalfLife0o/list/master/ad2.txt"
     "https://raw.githubusercontent.com/o0HalfLife0o/list/master/ad3.txt"
-    "https://sub.adtchrome.com/adt-chinalist-easylist.txt"
-    "https://www.fanboy.co.nz/enhancedstats.txt"
-    "https://secure.fanboy.co.nz/fanboy-social.txt"
-    "https://www.fanboy.co.nz/fanboy-annoyance.txt"
-    "https://easylist-downloads.adblockplus.org/easylistchina.txt"
-    "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
-    "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt"
-    "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
-    "https://easylist-downloads.adblockplus.org/easylistchina+easylistchina_compliance+easylist.txt"
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt"
-    "https://www.i-dont-care-about-cookies.eu/abp/"
     "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/ChineseFilter/sections/adservers.txt"
     "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/ChineseFilter/sections/antiadblock.txt"
     "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/GermanFilter/sections/adservers.txt"
@@ -620,7 +665,6 @@ filter_adblock=(
     "https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt"
     "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt"
     "https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/adguard.txt"
-    "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
     "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/TurkishFilter/sections/allowlist.txt"
     "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/SpywareFilter/sections/allowlist.txt"
     "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/GermanFilter/sections/allowlist.txt"
@@ -630,9 +674,6 @@ filter_adblock=(
     "https://raw.githubusercontent.com/hl2guide/AdGuard-Home-Whitelist/main/whitelist.txt"
     "https://raw.githubusercontent.com/eded333/TheFuckingList/main/whitelist.txt"
     "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/blacklist/master/whitelisted.list"
-    "https://easylist-downloads.adblockplus.org/exceptionrules.txt"
-    "https://filters.adtidy.org/extension/chromium/filters/10.txt"
-    "https://gitlab.com/ZeroDot1/CoinBlockerLists/-/raw/master/white_list.txt"
     "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exceptions.txt"
     "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exclusions.txt"
     "https://raw.githubusercontent.com/EnergizedProtection/unblock/master/basic/formats/domains.txt"
@@ -642,10 +683,21 @@ filter_adblock=(
     "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_allowlist.txt"
     "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_allowlist_international.txt"
     "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_allowlist.txt"
-
+    # GitLab Filters
+    "https://gitlab.com/malware-filter/phishing-filter/-/raw/master/dist/phishing-filter-agh.txt"
+    "https://gitlab.com/ZeroDot1/CoinBlockerLists/-/raw/master/white_list.txt"
+    # Other Filters
+    "https://code.gitlink.org.cn/zzp282/ads/raw/branch/master/ADSLJ.txt"
+    "https://hblock.molinero.dev/hosts_adblock.txt"
+    "https://o0.pages.dev/Xtra/adblock.txt"
+    "https://www.fanboy.co.nz/enhancedstats.txt"
+    "https://secure.fanboy.co.nz/fanboy-social.txt"
+    "https://www.fanboy.co.nz/fanboy-annoyance.txt"
+    "https://www.i-dont-care-about-cookies.eu/abp/"
 )
-#domain
-filter_domain=(
+
+# 域名白名单URL列表
+filter_domain_urls=(
     "https://raw.githubusercontent.com/slyfox1186/pihole-regex/main/domains/whitelist/exact-whitelist.txt"
     "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.whitelist.txt"
     "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-list.txt"
@@ -660,15 +712,93 @@ filter_domain=(
     "https://raw.githubusercontent.com/ookangzheng/blahdns/master/hosts/whitelist.txt"
 )
 
-for filter_adblock_task in "${!filter_adblock[@]}"; do
-    curl -s -L --connect-timeout 15 "${filter_adblock[$filter_adblock_task]}" >>./filter_adblock.tmp
-done
-for filter_domain_task in "${!filter_domain[@]}"; do
-    curl -s -L --connect-timeout 15 "${filter_domain[$filter_domain_task]}" >>./filter_domain.tmp
-done
+# ==================== 配置结束 ====================
 
-cat ./filter_adblock.tmp | sed 's/[ ]*//g' | grep '^[@@]' | sed '/^$/d' | sort -u >allow-adblock.txt
-cat ./filter_domain.tmp | sed 's/[ ]*//g' | grep -v "#\|!" | sed '/^$/d' | sed "/./{s/^/@@||&/;s/$/&^/}" | sort -u >allow-domain.txt
-cat allow-domain.txt allow-adblock.txt | sed 's/[ ]*//g' | sed '/^$/d' | sort -u >allow.txt
+# =============================================================================
+# 数据处理函数
+# =============================================================================
 
-exit
+# 从adblock临时文件提取白名单规则
+# 处理：去除空格 -> 提取@@开头行 -> 去空行 -> 排序去重
+# 参数: $1 - 输入临时文件路径, $2 - 输出文件路径
+process_adblock_data() {
+    local input_file="$1"
+    local output_file="$2"
+    log_info "处理adblock数据，提取白名单规则..."
+    cat "$input_file" | sed 's/[ ]*//g' | grep '^[@@]' | sed '/^$/d' | sort -u > "$output_file"
+    log_info "adblock白名单规则提取完成: $output_file ($(wc -l < "$output_file") 行)"
+}
+
+# 格式化域名白名单
+# 处理：去除空格 -> 排除注释行(#!) -> 去空行 -> 添加@@||前缀和^后缀 -> 排序去重
+# 参数: $1 - 输入临时文件路径, $2 - 输出文件路径
+process_domain_data() {
+    local input_file="$1"
+    local output_file="$2"
+    log_info "处理域名白名单数据..."
+    cat "$input_file" | sed 's/[ ]*//g' | grep -v "#\|!" | sed '/^$/d' | sed "/./{s/^/@@||&/;s/$/&^/}" | sort -u > "$output_file"
+    log_info "域名白名单格式化完成: $output_file ($(wc -l < "$output_file") 行)"
+}
+
+# 合并两个白名单文件并去重排序
+# 参数: $1 - adblock文件, $2 - domain文件, $3 - 输出文件
+merge_allow_lists() {
+    local adblock_file="$1"
+    local domain_file="$2"
+    local output_file="$3"
+    log_info "合并白名单文件..."
+    cat "$adblock_file" "$domain_file" | sed 's/[ ]*//g' | sed '/^$/d' | sort -u > "$output_file"
+    log_info "合并完成: $output_file ($(wc -l < "$output_file") 行)"
+}
+
+# =============================================================================
+# 主处理逻辑
+# =============================================================================
+
+main() {
+    log_info "allow.sh 脚本启动"
+
+    # 注册清理trap
+    register_cleanup_trap
+
+    # 创建临时文件
+    local tmp_adblock tmp_domain
+    create_temp_file "filter_adblock"
+    tmp_adblock="$_LAST_TEMP_RESULT"
+    create_temp_file "filter_domain"
+    tmp_domain="$_LAST_TEMP_RESULT"
+
+    # 并行下载adblock过滤列表
+    log_info "开始下载adblock过滤列表 (${#filter_adblock_urls[@]} 个URL)..."
+    download_urls_parallel "filter_adblock_urls" "$tmp_adblock" 8
+
+    # 并行下载域名白名单
+    log_info "开始下载域名白名单 (${#filter_domain_urls[@]} 个URL)..."
+    download_urls_parallel "filter_domain_urls" "$tmp_domain" 8
+
+    # 检查临时文件
+    if [ ! -s "$tmp_adblock" ]; then
+        log_warn "adblock临时文件为空，可能所有下载都失败了"
+    fi
+    if [ ! -s "$tmp_domain" ]; then
+        log_warn "domain临时文件为空，可能所有下载都失败了"
+    fi
+
+    # 处理数据并生成输出文件
+    process_adblock_data "$tmp_adblock" "allow-adblock.txt"
+    process_domain_data "$tmp_domain" "allow-domain.txt"
+    merge_allow_lists "allow-adblock.txt" "allow-domain.txt" "allow.txt"
+
+    # 验证输出文件
+    for output_file in allow-adblock.txt allow-domain.txt allow.txt; do
+        if [ -s "$output_file" ]; then
+            log_info "输出文件生成成功: $output_file"
+        else
+            log_warn "输出文件为空: $output_file"
+        fi
+    done
+
+    log_info "allow.sh 脚本执行完成"
+}
+
+main
